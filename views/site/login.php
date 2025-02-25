@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <ul class="p-0 m-0 text-secondary" style="list-style-type: none;">
                 В системе зарегистрированы пользователи:
-                <li><strong>demo-user / P1ssw0rd^1_7</strong></li>
+                <li><strong>demo-user / P1ssw0rd^1-7</strong></li>
                 <li><strong>demo-user1 / Pa66word+>Str0ng</strong></li>
             </ul>
         </div>

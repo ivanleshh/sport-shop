@@ -28,10 +28,28 @@ class LoginForm extends Model
         return [
             // login and password are both required
             [['login', 'password'], 'required'],
+            ['login', 'match', 'pattern' => '/^[a-z\-\d]+$/i', 'message' => 'Разрешённые символы: латиница, тире, цифры'],
+            ['password', 'match', 'pattern' => '/^[a-zA-Z\s\d\^\+\-\<\>]+$/', 'message' => 'Разрешённые символы: латиница, пробел, ^, +, -, <, >'],
+            ['password', 'string', 'min' => 8],
+            ['password', 'match', 'pattern' => '/^(?=.*[\d]).+$/', 'message' => 'Должна быть хотя бы одна цифра'],
+            ['password', 'match', 'pattern' => '/^(?=.*[a-z]).+$/', 'message' => 'Должна быть хотя бы одна строчная буква'],
+            ['password', 'match', 'pattern' => '/^(?=.*[A-Z]).+$/', 'message' => 'Должна быть хотя бы одна заглавная буква'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'login' => 'логин',
+            'password' => 'пароль',
+            'rememberMe' => 'Запомнить меня'
         ];
     }
 
@@ -49,7 +67,7 @@ class LoginForm extends Model
 
             if (!$user || !$user->validatePassword($this->password)) {
                 Yii::$app->session->setFlash('danger', 'Пара логин - пароль введены некорректно');
-                $this->addError($attribute, 'Incorrect login or password.');
+                $this->addError($attribute, 'Неверный логин или пароль');
             }
         }
     }

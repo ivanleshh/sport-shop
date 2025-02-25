@@ -9,6 +9,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\RegisterForm;
+use yii\bootstrap5\ActiveForm;
+use yii\helpers\VarDumper;
 
 class SiteController extends Controller
 {
@@ -20,14 +23,20 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['logout', 'login', 'register'],
                 'rules' => [
+                    [
+                        'actions' => ['login', 'register'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
                     [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => fn() => Yii::$app->response->redirect('/')
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
@@ -78,7 +87,7 @@ class SiteController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             Yii::$app->session->setFlash('success', 'Вы успешно вошли в учётную запись');
-            return $this->redirect(Yii::$app->user->identity->isAdmin ? '/admin-panel' : '/account');
+            return $this->redirect(Yii::$app->user->identity->isAdmin ? '/admin-panel' : '/personal');
         }
 
         $model->password = '';
@@ -122,11 +131,23 @@ class SiteController extends Controller
      *
      * @return string
      */
+    // Метод для регистрация пользователя на сайте
     public function actionRegister()
     {
-        Yii::$app->session->setFlash('success', 'Вы успешно зарегистрировались');
-        return $this->redirect('/account');
+        $model = new RegisterForm();
 
-        return $this->render('about');
+        if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validate($model);
+            }
+            if ($user = $model->userRegister()) {
+                Yii::$app->user->login($user, 3600*24*30);
+                Yii::$app->session->setFlash('success', 'Вы успешно зарегистрировались');
+                return $this->redirect('/personal');
+            }
+        }
+
+        return $this->render('register', compact('model'));
     }
 }

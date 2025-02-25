@@ -7,6 +7,7 @@
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 use yii\captcha\Captcha;
+use yii\web\JqueryAsset;
 
 $this->title = 'Регистрация';
 $this->params['breadcrumbs'][] = $this->title;
@@ -17,14 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
 
-            <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>
+            <?php $form = ActiveForm::begin([
+                'id' => 'contact-form',
+            ]); ?>
 
-            <?= $form->field($model, 'name')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'name') ?>
             <?= $form->field($model, 'surname') ?>
-            <?= $form->field($model, 'login') ?>
-            <?= $form->field($model, 'email') ?>
+            <?= $form->field($model, 'login', ['enableAjaxValidation' => true]) ?>
+            <?= $form->field($model, 'email', ['enableAjaxValidation' => true]) ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
+            <div class="text-secondary fs-7 my-2">* Разрешено использование специальных символов: ^, +, -, <, ></div>
             <?= $form->field($model, 'password_repeat')->passwordInput() ?>
+            <?= $form->field($model, 'personal')->checkbox() ?>
             <?= $form->field($model, 'rules')->checkbox() ?>
 
             <div class="form-group">

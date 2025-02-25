@@ -1,0 +1,55 @@
+.fs-7 {
+    font-size: 0.8rem;
+}
+
+#main {
+    animation: main .6s ease-in;
+}
+
+.invalid-feedback {
+    animation: feedback .3s ease-in;
+}
+
+.is-invalid {
+    animation: invalid .6s ease-in;
+}
+
+.is-valid {
+    animation: valid .6s ease-in;
+}
+
+@keyframes main {
+    from {
+        transform: translateX(50px);
+        opacity: 0;
+    } to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes feedback {
+    from {
+        transform: translateY(-15px);
+        opacity: 0;
+    } to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes valid {
+    0%, 50%, 100% {
+        box-shadow: 0 0 3px rgb(9, 106, 9);
+    } 25%, 75% {
+        box-shadow: 0 0 10px rgb(9, 106, 9);
+    }
+}
+
+@keyframes invalid {
+    0%, 50%, 100% {
+        transform: translateX(0);
+    } 25%, 75% {
+        transform: translateX(-7px);
+    }
+}
