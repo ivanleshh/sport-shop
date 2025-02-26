@@ -9,7 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $cart_id
- * @property int $product_Id
+ * @property int $product_id
  * @property int $product_amount
  * @property float $total_amount
  *
@@ -32,11 +32,12 @@ class CartItem extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cart_id', 'product_Id', 'product_amount'], 'required'],
-            [['cart_id', 'product_Id', 'product_amount'], 'integer'],
+            [['total_amount', 'product_amount'], 'default', 'value' => 0],
+            [['cart_id', 'product_id'], 'required'],
+            [['cart_id', 'product_id', 'product_amount'], 'integer'],
             [['total_amount'], 'number'],
             [['cart_id'], 'exist', 'skipOnError' => true, 'targetClass' => Cart::class, 'targetAttribute' => ['cart_id' => 'id']],
-            [['product_Id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_Id' => 'id']],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
         ];
     }
 
@@ -48,7 +49,7 @@ class CartItem extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'cart_id' => 'Cart ID',
-            'product_Id' => 'Product ID',
+            'product_id' => 'Product ID',
             'product_amount' => 'Product Amount',
             'total_amount' => 'Total Amount',
         ];
@@ -71,6 +72,6 @@ class CartItem extends \yii\db\ActiveRecord
      */
     public function getProduct()
     {
-        return $this->hasOne(Product::class, ['id' => 'product_Id']);
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 }

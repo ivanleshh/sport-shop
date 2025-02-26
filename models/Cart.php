@@ -31,7 +31,8 @@ class Cart extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_amount'], 'required'],
+            [['user_id'], 'required'],
+            [['user_id', 'product_amount'], 'default', 'value' => 0],
             [['user_id', 'product_amount'], 'integer'],
             [['total_amount'], 'number'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
@@ -69,5 +70,15 @@ class Cart extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
+    }
+
+    // Метод получения количества товаров в корзины у текущего клиента
+    public static function getItemCount()
+    {
+        $count = 0;
+        if ($cart = self::findOne(['user_id' => Yii::$app->user->id])) {
+            $count = $cart->product_amount;
+        }
+        return $count;
     }
 }

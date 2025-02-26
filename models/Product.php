@@ -93,7 +93,7 @@ class Product extends \yii\db\ActiveRecord
      */
     public function getCartItems()
     {
-        return $this->hasMany(CartItem::class, ['product_Id' => 'id']);
+        return $this->hasMany(CartItem::class, ['product_id' => 'id']);
     }
 
     /**

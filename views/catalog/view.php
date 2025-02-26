@@ -1,5 +1,6 @@
 <?php
 
+use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
 use yii\widgets\DetailView;
@@ -30,8 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php endif; ?>
 
     <?php Pjax::begin([
-        'id' => 'catalog-pjax'
+        'id' => 'catalog-pjax',
+        'enablePushState' => false,
+        'timeout' => 5000,
     ]); ?>
+
+    <?= Alert::widget() ?>
 
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex gap-3">
@@ -41,10 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::a('сбросить', ['/catalog'], ['class' => 'text-decoration-none link-dark']) ?>
         </div>
         <div>
-            <?= $this->render('_search', 
-                ['model' => $searchModel],
-            ); 
-            ?>
+            <?= $this->render('_search', ['model' => $searchModel]) ?>
         </div>
     </div>
 
@@ -60,5 +62,3 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="my-5"><?= $model->description ?></p>
 
 </div>
-
-<?= $this->registerJsFile('/js/filter.js', ['depends' => JqueryAsset::class]) ?>
