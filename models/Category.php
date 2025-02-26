@@ -95,4 +95,10 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Product::class, ['category_id' => 'id']);
     }
+
+    // Возвращает информацию о дочерних категориях данной категории
+    public function getChildren()
+    {
+        return $this->hasMany(Category::class, ['parent_id' => 'id']);
+    }
 }

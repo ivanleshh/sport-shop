@@ -1,43 +1,64 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\JqueryAsset;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
+use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
-/** @var app\models\Product $model */
+/** @var app\models\Category $model */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['index']];
+if (isset($model->parent_id)) {
+    $this->params['breadcrumbs'][] = ['label' => $model->parent->title, 'url' => ['view', 'id' => $model->parent->id]];
+}
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="product-view">
+<div class="category-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h3><?= Html::encode($this->title) ?></h3>
 
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+    <?php if (!empty($model->children)): ?>
+        <div class="mt-3 d-flex flex-wrap gap-3">
+            <?php foreach ($model->children as $child): ?>
+                <?= $this->render('category', ['model' => $child]) ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'photo',
-            'title',
-            'description:ntext',
-            'price',
-            'category_id',
-            'count',
-            'brand_id',
-        ],
+    <?php Pjax::begin([
+        'id' => 'catalog-pjax'
+    ]); ?>
+
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex gap-3">
+            Сортировать по:
+            <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
+            <?= $dataProvider->sort->link('price', ['class' => 'text-decoration-none']) ?>
+            <?= Html::a('сбросить', ['/catalog'], ['class' => 'text-decoration-none link-dark']) ?>
+        </div>
+        <div>
+            <?= $this->render('_search', 
+                ['model' => $searchModel],
+            ); 
+            ?>
+        </div>
+    </div>
+
+    <?= ListView::widget([
+        'dataProvider' => $dataProvider,
+        'itemOptions' => ['class' => 'item'],
+        'itemView' => 'product',
+        'layout' => '<div class="catalog-items d-flex flex-wrap gap-3">{items}</div>'
     ]) ?>
 
+    <?php Pjax::end(); ?>
+
+    <p class="my-5"><?= $model->description ?></p>
+
 </div>
+
+<?= $this->registerJsFile('/js/filter.js', ['depends' => JqueryAsset::class]) ?>

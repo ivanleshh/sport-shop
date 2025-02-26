@@ -54,7 +54,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= Html::a('Изменить персональные данные', ['change-personal', 'id' => $model->id], ['class' => 'btn btn-primary btn-change-personal']) ?>
             </div>
 
-
         <?php Pjax::end(); ?>
     </div>
 

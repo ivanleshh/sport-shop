@@ -24,6 +24,7 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
+    const IMG_PATH = '/images/products/';
     /**
      * {@inheritdoc}
      */
@@ -54,14 +55,14 @@ class Product extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'photo' => 'Photo',
-            'title' => 'Title',
-            'description' => 'Description',
-            'price' => 'Price',
-            'category_id' => 'Category ID',
-            'count' => 'Count',
-            'brand_id' => 'Brand ID',
+            'id' => '№',
+            'photo' => 'фото товара',
+            'title' => 'название',
+            'description' => 'описание',
+            'price' => 'цена',
+            'category_id' => 'категория',
+            'count' => 'количество',
+            'brand_id' => 'бренд',
         ];
     }
 

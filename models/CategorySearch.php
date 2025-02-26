@@ -4,13 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Product;
-use yii\helpers\VarDumper;
+use app\models\Category;
 
 /**
- * ProductSearch represents the model behind the search form of `app\models\Product`.
+ * CategorySearch represents the model behind the search form of `app\models\Category`.
  */
-class ProductSearch extends Product
+class CategorySearch extends Category
 {
     /**
      * {@inheritdoc}
@@ -18,10 +17,8 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'count', 'brand_id'], 'integer'],
+            [['id', 'parent_id'], 'integer'],
             [['photo', 'title', 'description'], 'safe'],
-            [['price'], 'number'],
-            ['category_id', 'safe'],
         ];
     }
 
@@ -43,26 +40,32 @@ class ProductSearch extends Product
      */
     public function search($params)
     {
-        $query = Product::find();
+        $query = Category::find()->where(['parent_id' => null]);
+
+        // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
         $this->load($params);
+
         if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
+
+        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'price' => $this->price,
-            'count' => $this->count,
-            'brand_id' => $this->brand_id,
+            'parent_id' => $this->parent_id,
         ]);
-        if (!empty($this->category_id)) {
-            $query->andFilterWhere(['category_id' => $this->category_id]);
-        }
+
         $query->andFilterWhere(['like', 'photo', $this->photo])
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
+
         return $dataProvider;
     }
 }

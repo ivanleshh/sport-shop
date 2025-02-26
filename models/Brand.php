@@ -15,6 +15,7 @@ use Yii;
  */
 class Brand extends \yii\db\ActiveRecord
 {
+    const IMG_PATH = '/images/brands/';
     /**
      * {@inheritdoc}
      */

@@ -18,6 +18,28 @@
     animation: valid .6s ease-in;
 }
 
+.w-mini {
+    width: 30px !important;
+}
+
+.list-style-none {
+    list-style-type: none !important;
+}
+
+.w-10 {
+    max-width: 100px !important;
+}
+
+.navbar-collapse {
+    justify-content: end;
+}
+
+@media screen and (max-width: 768px) {
+    .catalog-items {
+        justify-content: center;
+    }
+}
+
 @keyframes main {
     from {
         transform: translateX(50px);
