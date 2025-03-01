@@ -69,12 +69,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             'id' => '№',
-            'name' => 'имя',
-            'surname' => 'фамилия',
-            'login' => 'логин',
-            'email' => 'email',
-            'password' => 'пароль',
-            'password_repeat' => 'повтор пароля',
+            'name' => 'Имя',
+            'surname' => 'Фамилия',
+            'login' => 'Логин',
+            'email' => 'Email',
+            'password' => 'Пароль',
+            'password_repeat' => 'Повтор пароля',
             'role_id' => 'Role ID',
             'auth_key' => 'Auth Key',
             'check' => 'Изменить пароль',

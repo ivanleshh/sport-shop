@@ -9,6 +9,7 @@ use app\models\Orders;
 use app\models\Pickup;
 use app\models\Status;
 use app\models\Typepay;
+use app\modules\account\models\OrdersSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -36,6 +37,22 @@ class OrdersController extends Controller
                 ],
             ]
         );
+    }
+
+    /**
+     * Lists all Orders models.
+     *
+     * @return string
+     */
+    public function actionIndex()
+    {
+        $searchModel = new OrdersSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

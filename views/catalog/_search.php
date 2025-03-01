@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
         <div class="align-self-center">🔎</div>
         <?= $form->field($model, 'title') ?>
         <div class="form-group d-flex gap-3">
-            <?= Html::a('Сбросить', ['/catalog'], ['class' => 'btn btn-outline-secondary']) ?>
+            <?= Html::a('Сбросить', ['/catalog/view', 'id' => $model->category->id], ['class' => 'btn btn-outline-secondary']) ?>
         </div>
     </div>
     

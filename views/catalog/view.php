@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             Сортировать по:
             <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
             <?= $dataProvider->sort->link('price', ['class' => 'text-decoration-none']) ?>
-            <?= Html::a('сбросить', ['/catalog'], ['class' => 'text-decoration-none link-dark']) ?>
+            <?= Html::a('Сбросить', ['/catalog/view', 'id' => $model->id], ['class' => 'text-decoration-none link-dark']) ?>
         </div>
         <div>
             <?= $this->render('_search', ['model' => $searchModel]) ?>

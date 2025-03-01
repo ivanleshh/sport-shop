@@ -14,7 +14,7 @@ use yii\helpers\VarDumper;
                 ) . 
                 "<h5 class='card-title " . (isset($model->parent_id) ? "fs-6" : 'text-uppercase fw-bold') . "'>$model->title</h5>",
                 ['view', 'id' => $model->id],
-                ['class' => 'd-flex gap-3 align-items-center link-dark text-decoration-none']
+                ['class' => 'd-flex gap-3 align-items-center link-dark text-decoration-none', 'data-pjax' => 0]
             )
         ?>
 
