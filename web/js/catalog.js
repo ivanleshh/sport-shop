@@ -18,7 +18,7 @@ $(() => {
     }
   })
 
-  $("#catalog-pjax").on("click", ".btn-cart-add", function (e) {
+  $("#catalog-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
   e.preventDefault();
   const a = $(this);
   $.ajax({

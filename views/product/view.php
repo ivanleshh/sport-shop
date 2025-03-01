@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = ['label' => $model->category->title, 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="product-view">
+<div class="product-view mt-5">
     <div class="product-info justify-content-center d-flex gap-3">
         <div class="product-info-photo w-25">
             <?= Html::img(Product::IMG_PATH . $model->photo, ['class' => 'w-100']) ?>

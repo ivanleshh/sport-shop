@@ -34,6 +34,10 @@
     justify-content: end;
 }
 
+textarea {
+    resize: none;
+}
+
 /* .btn-cart-add {
     background: linear-gradient(90deg, rgba(255,249,74,1) 0%, rgba(238,132,36,1) 100%);
     border: none;
@@ -45,6 +49,16 @@
 
 .card:hover {
     transform: translateY(5px);
+}
+
+.create-order-cart,
+.create-order-form {
+    transition: 0.5s;
+}
+
+.create-order-cart:hover,
+.create-order-form:hover {
+    box-shadow: 0 0 15px rgb(189, 188, 188);
 }
 
 @media screen and (max-width: 768px) {

@@ -13,7 +13,6 @@ $(()=> {
     '.btn-cart-item-dec, .btn-cart-item-inc, .btn-cart-item-remove, .btn-cart-clear',
     function(e) {
         e.preventDefault();
-        
         $.ajax({
             url: $(this).attr("href"),
             method: 'POST',

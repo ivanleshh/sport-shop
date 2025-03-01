@@ -107,7 +107,7 @@ class CartController extends Controller
                         $cart->total_amount += $product->price;
                         $cart->save();
 
-                        Yii::$app->session->setFlash('success', 'Товар успешно добавлен в корзину');
+                        Yii::$app->session->setFlash('success', $product->title . ' добавлен в корзину');
                         return $this->asJson([
                             'status' => true,
                         ]);
@@ -136,6 +136,8 @@ class CartController extends Controller
                     $cart->product_amount++;
                     $cart->total_amount += $product->price;
                     $cart->save();
+
+                    Yii::$app->session->setFlash('success', $product->title . ' добавлен в корзину');
 
                     return $this->asJson([
                         'status' => true,
@@ -186,6 +188,7 @@ class CartController extends Controller
                 $cart->save();
 
                 $cart_item->delete();
+                Yii::$app->session->setFlash('warning', $cart_item->product->title . ' удалён из корзины');
                 return $this->asJson([
                     'status' => true,
                 ]);
@@ -212,6 +215,7 @@ class CartController extends Controller
         if (Yii::$app->request->isPost && Yii::$app->request->isAjax) {
             return Cart::getItemCount();
         }
+        return $this->redirect('/');
     }
 
     /**

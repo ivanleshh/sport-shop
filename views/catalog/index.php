@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => 'category',
-        'layout' => '<div class="d-flex flex-wrap gap-3 mt-3">{items}</div>'
+        'layout' => '<div class="d-flex flex-wrap gap-3 my-3">{items}</div>'
     ]) ?>
 
     <?php Pjax::end(); ?>

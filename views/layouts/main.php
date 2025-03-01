@@ -127,30 +127,27 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <div class="d-flex justify-content-end gap-3">
                 <?= Html::a(
                     "Очистить корзину",
-                    ["cart/clear"],
+                    ["/cart/clear"],
                     ["class" => "btn btn-outline-danger btn-cart-clear"]
                 ) ?>
                 <?= Html::a(
                     "Оформить заказ",
-                    ["/account/order-shop"],
+                    ["/personal/orders/create"],
                     ["class" => "btn btn-outline-success"]
                 ) ?>
             </div>
         </div>
         <?= $cart_data ?>
         <div class="d-flex justify-content-between gap-3 mt-2">
-            <div>
-                <?= Html::a("Закрыть", "", ["class" => "btn btn-outline-secondary btn-cart-close"]) ?>
-            </div>
             <div class="d-flex justify-content-end">
                 <?= Html::a(
                     "Очистить корзину",
-                    ["cart/clear"],
+                    ["/cart/clear"],
                     ["class" => "btn btn-outline-danger btn-cart-clear d-none btn-cart-manager"]
                 ) ?>
                 <?= Html::a(
                     "Оформить заказ",
-                    ["/account/order-shop"],
+                    ["/personal/orders/create"],
                     ["class" => "btn btn-outline-success d-none btn-cart-manager"]
                 ) ?>
             </div>
@@ -167,7 +164,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ]);
         echo "<div id='text-error'></div>";
         Modal::end();
-
         $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]);
     }
     ?>

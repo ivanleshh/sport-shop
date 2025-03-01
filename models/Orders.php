@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\VarDumper;
 
 /**
  * This is the model class for table "orders".
@@ -34,6 +35,9 @@ use Yii;
  */
 class Orders extends \yii\db\ActiveRecord
 {
+    public bool $check = false;
+    const SCENARIO_DELIVERY = 'delivery';
+    const SCENARIO_PICKUP = 'pickup';
     /**
      * {@inheritdoc}
      */
@@ -50,14 +54,20 @@ class Orders extends \yii\db\ActiveRecord
         return [
             [['name', 'email', 'phone', 'type_pay_id', 'product_amount', 'status_id', 'user_id'], 'required'],
             [['type_pay_id', 'pick_up_id', 'product_amount', 'status_id', 'user_id'], 'integer'],
-            [['date_delivery', 'time_delivery', 'created_at', 'updated_at', 'new_date_delivery'], 'safe'],
             [['comment', 'delay_reason'], 'string'],
+            [['created_at', 'updated_at', 'new_date_delivery', 'delay_reason', 'address', 'date_delivery', 'time_delivery'], 'safe'],
             [['total_amount'], 'number'],
-            [['name', 'email', 'phone', 'address'], 'string', 'max' => 255],
+            [['name', 'email', 'phone'], 'string', 'max' => 255],
             [['pick_up_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pickup::class, 'targetAttribute' => ['pick_up_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['type_pay_id'], 'exist', 'skipOnError' => true, 'targetClass' => Typepay::class, 'targetAttribute' => ['type_pay_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
+
+            ['name', 'match', 'pattern' => '/^[а-яё\-\s]+$/ui', 'message' => 'Разрешённые символы: кириллица, тире и пробел'],
+            ['check', 'boolean'],
+            ['pick_up_id', 'required', 'on' => self::SCENARIO_PICKUP],
+            [['address', 'date_delivery', 'time_delivery'], 'required', 'on' => self::SCENARIO_DELIVERY],
+            ['phone', 'match', 'pattern' => '/^\+7\([\d]{3}\)\-[\d]{3}(\-[\d]{2}){2}$/', 'message' => 'Формат +7(XXX)-XXX-XX-XX']
         ];
     }
 
@@ -67,25 +77,73 @@ class Orders extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'email' => 'Email',
-            'phone' => 'Phone',
-            'type_pay_id' => 'Type Pay ID',
-            'pick_up_id' => 'Pick Up ID',
-            'address' => 'Address',
-            'date_delivery' => 'Date Delivery',
-            'time_delivery' => 'Time Delivery',
-            'comment' => 'Comment',
-            'total_amount' => 'Total Amount',
-            'product_amount' => 'Product Amount',
-            'status_id' => 'Status ID',
-            'user_id' => 'User ID',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-            'delay_reason' => 'Delay Reason',
-            'new_date_delivery' => 'New Date Delivery',
+            'id' => '№',
+            'name' => 'имя',
+            'email' => 'email',
+            'phone' => 'телефон',
+            'type_pay_id' => 'тип оплаты',
+            'pick_up_id' => 'пункт выдачи',
+            'check' => 'Доставка',
+            'address' => 'адрес доставки',
+            'date_delivery' => 'дата доставки',
+            'time_delivery' => 'время доставки',
+            'comment' => 'комментарий курьеру',
+            'total_amount' => 'общая сумма заказа',
+            'product_amount' => 'количество товаров',
+            'status_id' => 'статус заказа',
+            'user_id' => 'клиент',
+            'created_at' => 'дата создания',
+            'updated_at' => 'дата обновления',
+            'delay_reason' => 'причина задержки',
+            'new_date_delivery' => 'новая дата доставки',
         ];
+    }
+
+    public static function orderCreate($orderShop): int|bool
+    {
+        if ($cart = Cart::findOne(['user_id' => Yii::$app->user->id])) {
+
+            $transaction = Yii::$app->db->beginTransaction();
+
+            try {
+                $orderShop->attributes = $cart->attributes;
+                $orderShop->save();                
+
+                $cartItems = CartItem::find()
+                    ->with('product')
+                    ->where(['cart_id' => $cart->id])
+                    ->all();
+
+                foreach ($cartItems as $cartItem) {
+                    if ($cartItem->product_amount <= $cartItem->product->count) {
+                        $orderItem = new OrderItem();
+                        $orderItem->attributes = $cartItem->attributes;
+                        $orderItem->order_id = $orderShop->id;
+                        $orderItem->product_title = $cartItem->product->title;
+                        $orderItem->product_cost = $cartItem->product->price;
+                        
+                        $product = Product::findOne($cartItem->product_id);
+                        $product->count -= $cartItem->product_amount;
+                        $product->save();
+
+                        $orderItem->save(false);
+                    } else {
+                        throw new \Exception("Товар из вашей корзины закончился!");
+                    }
+                }
+
+                $transaction->commit();
+                $cart->delete();
+                return $orderShop->id;
+            } catch (\Exception $e) { // пользовательские ошибки
+                $transaction->rollBack();
+                Yii::$app->session->setFlash('shop', $e->getMessage());
+            } catch (\Throwable $e) {
+                $transaction->rollBack(); // стандартные ошибки
+                Yii::$app->session->setFlash('shop', $e->getMessage());
+            }
+        }
+        return false;
     }
 
     /**

@@ -32,7 +32,7 @@ class Pickup extends \yii\db\ActiveRecord
         return [
             [['address', 'work_from', 'work_to'], 'required'],
             [['work_from', 'work_to'], 'safe'],
-            [['address'], 'string', 'max' => 255],
+            [['address'], 'string'],
         ];
     }
 
@@ -57,5 +57,13 @@ class Pickup extends \yii\db\ActiveRecord
     public function getOrders()
     {
         return $this->hasMany(Orders::class, ['pick_up_id' => 'id']);
+    }
+
+    public static function getPickups()
+    {
+        return self::find()
+                    ->select(['address'])
+                    ->indexBy('id')
+                    ->column();
     }
 }

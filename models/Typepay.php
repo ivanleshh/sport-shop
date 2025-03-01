@@ -53,4 +53,12 @@ class Typepay extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Orders::class, ['type_pay_id' => 'id']);
     }
+
+    public static function getTypePays()
+    {
+        return self::find()
+                    ->select('title')
+                    ->indexBy('id')
+                    ->column();
+    }
 }

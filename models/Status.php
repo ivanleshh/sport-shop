@@ -53,4 +53,10 @@ class Status extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Orders::class, ['status_id' => 'id']);
     }
+
+    // Метод для получения id статуса по его заголовку
+    public static function getStatusId($title): int|null
+    {
+        return self::findOne(compact('title'))->id;
+    }
 }

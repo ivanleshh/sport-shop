@@ -19,11 +19,25 @@ use yii\bootstrap5\Html;
       <h5 class="card-title"><?= $model->title ?></h5>
       <p class="card-text fw-bold"><?= $model->price ?> ₽</p>
       <?php if (!isset($model->cartItems[0]) || $model->count > $model->cartItems[0]->product_amount) : ?>
-      <div class="w-100 mt-2">
-        <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
-            ? Html::a('В корзину', ['/cart/add', 'product_id' => $model->id], 
-            ['class' => 'w-100 btn-cart-add btn btn-warning']) : "" 
-        ?>
+      <div class="mt-2 gap-3">
+        <?php if (isset($model->cartItems[0])) : ?>
+          <div class="d-flex align-items-center justify-content-center gap-4">
+            <span>В корзине</span>
+            <div class="d-flex gap-3 align-items-center">
+              <?= Html::a('-', ['cart/dec-item', 'item_id' => $model->cartItems[0]->id], 
+                ['class' => 'btn btn-outline-warning btn-cart-item-dec text-dark']) ?>
+              <?= $model->cartItems[0]->product_amount ?>
+              <?= Html::a('+', ['cart/inc-item', 'item_id' => $model->cartItems[0]->id], 
+                ['class' => 'btn btn-outline-warning btn-cart-item-inc text-dark']) ?>
+            </div>
+          </div>
+        <?php else : ?>
+          <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
+            ? Html::a('В корзину', ['cart/add', 'product_id' => $model->id], 
+            ['class' => 'btn-cart-add btn btn-warning w-100']) : "" 
+          ?>
+        <?php endif; ?>
+        
       </div>
     <?php else : ?>
       <div class="w-100 mt-2 text-center border border-warning py-2 px-2 rounded-2 mt-3">

@@ -22,14 +22,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h3><?= Html::encode($this->title) ?></h3>
 
-    <?php if (!empty($model->children)): ?>
-        <div class="mt-3 d-flex flex-wrap gap-3">
-            <?php foreach ($model->children as $child): ?>
-                <?= $this->render('category', ['model' => $child]) ?>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
-
     <?php Pjax::begin([
         'id' => 'catalog-pjax',
         'enablePushState' => false,
@@ -37,6 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?= Alert::widget() ?>
+
+    <?php if (!empty($model->children)): ?>
+        <div class="my-3 d-flex flex-wrap gap-3">
+            <?php foreach ($model->children as $child): ?>
+                <?= $this->render('category', ['model' => $child]) ?>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
 
     <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex gap-3">
@@ -62,3 +62,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <p class="my-5"><?= $model->description ?></p>
 
 </div>
+
+<?= $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]); ?>
+
