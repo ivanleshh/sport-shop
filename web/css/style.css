@@ -52,12 +52,16 @@ textarea {
 }
 
 .create-order-cart,
-.create-order-form {
+.create-order-form,
+.order-details-items,
+.order-details-info {
     transition: 0.5s;
 }
 
 .create-order-cart:hover,
-.create-order-form:hover {
+.create-order-form:hover,
+.order-details-items:hover,
+.order-details-info:hover {
     box-shadow: 0 0 15px rgb(189, 188, 188);
 }
 

@@ -29,7 +29,7 @@ use yii\bootstrap5\Html;
     </div>
     <div class="d-flex flex-column align-items-end">
         <h6 class="card-title">Сумма заказа: <span class="fw-bold"><?= $model->total_amount ?> ₽</span></h6>
-        <span class="card-text mb-3">Позиций: <?= $model->product_amount ?></span>
+        <span class="card-text mb-3">Количество товаров: <?= $model->product_amount ?></span>
         <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-dark']) ?>
     </div>
     
