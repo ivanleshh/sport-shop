@@ -29,6 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     ?>
 
+    <?= Html::a('История заказов', ['/personal/orders'], ['class' => 'btn btn-warning mb-3']) ?>
+
     <div class="user-personal-form col-md-4">
         <?php Pjax::begin([
             'id' => 'personal-pjax',
@@ -50,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]) ?>
             
-            <div>
+            <div class="d-flex gap-2">
                 <?= Html::a('Изменить персональные данные', ['change-personal', 'id' => $model->id], ['class' => 'btn btn-primary btn-change-personal']) ?>
             </div>
 

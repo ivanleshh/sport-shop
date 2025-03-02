@@ -14,16 +14,23 @@ use yii\bootstrap5\Html;
     </div>
   </div>
   <div class="card-body d-flex gap-3">
-    <div>
+    <div class="d-flex align-items-center gap-1">
         <?= Html::a(
-            Html::img(Product::IMG_PATH . $model->orderItems[0]->product->photo, ['class' => 'w-100']),
+            Html::img(Product::IMG_PATH . $model->orderItems[0]->product->photo, ['class' => 'w-100']) .
+            $model->orderItems[0]->product->title,
             ['/product/view', 'id' => $model->orderItems[0]->product->id],
+            ['class' => 'w-50 d-flex align-items-center text-decoration-none']
         ) ?>
+        <?php if (count($model->orderItems) > 1) : ?>
+          <div>
+            ...и ещё <?= count($model->orderItems) - 1 ?>
+          </div>
+        <?php endif; ?>
     </div>
-    <div>
-        <h5 class="card-title"></h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+    <div class="d-flex flex-column align-items-end">
+        <h6 class="card-title">Сумма заказа: <span class="fw-bold"><?= $model->total_amount ?> ₽</span></h6>
+        <span class="card-text mb-3">Позиций: <?= $model->product_amount ?></span>
+        <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-dark']) ?>
     </div>
     
   </div>

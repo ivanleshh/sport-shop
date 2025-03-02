@@ -63,6 +63,7 @@ class Orders extends \yii\db\ActiveRecord
             [['type_pay_id'], 'exist', 'skipOnError' => true, 'targetClass' => Typepay::class, 'targetAttribute' => ['type_pay_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
 
+            ['email', 'email'],
             ['name', 'match', 'pattern' => '/^[а-яё\-\s]+$/ui', 'message' => 'Разрешённые символы: кириллица, тире и пробел'],
             ['check', 'boolean'],
             ['pick_up_id', 'required', 'on' => self::SCENARIO_PICKUP],

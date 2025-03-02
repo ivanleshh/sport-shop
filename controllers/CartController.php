@@ -202,6 +202,7 @@ class CartController extends Controller
         if ($this->request->isPost && $this->request->isAjax) {
             if ($cart = Cart::findOne(['user_id' => Yii::$app->user->id])) {
                 $cart->delete();
+                Yii::$app->session->setFlash('warning', 'Корзина очищена');
                 return $this->asJson([
                     'status' => true,
                 ]);
