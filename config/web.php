@@ -57,9 +57,8 @@ $config = [
             'class' => 'app\modules\account\Module',
             'defaultRoute' => 'user',
         ],
-        'admin-panel' => [
-            'class' => 'app\modules\admin\Module',
-            'defaultRoute' => 'orders',
+        'admin-lte' => [
+            'class' => 'app\modules\adminlte\Module',
         ],
     ],
     'params' => $params,
