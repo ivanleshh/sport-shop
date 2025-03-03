@@ -17,7 +17,7 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
 ?>
 <div class="cart-index">
     <h3>Заказ № <?= $model->id ?> от <?= Yii::$app->formatter->asDate($model->created_at, 'php:d-m-Y (H:i)') ?></h3>
-    <div class="order-details d-flex gap-4">
+    <div class="order-details d-flex gap-4 mt-2">
         <div class="order-details-items border rounded-3 px-4 py-3 w-50">
             <h3 class="mb-3">Состав заказа</h3>
 
@@ -37,14 +37,15 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
                 <a class="text-decoration-none align-self-start" href="/"><- Вернуться к покупкам</a>
             </div>
         </div>
-        <div class="order-details-info border rounded-3 px-4 py-3">
+        <div class="order-details-info border rounded-3 px-4 py-3 w-50">
             <h3 class="mb-3">Информация о заказе</h3>
             <?= DetailView::widget([
                 'model' => $model,
                 'attributes' => [
                     [
                         'attribute' => 'pick_up_id',
-                        'value' => $model->pickUp->address,
+                        'value' => $model->pickUp?->address,
+                        'visible' => (bool)$model->pickUp?->address,
                     ],
                     'email:email',
                     [

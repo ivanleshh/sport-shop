@@ -20,14 +20,13 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="category-view">
 
-    <h3><?= Html::encode($this->title) ?></h3>
-
     <?php Pjax::begin([
         'id' => 'catalog-pjax',
         'enablePushState' => false,
         'timeout' => 5000,
     ]); ?>
-
+    
+    <h3><?= Html::encode($this->title) ?></h3>
     <?= Alert::widget() ?>
 
     <?php if (!empty($model->children)): ?>

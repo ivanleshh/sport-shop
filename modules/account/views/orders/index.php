@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'pager' => [
             'class' => LinkPager::class,
         ],
-        'layout' => '{pager}<div class="d-flex gap-3">{items}</div>',
+        'layout' => '{pager}<div class="d-flex gap-3 flex-wrap">{items}</div>',
         'itemView' => 'order',
     ]) ?>
 

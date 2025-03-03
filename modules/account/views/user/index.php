@@ -17,12 +17,23 @@ use yii\widgets\Pjax;
 /** @var app\modules\account\models\UserSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+Pjax::begin([
+    'id' => 'alert-personal-pjax',
+    'enablePushState' => false,
+    'timeout' => 5000,
+]);
+    if (Yii::$app->session->hasFlash('change-personal')) {
+        Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('change-personal'));
+        Yii::$app->session->removeFlash('change-personal');
+        echo Alert::widget();
+    }
+Pjax::end();
 $this->title = 'Личный кабинет';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
     <h3 class="mb-4"><?= Html::encode($this->title) ?></h3>
-   
+
     <?= Html::a('История заказов', ['/personal/orders'], ['class' => 'btn btn-warning mb-3']) ?>
     <div class="user-personal-form col-md-4">
         <?php Pjax::begin([
@@ -30,13 +41,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'enablePushState' => false,
             'timeout' => 5000,
         ]); ?>
-
-        <?php if (Yii::$app->session->hasFlash('change-personal')) {
-            Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('change-personal'));
-            Yii::$app->session->removeFlash('change-personal');
-            echo Alert::widget();
-        }
-        ?>
 
         <?= DetailView::widget([
             'model' => $model,

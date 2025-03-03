@@ -13,6 +13,7 @@ $(() => {
     })
 
     $('#form-personal-pjax').on('pjax:end', function() {
+        $.pjax.reload("#alert-personal-pjax")
         $('#change-personal-modal').modal('hide')
         $.pjax.reload('#personal-pjax')
     })

@@ -31,7 +31,7 @@ use function PHPSTORM_META\map;
         <?= $form->field($model, 'address')->textarea(['rows' => 2]) ?>
         <div class="date-time-delivery d-flex gap-3">
             <?= $form->field($model, 'date_delivery')->textInput(['type' => 'date', 'min' => date('Y-m-d')]) ?>
-            <?= $form->field($model, 'time_delivery')->textInput(['type' => 'time', 'min' => '09:00', 'min' => '21:00']) ?>
+            <?= $form->field($model, 'time_delivery')->textInput(['type' => 'time', 'min' => '09:00', 'max' => '21:00']) ?>
         </div>
         <?= $form->field($model, 'comment')->textarea(['rows' => 2]) ?>
     </div>

@@ -128,6 +128,9 @@ class CartController extends Controller
             if ($cart_item = CartItem::findOne($item_id)) {
                 $product = Product::findOne($cart_item->product_id);
                 if ($cart_item->product_amount < $product->count) {
+                    if ($cart_item->product_amount == 0) {
+                        Yii::$app->session->setFlash('success', $product->title . ' добавлен в корзину');
+                    }
                     $cart_item->product_amount++;
                     $cart_item->total_amount = $cart_item->product_amount * $product->price;
                     $cart_item->save();
@@ -137,7 +140,7 @@ class CartController extends Controller
                     $cart->total_amount += $product->price;
                     $cart->save();
 
-                    Yii::$app->session->setFlash('success', $product->title . ' добавлен в корзину');
+                    if ($cart)
 
                     return $this->asJson([
                         'status' => true,

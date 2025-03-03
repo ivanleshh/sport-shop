@@ -10,6 +10,12 @@ const cartItemCount = () => $.pjax.reload('#cart-item-count', {
   push: false,
   timeout: 5000,
 })
+
+const catalog_reload = function() {
+  if ($('#catalog-pjax').length > 0) {
+    $.pjax.reload('#catalog-pjax')
+  }
+}  
   
 $(() => {
   $('#catalog-pjax').on('keyup', '#productsearch-title', function(e) {
@@ -40,9 +46,12 @@ $(() => {
   });
 
   $("#catalog-pjax").on('pjax:end', function() {
-    setTimeout(() => {
-      $('.alert').remove()
-    }, 10000)
+    let alert = $('.alert')
+    if (alert.length > 0) {
+      setTimeout(() => {
+        alert[alert.length - 1].remove()
+      }, 5000)
+    }
     cartItemCount()
   })
 })

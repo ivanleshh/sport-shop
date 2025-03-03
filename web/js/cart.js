@@ -43,7 +43,9 @@ $(()=> {
                 .find('.btn-cart-manger, .cart-panel-top')
                 .removeClass('d-none')
         }
-        cartItemCount();
+        catalog_reload();
+        cartItemCount()
         $('#cart-modal').modal('show');
+        
     })
 })

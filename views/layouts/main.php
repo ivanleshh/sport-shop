@@ -161,8 +161,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         Modal::begin([
             'id' => 'info-modal',
             'size' => 'modal-md',
+            'headerOptions' => [
+                'class' => 'bg-secondary',
+            ],
+            'bodyOptions' => [
+                'class' => 'bg-secondary',
+            ],
+
         ]);
-        echo "<div id='text-error'></div>";
+        echo "<div id='text-error' class='text-light'></div>";
         Modal::end();
         $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]);
     }

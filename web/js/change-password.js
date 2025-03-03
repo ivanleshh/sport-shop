@@ -28,8 +28,6 @@ $(() => {
             console.log(1)
             // $('.field-user-password').addClass('collapse')
             // $('.field-user-password_repeat').addClass('collapse')
-            $('#form-personal').yiiActiveForm('remove', "user-password")
-            $('#form-personal').yiiActiveForm('remove', "user-password_repeat")
             $('#user-password').removeClass('is-invalid')
             $('#user-password_repeat').removeClass('is-invalid')
             $('#user-password').removeClass('is-valid')
@@ -37,8 +35,8 @@ $(() => {
             $('#user-password').val('')
             $('#user-password_repeat').val('')
 
-            // $('#form-personal').yiiActiveForm('remove', "user-password")
-            // $('#form-personal').yiiActiveForm('remove', "user-password_repeat")
+            $('#form-personal').yiiActiveForm('remove', "user-password")
+            $('#form-personal').yiiActiveForm('remove', "user-password_repeat")
         }
     })
 })
