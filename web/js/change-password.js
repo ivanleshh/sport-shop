@@ -1,5 +1,5 @@
 $(() => {
-    $('#change-personal-modal').on('change', '#user-check', function() {
+    $('.user-form').on('change', '#user-check', function() {
         if ($('#user-check').prop('checked')) {
             // $('.field-user-password').removeClass('collapse')
             // $('.field-user-password_repeat').removeClass('collapse')

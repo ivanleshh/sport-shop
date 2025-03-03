@@ -77,13 +77,16 @@ class UserController extends Controller
     public function actionChangePersonal($id)
     {
         $model = $this->findModel($id);
+        $password_old = $model->password;
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->check) {
                 $model->scenario = User::SCENARIO_PASSWORD;
                 $model->password = Yii::$app->security->generatePasswordHash($model->password);
+            } else {
+                $model->password = $password_old;
             }
-            if ($model->save()) {
+            if ($model->save(false)) {
                 Yii::$app->session->setFlash('change-personal', 'Ваши персональные данные были изменены');
                 return $this->render('_form', [
                     'model' => $model,
