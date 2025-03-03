@@ -1,6 +1,2 @@
 RewriteEngine on
 RewriteRule ^(.*)$ web/$1
-
-
-
-
