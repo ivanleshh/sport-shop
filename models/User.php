@@ -50,12 +50,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ['surname', 'match', 'pattern' => '/^[а-яё\-\s]+$/ui', 'message' => 'Разрешённые символы: кириллица, тире и пробел'],
             ['login', 'match', 'pattern' => '/^[a-z\-\d]+$/i', 'message' => 'Разрешённые символы: латиница, тире, цифры'],
             ['email', 'email'],
-            ['password', 'match', 'pattern' => '/^[a-zA-Z\s\d\^\+\-\<\>]+$/', 'message' => 'Разрешённые символы: латиница, пробел, ^, +, -, <, >'],
-            ['password', 'string', 'min' => 8],
-            ['password', 'match', 'pattern' => '/^(?=.*[\d]).+$/', 'message' => 'Должна быть хотя бы одна цифра'],
-            ['password', 'match', 'pattern' => '/^(?=.*[a-z]).+$/', 'message' => 'Должна быть хотя бы одна строчная буква'],
-            ['password', 'match', 'pattern' => '/^(?=.*[A-Z]).+$/', 'message' => 'Должна быть хотя бы одна заглавная буква'],
-            ['password_repeat', 'compare', 'compareAttribute' => 'password'],
+            ['password', 'match', 'pattern' => '/^[a-zA-Z\s\d\^\+\-\<\>]+$/', 'message' => 'Разрешённые символы: латиница, пробел, ^, +, -, <, >', 'on' => self::SCENARIO_PASSWORD],
+            ['password', 'string', 'min' => 8, 'on' => self::SCENARIO_PASSWORD],
+            ['password', 'match', 'pattern' => '/^(?=.*[\d]).+$/', 'message' => 'Должна быть хотя бы одна цифра', 'on' => self::SCENARIO_PASSWORD],
+            ['password', 'match', 'pattern' => '/^(?=.*[a-z]).+$/', 'message' => 'Должна быть хотя бы одна строчная буква', 'on' => self::SCENARIO_PASSWORD],
+            ['password', 'match', 'pattern' => '/^(?=.*[A-Z]).+$/', 'message' => 'Должна быть хотя бы одна заглавная буква', 'on' => self::SCENARIO_PASSWORD],
+            ['password_repeat', 'compare', 'compareAttribute' => 'password', 'on' => self::SCENARIO_PASSWORD],
 
             [['password', 'password_repeat'], 'required', 'on' => self::SCENARIO_PASSWORD],
             ['check', 'boolean']

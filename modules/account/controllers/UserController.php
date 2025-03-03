@@ -81,14 +81,14 @@ class UserController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->check) {
                 $model->scenario = User::SCENARIO_PASSWORD;
+                $model->password = Yii::$app->security->generatePasswordHash($model->password);
             }
-            $model->password = Yii::$app->security->generatePasswordHash($model->password);
-            if ($model->save(false)) {
+            if ($model->save()) {
                 Yii::$app->session->setFlash('change-personal', 'Ваши персональные данные были изменены');
                 return $this->render('_form', [
                     'model' => $model,
                 ]);
-            } 
+            }
         }
 
         return $this->render('update', [

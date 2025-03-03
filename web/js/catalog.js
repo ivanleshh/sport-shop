@@ -42,7 +42,7 @@ $(() => {
   $("#catalog-pjax").on('pjax:end', function() {
     setTimeout(() => {
       $('.alert').remove()
-    }, 5000)
+    }, 10000)
     cartItemCount()
   })
 })

@@ -1,8 +1,8 @@
 $(() => {
-    $('.user-form').on('click', '#user-check', function() {
+    $('#change-personal-modal').on('change', '#user-check', function() {
         if ($('#user-check').prop('checked')) {
-            $('.field-user-password').removeClass('collapse')
-            $('.field-user-password_repeat').removeClass('collapse')
+            // $('.field-user-password').removeClass('collapse')
+            // $('.field-user-password_repeat').removeClass('collapse')
             $('#user-password').removeClass('is-valid')
             $('#user-password_repeat').removeClass('is-valid')
 
@@ -25,15 +25,20 @@ $(() => {
             "skipOnEmpty":1});yii.validation.compare(value, messages, {"operator":"==","type":"string","compareAttribute":"user-password",
             "compareAttributeName":"User[password]","skipOnEmpty":1,"message":"Значение «повтор пароля» должно быть равно «пароль»."}, $form);}});
         } else {
-            $('.field-user-password').addClass('collapse')
-            $('.field-user-password_repeat').addClass('collapse')
+            console.log(1)
+            // $('.field-user-password').addClass('collapse')
+            // $('.field-user-password_repeat').addClass('collapse')
+            $('#form-personal').yiiActiveForm('remove', "user-password")
+            $('#form-personal').yiiActiveForm('remove', "user-password_repeat")
             $('#user-password').removeClass('is-invalid')
             $('#user-password_repeat').removeClass('is-invalid')
+            $('#user-password').removeClass('is-valid')
+            $('#user-password_repeat').removeClass('is-valid')
             $('#user-password').val('')
             $('#user-password_repeat').val('')
 
-            $('#form-personal').yiiActiveForm('remove', "user-password")
-            $('#form-personal').yiiActiveForm('remove', "user-password_repeat")
+            // $('#form-personal').yiiActiveForm('remove', "user-password")
+            // $('#form-personal').yiiActiveForm('remove', "user-password_repeat")
         }
     })
 })

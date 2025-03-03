@@ -1,6 +1,7 @@
 <?php
 
 use app\models\User;
+use app\widgets\Alert;
 use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
@@ -20,17 +21,9 @@ $this->title = 'Личный кабинет';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
-
     <h3 class="mb-4"><?= Html::encode($this->title) ?></h3>
-
-    <?php if (Yii::$app->session->hasFlash('change-personal')) {
-        Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('change-personal'));
-        Yii::$app->session->removeFlash('change-personal');
-    }
-    ?>
-
+   
     <?= Html::a('История заказов', ['/personal/orders'], ['class' => 'btn btn-warning mb-3']) ?>
-
     <div class="user-personal-form col-md-4">
         <?php Pjax::begin([
             'id' => 'personal-pjax',
@@ -38,27 +31,31 @@ $this->params['breadcrumbs'][] = $this->title;
             'timeout' => 5000,
         ]); ?>
 
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'name',
-                    'surname',
-                    'login',
-                    'email:email',
-                    [
-                        'label' => 'пароль',
-                        'value' => '************'
-                    ]
-                ],
-            ]) ?>
-            
-            <div class="d-flex gap-2">
-                <?= Html::a('Изменить персональные данные', ['change-personal', 'id' => $model->id], ['class' => 'btn btn-primary btn-change-personal']) ?>
-            </div>
+        <?php if (Yii::$app->session->hasFlash('change-personal')) {
+            Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('change-personal'));
+            Yii::$app->session->removeFlash('change-personal');
+            echo Alert::widget();
+        }
+        ?>
 
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'name',
+                'surname',
+                'login',
+                'email:email',
+                [
+                    'attribute' => 'password',
+                    'value' => '************'
+                ]
+            ],
+        ]) ?>
+        <div class="d-flex gap-2">
+            <?= Html::a('Изменить персональные данные', ['change-personal', 'id' => $model->id], ['class' => 'btn btn-primary btn-change-personal']) ?>
+        </div>
         <?php Pjax::end(); ?>
     </div>
-
 </div>
 
 <?php

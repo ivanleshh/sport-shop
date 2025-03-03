@@ -29,8 +29,16 @@ $(() => {
             $('#orders-date_delivery').removeClass('is-invalid')
             $('#orders-time_delivery').removeClass('is-invalid')
 
+            $('#orders-address').val('')
+            $('#orders-date_delivery').val('')
+            $('#orders-time_delivery').val('')
+            $('#orders-comment').val('')
+
+            $('#form-order').yiiActiveForm('remove', 'orders-address')
             $('#form-order').yiiActiveForm('remove', 'orders-address')
             $('#form-order').yiiActiveForm('remove', 'orders-date_delivery')
+            $('#form-order').yiiActiveForm('remove', 'orders-date_delivery')
+            $('#form-order').yiiActiveForm('remove', 'orders-time_delivery')
             $('#form-order').yiiActiveForm('remove', 'orders-time_delivery')
         }
     })

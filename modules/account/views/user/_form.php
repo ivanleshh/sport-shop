@@ -31,10 +31,10 @@ use yii\widgets\Pjax;
         <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'check')->checkbox() ?>
         <?= $form->field($model, 'password', ['options' => [
-            'class' => 'collapse'
+            // 'class' => 'collapse'
         ]])->passwordInput(['maxlength' => true, 'value' => '']) ?>
         <?= $form->field($model, 'password_repeat', ['options' => [
-            'class' => 'collapse'
+            // 'class' => 'collapse'
         ]])->passwordInput(['maxlength' => true, 'value' => '']) ?>
 
         <div class="form-group d-flex gap-3 justify-content-end mt-3">
