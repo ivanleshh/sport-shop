@@ -73,3 +73,4 @@ if ($dataProvider->count) {
 
 <?= $this->registerJsFile('/js/orders-delay.js', ['depends' => JqueryAsset::class]) ?>
 <?= $this->registerJsFile('/admin-lte-dist/js/filter.js', ['depends' => JqueryAsset::class]) ?>
+
