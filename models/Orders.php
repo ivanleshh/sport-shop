@@ -54,14 +54,16 @@ class Orders extends \yii\db\ActiveRecord
         return [
             [['name', 'email', 'phone', 'type_pay_id', 'product_amount', 'status_id', 'user_id'], 'required'],
             [['type_pay_id', 'pick_up_id', 'product_amount', 'status_id', 'user_id'], 'integer'],
-            [['comment', 'delay_reason'], 'string'],
-            [['created_at', 'updated_at', 'new_date_delivery', 'delay_reason', 'address', 'date_delivery', 'time_delivery'], 'safe'],
+            [['comment', 'delay_reason', 'address', 'date_delivery', 'time_delivery'], 'string'],
+            [['created_at', 'updated_at', 'new_date_delivery', 'delay_reason'], 'safe'],
             [['total_amount'], 'number'],
             [['name', 'email', 'phone'], 'string', 'max' => 255],
             [['pick_up_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pickup::class, 'targetAttribute' => ['pick_up_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
             [['type_pay_id'], 'exist', 'skipOnError' => true, 'targetClass' => Typepay::class, 'targetAttribute' => ['type_pay_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
+
+            [['address', 'comment'],'default', 'value' => null],
 
             ['email', 'email'],
             ['name', 'match', 'pattern' => '/^[а-яё\-\s]+$/ui', 'message' => 'Разрешённые символы: кириллица, тире и пробел'],
@@ -108,7 +110,7 @@ class Orders extends \yii\db\ActiveRecord
 
             try {
                 $orderShop->attributes = $cart->attributes;
-                $orderShop->save();                
+                $orderShop->save();
 
                 $cartItems = CartItem::find()
                     ->with('product')

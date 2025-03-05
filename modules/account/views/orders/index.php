@@ -22,11 +22,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
+        'itemOptions' => ['class' => 'item col-12 col-xxl-6'],
         'pager' => [
             'class' => LinkPager::class,
         ],
-        'layout' => '{pager}<div class="d-flex gap-3 flex-wrap">{items}</div>',
+        'layout' => 
+            '<div class="d-flex mt-3">{pager}</div>
+            <div class="row gy-4">{items}</div>
+            <div class="d-flex mt-3">{pager}</div>',
         'itemView' => 'order',
     ]) ?>
 

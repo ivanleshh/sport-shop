@@ -27,7 +27,7 @@ use yii\bootstrap5\Html;
     </div>
 
   </div>
-  <div class="d-flex gap-4 justify-content-between px-4 py-3">
+  <div class="d-flex gap-3 justify-content-between px-4 py-3">
     <div class="d-flex align-items-center gap-2">
       <?= Html::a(
         Html::img(Product::IMG_PATH . $model->orderItems[0]->product->photo, ['class' => 'w-50']) .
@@ -39,12 +39,13 @@ use yii\bootstrap5\Html;
         ['class' => 'd-flex align-items-center text-decoration-none']
       ) ?>
     </div>
-    <div class="list d-flex flex-column justify-content-center align-items-start gap-2">
+    <div class="list d-flex flex-column justify-content-center gap-2">
+      <div>Клиент: <span class="fw-bold"> <?= $model->name." (".$model->email.")" ?></span></div>
       <?php if (isset($model->date_delivery)) {
         echo "
           <div>Дата и время доставки: <div class='fw-bold'>" 
               . Yii::$app->formatter->asDate($model->date_delivery, 'php:d-m-Y')
-              . "<span class='ms-3'>" . Yii::$app->formatter->asTime($model->time_delivery, 'php:H:i') .
+              . "<span class='ms-2'>" . Yii::$app->formatter->asTime($model->time_delivery, 'php:H:i') .
             "<span></div>
           </div>
         ";
@@ -54,6 +55,17 @@ use yii\bootstrap5\Html;
       ?>
       <div>Сумма: <span class="fw-bold"><?= $model->total_amount ?> ₽</span></div>
       <div>Товаров: <span class="fw-bold"><?= $model->product_amount ?></span></div>
+    </div>
+    <div class="d-flex flex-column gap-3 justify-content-center">
+      <?php if ($model->status->id == Status::getStatusId('Новый')) {
+        echo Html::a('Принять', ['work'], ['class' => 'btn btn-outline-warning']);
+      } else {
+        if (is_null($model->address)) {
+          echo Html::a('Перенести доставку', ['delay'], ['class' => 'btn btn-outline-danger btn-delay']);
+        }
+        echo Html::a('Подтвердить получение', ['success'], ['class' => 'btn btn-outline-success']);
+      }
+      ?>
     </div>
   </div>
 </div>

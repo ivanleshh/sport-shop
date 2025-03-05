@@ -20,22 +20,23 @@ class AdminLteAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        "/admin-lte-dist/css/admin/index.css",
-        "/admin-lte-dist/css/admin/overlayscrollbars.min.css",
-        "/admin-lte-dist/css/admin/bootstrap-icons.min.css",
-        "/admin-lte-dist/css/adminlte.css",
-        "/admin-lte-dist/css/admin/apexcharts.css",
-        "/admin-lte-dist/css/admin/jsvectormap.min.css",
+        "css/style.css",
+        "admin-lte-dist/css/admin/index.css",
+        "admin-lte-dist/css/admin/overlayscrollbars.min.css",
+        "admin-lte-dist/css/admin/bootstrap-icons.min.css",
+        "admin-lte-dist/css/adminlte.css",
+        "admin-lte-dist/css/admin/apexcharts.css",
+        "admin-lte-dist/css/admin/jsvectormap.min.css",
     ];
     public $js = [
-        "/admin-lte-dist/js/admin/overlayscrollbars.browser.es6.min.js",
-        "/admin-lte-dist/js/admin/popper.min.js",
-        "/admin-lte-dist/js/admin/bootstrap.min.js",
-        "/admin-lte-dist/js/adminlte.js",
-        "/admin-lte-dist/js/admin/Sortable.min.js",
-        "/admin-lte-dist/js/admin/jsvectormap.min.js",
-        "/admin-lte-dist/js/admin/world.js",
-        "/admin-lte-dist/js/other-scripts.js",
+        "admin-lte-dist/js/admin/overlayscrollbars.browser.es6.min.js",
+        "admin-lte-dist/js/admin/popper.min.js",
+        "admin-lte-dist/js/admin/bootstrap.min.js",
+        "admin-lte-dist/js/adminlte.js",
+        "admin-lte-dist/js/admin/Sortable.min.js",
+        "admin-lte-dist/js/admin/jsvectormap.min.js",
+        "admin-lte-dist/js/admin/world.js",
+        "admin-lte-dist/js/other-scripts.js",
     ];
     public $depends = [
         'yii\web\YiiAsset',
