@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Orders;
+use app\widgets\Alert;
 use yii\bootstrap5\LinkPager;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
@@ -21,10 +22,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3><?= Html::encode($this->title) ?></h3>
 
     <?php Pjax::begin([
-        'id' => 'orders-delay-pjax',
-        'enablePushstate' => false,
+        'id' => 'admin-orders-pjax',
+        'enablePushState' => false,
         'timeout' => 5000,
     ]); ?>
+
+    <?php if (Yii::$app->session->hasFlash('order-delay')) {
+        Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('order-delay'));
+        Yii::$app->session->removeFlash('order-delay');
+        echo Alert::widget();
+    }
+    ?>
 
     <div class="d-flex align-items-center justify-content-between gap-5">
         <div class="d-flex gap-3">
@@ -62,16 +70,15 @@ $this->params['breadcrumbs'][] = $this->title;
 if ($dataProvider->count) {
     Modal::begin([
         'id' => 'orders-delay-modal',
-        'title' => 'Уведомление покупателя о задержке дсотавки',
+        'title' => 'Уведомление о задержке доставки',
         'size' => 'modal-md',
     ]);
-    echo $this->render('update', compact('model'));
+    echo $this->render('delay', compact('model_delay'));
     Modal::end();
     $this->registerJsFile('/js/orders-delay.js', ['depends' => JqueryAsset::class]);
 }
 ?>
 
-<?= $this->registerJsFile('/js/orders-delay.js', ['depends' => JqueryAsset::class]) ?>
 <?= $this->registerJsFile('/admin-lte-dist/js/filter.js', ['depends' => JqueryAsset::class]) ?>
 
 

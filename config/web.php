@@ -59,6 +59,7 @@ $config = [
         ],
         'admin-lte' => [
             'class' => 'app\modules\adminlte\Module',
+            'defaultRoute' => 'orders',
         ],
     ],
     'params' => $params,

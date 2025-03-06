@@ -11,7 +11,7 @@ use yii\bootstrap5\Html;
         <span class="fw-bold">Заказ № <?= $model->id ?></span>
         <span>от <?= Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i') ?></span>
       </div>
-      <div class="bg-<?= $model->status->color ?> py-1 px-2 rounded-3 text-light">
+      <div class="bg-<?= $model->status->bg_color . " text-" . $model->status->text_color ?> py-1 px-2 rounded-3 text-light">
         <?= $model->status->title ?>
       </div>
       <?php

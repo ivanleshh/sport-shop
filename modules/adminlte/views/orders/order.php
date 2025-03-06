@@ -11,7 +11,7 @@ use yii\bootstrap5\Html;
         <span class="fw-bold">Заказ № <?= $model->id ?></span>
         <span>от <?= Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i') ?></span>
       </div>
-      <div class="bg-<?= $model->status->color ?> py-1 px-2 rounded-3 text-light">
+      <div class="bg-<?= $model->status->bg_color . " text-" . $model->status->text_color ?> py-1 px-2 rounded-3">
         <?= $model->status->title ?>
       </div>
       <?php
@@ -40,13 +40,13 @@ use yii\bootstrap5\Html;
       ) ?>
     </div>
     <div class="list d-flex flex-column justify-content-center gap-2">
-      <div>Клиент: <span class="fw-bold"> <?= $model->name." (".$model->email.")" ?></span></div>
+      <div>Клиент: <span class="fw-bold"> <?= $model->name . " (" . $model->email . ")" ?></span></div>
       <?php if (isset($model->date_delivery)) {
         echo "
-          <div>Дата и время доставки: <div class='fw-bold'>" 
-              . Yii::$app->formatter->asDate($model->date_delivery, 'php:d-m-Y')
-              . "<span class='ms-2'>" . Yii::$app->formatter->asTime($model->time_delivery, 'php:H:i') .
-            "<span></div>
+          <div>Дата и время доставки: <div class='fw-bold'>"
+          . Yii::$app->formatter->asDate($model->date_delivery, 'php:d-m-Y')
+          . "<span class='ms-2'>" . Yii::$app->formatter->asTime($model->time_delivery, 'php:H:i') .
+          "<span></div>
           </div>
         ";
       } else {
@@ -58,12 +58,24 @@ use yii\bootstrap5\Html;
     </div>
     <div class="d-flex flex-column gap-3 justify-content-center">
       <?php if ($model->status->id == Status::getStatusId('Новый')) {
-        echo Html::a('Принять', ['work'], ['class' => 'btn btn-outline-warning']);
-      } else {
-        if (is_null($model->address)) {
-          echo Html::a('Перенести доставку', ['delay'], ['class' => 'btn btn-outline-danger btn-delay']);
+        echo Html::a('Принять', ['work', 'id' => $model->id], [
+          'class' => 'btn btn-outline-warning',
+          'data' => [
+            'confirm' => 'Подтвердите действие',
+            'method' => 'post',
+          ],
+        ]);
+      } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
+        if (is_null($model->address && $model->status_id == Status::getStatusId('В пути'))) {
+          echo Html::a('Перенести доставку', ['delay', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-delay']);
         }
-        echo Html::a('Подтвердить получение', ['success'], ['class' => 'btn btn-outline-success']);
+        echo Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
+          'class' => 'btn btn-outline-success',
+          'data' => [
+            'confirm' => 'Подтвердите действие',
+            'method' => 'post',
+          ],
+        ]);
       }
       ?>
     </div>

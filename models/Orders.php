@@ -38,6 +38,7 @@ class Orders extends \yii\db\ActiveRecord
     public bool $check = false;
     const SCENARIO_DELIVERY = 'delivery';
     const SCENARIO_PICKUP = 'pickup';
+    const SCENARIO_DELAY = 'delay';
     /**
      * {@inheritdoc}
      */
@@ -65,12 +66,15 @@ class Orders extends \yii\db\ActiveRecord
 
             [['address', 'comment'],'default', 'value' => null],
 
+            [['delay_reason', 'new_date_delivery'], 'required', 'on' => self::SCENARIO_DELAY],
+
             ['email', 'email'],
             ['name', 'match', 'pattern' => '/^[а-яё\-\s]+$/ui', 'message' => 'Разрешённые символы: кириллица, тире и пробел'],
             ['check', 'boolean'],
             ['pick_up_id', 'required', 'on' => self::SCENARIO_PICKUP],
             [['address', 'date_delivery', 'time_delivery'], 'required', 'on' => self::SCENARIO_DELIVERY],
-            ['phone', 'match', 'pattern' => '/^\+7\([\d]{3}\)\-[\d]{3}(\-[\d]{2}){2}$/', 'message' => 'Формат +7(XXX)-XXX-XX-XX']
+            ['phone', 'match', 'pattern' => '/^\+7\([\d]{3}\)\-[\d]{3}(\-[\d]{2}){2}$/', 'message' => 'Формат +7(XXX)-XXX-XX-XX'],
+
         ];
     }
 

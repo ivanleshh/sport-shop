@@ -55,7 +55,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +85,7 @@ CREATE TABLE `cart_item` (
   KEY `product_Id` (`product_id`),
   CONSTRAINT `cart_item_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cart_item_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE `order_item` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,6 +216,7 @@ CREATE TABLE `order_item` (
 
 LOCK TABLES `order_item` WRITE;
 /*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
+INSERT INTO `order_item` VALUES (5,5,6,'Maxler 100% Golden Whey 907 гр',2,3890.00,7780.00),(6,5,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(7,5,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(8,6,3,'Atlecs Casein 454 гр',3,1990.00,5970.00),(9,6,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(10,6,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00);
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +255,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`type_pay_id`) REFERENCES `typepay` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_4` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,6 +264,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (5,'Иван','fds@fds.fd','+7(312)-321-32-23',1,2,NULL,NULL,NULL,NULL,11560.00,4,3,5,'2025-03-02 09:24:06','2025-03-06 20:45:25','123','2025-03-07'),(6,'Иван','sdfjds@jfds.fd','+7(321)-312-31-23',1,2,NULL,NULL,NULL,NULL,9750.00,5,3,5,'2025-03-06 21:03:24','2025-03-06 21:50:18','123','2025-03-14');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,7 +324,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (3,'atlecs_454.jpg','Atlecs Casein 454 гр','Мицеллярный казеин является одним из самых полноценных источников белка благодаря своему уникальному аминокислотному профилю. При приеме перед сном длительное время питает мышцы, способствуя наилучшему восстановлению и формированию сухой мышечной массы. ',1990.00,2,66,2),(4,'rps_500.webp','RPS Casein Protein 500 гр','Казеиновые протеины – это пищевые добавки с медленной скоростью усвоения. Casein Protein, производимый Russian Performance Standard, представляет собой сложный молочный продукт, являющийся источником практически всех аминокислот. ',1290.00,2,87,1),(5,'levelup_100.jpeg','LevelUp 100% Whey 908 гр','Протеин 100% Whey от LevelUp производится на основе концентрата из сыворотки. И это не случайно: ведь сывороточный белок обладает легким и быстрым усвоением. К тому же, он богат незаменимыми аминокислотами BCAA и глютамином. Для получения продукта применяется ультрафильтрационная технология. Ну а исходным сырьем служит обычная молочная сыворотка, которая образуется, к примеру, при изготовлении сыров. В ходе данного способа обработки белок очищается от углеводов и жиров.',2490.00,3,82,3),(6,'maxler_100.jpg','Maxler 100% Golden Whey 907 гр','В состав 100% Golden Whey 908г входят концентрат, гидролизат и изолят сывороточного протеина. Действие протеина 100% Golden Whey от компании Maxler усилено высоким содержанием BCAA и L - глютамина.',3890.00,3,41,4);
+INSERT INTO `product` VALUES (3,'atlecs_454.jpg','Atlecs Casein 454 гр','Мицеллярный казеин является одним из самых полноценных источников белка благодаря своему уникальному аминокислотному профилю. При приеме перед сном длительное время питает мышцы, способствуя наилучшему восстановлению и формированию сухой мышечной массы. ',1990.00,2,63,2),(4,'rps_500.webp','RPS Casein Protein 500 гр','Казеиновые протеины – это пищевые добавки с медленной скоростью усвоения. Casein Protein, производимый Russian Performance Standard, представляет собой сложный молочный продукт, являющийся источником практически всех аминокислот. ',1290.00,2,85,1),(5,'levelup_100.jpeg','LevelUp 100% Whey 908 гр','Протеин 100% Whey от LevelUp производится на основе концентрата из сыворотки. И это не случайно: ведь сывороточный белок обладает легким и быстрым усвоением. К тому же, он богат незаменимыми аминокислотами BCAA и глютамином. Для получения продукта применяется ультрафильтрационная технология. Ну а исходным сырьем служит обычная молочная сыворотка, которая образуется, к примеру, при изготовлении сыров. В ходе данного способа обработки белок очищается от углеводов и жиров.',2490.00,3,80,3),(6,'maxler_100.jpg','Maxler 100% Golden Whey 907 гр','В состав 100% Golden Whey 908г входят концентрат, гидролизат и изолят сывороточного протеина. Действие протеина 100% Golden Whey от компании Maxler усилено высоким содержанием BCAA и L - глютамина.',3890.00,3,39,4);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -412,7 +414,8 @@ DROP TABLE IF EXISTS `status`;
 CREATE TABLE `status` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `color` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `bg_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `text_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -423,7 +426,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,'Новый','info'),(2,'В пути','primary'),(3,'Доставлен','success'),(4,'Доставка перенесена','warning');
+INSERT INTO `status` VALUES (1,'Новый','info','dark'),(2,'В пути','primary','light'),(3,'Доставлен','success','light'),(4,'Доставка перенесена','warning','dark');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -472,7 +475,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `email` (`email`),
   KEY `role_id` (`role_id`),
   CONSTRAINT `user_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,7 +484,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (5,'Иван','Лешок','demo-user1','demo-user1@das.asd','$2y$13$SDCJZly9BBPs9YqfsJ21JuDcEWyLDmfY193SxbF8GPaCXicMz90sa',2,'PcaBy_HxQYor6eb78FNlucc9gBgojYHU');
+INSERT INTO `user` VALUES (5,'Иван','Лешок','demo-user1','demo-user1@das.asd','$2y$13$SDCJZly9BBPs9YqfsJ21JuDcEWyLDmfY193SxbF8GPaCXicMz90sa',2,'PcaBy_HxQYor6eb78FNlucc9gBgojYHU'),(6,'Иванов','Иван','sport-admin','sport-admin@ya.ru','$2y$13$OAzqVAw4iE9.ka8EfdzEneYjp1o.HAr9hIZY8xeVY6pjLSfXfSjoW',1,'-MiyASTlOHins5doKqwrck9QZxHOVzoY');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -494,4 +497,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-02  0:23:15
+-- Dump completed on 2025-03-07  0:51:48

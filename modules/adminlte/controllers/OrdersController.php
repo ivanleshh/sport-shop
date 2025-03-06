@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
 
 /**
  * OrdersController implements the CRUD actions for Orders model.
@@ -46,9 +47,16 @@ class OrdersController extends Controller
         $searchModel = new OrdersSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        $model_delay = null;
+        if ($dataProvider->count) {
+            $model_delay = $this->findModel($dataProvider->models[0]->id);
+            $model_delay->scenario = Orders::SCENARIO_DELAY;
+        }
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model_delay' => $model_delay,
             'pickUps' => Pickup::getPickups(),
             'statuses' => Status::getStatuses(),
         ]);
@@ -63,6 +71,17 @@ class OrdersController extends Controller
     public function actionView($id)
     {
         if ($model = Orders::findOne($id)) {
+
+            $dataProviderr = new ActiveDataProvider([
+                'query' => Orders::find()
+                    ->where(['id' => $id])
+            ]);
+            $model_delay = null;
+            if ($dataProviderr->count) {
+                $model_delay = $this->findModel($dataProviderr->models[0]->id);
+                $model_delay->scenario = Orders::SCENARIO_DELAY;
+            }
+
             $dataProvider = new ActiveDataProvider([
                 'query' => OrderItem::find()
                     ->where(['order_id' => $id])
@@ -70,12 +89,14 @@ class OrdersController extends Controller
             ]);
             return $this->render('view', [
                 'dataProvider' => $dataProvider,
+                'dataProviderr' => $dataProviderr,
                 'model' => $model,
+                'model_delay' => $model_delay,
             ]);
         }
         Yii::$app->session->setFlash('error', 'Заказ не найден');
         // редирект на список заказов пользователя
-        return $this->redirect('/');
+        return $this->redirect('/admin-lte');
     }
 
     /**
@@ -109,42 +130,47 @@ class OrdersController extends Controller
      */
     public function actionDelay($id)
     {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }   
+        if ($model = $this->findModel($id)) {
+            $model->scenario = Orders::SCENARIO_DELAY;
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                if ($model->status_id == Status::getStatusId('В пути')) {
+                    $model->status_id = Status::getStatusId('Доставка перенесена');
+                    if ($model->save()) {
+                        Yii::$app->session->setFlash('order-delay', "Статус заказа № $model->id изменён на 'Доставка перенесена'");
+                        $model->delay_reason = null;
+                        return $this->render('_form-modal', [
+                            'model' => $model,
+                        ]);
+                    }
+                }
+            }
         }
-
-        return $this->render('update', [
+        return $this->render('delay', [
             'model' => $model,
         ]);
     }
 
     public function actionWork($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->status_id == Status::getStatusId('Новый')) {
-            $model->status_id = Status::getStatusId('В работе');
-            $model->save();
-            Yii::$app->session->setFlash('warning', "Статус заказа № $model->id изменён на 'В работе'");
+        if ($model = $this->findModel($id)) {
+            if ($model->status_id == Status::getStatusId('Новый')) {
+                $model->status_id = Status::getStatusId('В пути');
+                $model->save();
+                Yii::$app->session->setFlash('warning', "Статус заказа № $model->id изменён на 'В пути'");
+            }
         }
-
         return $this->redirect(['view', 'id' => $id]);
     }
 
     public function actionSuccess($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->status_id == Status::getStatusId('В пути')) {
-            $model->status_id = Status::getStatusId('Доставлен');
-            $model->save();
-            Yii::$app->session->setFlash('warning', "Статус заказа № $model->id изменён на 'Доставлен'");
+        if ($model = $this->findModel($id)) {
+            if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
+                $model->status_id = Status::getStatusId('Доставлен');
+                $model->save();
+                Yii::$app->session->setFlash('warning', "Статус заказа № $model->id изменён на 'Доставлен'");
+            }
         }
-
         return $this->redirect(['view', 'id' => $id]);
     }
 

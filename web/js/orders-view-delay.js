@@ -1,19 +1,20 @@
 $(() => {
-    $('#admin-orders-pjax').on('click', '.btn-delay', function(e) {
+    $('#admin-orders-view-pjax').on('click', '.btn-delay', function(e) {
         e.preventDefault()
         $('#form-delay').attr('action', $(this).attr('href'))
         $('#orders-delay_reason').val('')
         $('#orders-new_date_delivery').val('')
-        $('#orders-delay-modal').modal('show')
+        $('#orders-view-delay-modal').modal('show')
     })
 
     $('#form-delay-pjax').on('click', '.btn-modal-close', function(e) {
         e.preventDefault()
-        $('#orders-delay-modal').modal('hide')
+        $('#orders-view-delay-modal').modal('hide')
     })
 
     $('#form-delay-pjax').on('pjax:end', function() {
-        $('#orders-delay-modal').modal('hide')
-        $.pjax.reload('#admin-orders-pjax')
+        $('#orders-view-delay-modal').modal('hide')
+        setTimeout($('.alert').remove(), 5000)
+        $.pjax.reload('#admin-orders-view-pjax')
     });
 })

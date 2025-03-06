@@ -14,6 +14,10 @@ use yii\widgets\Pjax;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
+$this->title = 'Заказ № ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Личный кабинет', 'url' => ['/personal']];
+$this->params['breadcrumbs'][] = ['label' => 'Мои заказы', 'url' => ['/personal/orders']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="cart-index">
     <h3>Заказ № <?= $model->id ?> от <?= Yii::$app->formatter->asDate($model->created_at, 'php:d-m-Y (H:i)') ?></h3>
@@ -50,8 +54,7 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
                     'email:email',
                     [
                         'attribute' => 'status_id',
-                        'value' => "<div class='bg-" . $model->status->color . " py-1 px-2 rounded-3 text-center'>" . $model->status->title . "<div>",
-                        'format' => 'raw',
+                        'value' => $model->status->title,
                     ],
                     [
                         'attribute' => 'date_delivery',

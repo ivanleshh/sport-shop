@@ -12,6 +12,7 @@ use yii\widgets\Pjax;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Мои заказы';
+$this->params['breadcrumbs'][] = ['label' => 'Личный кабинет', 'url' => ['/personal']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="orders-index">
