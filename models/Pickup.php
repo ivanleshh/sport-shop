@@ -62,7 +62,7 @@ class Pickup extends \yii\db\ActiveRecord
     public static function getPickups()
     {
         return self::find()
-                    ->select(['address'])
+                    ->select('address')
                     ->indexBy('id')
                     ->column();
     }

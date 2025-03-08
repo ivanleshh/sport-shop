@@ -141,7 +141,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <li class="nav-item"> <a href="/admin-lte/products" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Товары</p>
                                     </a> </li>
-                                <li class="nav-item"> <a href="/admin-lte/categories" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/admin-lte/category" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Категории</p>
                                     </a> </li>
                             </ul>

@@ -20,6 +20,8 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
+    const IMG_PATH = '/images/categories/';
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -100,5 +102,31 @@ class Category extends \yii\db\ActiveRecord
     public function getChildren()
     {
         return $this->hasMany(Category::class, ['parent_id' => 'id']);
+    }
+
+    public static function getAllCategories()
+    {
+        return self::find()
+            ->select('title')
+            ->indexBy('id')
+            ->column();
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $fileName = Yii::$app->user->id
+                . '_'
+                . time()
+                . '_'
+                . Yii::$app->security->generateRandomString()
+                . '.'
+                . $this->imageFile->extension;
+            $this->imageFile->saveAs('images/categories/' . $fileName);
+            $this->photo = $fileName;
+            return true;
+        } else {
+            return false;
+        }
     }
 }
