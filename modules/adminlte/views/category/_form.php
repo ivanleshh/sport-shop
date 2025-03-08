@@ -12,6 +12,9 @@ use yii\helpers\Json;
 /** @var yii\web\View $this */
 /** @var app\models\Category $model */
 /** @var yii\widgets\ActiveForm $form */
+
+$properties = ArrayHelper::map(Property::find()->all(), 'id', 'title');
+$this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \yii\web\View::POS_HEAD);
 ?>
 
 <div class="category-form">
@@ -32,21 +35,26 @@ use yii\helpers\Json;
             <?= $form->field($model, 'imageFile')->fileInput() ?>
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-            <div class="d-flex gap-3 align-items-center">
-                <?= $form->field($model, 'parent_id')->widget(Select2::class, [
-                    'data' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
-                    'options' => ['placeholder' => 'Выберите значение'],
-                    'pluginOptions' => [
-                        'allowClear' => true
-                    ],
-                ]); ?>
+            <div class="d-flex gap-3 justify-content-between">
+                <div class="d-flex gap-3 align-items-center">
+                    <?= $form->field($model, 'parent_id')->widget(Select2::class, [
+                        'data' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
+                        'options' => ['placeholder' => 'Выберите значение'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ]); ?>
+                </div>
+                <div class="form-group d-flex justify-content-end align-items-center">
+                    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success my-auto']) ?>
+                </div>
             </div>
         </div>
 
         <div class="col">
-            <p>Список характеристик</p>
-            <div id="block-props" class="border p-3 mb-3">
-                <?php foreach ($props as $key => $prop) : ?>
+            <h4>Список характеристик</h4>
+            <div id="block-props" class="border p-3 mb-3 characters-block">
+                <?php foreach ($categoryProperties as $key => $prop) : ?>
                     <div class="border p-3 my-3 category-props col-lg-6 w-100" data-index="<?= $key ?>">
                         <div class="d-flex justify-content-end">
                             <div class="btn-group d-flex" role="group">
@@ -54,33 +62,33 @@ use yii\helpers\Json;
                                 <button type="button" class="btn btn-success btn-add">+</button>
                             </div>
                         </div>
-                        <div class="d-flex gap-3">
-                            <?= $form->field($prop, "[$key]property_id")->widget(Select2::class, [
-                                'data' => ArrayHelper::map(Property::find()->all(), 'id', 'title'),
-                                'options' => [
-                                    'placeholder' => 'Выберите значение',
-                                    'id' => "categoryproperty-{$key}-property_id",
-                                    'class' => 'form-control property-select',
-                                ],
-                                'pluginOptions' => [
-                                    'allowClear' => true,
-                                ],
-                            ])->label('Выбрать из списка'); ?>
-                            <?= $form->field($prop, "[$key]property_title")->textInput([
-                                'maxlength' => true,
-                                'id' => "categoryproperty-{$key}-property_title",
-                                'class' => 'form-control props-title',
-                            ])->label('Новая характеристика') ?>
+                        <div class="d-flex gap-3 align-items-center">
+                            <div class="d-flex flex-column gap-2 justify-content-center">
+                                <?= $form->field($prop, "[$key]property_id")->widget(Select2::class, [
+                                    'data' => $properties,
+                                    'options' => [
+                                        'placeholder' => 'Выберите значение',
+                                        'id' => "categoryproperty-{$key}-property_id",
+                                        'class' => 'form-control property-select',
+                                    ],
+                                    'pluginOptions' => [
+                                        'allowClear' => true,
+                                    ],
+                                ])->label('Выбрать из списка'); ?>
+                                <?= $form->field($prop, "[$key]property_title")->textInput([
+                                    'maxlength' => true,
+                                    'id' => "categoryproperty-{$key}-property_title",
+                                    'class' => 'form-control props-title',
+                                ])->label('Новая характеристика') ?>
+                            </div>
+
+                            <?= $form->field($prop, "[$key]property_value")->textInput() ?>
                             <?= $form->field($prop, "[$key]id")->hiddenInput(['id' => "categoryproperty-{$key}-id"])->label(false) ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
-    </div>
-
-    <div class="form-group d-flex justify-content-end">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

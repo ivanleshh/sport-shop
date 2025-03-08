@@ -74,59 +74,52 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Category();
-        $props = [new CategoryProperty()];
+        $categoryProperties = [new CategoryProperty()];
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-                if (is_null($model->imageFile) || $model->upload()) {
-                    VarDumper::dump($this->request->post('CategoryProperty'));
-                    die;
-                    if ($model->save(false)) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if (is_null($model->imageFile) || $model->upload()) {
+                if ($model->save(false)) {
+                    $categoryProperties = [];
+                    $postData = $this->request->post('CategoryProperty', []);
 
-                        $props = [];
-                        foreach ($this->request->post('CategoryProperty') as $item) {
-                            $prop = $item['id'] ? CategoryProperty::findOne($item['id']) : new CategoryProperty();
-                            $prop->category_id = $model->id;
-                            // Если выбрано существующее свойство
-                            if (!empty($item['property_id'])) {
-                                $prop->property_id = $item['property_id'];
-                            }
-                            // Если введено новое свойство
-                            elseif (!empty($item['property_title'])) {
-                                $newProperty = new Property();
-                                $newProperty->title = $item['property_title'];
-                                if ($newProperty->save()) {
-                                    $prop->property_id = $newProperty->id;
-                                }
-                            }
-                            $props[] = $prop;
+                    foreach ($postData as $item) {
+                        $categoryProperty = new CategoryProperty();
+                        $propertyId = $item['property_id'] ?? null;
+                        $newPropTitle = $item['property_title'] ?? null;
+                        $property_value = $item['property_value'] ?? null;
+
+                        // Если выбрано существующее свойство
+                        if ($propertyId && !$newPropTitle) {
+                            $categoryProperty->property_id = $propertyId;
                         }
-                        if (Model::validateMultiple($props)) {
-                            CategoryProperty::deleteAll([
-                                'category_id' => $model->id,
-                                'not in',
-                                'id',
-                                array_filter(array_column($props, 'id')),
-                            ]);
-                            foreach ($props as $prop) {
-                                $prop->save(false);
+                        // Если введено новое название свойства
+                        elseif ($newPropTitle) {
+                            $newProperty = new Property();
+                            $newProperty->title = $newPropTitle;
+                            if ($newProperty->save()) {
+                                $categoryProperty->property_id = $newProperty->id;
                             }
                         }
-
-                        Yii::$app->session->setFlash('success', "Категория $model->title успешно добавлена");
+                        $categoryProperty->category_id = $model->id;
+                        $categoryProperty->property_value = $property_value;
+                        $categoryProperties[] = $categoryProperty;
+                    }
+                    if (Model::validateMultiple($categoryProperties)) {
+                        foreach ($categoryProperties as $prop) {
+                            $prop->save(false);
+                        }
+                        Yii::$app->session->setFlash('success', 'Категория успешно создана');
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 }
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
-            'props' => $props,
-            'categories' => Category::getAllCategories(),
+            'categoryProperties' => $categoryProperties,
+            'properties' => Property::find()->all(), // Список существующих свойств
         ]);
     }
 
@@ -140,50 +133,64 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $props = CategoryProperty::find()->where(['category_id' => $id])->all();
+        $categoryProperties = $model->categoryProperties ?: [new CategoryProperty()];
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if (is_null($model->imageFile) || $model->upload()) {
                 if ($model->save(false)) {
+                    $categoryProperties = [];
+                    $postData = $this->request->post('CategoryProperty', []);
 
-                    $props = [];
-                    foreach ($this->request->post('CategoryProperty', []) as $key => $item) {
-                        $prop = $item['id'] ? CategoryProperty::findOne($item['id']) : new CategoryProperty();
-                        $prop->category_id = $model->id;
-                        if (!empty($item['property_id'])) {
-                            $prop->property_id = $item['property_id'];
-                        } elseif (!empty($item['property_title'])) {
+                    foreach ($postData as $index => $item) {
+                        $categoryProperty = $item['id'] ? CategoryProperty::findOne($item['id']) : new CategoryProperty();
+                        $propertyId = $item['property_id'] ?? null;
+                        $newPropTitle = $item['property_title'] ?? null;
+                        $property_value = $item['property_value'] ?? null;
+
+                        if ($propertyId && !$newPropTitle) {
+                            $categoryProperty->property_id = $propertyId;
+                        } elseif ($newPropTitle) {
                             $newProperty = new Property();
-                            $newProperty->title = $item['property_title'];
+                            $newProperty->title = $newPropTitle;
                             if ($newProperty->save()) {
-                                $prop->property_id = $newProperty->id;
+                                $categoryProperty->property_id = $newProperty->id;
                             }
                         }
-                        $props[] = $prop;
-                    }
-                    if (Model::validateMultiple($props)) {
-                        CategoryProperty::deleteAll([
-                            'category_id' => $model->id,
-                            'not in',
-                            'id',
-                            array_filter(array_column($props, 'id')),
-                        ]);
-                        foreach ($props as $prop) {
-                            $prop->save(false);
-                        }
+
+                        $categoryProperty->category_id = $model->id;
+                        $categoryProperty->property_value = $property_value;
+                        $categoryProperties[] = $categoryProperty;
                     }
 
-                    Yii::$app->session->setFlash('success', "Категория $model->title успешно добавлена");
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    if (Model::validateMultiple($categoryProperties)) {
+                        // Удаляем существующие свойства текущей категории, которых нет в новом списке
+                        $newPropertyIds = array_filter(
+                            array_map(fn($prop) => $prop->property_id, $categoryProperties),
+                            fn($id) => !is_null($id)
+                        );
+                        if (!empty($newPropertyIds)) {
+                            CategoryProperty::deleteAll([
+                                'and',
+                                ['category_id' => $model->id],
+                                ['not in', 'property_id', $newPropertyIds]
+                            ]);
+                        } else {
+                            CategoryProperty::deleteAll(['category_id' => $model->id]);
+                        }
+                        foreach ($categoryProperties as $prop) {
+                            $prop->save(false);
+                        }
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
                 }
             }
         }
 
         return $this->render('update', [
             'model' => $model,
-            'props' => $props,
-            'categories' => Category::getAllCategories(),
+            'categoryProperties' => $categoryProperties,
+            'properties' => Property::find()->all(),
         ]);
     }
 

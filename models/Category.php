@@ -36,11 +36,14 @@ class Category extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['photo', 'title', 'description'], 'required'],
+            [['title', 'description'], 'required'],
+            ['photo', 'safe'],
             [['description'], 'string'],
             [['parent_id'], 'integer'],
             [['photo', 'title'], 'string', 'max' => 255],
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['parent_id' => 'id']],
+
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -52,6 +55,7 @@ class Category extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'photo' => 'Photo',
+            'imageFile' => 'Фото категории',
             'title' => 'Title',
             'description' => 'Description',
             'parent_id' => 'Parent ID',
@@ -76,6 +80,11 @@ class Category extends \yii\db\ActiveRecord
     public function getCategoryProperties()
     {
         return $this->hasMany(CategoryProperty::class, ['category_id' => 'id']);
+    }
+
+    public function getProperties()
+    {
+        return $this->hasMany(Property::class, ['id' => 'property_id'])->viaTable('category_property', ['category_id' => 'id']);
     }
 
     /**

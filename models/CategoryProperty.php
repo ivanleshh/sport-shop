@@ -10,13 +10,14 @@ use Yii;
  * @property int $id
  * @property int $category_id
  * @property int $property_id
- * @property string $property_title
+ * @property string $property_value
  *
  * @property Category $category
  * @property Property $property
  */
 class CategoryProperty extends \yii\db\ActiveRecord
 {
+    public $property_title;
     /**
      * {@inheritdoc}
      */
@@ -31,9 +32,9 @@ class CategoryProperty extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id'], 'required'],
+            [['category_id', 'property_value'], 'required'],
             [['category_id', 'property_id'], 'integer'],
-            ['property_title', 'string', 'max' => 255],
+            [['property_value', 'property_title'], 'string', 'max' => 255],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
             [['property_id'], 'exist', 'skipOnError' => true, 'targetClass' => Property::class, 'targetAttribute' => ['property_id' => 'id']],
         ];
@@ -48,7 +49,7 @@ class CategoryProperty extends \yii\db\ActiveRecord
             'id' => 'ID',
             'category_id' => 'Category ID',
             'property_id' => 'Характеристика',
-            'property_title' => 'Значение'
+            'property_value' => 'Значение'
         ];
     }
 

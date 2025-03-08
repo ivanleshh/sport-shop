@@ -3,35 +3,88 @@ $(() => {
         $('#category-parent_id').val('').trigger('change')
     })
 
+    // Функция для генерации списка <option> из propertyOptions
+    const generateOptions = () => {
+        let options = '<option value="">Выберите значение</option>';
+        for (let id in propertyOptions) {
+            options += `<option value="${id}">${propertyOptions[id]}</option>`;
+        }
+        return options;
+    };
+
     let itemCount = $('#block-props').find('.category-props').length;
 
-    const block = (index) => `
-    <div class="border p-3 my-3 category-props col-lg-6 w-100" data-index="${index}">
-        <div class="d-flex justify-content-end">
-            <div class="btn-group d-flex" role="group">
-                <button type="button" class="btn btn-danger btn-remove">-</button>
-                <button type="button" class="btn btn-success btn-add">+</button>
-            </div>
+    const block = (index) => `<div class="border p-3 my-3 category-props col-lg-6 w-100" data-index="${index}">
+    <div class="d-flex justify-content-end">
+        <div class="btn-group d-flex" role="group">
+            <button type="button" class="btn btn-danger btn-remove">-</button>
+            <button type="button" class="btn btn-success btn-add">+</button>
         </div>
-        <div class="d-flex gap-3">
+    </div>
+    <div class="d-flex gap-3 align-items-center">
+        <div class="d-flex flex-column gap-2 justify-content-center">
             <div class="mb-3 field-categoryproperty-${index}-property_id">
-                <label class="form-label" for="categoryproperty-${index}-property_id">Свойство</label>
-                <select id="categoryproperty-${index}-property_id" class="form-control property-select" name="CategoryProperty[${index}][property_id]">
-                    ${$('select[name="CategoryProperty[0][property_id]"]').html()}
+                <label class="form-label" for="categoryproperty-${index}-property_id">Выбрать из списка</label>
+                <select id="categoryproperty-${index}-property_id" class="form-control property-select" 
+                name="CategoryProperty[${index}][property_id]">
+                    ${generateOptions()}
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
             <div class="mb-3 field-categoryproperty-${index}-property_title">
-                <label class="form-label" for="categoryproperty-${index}-property_title">Новое свойство</label>
-                <input type="text" id="categoryproperty-${index}-property_title" class="form-control props-title" name="CategoryProperty[${index}][property_title]" maxlength="255">
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="mb-3 field-categoryproperty-${index}-id">
-                <input type="hidden" id="categoryproperty-${index}-id" class="form-control" name="CategoryProperty[${index}][id]">
+                <label class="form-label" for="categoryproperty-${index}-property_title">Новая характеристика</label>
+                <input type="text" id="categoryproperty-${index}-property_title" class="form-control props-title"
+                    name="CategoryProperty[${index}][property_title]" maxlength="255">
+
                 <div class="invalid-feedback"></div>
             </div>
         </div>
-    </div>`
+        <div class="mb-3 field-categoryproperty-${index}-property_value">
+            <label class="form-label" for="categoryproperty-${index}-property_value">Значение</label>
+            <input type="text" id="categoryproperty-${index}-property_value" class="form-control"
+                name="CategoryProperty[${index}][property_value]">
+            <div class="invalid-feedback"></div>
+        </div>
+        <div class="mb-3 field-categoryproperty-${index}-id">
+            <input type="hidden" id="categoryproperty-${index}-id" class="form-control" name="CategoryProperty[${index}][id]">
+            <div class="invalid-feedback"></div>
+        </div>
+    </div>
+</div>`
+
+    // <div class="border p-3 my-3 category-props col-lg-6 w-100" data-index="${index}">
+    //     <div class="d-flex justify-content-end">
+    //         <div class="btn-group d-flex" role="group">
+    //             <button type="button" class="btn btn-danger btn-remove">-</button>
+    //             <button type="button" class="btn btn-success btn-add">+</button>
+    //         </div>
+    //     </div>
+    //     <div class="d-flex gap-3 align-items-center">
+    //         <div class="d-flex flex-column gap-2 justify-content-center">
+    //             <div class="mb-3 field-categoryproperty-${index}-property_id">
+    //                 <label class="form-label" for="categoryproperty-${index}-property_id">Выбрать из списка</label>
+    //                 <select id="categoryproperty-${index}-property_id" class="form-control property-select" name="CategoryProperty[${index}][property_id]">
+    //                     ${$('select[name="CategoryProperty[0][property_id]"]').html()}
+    //                 </select>
+    //                 <div class="invalid-feedback"></div>
+    //             </div>
+    //             <div class="mb-3 field-categoryproperty-${index}-property_title">
+    //                 <label class="form-label" for="categoryproperty-${index}-property_title">Новая характеристика</label>
+    //                 <input type="text" id="categoryproperty-${index}-property_title" class="form-control props-title" name="CategoryProperty[${index}][property_title]" maxlength="255">
+    //                 <div class="invalid-feedback"></div>
+    //             </div>
+    //         </div>
+    //         <div class="mb-3 field-categoryproperty-${index}-property_value">
+    //             <label class="form-label" for="categoryproperty-${index}-property_value">Значение</label>
+    //             <input type="text" id="categoryproperty-${index}-property_value" class="form-control" name="CategoryProperty[${index}][property_value]" maxlength="255">
+    //             <div class="invalid-feedback"></div>
+    //         </div>
+    //         <div class="mb-3 field-categoryproperty-${index}-id">
+    //             <input type="hidden" id="categoryproperty-${index}-id" class="form-control" name="CategoryProperty[${index}][id]">
+    //             <div class="invalid-feedback"></div>
+    //         </div>
+    //     </div>
+    // </div>
 
     const initializeSelect2AndValidation = () => {
         $('#block-props .property-select').each(function () {
@@ -63,26 +116,26 @@ $(() => {
                 }
             });
 
-            const prop_title = `categoryproperty-${index}-property_title`;
-            $('#form-category').yiiActiveForm('add', {
-                "id": prop_title,
-                "name": `[${itemCount}]property_title`,
-                "container": `.field-${prop_title}`,
-                "input": `#${prop_title}`,
-                "error": ".invalid-feedback",
-                "validate": function (
-                    attribute, value, messages, deferred, $form) {
-                    yii.validation.required(value, messages, {
-                        "message": "Необходимо заполнить «Значение»."
-                    });
-                    yii.validation.string(value, messages, {
-                        "message": "Значение «Значение» должно быть строкой.",
-                        "max": 255,
-                        "tooLong": "Значение «Значение» должно содержать максимум 255 символа.",
-                        "skipOnEmpty": 1
-                    });
-                }
-            })
+            // const prop_title = `categoryproperty-${index}-property_title`;
+            // $('#form-category').yiiActiveForm('add', {
+            //     "id": prop_title,
+            //     "name": `[${itemCount}]property_title`,
+            //     "container": `.field-${prop_title}`,
+            //     "input": `#${prop_title}`,
+            //     "error": ".invalid-feedback",
+            //     "validate": function (
+            //         attribute, value, messages, deferred, $form) {
+            //         yii.validation.required(value, messages, {
+            //             "message": "Необходимо заполнить «Значение»."
+            //         });
+            //         yii.validation.string(value, messages, {
+            //             "message": "Значение «Значение» должно быть строкой.",
+            //             "max": 255,
+            //             "tooLong": "Значение «Значение» должно содержать максимум 255 символа.",
+            //             "skipOnEmpty": 1
+            //         });
+            //     }
+            // })
         });
     };
 
@@ -145,6 +198,27 @@ $(() => {
                 });
             }
         })
+
+        const prop_value = `categoryproperty-${itemCount}-property_value`;
+        $('#form-category').yiiActiveForm('add', {
+            "id": prop_value,
+            "name": `[${itemCount}]property_title`,
+            "container": `.field-${prop_value}`,
+            "input": `#${prop_value}`,
+            "error": ".invalid-feedback",
+            "validate": function (
+                attribute, value, messages, deferred, $form) {
+                yii.validation.required(value, messages, {
+                    "message": "Необходимо заполнить «Значение»."
+                });
+                yii.validation.string(value, messages, {
+                    "message": "Значение «Значение» должно быть строкой.",
+                    "max": 255,
+                    "tooLong": "Значение «Значение» должно содержать максимум 255 символа.",
+                    "skipOnEmpty": 1
+                });
+            }
+        })
     })
 
     $('#block-props').on('click', '.btn-remove', function () {
@@ -153,6 +227,7 @@ $(() => {
             const index = parent.data('index')
             $('#form-category').yiiActiveForm('remove', `categoryproperty-${index}-property_id`)
             $('#form-category').yiiActiveForm('remove', `categoryproperty-${index}-property_title`)
+            $('#form-category').yiiActiveForm('remove', `categoryproperty-${index}-property_value`)
             parent.remove();
         }
     })
@@ -201,9 +276,9 @@ $(() => {
                 formData.attributes = formData.attributes.filter(attr => attr.id !== titleId);
             }
             input.removeClass('is-invalid')
-                 .closest('.field-categoryproperty-' + index + '-property_title')
-                 .find('.invalid-feedback')
-                 .text('');
+                .closest('.field-categoryproperty-' + index + '-property_title')
+                .find('.invalid-feedback')
+                .text('');
             $(`#${titleId}`).addClass('is-valid')
         } else {
             $('#form-category').yiiActiveForm('add', {
