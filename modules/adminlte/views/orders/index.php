@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'layout' => 
             '<div class="d-flex mt-3">{pager}</div>
-            <div class="row gy-4">{items}</div>
+            <div class="row">{items}</div>
             <div class="d-flex mt-3">{pager}</div>',
         'itemView' => 'order',
     ]) ?>
@@ -79,7 +79,7 @@ if ($dataProvider->count) {
 }
 ?>
 
-<?= $this->registerJsFile('/admin-lte-dist/js/filter.js', ['depends' => JqueryAsset::class]) ?>
+<?= $this->registerJsFile('/admin-lte-dist/js/filter-order.js', ['depends' => JqueryAsset::class]) ?>
 
 
 

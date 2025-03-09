@@ -21,6 +21,7 @@ use Yii;
 class Category extends \yii\db\ActiveRecord
 {
     const IMG_PATH = '/images/categories/';
+    const NO_PHOTO = '/images/noPhoto.jpg';
     public $imageFile;
     /**
      * {@inheritdoc}

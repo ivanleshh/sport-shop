@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Category;
 use yii\bootstrap5\Html;
 use yii\helpers\VarDumper;
 
@@ -9,7 +10,7 @@ use yii\helpers\VarDumper;
         <?php
             echo Html::a(
                 (isset($model->parent_id)
-                ? Html::img('/images/' . $model->photo, ['class' => 'w-mini'])
+                ? (isset($model->photo) ? Html::img(Category::IMG_PATH . $model->photo, ['class' => 'w-mini']) : '')
                 : ''
                 ) . 
                 "<h5 class='card-title " . (isset($model->parent_id) ? 
@@ -20,7 +21,7 @@ use yii\helpers\VarDumper;
         ?>
 
         <?php if (!empty($model->children)): ?>
-            <div class="mt-2 d-flex flex-wrap gap-3">
+            <div class="mt-2 d-flex flex-wrap gap-3 ms-3">
                 <?php foreach ($model->children as $child): ?>
                     <?= $this->render('category', ['model' => $child]) ?>
                 <?php endforeach; ?>
