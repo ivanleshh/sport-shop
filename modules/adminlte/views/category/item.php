@@ -10,7 +10,7 @@ use yii\bootstrap5\Html;
 
     <h4 class="fw-bold fs-5 m-0"><?= $model->title ?></h4>
     <?php if (isset($model->parent->title)) {
-        echo "<span>" . $model->parent->title . "</span>";
+        echo "<span class='text-secondary'>" . $model->parent->title . "</span>";
       }
       ?>
   </div>
