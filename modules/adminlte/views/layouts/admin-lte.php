@@ -36,7 +36,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <div class="container-fluid"> <!--begin::Start Navbar Links-->
                 <ul class="navbar-nav">
                     <li class="nav-item"> <a class="nav-link" data-lte-toggle="sidebar" href="#" role="button"> <i class="bi bi-list-ul"></i> </a> </li>
-                    <li class="nav-item d-none d-md-block"> <a href="#" class="nav-link">Главная</a> </li>
+                    <li class="nav-item d-none d-md-block"> <a href="/" class="nav-link">Главная</a> </li>
                 </ul> <!--end::Start Navbar Links--> <!--begin::End Navbar Links-->
                 <ul class="navbar-nav ms-auto"> <!--begin::Navbar Search-->
                     <li class="nav-item"> <a class="nav-link" data-widget="navbar-search" href="#" role="button"> <i class="bi bi-search"></i> </a> </li> <!--end::Navbar Search--> <!--begin::Messages Dropdown Menu-->
@@ -138,7 +138,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <li class="nav-item"> <a href="/admin-lte/orders" class="nav-link active"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Модерация заказов</p>
                                     </a> </li>
-                                <li class="nav-item"> <a href="/admin-lte/products" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
+                                <li class="nav-item"> <a href="/admin-lte/product" class="nav-link"> <i class="nav-icon bi bi-circle"></i>
                                         <p>Товары</p>
                                     </a> </li>
                                 <li class="nav-item"> <a href="/admin-lte/category" class="nav-link"> <i class="nav-icon bi bi-circle"></i>

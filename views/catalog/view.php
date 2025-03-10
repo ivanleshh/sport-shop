@@ -19,15 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="category-view">
-
-    <?php Pjax::begin([
-        'id' => 'catalog-pjax',
-        'enablePushState' => false,
-        'timeout' => 5000,
-    ]); ?>
     
     <h3><?= Html::encode($this->title) ?></h3>
-    <?= Alert::widget() ?>
 
     <?php if (!empty($model->children)): ?>
         <div class="my-3 d-flex flex-wrap gap-3">
@@ -37,23 +30,35 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     <?php endif; ?>
 
-    <div class="d-flex justify-content-between align-items-center">
-        <div class="d-flex gap-3">
+    <?php Pjax::begin([
+        'id' => 'catalog-pjax',
+        'enablePushState' => false,
+        'timeout' => 5000,
+        'enableReplaceState' => false,
+    ]); ?>
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="d-flex gap-3 flex-wrap my-2">
             Сортировать по:
             <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
             <?= $dataProvider->sort->link('price', ['class' => 'text-decoration-none']) ?>
-            <?= Html::a('Сбросить', ['/catalog/view', 'id' => $model->id], ['class' => 'text-decoration-none link-dark']) ?>
+            <?= Html::a('Сбросить', ['/catalog/view', 'id' => $model->id], ['class' => 'text-decoration-none link-danger']) ?>
         </div>
         <div>
             <?= $this->render('_search', ['model' => $searchModel]) ?>
         </div>
     </div>
 
+    <?= Alert::widget() ?>
+
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => 'product',
-        'layout' => '<div class="catalog-items d-flex flex-wrap gap-3">{items}</div>'
+        'layout' =>
+            '<div class="d-flex justify-content-center mt-4">{pager}</div>
+            <div class="catalog-items d-flex flex-wrap gap-3">{items}</div>
+            <div class="d-flex justify-content-center mt-4">{pager}</div>',
     ]) ?>
 
     <?php Pjax::end(); ?>
@@ -63,4 +68,4 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?= $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]); ?>
-
+<?= $this->registerJsFile('/js/filter-catalog.js', ['depends' => JqueryAsset::class]); ?>

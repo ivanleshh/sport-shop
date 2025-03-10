@@ -57,9 +57,9 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'photo' => 'Photo',
             'imageFile' => 'Фото категории',
-            'title' => 'Title',
-            'description' => 'Description',
-            'parent_id' => 'Parent ID',
+            'title' => 'Название',
+            'description' => 'Описание',
+            'parent_id' => 'Родительская категория',
         ];
     }
 

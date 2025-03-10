@@ -1,11 +1,10 @@
 <?php
 
-namespace app\models;
+namespace app\modules\adminlte\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Product;
-use yii\helpers\VarDumper;
 
 /**
  * ProductSearch represents the model behind the search form of `app\models\Product`.
@@ -18,10 +17,9 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'count', 'brand_id'], 'integer'],
+            [['id', 'category_id', 'count', 'brand_id'], 'integer'],
             [['photo', 'title', 'description'], 'safe'],
             [['price'], 'number'],
-            ['category_id', 'safe'],
         ];
     }
 
@@ -38,47 +36,41 @@ class ProductSearch extends Product
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     * @param string|null $formName Form name to be used into `->load()` method.
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $formName = null)
     {
-        $query = Product::find()->where('count > 0')->with('cartItems');
+        $query = Product::find();
+
+        // add conditions that should always apply here
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => [
-                'attributes' => [
-                    'title' => [
-                        'asc' => ['title' => SORT_ASC],
-                        'desc' => ['title' => SORT_DESC],
-                        'default' => SORT_ASC,
-                        'label' => 'Названию'
-                    ],
-                    'price' => [
-                        'asc' => ['price' => SORT_ASC],
-                        'desc' => ['price' => SORT_DESC],
-                        'default' => SORT_ASC,
-                        'label' => 'Цене'
-                    ],
-                ]
-            ]
         ]);
-        $this->load($params);
+
+        $this->load($params, $formName);
+
         if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
+
+        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'price' => $this->price,
+            'category_id' => $this->category_id,
             'count' => $this->count,
             'brand_id' => $this->brand_id,
         ]);
-        if (!empty($this->category_id)) {
-            $query->andFilterWhere(['category_id' => $this->category_id]);
-        }
+
         $query->andFilterWhere(['like', 'photo', $this->photo])
             ->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
+
         return $dataProvider;
     }
 }

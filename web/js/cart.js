@@ -44,7 +44,6 @@ $(()=> {
                 .removeClass('d-none')
         }
         catalog_reload();
-        cartItemCount()
         $('#cart-modal').modal('show');
         
     })

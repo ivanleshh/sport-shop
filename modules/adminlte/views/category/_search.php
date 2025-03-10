@@ -28,7 +28,7 @@ use yii\widgets\ActiveForm;
             'data' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
             'options' => ['placeholder' => 'Выберите родительскую категорию'],
             'pluginOptions' => [
-                'width' => '300px',
+                'width' => '200px',
                 'allowClear' => true,
             ],
         ]); ?>

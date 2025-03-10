@@ -46,6 +46,16 @@ class CategorySearch extends Category
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => [
+                'attributes' => [
+                    'title' => [
+                        'asc' => ['title' => SORT_ASC],
+                        'desc' => ['title' => SORT_DESC],
+                        'default' => SORT_ASC,
+                        'label' => 'Названию'
+                    ],
+                ]
+            ]
         ]);
 
         $this->load($params);

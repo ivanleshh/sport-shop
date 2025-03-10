@@ -119,14 +119,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
         <?php $cart_data = $this->render('@app/views/cart/index', ['dataProvider' => null]); ?>
 
-        <div class="d-flex justify-content-between gap-3 my-2 d-none cart-panel-top">
-            <div>
-                <?= Html::a(
-                    "Закрыть",
-                    "",
-                    ["class" => "btn btn-outline-secondary btn-cart-close"]
-                ) ?>
-            </div>
+        <div class="d-flex justify-content-end gap-3 my-2 d-none cart-panel-top">
             <div class="d-flex justify-content-end gap-3">
                 <?= Html::a(
                     "Очистить корзину",

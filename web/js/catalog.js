@@ -18,10 +18,6 @@ const catalog_reload = function () {
 }
 
 $(() => {
-  $('#catalog-pjax').on('keyup', '#productsearch-title', function (e) {
-    $('#catalog-filter').submit();
-  })
-
   $("#catalog-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
     e.preventDefault();
     const a = $(this);
@@ -50,6 +46,8 @@ $(() => {
         alert[alert.length - 1].remove()
       }, 5000)
     }
-    cartItemCount()
+    if ($('#cart-item-count').length > 0) {
+      cartItemCount()
+    }
   })
 })

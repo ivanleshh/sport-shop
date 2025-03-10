@@ -35,7 +35,7 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
         </div>
     <?php else: ?>
         <div class="cart-empty">
-            <div class="cart-empty-wrapper d-flex justify-content-center mt-5">
+            <div class="cart-empty-wrapper d-flex justify-content-center">
                 <div class="d-flex flex-column justify-content-center align-items-center gap-1">
                     <h3>Корзина пустая</h3>
                     <div class="d-flex gap-1">
