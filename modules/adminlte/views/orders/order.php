@@ -27,7 +27,7 @@ use yii\bootstrap5\Html;
     </div>
 
   </div>
-  <div class="d-flex gap-3 justify-content-between px-4 py-3">
+  <div class="d-flex gap-3 justify-content-between align-items-center px-4 py-3">
     <div class="d-flex align-items-center gap-2">
       <?= Html::a(
         Html::img(Product::IMG_PATH . $model->orderItems[0]->product->photo, ['class' => 'w-50']) .

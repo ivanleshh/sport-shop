@@ -6,20 +6,16 @@ use app\models\Status;
 use yii\bootstrap5\Html;
 ?>
 <div class="card h-100">
-  <div class="border d-flex gap-3 align-items-center justify-content-between p-3 flex-wrap">
-
+  <div class="border d-flex gap-3 align-items-center justify-content-between p-3">
     <h4 class="fw-bold fs-5 m-0"><?= $model->title ?></h4>
-    <?php if (isset($model->parent->title)) {
-        echo "<span class='text-secondary'>" . $model->parent->title . "</span>";
-      }
-      ?>
+    <span class='text-secondary'><?= $model->category->title ?></span>
   </div>
   <div class="row px-4 py-3 align-items-center h-100">
     <div class="d-flex align-items-center gap-2 col-5">
       <?= Html::a(
-        Html::img(isset($model->photo) ? Category::IMG_PATH . $model->photo : Category::NO_PHOTO, ['class' => 'w-100']),
+        Html::img(isset($model->photo) ? Product::IMG_PATH . $model->photo : Product::NO_PHOTO, ['class' => 'w-100']),
         ['view', 'id' => $model->id],
-        ['class' => 'd-flex align-items-center text-decoration-none w-100']
+        ['class' => 'd-flex flex-column justify-content-center text-decoration-none w-100']
       )
       ?>
     </div>

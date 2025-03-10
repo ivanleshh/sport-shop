@@ -24,7 +24,7 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
         'enctype' => 'multipart/form-data'
     ]]); ?>
 
-    <div class="row">
+    <div class="row col-12">
         <div class="col">
             <?php if (isset($model->photo)) : ?>
                 <div class="d-flex flex-column align-items-center">
@@ -51,38 +51,34 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
             </div>
         </div>
 
-        <div class="col">
+        <div class="col-12 col-sm-12 col-md-6">
             <h4>Список характеристик</h4>
             <div id="block-props" class="border p-3 mb-3 characters-block">
                 <?php foreach ($categoryProperties as $key => $prop) : ?>
-                    <div class="border p-3 my-3 category-props col-lg-6 w-100" data-index="<?= $key ?>">
+                    <div class="border border-success p-3 my-3 category-props col-lg-6 w-100" data-index="<?= $key ?>">
                         <div class="d-flex justify-content-end">
                             <div class="btn-group d-flex" role="group">
                                 <button type="button" class="btn btn-danger btn-remove">-</button>
                                 <button type="button" class="btn btn-success btn-add">+</button>
                             </div>
                         </div>
-                        <div class="d-flex gap-3 align-items-center">
-                            <div class="d-flex flex-column gap-2 justify-content-center">
-                                <?= $form->field($prop, "[$key]property_id")->widget(Select2::class, [
-                                    'data' => $properties,
-                                    'options' => [
-                                        'placeholder' => 'Выберите значение',
-                                        'id' => "categoryproperty-{$key}-property_id",
-                                        'class' => 'form-control property-select',
-                                    ],
-                                    'pluginOptions' => [
-                                        'allowClear' => true,
-                                    ],
-                                ])->label('Выбрать из списка'); ?>
-                                <?= $form->field($prop, "[$key]property_title")->textInput([
-                                    'maxlength' => true,
-                                    'id' => "categoryproperty-{$key}-property_title",
-                                    'class' => 'form-control props-title',
-                                ])->label('Новая характеристика') ?>
-                            </div>
-
-                            <?= $form->field($prop, "[$key]property_value")->textInput() ?>
+                        <div class="d-flex gap-3 mt-2 flex-wrap">
+                            <?= $form->field($prop, "[$key]property_id", ['options' => ['class' => 'mb-0 w-220']])->widget(Select2::class, [
+                                'data' => $properties,
+                                'options' => [
+                                    'placeholder' => 'Выбрать характеристику',
+                                    'id' => "categoryproperty-{$key}-property_id",
+                                    'class' => 'form-control property-select',
+                                ],
+                                'pluginOptions' => [
+                                    'allowClear' => true,
+                                ],
+                            ])->label('Выбрать из списка'); ?>
+                            <?= $form->field($prop, "[$key]property_title")->textInput([
+                                'maxlength' => true,
+                                'id' => "categoryproperty-{$key}-property_title",
+                                'class' => 'form-control props-title',
+                            ])->label('Создать новую') ?>
                             <?= $form->field($prop, "[$key]id")->hiddenInput(['id' => "categoryproperty-{$key}-id"])->label(false) ?>
                         </div>
                     </div>

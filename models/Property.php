@@ -30,6 +30,7 @@ class Property extends \yii\db\ActiveRecord
         return [
             [['title'], 'required'],
             [['title'], 'string', 'max' => 255],
+            ['title','unique', 'targetClass' => self::class, 'message' => 'Характеристика уже существует'],
         ];
     }
 

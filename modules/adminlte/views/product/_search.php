@@ -1,10 +1,14 @@
 <?php
 
+use app\models\Brand;
+use app\models\Category;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\modules\adminlte\models\ProductSearch $model */
+/** @var app\modules\adminlte\models\CategorySearch $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -18,25 +22,28 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
-    <?= $form->field($model, 'photo') ?>
-
-    <?= $form->field($model, 'title') ?>
-
-    <?= $form->field($model, 'description') ?>
-
-    <?= $form->field($model, 'price') ?>
-
-    <?php // echo $form->field($model, 'category_id') ?>
-
-    <?php // echo $form->field($model, 'count') ?>
-
-    <?php // echo $form->field($model, 'brand_id') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+    <div class="d-flex gap-3 align-items-end flex-wrap">
+        <div class="align-self-center mt-4">🔎</div>
+        <?= $form->field($model, 'title') ?>
+        <?= $form->field($model, 'category_id')->widget(Select2::class, [
+            'data' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
+            'options' => ['placeholder' => 'Выберите категорию'],
+            'pluginOptions' => [
+                'width' => '200px',
+                'allowClear' => true,
+            ],
+        ]); ?>
+        <?= $form->field($model, 'brand_id')->widget(Select2::class, [
+            'data' => ArrayHelper::map(Brand::find()->all(), 'id', 'title'),
+            'options' => ['placeholder' => 'Выберите категорию'],
+            'pluginOptions' => [
+                'width' => '200px',
+                'allowClear' => true,
+            ],
+        ]); ?>
+        <div class="form-group d-flex gap-3">
+            <?= Html::a('Сбросить', ['/admin-lte/product'], ['class' => 'btn btn-outline-secondary']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

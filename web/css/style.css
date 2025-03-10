@@ -43,6 +43,10 @@ textarea {
     overflow: auto;
 }
 
+.w-220 {
+    width: 220px;
+}
+
 /* .btn-cart-add {
     background: linear-gradient(90deg, rgba(255,249,74,1) 0%, rgba(238,132,36,1) 100%);
     border: none;

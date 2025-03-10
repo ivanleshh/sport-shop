@@ -87,7 +87,6 @@ class CategoryController extends Controller
                         $categoryProperty = new CategoryProperty();
                         $propertyId = $item['property_id'] ?? null;
                         $newPropTitle = $item['property_title'] ?? null;
-                        $property_value = $item['property_value'] ?? null;
 
                         // Если выбрано существующее свойство
                         if ($propertyId && !$newPropTitle) {
@@ -102,7 +101,6 @@ class CategoryController extends Controller
                             }
                         }
                         $categoryProperty->category_id = $model->id;
-                        $categoryProperty->property_value = $property_value;
                         $categoryProperties[] = $categoryProperty;
                     }
                     if (Model::validateMultiple($categoryProperties)) {
@@ -146,7 +144,6 @@ class CategoryController extends Controller
                         $categoryProperty = $item['id'] ? CategoryProperty::findOne($item['id']) : new CategoryProperty();
                         $propertyId = $item['property_id'] ?? null;
                         $newPropTitle = $item['property_title'] ?? null;
-                        $property_value = $item['property_value'] ?? null;
 
                         if ($propertyId && !$newPropTitle) {
                             $categoryProperty->property_id = $propertyId;
@@ -159,12 +156,11 @@ class CategoryController extends Controller
                         }
 
                         $categoryProperty->category_id = $model->id;
-                        $categoryProperty->property_value = $property_value;
                         $categoryProperties[] = $categoryProperty;
                     }
 
                     if (Model::validateMultiple($categoryProperties)) {
-                        // Удаляем существующие свойства текущей категории, которых нет в новом списке
+                        //Удаляем существующие свойства текущей категории, которых нет в новом списке
                         $newPropertyIds = array_filter(
                             array_map(fn($prop) => $prop->property_id, $categoryProperties),
                             fn($id) => !is_null($id)

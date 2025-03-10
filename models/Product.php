@@ -25,6 +25,7 @@ use Yii;
 class Product extends \yii\db\ActiveRecord
 {
     const IMG_PATH = '/images/products/';
+    const NO_PHOTO = '/images/noPhoto.jpg';
     /**
      * {@inheritdoc}
      */

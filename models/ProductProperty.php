@@ -5,24 +5,26 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "category_property".
+ * This is the model class for table "product_property".
  *
  * @property int $id
- * @property int $category_id
+ * @property int $product_id
  * @property int $property_id
- * 
- * @property Category $category
+ * @property string $property_value
+ *
+ * @property Product $product
  * @property Property $property
  */
-class CategoryProperty extends \yii\db\ActiveRecord
+class ProductProperty extends \yii\db\ActiveRecord
 {
-    public $property_title;
+
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'category_property';
+        return 'product_property';
     }
 
     /**
@@ -31,15 +33,10 @@ class CategoryProperty extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'property_id'], 'integer'],
-            [['property_title'], 'string', 'max' => 255],
-            [
-                ['category_id', 'property_id'],
-                'unique',
-                'targetClass' => CategoryProperty::class,
-                'message' => 'Характеристика уже существует'
-            ],
-            [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
+            [['product_id', 'property_id', 'property_value'], 'required'],
+            [['product_id', 'property_id'], 'integer'],
+            [['property_value'], 'string', 'max' => 255],
+            [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
             [['property_id'], 'exist', 'skipOnError' => true, 'targetClass' => Property::class, 'targetAttribute' => ['property_id' => 'id']],
         ];
     }
@@ -51,19 +48,20 @@ class CategoryProperty extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'category_id' => 'Category ID',
+            'product_id' => 'Товар',
             'property_id' => 'Характеристика',
+            'property_value' => 'Значение характеристики',
         ];
     }
 
     /**
-     * Gets query for [[Category]].
+     * Gets query for [[Product]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCategory()
+    public function getProduct()
     {
-        return $this->hasOne(Category::class, ['id' => 'category_id']);
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 
     /**
@@ -75,4 +73,5 @@ class CategoryProperty extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Property::class, ['id' => 'property_id']);
     }
+
 }

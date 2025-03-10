@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="d-flex gap-3 flex-wrap my-2">
             Сортировать по:
             <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
-            <?= Html::a('Сбросить', ['/admin-lte/category'], ['class' => 'text-decoration-none link-dark']) ?>
+            <?= Html::a('Сбросить', ['/admin-lte/category'], ['class' => 'text-decoration-none link-danger']) ?>
         </div>
         <div class="d-flex">
             <?= $this->render('_search', [
