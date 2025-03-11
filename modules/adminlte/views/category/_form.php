@@ -55,7 +55,7 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
             <h4>Список характеристик</h4>
             <div id="block-props" class="border p-3 mb-3 characters-block">
                 <?php foreach ($categoryProperties as $key => $prop) : ?>
-                    <div class="border border-success p-3 my-3 category-props col-lg-6 w-100" data-index="<?= $key ?>">
+                    <div class="border border-success rounded-3 p-3 my-3 category-props col-lg-6 w-100" data-index="<?= $key ?>">
                         <div class="d-flex justify-content-end">
                             <div class="btn-group d-flex" role="group">
                                 <button type="button" class="btn btn-danger btn-remove">-</button>

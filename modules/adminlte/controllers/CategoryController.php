@@ -11,6 +11,7 @@ use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 use yii\web\UploadedFile;
 
@@ -131,61 +132,57 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $categoryProperties = $model->categoryProperties ?: [new CategoryProperty()];
+        $existingProps = $model->categoryProperties;
+        $existingPropIds = ArrayHelper::getColumn($existingProps, 'id');
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if (is_null($model->imageFile) || $model->upload()) {
-                if ($model->save(false)) {
-                    $categoryProperties = [];
-                    $postData = $this->request->post('CategoryProperty', []);
-
-                    foreach ($postData as $index => $item) {
-                        $categoryProperty = $item['id'] ? CategoryProperty::findOne($item['id']) : new CategoryProperty();
-                        $propertyId = $item['property_id'] ?? null;
-                        $newPropTitle = $item['property_title'] ?? null;
-
-                        if ($propertyId && !$newPropTitle) {
-                            $categoryProperty->property_id = $propertyId;
-                        } elseif ($newPropTitle) {
-                            $newProperty = new Property();
-                            $newProperty->title = $newPropTitle;
-                            if ($newProperty->save()) {
-                                $categoryProperty->property_id = $newProperty->id;
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                if (is_null($model->imageFile) || $model->upload()) {
+                    if ($model->save(false)) {
+                        $postData = $this->request->post('CategoryProperty', []);
+                        $processedIds = [];
+                        $categoryProperties = [];
+                        foreach ($postData as $item) {
+                            $prop = $item['id']
+                                ? CategoryProperty::findOne($item['id'])
+                                : new CategoryProperty();
+                            if (isset($item['property_id'])) {
+                                $prop->property_id = $item['property_id'];
+                            } elseif (!empty($item['property_title'])) {
+                                $newProp = new Property(['title' => $item['property_title']]);
+                                $newProp->save(false);
+                                $prop->property_id = $newProp->id;
+                            }
+                            $prop->category_id = $model->id;
+                            $categoryProperties[] = $prop;
+                        }
+                        // Валидация и сохранение
+                        if (Model::validateMultiple($categoryProperties)) {
+                            foreach ($categoryProperties as $prop) {
+                                $prop->save(false);
+                                $processedIds[] = $prop->id;
                             }
                         }
-
-                        $categoryProperty->category_id = $model->id;
-                        $categoryProperties[] = $categoryProperty;
-                    }
-
-                    if (Model::validateMultiple($categoryProperties)) {
-                        //Удаляем существующие свойства текущей категории, которых нет в новом списке
-                        $newPropertyIds = array_filter(
-                            array_map(fn($prop) => $prop->property_id, $categoryProperties),
-                            fn($id) => !is_null($id)
-                        );
-                        if (!empty($newPropertyIds)) {
-                            CategoryProperty::deleteAll([
-                                'and',
-                                ['category_id' => $model->id],
-                                ['not in', 'property_id', $newPropertyIds]
-                            ]);
-                        } else {
-                            CategoryProperty::deleteAll(['category_id' => $model->id]);
+                        // Удаление старых связей
+                        $deleteIds = array_diff($existingPropIds, $processedIds);
+                        if (!empty($deleteIds)) {
+                            CategoryProperty::deleteAll(['id' => $deleteIds]);
                         }
-                        foreach ($categoryProperties as $prop) {
-                            $prop->save(false);
-                        }
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', 'Категория обновлена');
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 }
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                Yii::$app->session->setFlash('error', 'Ошибка: ' . $e->getMessage());
             }
         }
-
         return $this->render('update', [
             'model' => $model,
-            'categoryProperties' => $categoryProperties,
+            'categoryProperties' => $existingProps ?: [new CategoryProperty()],
             'properties' => Property::find()->all(),
         ]);
     }

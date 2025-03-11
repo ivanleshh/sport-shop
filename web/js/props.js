@@ -13,6 +13,7 @@ $(() => {
     };
 
     let itemCount = $('#block-props').find('.category-props').length
+    let startItemCount = itemCount
 
     const block = (index) => `<div class="border p-3 my-3 category-props col-lg-6 w-100" data-index="${index}">
     <div class="d-flex justify-content-end">
@@ -176,7 +177,7 @@ $(() => {
         const select = $(this).closest('.category-props').find('.property-select');
         const index = select.closest('.category-props').data('index');
 
-        if (index < itemCount) {
+        if (index > startItemCount - 1) {
             const propId = `categoryproperty-${index}-property_id`;
             if ($(this).val().length > 0) {
                 select.val(null).trigger('change');
@@ -210,7 +211,7 @@ $(() => {
         const input = $(this).closest('.category-props').find('.props-title');
         const index = $(this).closest('.category-props').data('index');
 
-        if (index < itemCount) {
+        if (index > startItemCount - 1) {
             const titleId = `categoryproperty-${index}-property_title`;
             if ($(this).val()) {
                 input.val('');
