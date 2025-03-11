@@ -132,7 +132,7 @@ class Category extends \yii\db\ActiveRecord
                 . Yii::$app->security->generateRandomString()
                 . '.'
                 . $this->imageFile->extension;
-            $this->imageFile->saveAs('images/categories/' . $fileName);
+            $this->imageFile->saveAs(self::IMG_PATH . $fileName);
             $this->photo = $fileName;
             return true;
         } else {

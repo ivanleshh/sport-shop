@@ -26,6 +26,7 @@ class Product extends \yii\db\ActiveRecord
 {
     const IMG_PATH = '/images/products/';
     const NO_PHOTO = '/images/noPhoto.jpg';
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -40,13 +41,17 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['photo', 'title', 'description', 'price', 'category_id', 'brand_id'], 'required'],
+            [['title', 'description', 'price', 'category_id', 'brand_id'], 'required'],
             [['description'], 'string'],
             [['price'], 'number'],
+            ['photo', 'safe'],
+            ['count', 'default', 'value' => 0],
             [['category_id', 'count', 'brand_id'], 'integer'],
             [['photo', 'title'], 'string', 'max' => 255],
             [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => Brand::class, 'targetAttribute' => ['brand_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
+
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
         ];
     }
 
@@ -58,6 +63,7 @@ class Product extends \yii\db\ActiveRecord
         return [
             'id' => '№',
             'photo' => 'Фото товара',
+            'imageFile' => 'Фото товара',
             'title' => 'Название',
             'description' => 'Описание',
             'price' => 'Цена',
@@ -125,5 +131,23 @@ class Product extends \yii\db\ActiveRecord
     public function getOrderItems()
     {
         return $this->hasMany(OrderItem::class, ['product_id' => 'id']);
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $fileName = Yii::$app->user->id
+                . '_'
+                . time()
+                . '_'
+                . Yii::$app->security->generateRandomString()
+                . '.'
+                . $this->imageFile->extension;
+            $this->imageFile->saveAs(self::IMG_PATH . $fileName);
+            $this->photo = $fileName;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

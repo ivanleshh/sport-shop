@@ -75,50 +75,78 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Category();
-        $categoryProperties = [new CategoryProperty()];
+        $categoryProperties = [new CategoryProperty()]; // Начальный массив для формы
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if (is_null($model->imageFile) || $model->upload()) {
                 if ($model->save(false)) {
-                    $categoryProperties = [];
                     $postData = $this->request->post('CategoryProperty', []);
-
+                    $newCategoryProperties = [];
+                    // Обработка данных из формы
                     foreach ($postData as $item) {
-                        $categoryProperty = new CategoryProperty();
                         $propertyId = $item['property_id'] ?? null;
-                        $newPropTitle = $item['property_title'] ?? null;
-
-                        // Если выбрано существующее свойство
-                        if ($propertyId && !$newPropTitle) {
-                            $categoryProperty->property_id = $propertyId;
+                        $propertyTitle = $item['property_title'] ?? null;
+                        // Пропускаем пустые блоки (оба поля пусты)
+                        if (empty($propertyId) && empty($propertyTitle)) {
+                            continue;
                         }
-                        // Если введено новое название свойства
-                        elseif ($newPropTitle) {
-                            $newProperty = new Property();
-                            $newProperty->title = $newPropTitle;
-                            if ($newProperty->save()) {
-                                $categoryProperty->property_id = $newProperty->id;
+                        // Если заполнен property_id, проверяем, существует ли уже связь
+                        if (!empty($propertyId)) {
+                            // Проверяем, есть ли уже запись с таким category_id и property_id
+                            $existingProperty = CategoryProperty::findOne([
+                                'category_id' => $model->id,
+                                'property_id' => $propertyId
+                            ]);
+                            if ($existingProperty) {
+                                // Если связь уже существует, добавляем её в список без дублирования
+                                $newCategoryProperties[] = $existingProperty;
+                            } else {
+                                // Если связи нет, создаём новую
+                                $categoryProperty = new CategoryProperty();
+                                $categoryProperty->category_id = $model->id;
+                                $categoryProperty->property_id = $propertyId;
+                                $newCategoryProperties[] = $categoryProperty;
                             }
                         }
-                        $categoryProperty->category_id = $model->id;
-                        $categoryProperties[] = $categoryProperty;
-                    }
-                    if (Model::validateMultiple($categoryProperties)) {
-                        foreach ($categoryProperties as $prop) {
-                            $prop->save(false);
+                        // Если заполнен property_title, создаём новое свойство и связь
+                        if (!empty($propertyTitle)) {
+                            $newProperty = new Property();
+                            $newProperty->title = $propertyTitle;
+                            if ($newProperty->save()) {
+                                // Проверяем, существует ли уже связь с новым property_id
+                                $existingProperty = CategoryProperty::findOne([
+                                    'category_id' => $model->id,
+                                    'property_id' => $newProperty->id
+                                ]);
+                                if ($existingProperty) {
+                                    $newCategoryProperties[] = $existingProperty;
+                                } else {
+                                    $categoryProperty = new CategoryProperty();
+                                    $categoryProperty->category_id = $model->id;
+                                    $categoryProperty->property_id = $newProperty->id;
+                                    $newCategoryProperties[] = $categoryProperty;
+                                }
+                            }
                         }
-                        Yii::$app->session->setFlash('success', 'Категория успешно создана');
+                    }
+                    // Валидация всех новых связей
+                    if (Model::validateMultiple($newCategoryProperties)) {
+                        foreach ($newCategoryProperties as $prop) {
+                            if ($prop->isNewRecord) {
+                                $prop->save(false);
+                            }
+                        }
+                        Yii::$app->session->setFlash('success', "Категория $model->title успешно создана");
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 }
             }
         }
-
-        return $this->render('create', [
+        return $this->render('update', [
             'model' => $model,
             'categoryProperties' => $categoryProperties,
-            'properties' => Property::find()->all(), // Список существующих свойств
+            'properties' => ArrayHelper::map(Property::find()->all(), 'id', 'title'), // Для dropdown
         ]);
     }
 
@@ -132,58 +160,100 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $existingProps = $model->categoryProperties;
-        $existingPropIds = ArrayHelper::getColumn($existingProps, 'id');
+        $categoryProperties = CategoryProperty::find()->where(['category_id' => $model->id])->all();
+
+        // Если нет существующих свойств, добавляем пустой блок для формы
+        if (empty($categoryProperties)) {
+            $categoryProperties = [new CategoryProperty()];
+        }
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                if (is_null($model->imageFile) || $model->upload()) {
-                    if ($model->save(false)) {
-                        $postData = $this->request->post('CategoryProperty', []);
-                        $processedIds = [];
-                        $categoryProperties = [];
-                        foreach ($postData as $item) {
-                            $prop = $item['id']
-                                ? CategoryProperty::findOne($item['id'])
-                                : new CategoryProperty();
-                            if (isset($item['property_id'])) {
-                                $prop->property_id = $item['property_id'];
-                            } elseif (!empty($item['property_title'])) {
-                                $newProp = new Property(['title' => $item['property_title']]);
-                                $newProp->save(false);
-                                $prop->property_id = $newProp->id;
-                            }
-                            $prop->category_id = $model->id;
-                            $categoryProperties[] = $prop;
+            if (is_null($model->imageFile) || $model->upload()) {
+                if ($model->save(false)) {
+                    $postData = $this->request->post('CategoryProperty', []);
+                    $newCategoryProperties = [];
+                    // Обработка данных из формы
+                    foreach ($postData as $item) {
+                        $propertyId = $item['property_id'] ?? null;
+                        $propertyTitle = $item['property_title'] ?? null;
+                        // Пропускаем пустые блоки (оба поля пусты)
+                        if (empty($propertyId) && empty($propertyTitle)) {
+                            continue;
                         }
-                        // Валидация и сохранение
-                        if (Model::validateMultiple($categoryProperties)) {
-                            foreach ($categoryProperties as $prop) {
+                        // Если заполнен property_id, проверяем, существует ли уже связь
+                        if (!empty($propertyId)) {
+                            // Проверяем, есть ли уже запись с таким category_id и property_id
+                            $existingProperty = CategoryProperty::findOne([
+                                'category_id' => $model->id,
+                                'property_id' => $propertyId
+                            ]);
+                            if ($existingProperty) {
+                                // Если связь уже существует, добавляем её в список без дублирования
+                                $newCategoryProperties[] = $existingProperty;
+                            } else {
+                                // Если связи нет, создаём новую
+                                $categoryProperty = new CategoryProperty();
+                                $categoryProperty->category_id = $model->id;
+                                $categoryProperty->property_id = $propertyId;
+                                $newCategoryProperties[] = $categoryProperty;
+                            }
+                        }
+                        // Если заполнен property_title, создаём новое свойство и связь
+                        if (!empty($propertyTitle)) {
+                            $newProperty = new Property();
+                            $newProperty->title = $propertyTitle;
+                            if ($newProperty->save()) {
+                                // Проверяем, существует ли уже связь с новым property_id
+                                $existingProperty = CategoryProperty::findOne([
+                                    'category_id' => $model->id,
+                                    'property_id' => $newProperty->id
+                                ]);
+                                if ($existingProperty) {
+                                    $newCategoryProperties[] = $existingProperty;
+                                } else {
+                                    $categoryProperty = new CategoryProperty();
+                                    $categoryProperty->category_id = $model->id;
+                                    $categoryProperty->property_id = $newProperty->id;
+                                    $newCategoryProperties[] = $categoryProperty;
+                                }
+                            }
+                        }
+                    }
+                    // Валидация всех новых связей
+                    if (Model::validateMultiple($newCategoryProperties)) {
+                        // Получаем список property_id из новых связей
+                        $newPropertyIds = array_filter(
+                            array_map(fn($prop) => $prop->property_id, $newCategoryProperties),
+                            fn($id) => !is_null($id)
+                        );
+                        // Удаляем все связи для данной категории, которых нет в новом списке
+                        if (!empty($newPropertyIds)) {
+                            CategoryProperty::deleteAll([
+                                'and',
+                                ['category_id' => $model->id],
+                                ['not in', 'property_id', $newPropertyIds]
+                            ]);
+                        } else {
+                            // Если нет новых свойств, удаляем все существующие связи
+                            CategoryProperty::deleteAll(['category_id' => $model->id]);
+                        }
+                        // Сохраняем новые связи (только те, которые ещё не существуют)
+                        foreach ($newCategoryProperties as $prop) {
+                            if ($prop->isNewRecord) {
                                 $prop->save(false);
-                                $processedIds[] = $prop->id;
                             }
                         }
-                        // Удаление старых связей
-                        $deleteIds = array_diff($existingPropIds, $processedIds);
-                        if (!empty($deleteIds)) {
-                            CategoryProperty::deleteAll(['id' => $deleteIds]);
-                        }
-                        $transaction->commit();
-                        Yii::$app->session->setFlash('success', 'Категория обновлена');
+                        Yii::$app->session->setFlash('success', "Категория $model->title успешно обновлена");
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 }
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-                Yii::$app->session->setFlash('error', 'Ошибка: ' . $e->getMessage());
             }
         }
         return $this->render('update', [
             'model' => $model,
-            'categoryProperties' => $existingProps ?: [new CategoryProperty()],
-            'properties' => Property::find()->all(),
+            'categoryProperties' => $categoryProperties,
+            'properties' => ArrayHelper::map(Property::find()->all(), 'id', 'title'), // Для dropdown
         ]);
     }
 

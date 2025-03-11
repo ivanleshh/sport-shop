@@ -31,9 +31,8 @@ class CategoryProperty extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['category_id', 'property_id'], 'integer'],
+            [['category_id'], 'integer'],
             [['property_title'], 'string', 'max' => 255],
-            ['category_id', 'property_id'], 'unique', 'targetAttribute' => ['category_id', 'property_id'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
             [['property_id'], 'exist', 'skipOnError' => true, 'targetClass' => Property::class, 'targetAttribute' => ['property_id' => 'id']],
         ];

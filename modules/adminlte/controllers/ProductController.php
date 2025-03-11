@@ -2,11 +2,18 @@
 
 namespace app\modules\adminlte\controllers;
 
+use app\models\Category;
+use app\models\CategoryProperty;
 use app\models\Product;
+use app\models\ProductProperty;
 use app\modules\adminlte\models\ProductSearch;
+use Yii;
+use yii\base\Model;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -68,17 +75,48 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
+        $productProperties = []; // Значения характеристик будут заполнены после выбора категории
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if (is_null($model->imageFile) || $model->upload()) {
+                if ($model->save(false)) {
+                    $postData = $this->request->post('ProductProperty', []);
+                    $productProperties = [];
+                    // Получаем характеристики выбранной категории
+                    $categoryProperties = CategoryProperty::find()
+                        ->where(['category_id' => $model->category_id])
+                        ->all();
+                    $allowedPropertyIds = ArrayHelper::getColumn($categoryProperties, 'property_id');
+                    // Обработка значений характеристик
+                    foreach ($allowedPropertyIds as $index => $propertyId) {
+                        $value = $postData[$index]['value'] ?? null;
+
+                        if (!empty($value)) { // Сохраняем только заполненные значения
+                            $productProperty = new ProductProperty();
+                            $productProperty->product_id = $model->id;
+                            $productProperty->property_id = $propertyId;
+                            $productProperty->value = $value;
+                            $productProperties[] = $productProperty;
+                        }
+                    }
+
+                    if (Model::validateMultiple($productProperties)) {
+                        foreach ($productProperties as $prop) {
+                            $prop->save(false);
+                        }
+                        Yii::$app->session->setFlash('success', "Товар $model->title успешно создан");
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                }
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'productProperties' => $productProperties,
+            'categories' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
+            'properties' => [],
         ]);
     }
 
@@ -93,8 +131,14 @@ class ProductController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if (is_null($model->imageFile) || $model->upload()) {
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('success', "Товар $model->title успешно обновлён");
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('update', [
@@ -130,5 +174,24 @@ class ProductController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionGetCategoryProperties()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $categoryId = Yii::$app->request->get('category_id');
+        if (!$categoryId) {
+            return [];
+        }
+        $categoryProperties = CategoryProperty::find()
+            ->where(['category_id' => $categoryId])
+            ->with('property')
+            ->all();
+        return array_map(function ($prop) {
+            return [
+                'property_id' => $prop->property_id,
+                'property_title' => $prop->property->title,
+            ];
+        }, $categoryProperties);
     }
 }
