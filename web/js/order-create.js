@@ -2,8 +2,8 @@ $(() => {
     $('.order-form').on('change', '#orders-check', function() {
         if ($('#orders-check').prop('checked')) {
             $('#orders-pick_up_id option:first').prop('selected', true)
-            $('#orders-pick_up_id').prop('disabled', true)
             $('.delivery-fields').removeClass('collapse')
+            $('.pickup').addClass('collapse')
             $('#orders-pick_up_id').removeClass('is-invalid')
             $('#orders-address').removeClass('is-valid')
             $('#orders-date_delivery').removeClass('is-valid')
@@ -22,7 +22,7 @@ $(() => {
             value, messages, {"message":"Необходимо заполнить «время доставки»."});yii.validation.string(value, messages, {
             "message":"Значение «время доставки» должно быть строкой.","skipOnEmpty":1});}});
         } else {
-            $('#orders-pick_up_id').prop('disabled', false)
+            $('.pickup').removeClass('collapse')
             $('.delivery-fields').addClass('collapse')
             $('#orders-pick_up_id').removeClass('is-valid')
             $('#orders-address').removeClass('is-invalid')

@@ -25,7 +25,9 @@ use function PHPSTORM_META\map;
         ]) ?>
         <?= $form->field($model, 'type_pay_id')->dropDownList($typePays, ['prompt' => 'Выберите тип оплаты']) ?>
     </div>
-    <?= $form->field($model, 'pick_up_id')->dropDownList($pickUps, ['prompt' => 'Выберите пункты выдачи']) ?>
+    <div class="pickup">
+        <?= $form->field($model, 'pick_up_id')->dropDownList($pickUps, ['prompt' => 'Выберите пункты выдачи']) ?>
+    </div>
     <?= $form->field($model, 'check')->checkbox() ?>
     <div class="delivery-fields collapse">
         <?= $form->field($model, 'address')->textarea(['rows' => 2]) ?>

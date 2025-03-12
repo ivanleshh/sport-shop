@@ -49,12 +49,12 @@ class RegisterForm extends Model
     public function attributeLabels()
     {
         return [
-            'name' => 'имя',
-            'surname' => 'фамилия',
-            'login' => 'логин',
-            'email' => 'почта',
-            'password' => 'пароль',
-            'password_repeat' => 'повтор пароля',
+            'name' => 'Имя',
+            'surname' => 'Фамилия',
+            'login' => 'Логин',
+            'email' => 'Почта',
+            'password' => 'Пароль',
+            'password_repeat' => 'Повтор пароля',
             'personal' => 'Я согласен на обработку персональных данных',
             'rules' => 'Я принимаю условия пользовательского соглашения',
         ];
