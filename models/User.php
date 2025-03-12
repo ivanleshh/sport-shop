@@ -137,17 +137,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return $this->hasMany(Cart::class, ['user_id' => 'id']);
     }
-
-    /**
-     * Gets query for [[Comments]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getComments()
-    {
-        return $this->hasMany(Comment::class, ['user_id' => 'id']);
-    }
-
+    
     /**
      * Gets query for [[Orders]].
      *
@@ -169,13 +159,33 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
-     * Gets query for [[Reactions]].
+     * Gets query for [[Reviews]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getReactions()
+    public function getReviews()
     {
-        return $this->hasMany(Reaction::class, ['user_id' => 'id']);
+        return $this->hasMany(Review::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CompareProducts]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompareProducts()
+    {
+        return $this->hasMany(CompareProducts::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[FavouriteProducts]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavouriteProducts()
+    {
+        return $this->hasMany(FavouriteProducts::class, ['user_id' => 'id']);
     }
 
     // Метод для поиска пользователя по его логину

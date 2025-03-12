@@ -4,9 +4,11 @@ namespace app\controllers;
 
 use app\models\Category;
 use app\models\CategorySearch;
+use app\models\FavouriteProducts;
 use app\models\Product;
 use app\models\ProductSearch;
 use Yii;
+use yii\bootstrap5\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -103,5 +105,34 @@ class CatalogController extends Controller
             $categoryIds = array_merge($categoryIds, $this->getAllCategoryIds($category->id));
         }
         return $categoryIds;
+    }
+
+    // Метод для добавления товара в избранное
+    public function actionFavourite()
+    {
+        if ($this->request->isPost) {
+            $id = $this->request->post('id');
+            $model = FavouriteProducts::findOne([
+                'user_id' => Yii::$app->user->id,
+                'product_id' => $id
+            ]);
+            if (is_null($model)) {
+                $model = new FavouriteProducts();
+                $model->user_id = Yii::$app->user->id;
+                $model->product_id = $id;
+                $model->status = 1;
+            } else {
+                $model->status = (int)!$model->status;
+            }
+            if ($model->status == 1) {
+                Yii::$app->session->setFlash('success', $model->product->title . 
+                ' добавлен в <a href="/personal/favourite-products" class="text-decoration-none">Избранное</a>');
+            } else {
+                Yii::$app->session->setFlash('warning', $model->product->title . 
+                ' удалён из <a href="/personal/favourite-products" class="text-decoration-none">Избранного</a>');
+            }
+            $model->save();
+            return $model->status;
+        }
     }
 }

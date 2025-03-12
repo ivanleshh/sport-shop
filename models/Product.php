@@ -74,16 +74,6 @@ class Product extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Reactions]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getReactions()
-    {
-        return $this->hasMany(Reaction::class, ['product_id' => 'id']);
-    }
-
-    /**
      * Gets query for [[Brand]].
      *
      * @return \yii\db\ActiveQuery
@@ -114,13 +104,43 @@ class Product extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Comments]].
+     * Gets query for [[ProductProperties]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getComments()
+    public function getProductProperties()
     {
-        return $this->hasMany(Comment::class, ['product_id' => 'id']);
+        return $this->hasMany(ProductProperty::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Reviews]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReviews()
+    {
+        return $this->hasMany(Review::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[CompareProducts]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCompareProducts()
+    {
+        return $this->hasMany(CompareProducts::class, ['product_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[FavouriteProducts]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFavouriteProducts()
+    {
+        return $this->hasMany(FavouriteProducts::class, ['product_id' => 'id']);
     }
 
     /**

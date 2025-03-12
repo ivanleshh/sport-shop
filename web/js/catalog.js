@@ -18,7 +18,7 @@ const catalog_reload = function () {
 }
 
 $(() => {
-  $("#catalog-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
+  $("#catalog-pjax, #favourite-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
     e.preventDefault();
     const a = $(this);
     $.ajax({
@@ -27,10 +27,17 @@ $(() => {
       success(data) {
         if (data) {
           if (data.status) {
-            $.pjax.reload("#catalog-pjax", {
-              push: false,
-              timeout: 5000
-            })
+            if ($('#catalog-pjax').length > 0) {
+              $.pjax.reload("#catalog-pjax", {
+                push: false,
+                timeout: 5000
+              })
+            } else if ($('#favourite-pjax').length > 0) {
+              $.pjax.reload("#favourite-pjax", {
+                push: false,
+                timeout: 5000
+              })
+            }
           } else {
             error_modal(data.message)
           }
@@ -39,7 +46,7 @@ $(() => {
     });
   });
 
-  $("#catalog-pjax").on('pjax:end', function () {
+  $("#catalog-pjax, #favourite-pjax").on('pjax:end', function () {
     let alert = $('.alert')
     if (alert.length > 0) {
       setTimeout(() => {
@@ -50,4 +57,20 @@ $(() => {
       cartItemCount()
     }
   })
+
+  $("#catalog-pjax").on("click", ".btn-favourite", function (e) {
+    e.preventDefault();
+    const a = $(this);
+    $.ajax({
+      url: a.attr("href"),
+      type: "POST",
+      data: {
+        id: a.data("id")
+      },
+      success(data) {
+        a.html(data == '1' ? "❤" : "🤍");
+        catalog_reload()
+      },
+    });
+  });
 })

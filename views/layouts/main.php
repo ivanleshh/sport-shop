@@ -66,7 +66,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         ?>
 
         <?php if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) : ?>
-            <div class="d-flex ms-5 gap-2 text-white">
+            <div class="d-flex ms-5 gap-3 text-white align-items-center">
+                <?= Html::a("🤍", ['/personal/favourite-products'], ['class' => 'text-decoration-none mt-1']) ?>
                 <?= Html::a(
                     '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" 
             class="bi bi-cart-fill" viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 

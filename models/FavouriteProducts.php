@@ -5,28 +5,26 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "comment".
+ * This is the model class for table "favourite_products".
  *
  * @property int $id
  * @property int $user_id
  * @property int $product_id
- * @property string $text
- * @property int|null $parent_id
- * @property string $created_at
+ * @property int $status
  *
- * @property Comment[] $comments
- * @property Comment $parent
  * @property Product $product
  * @property User $user
  */
-class Comment extends \yii\db\ActiveRecord
+class FavouriteProducts extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'comment';
+        return 'favourite_products';
     }
 
     /**
@@ -35,11 +33,9 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_id', 'text'], 'required'],
-            [['user_id', 'product_id', 'parent_id'], 'integer'],
-            [['text'], 'string'],
-            [['created_at'], 'safe'],
-            [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Comment::class, 'targetAttribute' => ['parent_id' => 'id']],
+            [['status'], 'default', 'value' => 0],
+            [['user_id', 'product_id'], 'required'],
+            [['user_id', 'product_id', 'status'], 'integer'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -54,30 +50,8 @@ class Comment extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'product_id' => 'Product ID',
-            'text' => 'Text',
-            'parent_id' => 'Parent ID',
-            'created_at' => 'Created At',
+            'status' => 'Status',
         ];
-    }
-
-    /**
-     * Gets query for [[Comments]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getComments()
-    {
-        return $this->hasMany(Comment::class, ['parent_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Parent]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getParent()
-    {
-        return $this->hasOne(Comment::class, ['id' => 'parent_id']);
     }
 
     /**
@@ -99,4 +73,5 @@ class Comment extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
 }

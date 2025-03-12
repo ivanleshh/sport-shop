@@ -33,7 +33,11 @@ $this->params['breadcrumbs'][] = $this->title;
         echo Alert::widget();
     } ?>
     <h3 class="mb-4"><?= Html::encode($this->title) ?></h3>
-    <?= Html::a('История заказов', ['/personal/orders'], ['class' => 'btn btn-warning mb-3']) ?>
+    <div class="d-flex flex-wrap gap-3">
+        <?= Html::a("🤍 Избранное", ['/personal/favourite-products'], ['class' => 'btn btn-outline-danger mb-3']) ?>
+        <?= Html::a('История заказов', ['/personal/orders'], ['class' => 'btn btn-warning mb-3']) ?>
+    </div>
+    
     <div class="user-personal-form col-md-4">
         <?= DetailView::widget([
             'model' => $model,

@@ -5,24 +5,26 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "reaction".
+ * This is the model class for table "compare_products".
  *
  * @property int $id
  * @property int $user_id
  * @property int $product_id
- * @property string $stars
+ * @property int $status
  *
  * @property Product $product
  * @property User $user
  */
-class Reaction extends \yii\db\ActiveRecord
+class CompareProducts extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'reaction';
+        return 'compare_products';
     }
 
     /**
@@ -31,9 +33,9 @@ class Reaction extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'product_id', 'stars'], 'required'],
-            [['user_id', 'product_id'], 'integer'],
-            [['stars'], 'string'],
+            [['status'], 'default', 'value' => 0],
+            [['user_id', 'product_id'], 'required'],
+            [['user_id', 'product_id', 'status'], 'integer'],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -48,7 +50,7 @@ class Reaction extends \yii\db\ActiveRecord
             'id' => 'ID',
             'user_id' => 'User ID',
             'product_id' => 'Product ID',
-            'stars' => 'Stars',
+            'status' => 'Status',
         ];
     }
 
@@ -71,4 +73,5 @@ class Reaction extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
 }
