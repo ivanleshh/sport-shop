@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -20,11 +21,21 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
         'css/style.css',
+        "front/css/bootstrap.min.css",
+        "front/css/LineIcons.3.0.css",
+        "front/css/tiny-slider.css",
+        "front/css/glightbox.min.css",
+        "front/css/main.css",
+        "assets/bootstrap-icons/bootstrap-icons.css",
     ];
     public $js = [
-        'js/catalog.js'
+        'js/catalog.js',
+        "front/js/bootstrap.min.js",
+        "front/js/tiny-slider.js",
+        "front/js/glightbox.min.js",
+        "front/js/main.js",
+        "front/js/other.js",
     ];
     public $depends = [
         'yii\web\YiiAsset',

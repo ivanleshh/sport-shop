@@ -2,6 +2,23 @@
     font-size: 0.8rem;
 }
 
+.header-middle {
+    background: #FCF1C3;
+}
+
+.btn-orange {
+    background: rgb(225, 146, 0) !important;
+}
+
+.btn-orange:hover {
+    background: rgb(255, 179, 36) !important;
+}
+
+.navbar-logo {
+    width: 200px !important;
+    margin-top: 1rem;
+}
+
 #main {
     animation: main .6s ease-in;
 }

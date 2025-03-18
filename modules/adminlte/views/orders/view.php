@@ -117,7 +117,7 @@ use yii\widgets\Pjax;
             ]) ?>
             <div class="d-flex flex-column gap-3 justify-content-center">
                 <?php if ($model->status->id == Status::getStatusId('Новый')) {
-                    echo Html::a('Принять', ['work', 'id' => $model->id], [
+                    echo Html::a('Принять в работу', ['work', 'id' => $model->id], [
                         'class' => 'btn btn-outline-warning',
                         'data' => [
                             'confirm' => 'Подтвердите действие',

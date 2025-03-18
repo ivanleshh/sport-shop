@@ -10,12 +10,12 @@ use yii\widgets\Pjax;
 /** @var app\models\CategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Каталог';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [
+    ['label' => 'Главная', 'url' => ['/site/index'], 'icon' => 'bi bi-house-fill mx-2'],
+    'Каталог',
+];
 ?>
 <div class="category-index">
-
-    <h3><?= Html::encode($this->title) ?></h3>
 
     <?php Pjax::begin(); ?>
 
