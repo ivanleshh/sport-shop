@@ -11,7 +11,7 @@ use yii\bootstrap5\Html;
 $this->title = 'Авторизация';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-login">
+<div class="hero-content site-login">
     <h3><?= Html::encode($this->title) ?></h3>
 
     <p>Пожалуйста, заполните указанные ниже поля:</p>

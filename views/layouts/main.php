@@ -109,8 +109,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <div class="col-lg-2 col-md-3 col-12 text-center">
                         <!-- Start Header Logo -->
                         <a class="navbar-logo" href="/">
-                            <!-- <img src="front/images/logo/logo.svg" alt="Logo"> -->
-                            <img class="w-100" src="images/header_logo.jpg" alt="Logo">
+                            <?= Html::img("/images/header_logo.jpg", ['class' => "w-100", 'alt' => "Logo"]) ?>
                         </a>
                         <!-- End Header Logo -->
                     </div>
@@ -334,6 +333,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </section>
     <!-- End Hero Area -->
 
+    <?php if (isset($this->blocks['additional'])): ?>
+        <?= $this->blocks['additional'] ?> <!-- Секция для дополнительного контента -->
+    <?php endif; ?>
+
     <!-- Start Footer Area -->
     <footer class="footer">
         <!-- Start Footer Top -->
@@ -344,7 +347,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="col-lg-3 col-md-4 col-12">
                             <div class="footer-logo">
                                 <a href="/">
-                                    <img src="images/logo_dark.png" alt="#">
+                                    <?= Html::img("/images/logo_dark.png", ['class' => "w-100", 'alt' => "Logo"]) ?>
                                 </a>
                             </div>
                         </div>
