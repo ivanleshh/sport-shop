@@ -5,7 +5,7 @@
 $this->title = 'My Yii Application';
 ?>
 
-<div class="row">
+<div class="row mt-5">
     <div class="col-lg-8 col-12 custom-padding-right">
         <div class="slider-head">
             <!-- Start Hero Slider -->
@@ -81,7 +81,7 @@ $this->title = 'My Yii Application';
 
 <?php $this->beginBlock('additional') ?>
     <!-- Start Trending Product Area -->
-    <section class="trending-product section" style="margin-top: 12px;">
+    <section class="trending-product section">
         <div class="container">
             <div class="row">
                 <div class="col-12">

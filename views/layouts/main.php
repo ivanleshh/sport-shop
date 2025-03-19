@@ -70,32 +70,32 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     </div>
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="top-end">
-                            <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
-                                <li><a href="/personal">Личный кабинет</a></li>
-                            <?php endif; ?>
-                            <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
-                                <li><a href="/admin-lte">Панель администратора</a></li>
-                            <?php endif; ?>
-                            <?php if (Yii::$app->user->isGuest) : ?>
-                                <ul class="user-login">
+                            <ul class="user-login">
+                                <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
+                                    <li><a href="/personal">Личный кабинет</a></li>
+                                <?php endif; ?>
+                                <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
+                                    <li><a href="/admin-lte">Панель администратора</a></li>
+                                <?php endif; ?>
+                                <?php if (Yii::$app->user->isGuest) : ?>
                                     <li><a href="/site/login">Вход</a></li>
                                     <li><a href="/site/register">Регистрация</a></li>
-                                </ul>
-                            <?php else : ?>
-                                <li class="user">
-                                    <i class="lni lni-user"></i>
-                                    <?= "Привет, " . Yii::$app->user->identity->login ?>
-                                </li>
-                                <li>
-                                    <?= Html::beginForm(['/site/logout'])
-                                        . Html::submitButton(
-                                            'Выход <i class="bi bi-door-open-fill"></i>',
-                                            ['class' => 'nav-link btn btn-link logout']
-                                        )
-                                        . Html::endForm()
-                                    ?>
-                                </li>
-                            <?php endif; ?>
+                                <?php else : ?>
+                                    <li class="user">
+                                        <i class="lni lni-user"></i>
+                                        <?= "Привет, " . Yii::$app->user->identity->login ?>
+                                    </li>
+                                    <li>
+                                        <?= Html::beginForm(['/site/logout'])
+                                            . Html::submitButton(
+                                                'Выход <i class="bi bi-door-open-fill"></i>',
+                                                ['class' => 'logout bg-transparent border-0']
+                                            )
+                                            . Html::endForm()
+                                        ?>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -106,14 +106,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="header-middle">
             <div class="container">
                 <div class="row align-items-center justify-content-between">
-                    <div class="col-lg-2 col-md-3 col-12 text-center">
+                    <div class="col-lg-3 col-md-3 col-12 text-center">
                         <!-- Start Header Logo -->
                         <a class="navbar-logo" href="/">
                             <?= Html::img("/images/header_logo.jpg", ['class' => "w-100", 'alt' => "Logo"]) ?>
                         </a>
                         <!-- End Header Logo -->
                     </div>
-                    <div class="col-lg-5 col-md-7 d-xs-none">
+                    <div class="col-lg-5 col-md-6 d-xs-none">
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
                             <!-- navbar search start -->
@@ -129,26 +129,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         </div>
                         <!-- End Main Menu Search -->
                     </div>
-                    <div class="nav-hotline col-lg-2 col-md-2 col-5">
-                        <div class="middle-right-area">
+                    <div class="nav-hotline col-lg-4 col-md-2 col-5">
+                        <div class="middle-right-area justify-content-end gap-4">
                             <div class="nav-hotline-ic">
-                                <i class="lni lni-phone"></i>
+                                <i class="bi bi-telephone-fill"></i>
                                 <h3>Горячая линия:
                                     <span>(+100) 123 456 7890</span>
                                 </h3>
                             </div>
                             <?php if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) : ?>
-                                <div class="d-flex ms-5 gap-3 text-white align-items-center">
-                                    <?= Html::a("🤍", ['/personal/favourite-products'], ['class' => 'text-decoration-none mt-1']) ?>
-                                    <?= Html::a(
-                                        '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" 
-                                    class="bi bi-cart-fill" viewBox="0 0 16 16"><path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 
-                                    .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 
-                                    3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 
-                                    0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/></svg>',
+                                <div class="nav-actions d-flex text-white align-items-center gap-3">
+                                    <div><?= Html::a('<i class="bi bi-bag-heart-fill"></i>', ['/personal/favourite-products'], ['class' => 'text-decoration-none']) ?></div>
+                                    <div class="position-relative">
+                                        <?= Html::a(
+                                        '<i class="bi bi-cart4"></i>',
                                         ['/cart/index'],
-                                        ['id' => 'btn-cart']
-                                    ) ?>
+                                        ['id' => 'btn-cart']) ?>
+                                    
                                     <? Pjax::begin([
                                         'id' => 'cart-item-count',
                                         'enablePushState' => false,
@@ -157,8 +154,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                             'data-url' => '/cart/item-count',
                                         ]
                                     ]) ?>
-                                    <?= Cart::getItemCount() ?>
+                                    <span class="cart-item-count"><?= Cart::getItemCount() ?></span>
                                     <? Pjax::end() ?>
+                                    </div>
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -287,7 +285,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <!-- End Header Area -->
 
     <!-- Start Hero Area -->
-    <section id="main" class="hero-area">
+    <section id="main" class="hero-area my-4">
         <div class="container">
 
             <!-- Start Breadcrumbs -->
@@ -296,12 +294,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 $breadcrumbs = $this->params['breadcrumbs'];
                 $lastItem = array_pop($breadcrumbs); // Извлекаем последний элемент (текущая страница)
             ?>
-                <div class="breadcrumbs">
+                <div class="breadcrumbs border rounded-4 mb-4">
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="breadcrumbs-content">
-                                    <h1 class="page-title"><?= is_array($lastItem) ? $lastItem['label'] : $lastItem ?></h1>
+                                    <h3 class="page-title fs-4"><?= is_array($lastItem) ? $lastItem['label'] : $lastItem ?></h3>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-12">
@@ -343,15 +341,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="footer-top">
             <div class="container">
                 <div class="inner-content">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-4 col-12">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-2 col-md-3 col-6">
                             <div class="footer-logo">
                                 <a href="/">
                                     <?= Html::img("/images/logo_dark.png", ['class' => "w-100", 'alt' => "Logo"]) ?>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-9 col-md-8 col-12 align-self-center">
+                        <div class="col-lg-9 col-md-8 col-12 align-self-center gx-3">
                             <div class="footer-newsletter gap-3">
                                 <h4 class="title">
                                     Subscribe to our Newsletter
@@ -456,7 +454,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="col-lg-4 col-12">
                             <div class="payment-gateway">
                                 <span>We Accept:</span>
-                                <img src="front/images/footer/credit-cards-footer.png" alt="#">
+                                <img src="/front/images/footer/credit-cards-footer.png" alt="#">
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
@@ -468,13 +466,17 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="col-lg-4 col-12">
                             <ul class="socila">
                                 <li>
-                                    <span>Follow Us On:</span>
+                                    <span>Мы в соц.сетях:</span>
                                 </li>
-                                <li><a href="javascript:void(0)"><i class="lni lni-facebook-filled"></i></a></li>
-                                <li><a href="javascript:void(0)"><i class="lni lni-twitter-original"></i></a></li>
-                                <li><a href="javascript:void(0)"><i class="lni lni-instagram"></i></a></li>
-                                <li><a href="javascript:void(0)"><i class="lni lni-google"></i></a></li>
+                                <li>
+                                <a href="#"><i class="bi bi-github w-100"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="bi bi-telegram"></i></a>
+                            </li>
                             </ul>
+                            <div class="nav-social">
+                    </div>
                         </div>
                     </div>
                 </div>

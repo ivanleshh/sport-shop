@@ -17,10 +17,12 @@ use yii\widgets\Pjax;
 /** @var app\modules\account\models\UserSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Личный кабинет';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [
+    ['label' => 'Главная', 'url' => ['/site/index'], 'icon' => 'bi bi-house-fill mx-2'],
+    'Личный кабинет',
+];
 ?>
-<div class="user-index">
+<div class="hero-content user-index">
     <?php Pjax::begin([
         'id' => 'personal-pjax',
         'enablePushState' => false,
@@ -32,7 +34,6 @@ $this->params['breadcrumbs'][] = $this->title;
         Yii::$app->session->removeFlash('change-personal');
         echo Alert::widget();
     } ?>
-    <h3 class="mb-4"><?= Html::encode($this->title) ?></h3>
     <div class="d-flex flex-wrap gap-3">
         <?= Html::a("🤍 Избранное", ['/personal/favourite-products'], ['class' => 'btn btn-outline-danger mb-3']) ?>
         <?= Html::a('История заказов', ['/personal/orders'], ['class' => 'btn btn-warning mb-3']) ?>

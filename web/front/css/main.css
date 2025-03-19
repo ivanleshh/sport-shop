@@ -887,16 +887,16 @@ ol {
   height: 100%;
 }
 
-@media only screen and (min-width: 480px) and (max-width: 767px) {
+/* @media only screen and (min-width: 480px) and (max-width: 767px) {
   .container {
     width: 475px;
   }
-}
+} */
 
 /* Bread Crumbs */
 .breadcrumbs {
   position: relative;
-  padding: 30px 0;
+  padding: 20px 0;
   z-index: 2;
   text-align: left;
   background-color: #fff;
@@ -904,17 +904,17 @@ ol {
   box-shadow: 0px 7px 30px rgba(0, 0, 0, 0.075);
 }
 
-@media only screen and (min-width: 768px) and (max-width: 991px) {
+/* @media only screen and (min-width: 768px) and (max-width: 991px) {
   .breadcrumbs {
     padding: 30px;
   }
-}
+} */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   .breadcrumbs {
     padding: 30px;
   }
-}
+} */
 
 .breadcrumbs .breadcrumbs-content {
   position: relative;
@@ -1015,8 +1015,8 @@ top: -1px;
 }
 
 .section {
-  padding-top: 90px;
-  padding-bottom: 90px;
+  padding-top: 45px;
+  padding-bottom: 45px;
   position: relative;
 }
 
@@ -1501,7 +1501,7 @@ top: -1px;
 }
 
 @media (max-width: 767px) {
-  .header .topbar .top-middle {
+  .header .topbar .top-end {
     display: none;
   }
 }
@@ -1527,13 +1527,18 @@ top: -1px;
   color: rgb(255, 179, 36);
 }
 
+.header .topbar .top-middle {
+  float: left;
+  display: inline-block;
+  margin: 0 !important;
+}
+
 .header .topbar .top-end {
   float: right;
-  display: inline-block;
 }
 
 @media (max-width: 767px) {
-  .header .topbar .top-end {
+  .header .topbar .top-middle {
     float: none;
     text-align: center;
     display: block;
@@ -1577,14 +1582,17 @@ top: -1px;
   border-right: none;
 }
 
-.header .topbar .top-end .user-login li a {
+.header .topbar .top-end .user-login li a,
+.logout {
   color: #fff;
   font-weight: 500;
   font-size: 14px;
   white-space: nowrap;
+  transition: .4s;
 }
 
-.header .topbar .top-end .user-login li a:hover {
+.header .topbar .top-end .user-login li a:hover,
+.logout:hover {
   color: rgb(255, 179, 36);
 }
 
@@ -1630,7 +1638,7 @@ top: -1px;
 
 .header .nav-hotline {
   position: relative;
-  padding-left: 50px;
+  /* padding-left: 50px; */
 }
 
 @media (max-width: 767px) {
@@ -1648,18 +1656,17 @@ top: -1px;
 .header .nav-hotline i {
   color: #081828;
   font-size: 18px;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-  height: 40px;
-  width: 40px;
   line-height: 40px;
   text-align: center;
   display: block;
-  border: 1px solid #eee;
+  width: 40px;
   border-radius: 50%;
+  transition: .4s;
+}
+
+.header .nav-hotline .nav-actions i:hover {
+  background: rgb(225, 146, 0);
+  color: white;
 }
 
 .header .nav-hotline h3 {
@@ -2866,8 +2873,7 @@ top: 2px;
 .hero-area {
   position: relative;
   background-color: #fff;
-  margin-top: 12px;
-  min-height: 76vh;
+  min-height: 71vh;
 }
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
@@ -4676,7 +4682,7 @@ top: 2px;
 
 .footer .single-footer.f-link ul li a:hover {
   padding-left: 5px;
-  color: #0167F3;
+  color: rgb(225, 146, 0);
 }
 
 .footer .single-footer.f-contact .phone {
