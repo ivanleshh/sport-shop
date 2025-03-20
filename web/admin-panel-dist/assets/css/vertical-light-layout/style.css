@@ -16294,6 +16294,7 @@ input:focus {
 /* Typography */
 body {
   font-size: 1rem;
+  /* font-family: "Open Sans", sans-serif; */
   font-weight: initial;
   line-height: normal;
   -webkit-font-smoothing: antialiased;
@@ -24842,6 +24843,8 @@ div.tagsinput span.tag a {
   -webkit-transition: width 0.25s ease, background 0.25s ease;
   -moz-transition: width 0.25s ease, background 0.25s ease;
   -ms-transition: width 0.25s ease, background 0.25s ease;
+  color: white;
+  border-left: none;
   background: #181824;
   width: 240px;
   height: 70px;
@@ -24852,9 +24855,10 @@ div.tagsinput span.tag a {
 }
 @media (max-width: 991px) {
   .navbar .navbar-brand-wrapper {
+    border-left: 5px solid orange;
     width: 55px;
-    padding-left: 15px;
-    padding-right: 15px;
+    color: #181824;
+    padding: 0;
   }
 }
 .sidebar-light .navbar .navbar-brand-wrapper {
@@ -24948,7 +24952,6 @@ div.tagsinput span.tag a {
 @media (max-width: 991px) {
   .navbar .navbar-menu-wrapper {
     width: auto;
-    padding-left: 15px;
     padding-right: 15px;
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;
@@ -25281,7 +25284,8 @@ div.tagsinput span.tag a {
     flex-direction: row;
   }
   .navbar .navbar-brand-wrapper {
-    width: 75px;
+    width: 175px;
+    background: transparent;
   }
   .navbar .navbar-brand-wrapper .navbar-brand.brand-logo {
     display: none;
@@ -25297,9 +25301,6 @@ div.tagsinput span.tag a {
   }
 }
 @media (max-width: 480px) {
-  .navbar .navbar-brand-wrapper {
-    width: 55px;
-  }
   .navbar .navbar-brand-wrapper .brand-logo-mini {
     padding-top: 0px;
   }
