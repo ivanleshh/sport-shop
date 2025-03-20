@@ -20,10 +20,10 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <div class="d-flex gap-3 align-items-end flex-wrap">
-        <div class="d-flex align-self-center align-items-center gap-3">
-            🔎
+        <div class="d-flex align-items-end gap-3">
+            <span class="mb-2">🔎</span>
             <?= $form->field($model, 'title') ?>
-            <?= Html::a('Сбросить', ['/catalog/view', 'id' => $model->category->id], ['class' => 'btn btn-outline-secondary mt-2']) ?>
+            <?= Html::a('Сбросить', ['/catalog/view', 'id' => $model->category->id], ['class' => 'btn btn-outline-secondary']) ?>
         </div>
     </div>
 
