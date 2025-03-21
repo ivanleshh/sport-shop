@@ -19,6 +19,10 @@
     margin-top: 1rem;
 }
 
+.navbar .navbar-title {
+    display: block;
+}
+
 .hero-content {
     padding: 25px;
     box-shadow: 0px 7px 30px rgba(0, 0, 0, 0.075);
@@ -39,6 +43,11 @@
 
 .nav-hotline-ic {
     display: flex;
+}
+
+.container-admin {
+    padding-right: 1.75rem;
+    padding-left: 1.75rem;
 }
 
 #main {
@@ -113,9 +122,129 @@ textarea {
     box-shadow: 0 0 15px rgb(189, 188, 188);
 }
 
+/* BREAD CRUMBS START */
+.breadcrumbs {
+    position: relative;
+    padding: 20px 0;
+    z-index: 2;
+    text-align: left;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 7px 30px rgba(0, 0, 0, 0.075);
+    box-shadow: 0px 7px 30px rgba(0, 0, 0, 0.075);
+}
+
+.breadcrumbs .breadcrumbs-content {
+    position: relative;
+    text-align: left;
+}
+
+.breadcrumbs .breadcrumbs-content .page-title {
+    font-size: 18px;
+    color: #081828;
+    font-weight: 600;
+    position: relative;
+    line-height: 28px;
+    text-transform: capitalize;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .breadcrumbs .breadcrumbs-content .page-title {
+        font-size: 17px;
+        line-height: 28px;
+    }
+}
+
+@media (max-width: 767px) {
+    .breadcrumbs .breadcrumbs-content .page-title {
+        font-size: 16px;
+        text-align: center;
+        line-height: 26px;
+    }
+}
+
+.breadcrumbs .breadcrumbs-content .breadcrumb-nav {
+    background: transparent;
+    border-radius: 0;
+    margin-bottom: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.breadcrumbs .breadcrumb-nav {
+    text-align: right;
+}
+
+@media (max-width: 767px) {
+    .breadcrumbs .breadcrumb-nav {
+        text-align: center;
+        margin-top: 15px;
+    }
+}
+
+.breadcrumbs .breadcrumb-nav li {
+    display: inline-block;
+    position: relative;
+    padding-right: 14px;
+    margin-right: 14px;
+    text-transform: capitalize;
+}
+
+.breadcrumbs .breadcrumb-nav li:after {
+    content: "\ea62";
+    font-family: lineIcons;
+    font-size: 12px;
+    position: absolute;
+    top: 3px;
+    right: -7px;
+}
+
+.breadcrumbs .breadcrumb-nav li:last-child {
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumbs .breadcrumb-nav li:last-child::after {
+    display: none;
+}
+
+.breadcrumbs .breadcrumb-nav li,
+.breadcrumbs .breadcrumb-nav li a {
+    transition: .4s;
+    text-decoration: none;
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.breadcrumbs .breadcrumb-nav li i,
+.breadcrumbs .breadcrumb-nav li a i {
+    font-size: 13px;
+    display: inline-block;
+    margin-right: 3px;
+    position: relative;
+    top: -1px;
+}
+
+.breadcrumbs .breadcrumb-nav li a {
+    position: relative;
+}
+
+.breadcrumbs .breadcrumb-nav li a:hover {
+    color: rgb(225, 146, 0);
+}
+
+/* BREAD CRUMBS END */
+
 @media screen and (max-width: 768px) {
     .catalog-items {
         justify-content: center;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container-admin {
+        padding-right: 1rem;
+        padding-left: 1rem;
     }
 }
 
@@ -123,7 +252,9 @@ textarea {
     from {
         transform: translateX(50px);
         opacity: 0;
-    } to {
+    }
+
+    to {
         transform: translateX(0);
         opacity: 1;
     }
@@ -133,24 +264,38 @@ textarea {
     from {
         transform: translateY(-15px);
         opacity: 0;
-    } to {
+    }
+
+    to {
         transform: translateX(0);
         opacity: 1;
     }
 }
 
 @keyframes valid {
-    0%, 50%, 100% {
+
+    0%,
+    50%,
+    100% {
         box-shadow: 0 0 3px rgb(9, 106, 9);
-    } 25%, 75% {
+    }
+
+    25%,
+    75% {
         box-shadow: 0 0 10px rgb(9, 106, 9);
     }
 }
 
 @keyframes invalid {
-    0%, 50%, 100% {
+
+    0%,
+    50%,
+    100% {
         transform: translateX(0);
-    } 25%, 75% {
+    }
+
+    25%,
+    75% {
         transform: translateX(-7px);
     }
 }

@@ -34,7 +34,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <div class="container-scroller">
         <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
             <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-                <h5 class="ps-5 ps-lg-0 fs-6 mt-2 text-uppercase">Панель администратора</h5>
+                <h5 class="brand-logo ps-5 ps-lg-0 fs-6 mt-2 text-uppercase pe-4">Панель администратора</h5>
+                <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+                    <span class="icon-menu"></span>
+                </button>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center">
                 <ul class="navbar-nav navbar-nav-right">
@@ -128,14 +131,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <li class="nav-item nav-category"><span class="nav-link">Управление магазином</span></li>
                     <li class="nav-item">
                         <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                            <span class="menu-title">Действия</span>
+                            <span class="menu-title">Опции</span>
                             <i class="bi bi-stack menu-icon"></i>
                         </a>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/dropdowns.html">Dropdowns</a></li>
-                                <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin-panel/orders">Заказы</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin-panel/product">Товары</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin-panel/category">Категории</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin-panel/brand">Бренды</a></li>
                             </ul>
                         </div>
                     </li>
@@ -146,6 +150,40 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <div class="content-wrapper">
                     <div class="row">
                         <div class="col-md-12 grid-margin">
+                            <?php
+                            if (isset($this->params['breadcrumbs']) && !empty($this->params['breadcrumbs'])) { // Проверяем, есть ли breadcrumbs в параметрах
+                                $breadcrumbs = $this->params['breadcrumbs'];
+                                $lastItem = array_pop($breadcrumbs); // Извлекаем последний элемент (текущая страница)
+                            ?>
+                                <div class="breadcrumbs border rounded-4 mb-4">
+                                    <div class="container-admin">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="breadcrumbs-content">
+                                                    <h3 class="page-title fs-4"><?= is_array($lastItem) ? $lastItem['label'] : $lastItem ?></h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-12">
+                                                <ul class="breadcrumb-nav p-0 m-0 mt-2 mt-lg-0">
+                                                    <?php foreach ($breadcrumbs as $item): ?>
+                                                        <li>
+                                                            <?php if (isset($item['url'])): ?>
+                                                                <a href="<?= \yii\helpers\Url::to($item['url']) ?>">
+                                                                    <?= isset($item['icon']) ? '<i class="' . $item['icon'] . '"></i> ' : '' ?>
+                                                                    <?= $item['label'] ?>
+                                                                </a>
+                                                            <?php else: ?>
+                                                                <?= $item['label'] ?>
+                                                            <?php endif; ?>
+                                                        </li>
+                                                    <?php endforeach; ?>
+                                                    <li><?= is_array($lastItem) ? $lastItem['label'] : $lastItem ?></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php } ?>
                             <?= Alert::widget() ?>
                             <?= $content ?>
                         </div>

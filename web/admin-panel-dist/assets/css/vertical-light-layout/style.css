@@ -18056,7 +18056,7 @@ code {
 
 .btn-outline-danger:hover, .btn-outline-danger:focus, .btn-outline-danger:active {
   background: danger;
-  color: #aab2bd;
+  color: white;
 }
 
 .btn-inverse-light {
@@ -20192,8 +20192,8 @@ dl li {
 .jsgrid .jsgrid-pager .jsgrid-pager-page .page-item:active a, .jsgrid .jsgrid-pager .jsgrid-pager-nav-button:active .page-link, .jsgrid .jsgrid-pager .jsgrid-pager-nav-button:active a,
 .jsgrid .jsgrid-pager .jsgrid-pager-page:active .page-link,
 .jsgrid .jsgrid-pager .jsgrid-pager-page:active a {
-  background: #1bdbe0;
-  border-color: #1bdbe0;
+  background: rgb(225, 146, 0);
+  border-color: rgb(225, 146, 0);
   color: #ffffff;
 }
 .pagination.flat .page-item .page-link, .jsgrid .jsgrid-pager .jsgrid-pager-nav-button .pagination.flat .page-item a,
@@ -25552,12 +25552,12 @@ div.tagsinput span.tag a {
   right: 0;
 }
 .sidebar .nav.sub-menu .nav-item .nav-link.active {
-  color: #38ce3c;
+  color: rgb(255, 179, 36);
   background: transparent;
   font-weight: 900;
 }
 .sidebar .nav.sub-menu .nav-item .nav-link:hover {
-  color: #b3b3b3;
+  color: rgb(225, 146, 0);
 }
 .sidebar .nav.sub-menu .nav-item:hover {
   background: transparent;

@@ -21,6 +21,7 @@ class AdminPanelAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         "css/style.css",
+        "front/css/LineIcons.3.0.css",
         "assets/bootstrap-icons/bootstrap-icons.css",
         "admin-panel-dist/assets/vendors/simple-line-icons/css/simple-line-icons.css",
         "admin-panel-dist/assets/vendors/flag-icon-css/css/flag-icons.min.css",

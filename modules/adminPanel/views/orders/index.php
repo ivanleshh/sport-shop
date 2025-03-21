@@ -15,8 +15,10 @@ use yii\widgets\Pjax;
 /** @var app\modules\account\models\OrdersSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Модерация заказов';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [
+    ['label' => 'Панель администратора', 'url' => ['/site/index'], 'icon' => 'bi bi-house-fill mx-2'],
+    'Модерация заказов',
+];
 ?>
 <div class="orders-index">
 
