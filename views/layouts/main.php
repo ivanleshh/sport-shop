@@ -5,12 +5,14 @@
 
 use app\assets\AppAsset;
 use app\models\Cart;
+use app\models\Category;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use yii\helpers\VarDumper;
 use yii\web\JqueryAsset;
 use yii\widgets\Pjax;
 
@@ -175,31 +177,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="mega-category-menu">
                             <a href="/catalog" class="cat-button"><i class="lni lni-menu"></i>Каталог</a>
                             <ul class="sub-category">
-                                <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
-                                    <ul class="inner-sub-category">
-                                        <li><a href="product-grids.html">Digital Cameras</a></li>
-                                        <li><a href="product-grids.html">Camcorders</a></li>
-                                        <li><a href="product-grids.html">Camera Drones</a></li>
-                                        <li><a href="product-grids.html">Smart Watches</a></li>
-                                        <li><a href="product-grids.html">Headphones</a></li>
-                                        <li><a href="product-grids.html">MP3 Players</a></li>
-                                        <li><a href="product-grids.html">Microphones</a></li>
-                                        <li><a href="product-grids.html">Chargers</a></li>
-                                        <li><a href="product-grids.html">Batteries</a></li>
-                                        <li><a href="product-grids.html">Cables & Adapters</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="product-grids.html">accessories</a></li>
-                                <li><a href="product-grids.html">Televisions</a></li>
-                                <li><a href="product-grids.html">best selling</a></li>
-                                <li><a href="product-grids.html">top 100 offer</a></li>
-                                <li><a href="product-grids.html">sunglass</a></li>
-                                <li><a href="product-grids.html">watch</a></li>
-                                <li><a href="product-grids.html">man’s product</a></li>
-                                <li><a href="product-grids.html">Home Audio & Theater</a></li>
-                                <li><a href="product-grids.html">Computers & Tablets </a></li>
-                                <li><a href="product-grids.html">Video Games </a></li>
-                                <li><a href="product-grids.html">Home Appliances </a></li>
+                                <? foreach (Category::find()->select(['id', 'parent_id', 'title'])->where(['parent_id' => null])->asArray()->all() as $parent) {
+                                    echo "<li>" . Html::a($parent['title'] . '<i class="lni lni-chevron-right"></i>', ['catalog/view', 'id' => $parent['id']]) .
+                                    '<ul class="inner-sub-category">';
+                                    foreach (Category::find()->select(['id', 'title'])->where(['parent_id' => $parent['id']])->asArray()->all() as $child) {
+                                        echo "<li>" . Html::a($child['title'], ['catalog/view', 'id' => $child['id']]) . '</li>';
+                                    }
+                                    echo '</ul><li>';
+                                }
+                                ?>
                             </ul>
                         </div>
                         <!-- End Mega Category Menu -->
@@ -273,6 +259,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             </li>
                             <li>
                                 <a href="#"><i class="bi bi-telegram"></i></a>
+                            </li>
+                            <li>
+                                <a href="#"><i class="lni lni-vk"></i></a>
                             </li>
                         </ul>
                     </div>
