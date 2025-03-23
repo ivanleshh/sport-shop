@@ -9,7 +9,7 @@ use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 
 $this->params['breadcrumbs'] = [
-    ['label' => 'Главная', 'url' => ['/site/index'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
     'Авторизация',
 ];
 ?>

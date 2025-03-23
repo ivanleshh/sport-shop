@@ -18,7 +18,7 @@ use yii\widgets\Pjax;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->params['breadcrumbs'] = [
-    ['label' => 'Главная', 'url' => ['/site/index'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
     'Личный кабинет',
 ];
 ?>

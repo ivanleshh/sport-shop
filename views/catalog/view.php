@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Category;
 use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
@@ -10,20 +11,25 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var app\models\Category $model */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['index']];
+$this->params['breadcrumbs'] = [
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Каталог', 'url' => ['/catalog'], 'icon' => 'bi bi-card-list mx-2'],
+];
+
 if (isset($model->parent_id)) {
-    $this->params['breadcrumbs'][] = ['label' => $model->parent->title, 'url' => ['view', 'id' => $model->parent->id]];
+    array_map(function($title) {
+        $this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['view', 'id' => Category::getIdByTitle($title)]]; 
+    }, array_reverse($model->getParentRecursive()));
 }
-$this->params['breadcrumbs'][] = $this->title;
+
+$this->params['breadcrumbs'][] = $model->title;
+
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="category-view">
-    
-    <h3><?= Html::encode($this->title) ?></h3>
+<div class="category-view hero-content">
 
     <?php if (!empty($model->children)): ?>
-        <div class="my-3 d-flex flex-wrap gap-3">
+        <div class="d-flex flex-wrap gap-3">
             <?php foreach ($model->children as $child): ?>
                 <?= $this->render('category', ['model' => $child]) ?>
             <?php endforeach; ?>
@@ -63,7 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php Pjax::end(); ?>
 
-    <p class="my-5"><?= $model->description ?></p>
+    <p class="mt-5"><?= $model->description ?></p>
 
 </div>
 

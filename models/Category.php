@@ -122,6 +122,21 @@ class Category extends \yii\db\ActiveRecord
             ->column();
     }
 
+    // Метод для получения массива родительских категорий
+    public function getParentRecursive(array $categories = []): array
+    {
+        if ($this->parent_id !== null && $this->parent) {
+            $categories[] = $this->parent->title;
+            return $this->parent->getParentRecursive($categories);
+        }
+        return $categories;
+    }
+
+    public static function getIdByTitle($title)
+    {
+        return self::findOne(compact('title'))->id;
+    }
+
     public function upload()
     {
         if ($this->validate()) {

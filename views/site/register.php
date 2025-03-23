@@ -10,7 +10,7 @@ use yii\captcha\Captcha;
 use yii\web\JqueryAsset;
 
 $this->params['breadcrumbs'] = [
-    ['label' => 'Главная', 'url' => ['/site/index'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
     'Регистрация',
 ];
 ?>

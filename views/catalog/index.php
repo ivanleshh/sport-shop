@@ -11,11 +11,11 @@ use yii\widgets\Pjax;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->params['breadcrumbs'] = [
-    ['label' => 'Главная', 'url' => ['/site/index'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
     'Каталог',
 ];
 ?>
-<div class="category-index">
+<div class="hero-content category-index">
 
     <?php Pjax::begin(); ?>
 
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'] = [
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => 'category',
-        'layout' => '<div class="d-flex flex-wrap gap-3 my-3">{items}</div>'
+        'layout' => '<div class="d-flex flex-wrap gap-3">{items}</div>'
     ]) ?>
 
     <?php Pjax::end(); ?>

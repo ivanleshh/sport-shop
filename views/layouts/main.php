@@ -173,7 +173,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <div class="nav-inner">
                         <!-- Start Mega Category Menu -->
                         <div class="mega-category-menu">
-                            <span class="cat-button"><i class="lni lni-menu"></i>Каталог</span>
+                            <a href="/catalog" class="cat-button"><i class="lni lni-menu"></i>Каталог</a>
                             <ul class="sub-category">
                                 <li><a href="product-grids.html">Electronics <i class="lni lni-chevron-right"></i></a>
                                     <ul class="inner-sub-category">
@@ -345,7 +345,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="col-lg-2 col-md-3 col-6">
                             <div class="footer-logo">
                                 <a href="/">
-                                    <?= Html::img("/images/logo_dark.png", ['class' => "w-100", 'alt' => "Logo"]) ?>
+                                    <?= Html::img("/images/logo_dark.png", ['class' => "w-75", 'alt' => "Logo"]) ?>
                                 </a>
                             </div>
                         </div>

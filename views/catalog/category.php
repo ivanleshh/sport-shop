@@ -5,23 +5,23 @@ use yii\bootstrap5\Html;
 use yii\helpers\VarDumper;
 
 ?>
-<div class="card">
-    <div class="card-body p-2">
+<div class="card <?= isset($model->parent_id) ? "rounded-4" : 'border-0' ?>">
+    <div class="card-body <?= isset($model->parent_id) ? "rounded-4 p-2" : 'border-0 p-0' ?>">
         <?php
             echo Html::a(
                 (isset($model->parent_id)
                 ? (isset($model->photo) ? Html::img(Category::IMG_PATH . $model->photo, ['class' => 'w-mini']) : '')
                 : ''
                 ) . 
-                "<h5 class='card-title " . (isset($model->parent_id) ? 
-                "fs-6" : 'text-uppercase fw-bold mt-2 ms-2 pe-2 border-bottom border-3 border-primary') . "'>$model->title</h5>",
+                "<h5 class='card-title" . (isset($model->parent_id) ? 
+                " fs-6 mb-0" : 'text-uppercase fw-bold border-bottom border-3 border-primary') . "'>$model->title</h5>",
                 ['view', 'id' => $model->id],
                 ['class' => 'd-flex gap-3 align-items-center link-dark text-decoration-none', 'data-pjax' => 0]
             )
         ?>
 
         <?php if (!empty($model->children)): ?>
-            <div class="mt-2 d-flex flex-wrap gap-3 ms-3">
+            <div class="d-flex flex-wrap gap-3 float-end mt-2">
                 <?php foreach ($model->children as $child): ?>
                     <?= $this->render('category', ['model' => $child]) ?>
                 <?php endforeach; ?>
