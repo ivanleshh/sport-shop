@@ -3214,7 +3214,7 @@ top: 2px;
   visibility: visible;
 }
 
-.single-product:hover .product-image img {
+.card:hover .product-image img {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }

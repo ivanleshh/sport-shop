@@ -17,6 +17,7 @@ $this->params['breadcrumbs'] = [
 <div class="site-register hero-content">
     <div class="row align-items-center">
         <div class="col-lg-6">
+            <h5 class="fw-bold fs-6 mb-3">Пожалуйста, заполните указанные ниже поля:</h5>
 
             <?php $form = ActiveForm::begin([
                 'id' => 'contact-form',

@@ -86,7 +86,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         </div>
                     </li>
                     <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
-                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="/admin-panel/orders" data-bs-toggle="dropdown" aria-expanded="false">
                             <img class="img-xs rounded-circle ms-2" src="/admin-panel-dist/assets/images/faces/face8.jpg" alt="Profile image"> <span class="font-weight-normal"> Henry Klein </span></a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <div class="dropdown-header text-center">
@@ -116,7 +116,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <a class="nav-link navbar-brand brand-logo-mini" href="/admin-panel"><i class="bi bi-person-badge-fill"></i></a>
                     </li>
                     <li class="nav-item nav-profile mt-4">
-                        <a href="/admin-panel" class="nav-link">
+                        <a href="/admin-panel/orders" class="nav-link">
                             <div class="profile-image">
                                 <img class="img-xs rounded-circle" src="/admin-panel-dist/assets/images/faces/face8.jpg" alt="profile image">
                                 <div class="dot-indicator bg-warning"></div>
@@ -130,10 +130,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     </li>
                     <li class="nav-item nav-category"><span class="nav-link">Управление магазином</span></li>
                     <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                        <div class="nav-link">
                             <span class="menu-title">Опции</span>
                             <i class="bi bi-stack menu-icon"></i>
-                        </a>
+                        </div>
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="/admin-panel/orders">Заказы</a></li>
@@ -203,15 +203,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
         <!-- page-body-wrapper ends -->
     </div>
-
-    <main id="main" class="flex-shrink-0" role="main">
-        <div class="container">
-            <? #= Alert::widget() 
-            ?>
-            <? #= $content 
-            ?>
-        </div>
-    </main>
 
     <?php $this->endBody() ?>
 </body>

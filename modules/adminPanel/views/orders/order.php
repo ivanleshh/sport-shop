@@ -66,7 +66,7 @@ use yii\bootstrap5\Html;
           ],
         ]);
       } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
-        if (is_null($model->address && $model->status_id == Status::getStatusId('В пути'))) {
+        if (isset($model->address) && $model->status_id == Status::getStatusId('В пути')) {
           echo Html::a('Перенести доставку', ['delay', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-delay']);
         }
         echo Html::a('Подтвердить получение', ['success', 'id' => $model->id], [

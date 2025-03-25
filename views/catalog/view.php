@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
 
 $this->params['breadcrumbs'] = [
     ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
-    ['label' => 'Каталог', 'url' => ['/catalog'], 'icon' => 'bi bi-card-list mx-2'],
+    ['label' => 'Каталог', 'url' => ['/catalog']],
 ];
 
 if (isset($model->parent_id)) {

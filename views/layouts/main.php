@@ -144,20 +144,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     <div><?= Html::a('<i class="bi bi-bag-heart-fill"></i>', ['/personal/favourite-products'], ['class' => 'text-decoration-none']) ?></div>
                                     <div class="position-relative">
                                         <?= Html::a(
-                                        '<i class="bi bi-cart4"></i>',
-                                        ['/cart/index'],
-                                        ['id' => 'btn-cart']) ?>
-                                    
-                                    <? Pjax::begin([
-                                        'id' => 'cart-item-count',
-                                        'enablePushState' => false,
-                                        'timeout' => 5000,
-                                        'options' => [
-                                            'data-url' => '/cart/item-count',
-                                        ]
-                                    ]) ?>
-                                    <span class="cart-item-count"><?= Cart::getItemCount() ?></span>
-                                    <? Pjax::end() ?>
+                                            '<i class="bi bi-cart4"></i>',
+                                            ['/cart/index'],
+                                            ['id' => 'btn-cart']
+                                        ) ?>
+
+                                        <span class="cart-item-count">
+                                            <? Pjax::begin([
+                                                'id' => 'cart-item-count',
+                                                'enablePushState' => false,
+                                                'timeout' => 5000,
+                                                'options' => [
+                                                    'data-url' => '/cart/item-count',
+                                                ]
+                                            ]) ?>
+                                                <?= Cart::getItemCount() ?>
+                                            <? Pjax::end() ?>
+                                        </span>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -179,7 +182,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             <ul class="sub-category">
                                 <? foreach (Category::find()->select(['id', 'parent_id', 'title'])->where(['parent_id' => null])->asArray()->all() as $parent) {
                                     echo "<li>" . Html::a($parent['title'] . '<i class="lni lni-chevron-right"></i>', ['catalog/view', 'id' => $parent['id']]) .
-                                    '<ul class="inner-sub-category">';
+                                        '<ul class="inner-sub-category">';
                                     foreach (Category::find()->select(['id', 'title'])->where(['parent_id' => $parent['id']])->asArray()->all() as $child) {
                                         echo "<li>" . Html::a($child['title'], ['catalog/view', 'id' => $child['id']]) . '</li>';
                                     }
@@ -458,14 +461,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     <span>Мы в соц.сетях:</span>
                                 </li>
                                 <li>
-                                <a href="#"><i class="bi bi-github w-100"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="bi bi-telegram"></i></a>
-                            </li>
+                                    <a href="#"><i class="bi bi-github w-100"></i></a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="bi bi-telegram"></i></a>
+                                </li>
                             </ul>
                             <div class="nav-social">
-                    </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -480,14 +483,66 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <i class="lni lni-chevron-up"></i>
     </a>
 
-    <!-- <main id="main" class="flex-shrink-0" role="main">
-        <div class="container">
-            <? #= Alert::widget() 
-            ?>
-            <? #= $content 
-            ?>
+    <?php if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) : ?>
+        <?php Modal::begin([
+            'id' => 'cart-modal',
+            'size' => 'modal-lg',
+            'title' => 'Корзина'
+        ]); ?>
+
+        <?php $cart_data = $this->render('@app/views/cart/index', ['dataProvider' => null]); ?>
+
+        <div class="d-flex justify-content-end gap-3 my-2 d-none cart-panel-top">
+            <div class="d-flex justify-content-end gap-3">
+                <?= Html::a(
+                    "Очистить корзину",
+                    ["/cart/clear"],
+                    ["class" => "btn btn-outline-danger btn-cart-clear"]
+                ) ?>
+                <?= Html::a(
+                    "Оформить заказ",
+                    ["/personal/orders/create"],
+                    ["class" => "btn btn-outline-success"]
+                ) ?>
+            </div>
         </div>
-    </main> -->
+        <?= $cart_data ?>
+        <div class="d-flex justify-content-between gap-3 mt-2">
+            <div class="d-flex justify-content-end">
+                <?= Html::a(
+                    "Очистить корзину",
+                    ["/cart/clear"],
+                    ["class" => "btn btn-outline-danger btn-cart-clear d-none btn-cart-manager"]
+                ) ?>
+                <?= Html::a(
+                    "Оформить заказ",
+                    ["/personal/orders/create"],
+                    ["class" => "btn btn-outline-success d-none btn-cart-manager"]
+                ) ?>
+            </div>
+        </div>
+        <?php Modal::end(); ?>
+        <?php $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]); ?>
+    <?php endif; ?>
+
+    <?php
+    if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) {
+        Modal::begin([
+            'id' => 'info-modal',
+            'size' => 'modal-md',
+            'headerOptions' => [
+                'class' => 'bg-secondary',
+            ],
+            'bodyOptions' => [
+                'class' => 'bg-secondary',
+            ],
+
+        ]);
+        echo "<div id='text-error' class='text-light'></div>";
+        Modal::end();
+        $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]);
+    }
+    ?>
 
     <?php $this->endBody() ?>
 </body>

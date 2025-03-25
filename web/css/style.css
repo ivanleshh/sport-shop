@@ -41,6 +41,27 @@
     transform: translate(5px, -5px);
 }
 
+.card:hover .card-img img {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.card .card-img img {
+    transition: .5s;
+}
+
+.card .btn-favourite i {
+    transition: .5s;
+}
+
+.card .btn-favourite:hover i {
+    color: red !important;
+}
+
+.card-different:hover {
+    color: rgb(255, 179, 36) !important;
+}
+
 .nav-hotline-ic {
     display: flex;
 }
@@ -94,11 +115,6 @@ textarea {
 .w-220 {
     width: 220px;
 }
-
-/* .btn-cart-add {
-    background: linear-gradient(90deg, rgba(255,249,74,1) 0%, rgba(238,132,36,1) 100%);
-    border: none;
-} */
 
 .card {
     transition: 0.5s;

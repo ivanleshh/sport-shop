@@ -1,20 +1,29 @@
 <?php
 
 use app\models\Brand;
+use app\models\Category;
 use app\models\Product;
 use yii\helpers\Html;
+use yii\helpers\VarDumper;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var app\models\Product $model */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Каталог', 'url' => ['index']];
-if (isset($model->category->parent_id)) {
-    $this->params['breadcrumbs'][] = ['label' => $model->category->parent->title, 'url' => ['/catalog/view', 'id' => $model->category->parent->id]];
+$this->params['breadcrumbs'] = [
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Каталог', 'url' => ['/catalog']],
+];
+
+if (isset($model->category_id)) {
+    array_map(function($title) {
+        $this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['/category/view', 'id' => Category::getIdByTitle($title)]]; 
+    }, array_reverse($model->category->getParentRecursive()));
 }
-$this->params['breadcrumbs'][] = ['label' => $model->category->title, 'url' => ['/catalog/view', 'id' => $model->category->id]];
-$this->params['breadcrumbs'][] = $this->title;
+
+$this->params['breadcrumbs'][] = ['label' => $model->category->title, 'url' => ['/catalog/view','id' => $model->category->id]];
+$this->params['breadcrumbs'][] = $model->title;
+
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="product-view mt-5">

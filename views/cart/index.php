@@ -36,11 +36,11 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
     <?php else: ?>
         <div class="cart-empty">
             <div class="cart-empty-wrapper d-flex justify-content-center">
-                <div class="d-flex flex-column justify-content-center align-items-center gap-1">
-                    <h3>Корзина пустая</h3>
-                    <div class="d-flex gap-1">
-                        <span>Чтобы добавить товары вы можете</span>
-                        <?= Html::a('вернуться в каталог', ['/'], ['class' => 'text-decoration-none', 'data-pjax' => 0]) ?>
+                <div class="d-flex flex-column justify-content-center align-items-center gap-3">
+                    <h4 class="fw-medium">Здесь пока что пусто</h4>
+                    <div class="d-flex gap-1 align-items-center">
+                        <span>Вы можете добавить товары в </span>
+                        <?= Html::a('каталоге', ['/catalog'], ['class' => 'text-decoration-none fs-6 fw-bold text-danger', 'data-pjax' => 0]) ?>
                     </div>
                 </div>
             </div>

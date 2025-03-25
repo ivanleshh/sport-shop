@@ -68,7 +68,7 @@ $(() => {
         id: a.data("id")
       },
       success(data) {
-        a.html(data == '1' ? "❤" : "🤍");
+        a.html(data == '1' ? "<i class='bi bi-suit-heart-fill text-danger'></i>" : "<i class='bi bi-suit-heart-fill text-light'></i>");
         catalog_reload()
       },
     });

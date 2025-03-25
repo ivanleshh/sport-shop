@@ -14,8 +14,13 @@ use yii\widgets\Pjax;
 $this->title = 'Мои заказы';
 $this->params['breadcrumbs'][] = ['label' => 'Личный кабинет', 'url' => ['/personal']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Личный кабинет', 'url' => ['/personal']],
+    'Мои заказы',
+];
 ?>
-<div class="orders-index">
+<div class="hero-content orders-index">
 
     <h3><?= Html::encode($this->title) ?></h3>
 

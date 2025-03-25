@@ -26,8 +26,10 @@ class AdminPanelAsset extends AssetBundle
         "admin-panel-dist/assets/vendors/simple-line-icons/css/simple-line-icons.css",
         "admin-panel-dist/assets/vendors/flag-icon-css/css/flag-icons.min.css",
         "admin-panel-dist/assets/css/vertical-light-layout/style.css",
+        "admin-panel-dist/assets/css/login/admin-login.css",
     ];
     public $js = [
+        "front/js/bootstrap.bundle.min.js",
         "admin-panel-dist/assets/js/jquery.cookie.js",
         "admin-panel-dist/assets/js/off-canvas.js",
         "admin-panel-dist/assets/js/hoverable-collapse.js",

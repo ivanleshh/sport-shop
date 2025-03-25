@@ -5,10 +5,10 @@ use yii\bootstrap5\Html;
 ?>
 <div class="card" style="width: 18rem; height: 28rem;">
   <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
-    <div class="d-flex justify-content-between bg-dark w-100 bg-gradient rounded-top-2 px-3 py-2">
-      <?= Html::a('+ В сравнение', [''], ['class' => 'text-decoration-none link-light']) ?>
+    <div class="d-flex justify-content-end w-100 bg-dark bg-gradient rounded-top-2 px-3 py-2 gap-3">
+      <?= Html::a('сравнить', [''], ['class' => 'card-different text-decoration-none link-light']) ?>
       <?= Html::a(
-          empty($model->favouriteProducts[0]->status) ? '🤍' : '❤️', 
+          "<i class='bi bi-suit-heart-fill " . (empty($model->favouriteProducts[0]->status) ? 'text-light' : 'text-danger') . "'></i>", 
           ['favourite'], ['data-id' => $model->id, 'class' => 'btn-favourite text-decoration-none align-self-end']) ?>
     </div>
   <?php endif; ?>
@@ -19,11 +19,12 @@ use yii\bootstrap5\Html;
         ['/product/view', 'id' => $model->id], 
         ['class' => 'd-flex flex-column align-items-center']) ?>
     </div>
-    <div class="mt-3">
-      <h5 class="card-title"><?= $model->title ?></h5>
-      <p class="card-text fw-bold"><?= $model->price ?> ₽</p>
+    <div class="d-flex flex-column gap-2">
+      <span class="text-secondary mt-2"><?= $model->category->title ?></span>
+      <h5 class="card-body-title"><?= $model->title ?></h5>
+      <p class="card-text fw-bold fs-6"><?= $model->price ?> ₽</p>
       <?php if (!isset($model->cartItems[0]) || $model->count > $model->cartItems[0]->product_amount) : ?>
-      <div class="mt-2 gap-3">
+      <div class="gap-3">
         <?php if (isset($model->cartItems[0])) : ?>
           <div class="d-flex align-items-center justify-content-center gap-4">
             <span>В корзине</span>
