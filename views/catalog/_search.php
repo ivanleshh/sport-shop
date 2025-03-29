@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="category-search my-2">
+<div class="category-search">
 
     <?php $form = ActiveForm::begin([
         'id' => 'catalog-filter',
@@ -19,11 +19,12 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <div class="d-flex gap-3 align-items-end flex-wrap">
-        <div class="d-flex align-items-end gap-3">
-            <span class="mb-2">🔎</span>
+    <div class="row align-items-end g-3">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-6">
             <?= $form->field($model, 'title') ?>
-            <?= Html::a('Сбросить', ['/catalog/view', 'id' => $model->category->id], ['class' => 'btn btn-outline-secondary']) ?>
+        </div>
+        <div class="col-6 col-md-3 col-lg-4 col-xl-3">
+            <?= Html::a('Сбросить', ['/admin-panel/category'], ['class' => 'btn btn-outline-secondary w-100']) ?>
         </div>
     </div>
 

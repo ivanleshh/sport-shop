@@ -16,6 +16,7 @@ use Yii;
 class Brand extends \yii\db\ActiveRecord
 {
     const IMG_PATH = '/images/brands/';
+    const NO_PHOTO = '/images/noPhoto.jpg';
     /**
      * {@inheritdoc}
      */
@@ -41,9 +42,9 @@ class Brand extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'photo' => 'Photo',
-            'title' => 'Title',
+            'id' => '№',
+            'photo' => 'Логотип',
+            'title' => 'Название',
         ];
     }
 

@@ -1,6 +1,4 @@
 $(() => {
-    let searchTimeout;
-
     $(".category-index").on("change", "#categorysearch-parent_id", function () {
         const parentId = $(this).val();
         const title = $("#categorysearch-title").val();
@@ -19,15 +17,12 @@ $(() => {
         const parentId = $("#categorysearch-parent_id").val();
         const url = `/admin-panel/category?CategorySearch[title]=${title}&CategorySearch[parent_id]=${parentId}&_pjax=#category-index-pjax`;
 
-        clearTimeout(searchTimeout)
-        searchTimeout = setTimeout(() => {
-            $.pjax.reload({
-                container: "#category-index-pjax",
-                url: url,
-                push: false,
-                timeout: 5000,
-                replace: false,
-            });
-        }, 1000)
+        $.pjax.reload({
+            container: "#category-index-pjax",
+            url: url,
+            push: false,
+            timeout: 5000,
+            replace: false,
+        });
     });
 })

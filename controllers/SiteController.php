@@ -84,10 +84,10 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        $model = new LoginForm();
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_CLIENT]);
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             Yii::$app->session->setFlash('success', 'Вы успешно вошли в учётную запись');
-            return $this->redirect(Yii::$app->user->identity->isAdmin ? '/admin-panel' : '/personal');
+            return $this->redirect('/personal');
         }
 
         $model->password = '';

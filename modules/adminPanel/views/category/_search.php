@@ -21,19 +21,21 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <div class="d-flex gap-3 align-items-end flex-wrap">
-        <div class="align-self-center mt-4">🔎</div>
-        <?= $form->field($model, 'title') ?>
-        <?= $form->field($model, 'parent_id')->widget(Select2::class, [
-            'data' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
-            'options' => ['placeholder' => 'Выберите родительскую категорию'],
-            'pluginOptions' => [
-                'width' => '200px',
-                'allowClear' => true,
-            ],
-        ]); ?>
-        <div class="form-group d-flex gap-3">
-            <?= Html::a('Сбросить', ['/admin-panel/category'], ['class' => 'btn btn-outline-secondary']) ?>
+    <div class="row align-items-center">
+        <div class="col-12 col-sm-6 col-md-4 col-xl-4 col-xxl-3">
+            <?= $form->field($model, 'title') ?>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 col-xl-4 col-xxl-3">
+            <?= $form->field($model, 'parent_id')->widget(Select2::class, [
+                'data' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
+                'options' => ['placeholder' => 'Выберите родительскую категорию'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]); ?>
+        </div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-3 col-xxl-2">
+            <?= Html::a('Сбросить', ['/admin-panel/category'], ['class' => 'btn btn-outline-secondary w-100']) ?>
         </div>
     </div>
 

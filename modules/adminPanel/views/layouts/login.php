@@ -9,6 +9,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use yii\bootstrap5\Widget;
 
 AdminPanelAsset::register($this);
 
@@ -29,14 +30,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </head>
 
 
-<body>
+<body class="admin-login-body h-100">
     <?php $this->beginBody() ?>
     <section class="p-3 p-md-4 p-xl-5">
         <div class="container">
-            <div class="card border-light-subtle shadow-sm">
-                <div class="row g-0">
-                    <?= $content ?>
-                </div>
+            <div class="login border-light-subtle shadow-sm rounded-4">
+                <?= Alert::widget() ?>
+                <?= $content ?>
             </div>
         </div>
     </section>

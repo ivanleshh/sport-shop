@@ -16,13 +16,29 @@ use yii\widgets\Pjax;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->params['breadcrumbs'] = [
-    ['label' => 'Панель администратора', 'url' => ['/site/index'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Панель администратора', 'url' => ['/admin-panel'], 'icon' => 'bi bi-house-fill mx-2'],
     'Модерация заказов',
 ];
 ?>
 <div class="orders-index">
 
-    <h3><?= Html::encode($this->title) ?></h3>
+    <div class="row justify-content-between align-items-center">
+        <div class="col-12 col-xxl-9">
+            <?= $this->render('_search', [
+                'model' => $searchModel,
+                'pickUps' => $pickUps,
+                'statuses' => $statuses,
+            ]) ?>
+        </div>
+        <div class="col-12 col-xxl-3 d-flex gap-3 justify-content-end flex-wrap">
+            Сортировать по:
+            <div>
+                <?= $dataProvider->sort->link('created_at', ['class' => 'text-decoration-none pe-3', 'data-pjax' => 1]) ?>
+                <?= Html::a('Сбросить', ['/admin-panel/orders'], ['class' => 'text-decoration-none link-danger']) ?>
+            </div>
+
+        </div>
+    </div>
 
     <?php Pjax::begin([
         'id' => 'admin-orders-pjax',
@@ -30,21 +46,6 @@ $this->params['breadcrumbs'] = [
         'enableReplaceState' => false,
         'timeout' => 5000,
     ]); ?>
-
-    <div class="d-flex justify-content-between align-items-center flex-wrap">
-        <div class="d-flex gap-3 flex-wrap my-2">
-            Сортировать по:
-            <?= $dataProvider->sort->link('created_at', ['class' => 'text-decoration-none', 'data-pjax' => 1]) ?>
-            <?= Html::a('Сбросить', ['/admin-panel/orders'], ['class' => 'text-decoration-none link-danger']) ?>
-        </div>
-        <div class="d-flex">
-            <?= $this->render('_search', [
-                'model' => $searchModel,
-                'pickUps' => $pickUps,
-                'statuses' => $statuses,
-            ]) ?>
-        </div>
-    </div>
 
     <?php if (Yii::$app->session->hasFlash('order-delay')) {
         Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('order-delay'));
@@ -55,12 +56,12 @@ $this->params['breadcrumbs'] = [
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item col-12 col-xxl-6'],
+        'itemOptions' => ['class' => 'item col-12 col-xxl-6 g-3'],
         'pager' => [
             'class' => LinkPager::class,
         ],
         'layout' =>
-            '<div class="d-flex justify-content-center mt-4">{pager}</div>
+        '<div class="d-flex justify-content-center mt-4">{pager}</div>
             <div class="row">{items}</div>
             <div class="d-flex justify-content-center mt-4">{pager}</div>',
         'itemView' => 'order',

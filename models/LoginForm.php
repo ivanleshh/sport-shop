@@ -2,8 +2,10 @@
 
 namespace app\models;
 
+use Codeception\Scenario;
 use Yii;
 use yii\base\Model;
+use yii\helpers\VarDumper;
 
 /**
  * LoginForm is the model behind the login form.
@@ -13,6 +15,10 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
+    const SCENARIO_ADMIN = 'admin';
+    const SCENARIO_CLIENT = 'client';
+
+    public $email;
     public $login;
     public $password;
     public $rememberMe = true;
@@ -26,8 +32,12 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // login and password are both required
-            [['login', 'password'], 'required'],
+            ['password', 'required'],
+            ['login', 'required', 'on' => self::SCENARIO_CLIENT],
+            ['email', 'required', 'on' => self::SCENARIO_ADMIN],
+
+            ['email', 'email'],
+
             ['login', 'match', 'pattern' => '/^[a-z\-\d]+$/i', 'message' => 'Разрешённые символы: латиница, тире, цифры'],
             ['password', 'match', 'pattern' => '/^[a-zA-Z\s\d\^\+\-\<\>]+$/', 'message' => 'Разрешённые символы: латиница, пробел, ^, +, -, <, >'],
             ['password', 'string', 'min' => 8],
@@ -37,7 +47,8 @@ class LoginForm extends Model
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
-            ['password', 'validatePassword'],
+            ['password', 'validatePassword', 'on' => self::SCENARIO_CLIENT],
+            ['password', 'validateAdminPassword', 'on' => self::SCENARIO_ADMIN],
         ];
     }
 
@@ -47,8 +58,9 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'login' => 'логин',
-            'password' => 'пароль',
+            'email' => 'Почта',
+            'login' => 'Логин',
+            'password' => 'Пароль',
             'rememberMe' => 'Запомнить меня'
         ];
     }
@@ -65,9 +77,28 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
 
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (!$user || $user->role_id !== Role::getRoleId('user') || !$user->validatePassword($this->password)) {
                 Yii::$app->session->setFlash('danger', 'Пара логин - пароль введены некорректно');
                 $this->addError($attribute, 'Неверный логин или пароль');
+            }
+        }
+    }
+
+    /**
+     * Validates the admin password.
+     * This method serves as the inline validation for admin password.
+     *
+     * @param string $attribute the attribute currently being validated
+     * @param array $params the additional name-value pairs given in the rule
+     */
+    public function validateAdminPassword($attribute, $params)
+    {
+        if (!$this->hasErrors()) {
+            $admin = $this->getAdmin();
+
+            if (!$admin || $admin->role_id !== Role::getRoleId('admin') || !$admin->validatePassword($this->password)) {
+                Yii::$app->session->setFlash('danger', 'Пара почта - пароль введены некорректно');
+                $this->addError($attribute, 'Неверная почта или пароль');
             }
         }
     }
@@ -93,6 +124,20 @@ class LoginForm extends Model
     {
         if ($this->_user === false) {
             $this->_user = User::findByLogin($this->login);
+        }
+
+        return $this->_user;
+    }
+
+    /**
+     * Finds user by [[login]]
+     *
+     * @return User|null
+     */
+    public function getAdmin()
+    {
+        if ($this->_user === false) {
+            $this->_user = User::findByEmail($this->email);
         }
 
         return $this->_user;

@@ -15,16 +15,29 @@ PjaxAsset::register($this);
 /** @var app\modules\adminPanel\models\CategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Категории';
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [
+    ['label' => 'Панель администратора', 'url' => ['/admin-panel'], 'icon' => 'bi bi-house-fill mx-2'],
+    'Управление Категориями',
+];
 ?>
 <div class="category-index">
 
-    <h3><?= Html::encode($this->title) ?></h3>
-
-    <p>
+    <p class="my-4">
         <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
+    <div class="row justify-content-between align-items-center">
+        <div class="col-12 col-xl-8">
+            <?= $this->render('_search', [
+                'model' => $searchModel,
+            ]) ?>
+        </div>
+        <div class="col-12 col-xl-4 d-flex gap-3 justify-content-end flex-wrap mt-3 mt-sm-0">
+            Сортировать по:
+            <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
+            <?= Html::a('Сбросить', ['/admin-panel/category'], ['class' => 'text-decoration-none link-danger']) ?>
+        </div>
+    </div>
 
     <?php Pjax::begin([
         'id' => 'category-index-pjax',
@@ -33,27 +46,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'enableReplaceState' => false,
     ]); ?>
 
-    <div class="d-flex justify-content-between align-items-center flex-wrap">
-        <div class="d-flex gap-3 flex-wrap my-2">
-            Сортировать по:
-            <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
-            <?= Html::a('Сбросить', ['/admin-panel/category'], ['class' => 'text-decoration-none link-danger']) ?>
-        </div>
-        <div class="d-flex">
-            <?= $this->render('_search', [
-                'model' => $searchModel,
-            ]) ?>
-        </div>
-    </div>
-
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-10'],
+        'itemOptions' => ['class' => 'item col-12 col-sm-6 col-lg-6 col-xl-4 col-xxl-3'],
         'pager' => [
             'class' => LinkPager::class,
         ],
         'layout' =>
-            '<div class="d-flex justify-content-center mt-4">{pager}</div>
+        '<div class="d-flex justify-content-center mt-4">{pager}</div>
             <div class="row gy-4">{items}</div>
             <div class="d-flex justify-content-center mt-4">{pager}</div>',
         'itemView' => 'item',

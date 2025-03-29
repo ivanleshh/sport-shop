@@ -4,6 +4,7 @@
 /** @var string $content */
 
 use app\assets\AdminPanelAsset;
+use app\models\User;
 use app\widgets\Alert;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
@@ -39,67 +40,25 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <span class="icon-menu"></span>
                 </button>
             </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center">
-                <ul class="navbar-nav navbar-nav-right">
-                    <form class="search-form d-none d-md-block" action="#">
-                        <i class="icon-magnifier"></i>
-                        <input type="search" class="form-control" placeholder="Search Here" title="Search here">
-                    </form>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link count-indicator message-dropdown" id="messageDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="icon-speech"></i>
-                            <span class="count">7</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list pb-0" aria-labelledby="messageDropdown">
-                            <a class="dropdown-item py-3">
-                                <p class="mb-0 font-weight-medium float-start me-2">You have 7 unread mails </p>
-                                <span class="badge badge-pill badge-primary float-end">View all</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="/admin-panel-dist/assets/images/faces/face10.jpg" alt="image" class="img-sm profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow py-2">
-                                    <p class="preview-subject ellipsis font-weight-medium text-dark">Marian Garner </p>
-                                    <p class="font-weight-light small-text"> The meeting is cancelled </p>
-                                </div>
-                            </a>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="/admin-panel-dist/assets/images/faces/face12.jpg" alt="image" class="img-sm profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow py-2">
-                                    <p class="preview-subject ellipsis font-weight-medium text-dark">David Grey </p>
-                                    <p class="font-weight-light small-text"> The meeting is cancelled </p>
-                                </div>
-                            </a>
-                            <a class="dropdown-item preview-item">
-                                <div class="preview-thumbnail">
-                                    <img src="/admin-panel-dist/assets/images/faces/face1.jpg" alt="image" class="img-sm profile-pic">
-                                </div>
-                                <div class="preview-item-content flex-grow py-2">
-                                    <p class="preview-subject ellipsis font-weight-medium text-dark">Travis Jenkins </p>
-                                    <p class="font-weight-light small-text"> The meeting is cancelled </p>
-                                </div>
-                            </a>
+            <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+                <ul class="navbar-nav navbar-nav-right d-none d-lg-flex gap-3">
+                    <li class="">
+                        <div class="dropdown-header d-flex gap-3 align-items-center">
+                            <img class="rounded-circle img-sm" src="<?= User::ADMIN_PHOTO ?>" alt="Profile image">
+                            <div>
+                                <span class="fw-bold"><?= Yii::$app->user->identity->nameSurname ?></span>
+                                <p class="font-weight-light text-muted mb-0"><?= Yii::$app->user->identity->email ?></p>
+                            </div>
                         </div>
                     </li>
-                    <li class="nav-item dropdown d-none d-xl-inline-flex user-dropdown">
-                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="/admin-panel/orders" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="img-xs rounded-circle ms-2" src="/admin-panel-dist/assets/images/faces/face8.jpg" alt="Profile image"> <span class="font-weight-normal"> Henry Klein </span></a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                            <div class="dropdown-header text-center">
-                                <img class="img-md rounded-circle" src="/admin-panel-dist/assets/images/faces/face8.jpg" alt="Profile image">
-                                <p class="mb-1 mt-3">Henry Klein</p>
-                                <p class="font-weight-light text-muted mb-0">kleinhenry@gmail.com</p>
-                            </div>
-                            <a class="dropdown-item"><i class="bi bi-person-bounding-box"></i>Личный кабинет</a>
-                            <a class="dropdown-item"><i class="dropdown-item-icon icon-speech text-primary"></i> Messages</a>
-                            <a class="dropdown-item"><i class="dropdown-item-icon icon-energy text-primary"></i> Activity</a>
-                            <a class="dropdown-item"><i class="dropdown-item-icon icon-question text-primary"></i> FAQ</a>
-                            <a class="dropdown-item"><i class="dropdown-item-icon icon-power text-primary"></i>Sign Out</a>
-                        </div>
+                    <li>
+                        <?= Html::beginForm(['/site/logout'])
+                            . Html::submitButton(
+                                'Выход <i class="bi bi-door-open-fill text-danger fs-6"></i>',
+                                ['class' => 'logout bg-transparent border-0']
+                            )
+                            . Html::endForm()
+                        ?>
                     </li>
                 </ul>
                 <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
@@ -118,23 +77,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <li class="nav-item nav-profile mt-4">
                         <a href="/admin-panel/orders" class="nav-link">
                             <div class="profile-image">
-                                <img class="img-xs rounded-circle" src="/admin-panel-dist/assets/images/faces/face8.jpg" alt="profile image">
+                                <img class="img-xs rounded-circle" src="<?= User::ADMIN_PHOTO ?>" alt="profile image">
                                 <div class="dot-indicator bg-warning"></div>
                             </div>
                             <div class="text-wrapper">
-                                <p class="profile-name">Henry Klein</p>
+                                <p class="profile-name"><?= Yii::$app->user->identity->nameSurname ?></p>
                                 <p class="designation">Администратор</p>
                             </div>
                             <i class="bi bi-person-badge-fill"></i>
                         </a>
                     </li>
                     <li class="nav-item nav-category"><span class="nav-link">Управление магазином</span></li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <div class="nav-link">
                             <span class="menu-title">Опции</span>
                             <i class="bi bi-stack menu-icon"></i>
                         </div>
-                        <div class="collapse" id="ui-basic">
+                        <div class="collapse active show" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item"> <a class="nav-link" href="/admin-panel/orders">Заказы</a></li>
                                 <li class="nav-item"> <a class="nav-link" href="/admin-panel/product">Товары</a></li>
@@ -142,6 +101,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <li class="nav-item"> <a class="nav-link" href="/admin-panel/brand">Бренды</a></li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <?= Html::beginForm(['/site/logout'])
+                            . Html::submitButton(
+                                '<span class="menu-title">Выход</span><i class="bi bi-door-open-fill"></i>',
+                                ['class' => 'nav-link logout bg-transparent border-0 text-muted w-100 text-center']
+                            )
+                            . Html::endForm()
+                        ?>
                     </li>
                 </ul>
             </nav>
@@ -155,7 +123,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 $breadcrumbs = $this->params['breadcrumbs'];
                                 $lastItem = array_pop($breadcrumbs); // Извлекаем последний элемент (текущая страница)
                             ?>
-                                <div class="breadcrumbs border rounded-4 mb-4">
+                                <div class="breadcrumbs border rounded-4 mb-3">
                                     <div class="container-admin">
                                         <div class="row align-items-center">
                                             <div class="col-lg-6 col-md-6 col-12">
@@ -164,7 +132,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                                 </div>
                                             </div>
                                             <div class="col-lg-6 col-md-6 col-12">
-                                                <ul class="breadcrumb-nav p-0 m-0 mt-2 mt-lg-0">
+                                                <ul class="breadcrumb-nav p-0 m-0 mt-1 mt-md-0">
                                                     <?php foreach ($breadcrumbs as $item): ?>
                                                         <li>
                                                             <?php if (isset($item['url'])): ?>

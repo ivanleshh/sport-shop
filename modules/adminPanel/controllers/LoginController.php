@@ -2,6 +2,9 @@
 
 namespace app\modules\adminPanel\controllers;
 
+use app\models\LoginForm;
+use Yii;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 
 /**
@@ -16,6 +19,20 @@ class LoginController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (!Yii::$app->user->isGuest) {
+            return $this->goHome();
+        }
+
+        $model = new LoginForm(['scenario' => LoginForm::SCENARIO_ADMIN]);
+        
+        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            Yii::$app->session->setFlash('success', 'Вы успешно вошли в учётную запись');
+            return $this->redirect('/admin-panel/orders');
+        }
+
+        $model->password = '';
+        return $this->render('index', [
+            'model' => $model,
+        ]);
     }
 }

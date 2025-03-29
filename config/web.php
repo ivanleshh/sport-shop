@@ -1,12 +1,14 @@
 <?php
 
+use app\models\Product;
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    'bootstrap' => ['log', 'search'],
     'language' => 'ru-RU',
     'defaultRoute' => '/site',
     'aliases' => [
@@ -48,8 +50,7 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
     ],
     'modules' => [
@@ -60,6 +61,23 @@ $config = [
         'admin-panel' => [
             'class' => 'app\modules\adminPanel\Module',
             'defaultRoute' => 'orders',
+        ],
+        'search' => [
+            'class' => '\kazda01\search\SearchModule',
+            'searchConfig' => [
+                'app\models\ProductSearch' => [
+                    'columns' => ['title'],
+                    'matchTitle' => 'Результаты поиска:',
+                    'matchText' => function ($model) {
+                        return "<img src='" . Product::IMG_PATH . $model->photo . "' alt='product'>";
+                    },
+                    'route' => '/product/view',
+                    'routeParams' => function ($model) {
+                        return ['id' => $model->id];
+                    },
+                    'limit' => 4,
+                ],
+            ]
         ],
     ],
     'params' => $params,

@@ -16,12 +16,12 @@ $this->params['breadcrumbs'] = [
 ];
 
 if (isset($model->category_id)) {
-    array_map(function($title) {
-        $this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['/category/view', 'id' => Category::getIdByTitle($title)]]; 
+    array_map(function ($title) {
+        $this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['/category/view', 'id' => Category::getIdByTitle($title)]];
     }, array_reverse($model->category->getParentRecursive()));
 }
 
-$this->params['breadcrumbs'][] = ['label' => $model->category->title, 'url' => ['/catalog/view','id' => $model->category->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->category->title, 'url' => ['/catalog/view', 'id' => $model->category->id]];
 $this->params['breadcrumbs'][] = $model->title;
 
 \yii\web\YiiAsset::register($this);
@@ -65,7 +65,11 @@ $this->params['breadcrumbs'][] = $model->title;
                 <div class="d-flex flex-column gap-2">
                     <span>Осталось <?= $model->count ?> шт.</span>
                     <h5 class="fw-bold"><?= $model->price ?> ₽</h5>
-                    <?= Html::a('В корзину', [''], ['class' => 'btn bg-warning bg-gradient px-5 text-nowrap']) ?>
+                    <?= Html::a(
+                        'В корзину',
+                        ['cart/add', 'product_id' => $model->id],
+                        ['class' => 'btn-cart-add btn btn-warning text-nowrap']
+                    ) ?>
                 </div>
             </div>
         </div>

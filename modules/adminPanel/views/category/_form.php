@@ -92,4 +92,4 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
 
 </div>
 
-<?= $this->registerJsFile('/js/props.js', ['depends' => JqueryAsset::class]) ?>
+<?= $this->registerJsFile('/admin-panel-dist/assets/js-my/props.js', ['depends' => JqueryAsset::class]) ?>

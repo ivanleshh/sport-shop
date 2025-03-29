@@ -17,8 +17,8 @@ $this->params['breadcrumbs'] = [
 ];
 
 if (isset($model->parent_id)) {
-    array_map(function($title) {
-        $this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['view', 'id' => Category::getIdByTitle($title)]]; 
+    array_map(function ($title) {
+        $this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['view', 'id' => Category::getIdByTitle($title)]];
     }, array_reverse($model->getParentRecursive()));
 }
 
@@ -29,9 +29,9 @@ $this->params['breadcrumbs'][] = $model->title;
 <div class="category-view hero-content">
 
     <?php if (!empty($model->children)): ?>
-        <div class="d-flex flex-wrap gap-3">
+        <div class="d-flex flex-wrap gap-3 mb-3">
             <?php foreach ($model->children as $child): ?>
-                <?= $this->render('category', ['model' => $child]) ?>
+                <?= $this->render('category', ['model' => $child, 'noChild' => true]) ?>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>
@@ -43,15 +43,15 @@ $this->params['breadcrumbs'][] = $model->title;
         'enableReplaceState' => false,
     ]); ?>
 
-    <div class="d-flex justify-content-between align-items-center flex-wrap">
-        <div class="d-flex gap-3 flex-wrap my-2">
+    <div class="row justify-content-between align-items-center mb-4">
+        <div class="col-12 col-lg-6">
+            <?= $this->render('_search', ['model' => $searchModel]) ?>
+        </div>
+        <div class="col-12 col-lg-6 d-flex gap-3 justify-content-end flex-wrap mt-2 mt-lg-0">
             Сортировать по:
             <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
             <?= $dataProvider->sort->link('price', ['class' => 'text-decoration-none']) ?>
             <?= Html::a('Сбросить', ['/catalog/view', 'id' => $model->id], ['class' => 'text-decoration-none link-danger']) ?>
-        </div>
-        <div>
-            <?= $this->render('_search', ['model' => $searchModel]) ?>
         </div>
     </div>
 
@@ -62,7 +62,7 @@ $this->params['breadcrumbs'][] = $model->title;
         'itemOptions' => ['class' => 'item'],
         'itemView' => 'product',
         'layout' =>
-            '<div class="d-flex justify-content-center mt-4">{pager}</div>
+        '<div class="d-flex justify-content-center mt-4">{pager}</div>
             <div class="catalog-items d-flex flex-wrap gap-3">{items}</div>
             <div class="d-flex justify-content-center mt-4">{pager}</div>',
     ]) ?>

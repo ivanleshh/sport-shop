@@ -7,6 +7,7 @@ use app\assets\AppAsset;
 use app\models\Cart;
 use app\models\Category;
 use app\widgets\Alert;
+use kazda01\search\SearchInput;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Modal;
@@ -65,8 +66,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="top-middle">
                             <ul class="useful-links">
                                 <li><a href="/site"><i class="bi bi-house-fill mx-2"></i>Главная</a></li>
-                                <li><a href="about-us.html">О нас</a></li>
-                                <li><a href="contact.html">Контакты</a></li>
                             </ul>
                         </div>
                     </div>
@@ -74,10 +73,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="top-end">
                             <ul class="user-login">
                                 <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
-                                    <li><a href="/personal">Личный кабинет</a></li>
+                                    <li class="d-none d-sm-inline-block"><a href="/personal">Личный кабинет</a></li>
                                 <?php endif; ?>
                                 <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
-                                    <li><a href="/admin-panel">Панель администратора</a></li>
+                                    <li class="d-none d-sm-inline-block"><a href="/admin-panel">Панель администратора</a></li>
                                 <?php endif; ?>
                                 <?php if (Yii::$app->user->isGuest) : ?>
                                     <li><a href="/site/login">Вход</a></li>
@@ -90,7 +89,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     <li>
                                         <?= Html::beginForm(['/site/logout'])
                                             . Html::submitButton(
-                                                'Выход <i class="bi bi-door-open-fill"></i>',
+                                                'Выход <i class="bi bi-door-open-fill fs-6"></i>',
                                                 ['class' => 'logout bg-transparent border-0']
                                             )
                                             . Html::endForm()
@@ -108,26 +107,24 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="header-middle">
             <div class="container">
                 <div class="row align-items-center justify-content-between">
-                    <div class="col-lg-3 col-md-3 col-12 text-center">
+                    <div class="col-lg-3 col-md-3 col-12 text-center text-md-start">
                         <!-- Start Header Logo -->
                         <a class="navbar-logo" href="/">
                             <?= Html::img("/images/header_logo.jpg", ['class' => "w-100", 'alt' => "Logo"]) ?>
                         </a>
                         <!-- End Header Logo -->
                     </div>
-                    <div class="col-lg-5 col-md-6 d-xs-none">
+                    <div class="col-lg-4 col-md-6 mb-3 mb-md-0">
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
-                            <!-- navbar search start -->
-                            <div class="navbar-search search-style-5">
-                                <div class="search-input">
-                                    <input type="text" placeholder="Search">
-                                </div>
-                                <button class='btn btn-orange'>
-                                    <i class="bi bi-search text-light"></i>
-                                </button>
-                            </div>
-                            <!-- navbar search Ends -->
+                            <?= SearchInput::widget([
+                                    'search_id' => 'search',
+                                    'placeholder' => 'Поиск...',
+                                    'wrapperClass' => 'navbar-search search-style-5',
+                                    'buttonContent' => '<i class="bi bi-search text-light"></i>',
+                                    'buttonClass' => 'btn btn-orange',
+                                    'inputClass' => 'px-3 py-2',
+                                ]); ?>
                         </div>
                         <!-- End Main Menu Search -->
                     </div>
@@ -158,7 +155,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                                     'data-url' => '/cart/item-count',
                                                 ]
                                             ]) ?>
-                                                <?= Cart::getItemCount() ?>
+                                            <?= Cart::getItemCount() ?>
                                             <? Pjax::end() ?>
                                         </span>
                                     </div>
@@ -203,9 +200,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             </button>
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
-                                    <li class="nav-item">
-                                        <a href="index.html" class="active" aria-label="Toggle navigation">Home</a>
-                                    </li>
                                     <li class="nav-item">
                                         <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
                                             data-bs-target="#submenu-1-2" aria-controls="navbarSupportedContent"

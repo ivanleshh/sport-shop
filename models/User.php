@@ -23,6 +23,8 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    const ADMIN_PHOTO = '/images/admin.jpg';
+
     public bool $check = false;
     public string $password_repeat = '';
     const SCENARIO_PASSWORD = 'password';
@@ -194,6 +196,12 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return self::findOne(compact('login'));
     }
 
+    // Метод для поиска администратора по его почте
+    public static function findByEmail($email)
+    {
+        return self::findOne(compact('email'));
+    }
+
     // Метод для сравнения вводимого посетителем пароля и хэша пароля пользователя из базы данных
     public function validatePassword($password)
     {
@@ -204,5 +212,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getIsAdmin()
     {
         return $this->role_id == Role::getRoleId('admin');
+    }
+
+    // Метод для получения имени и фамилии пользователя
+    public function getNameSurname()
+    {
+        return $this->name . ' ' . $this->surname;
     }
 }

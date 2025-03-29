@@ -18,15 +18,12 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <div class="d-flex gap-3 align-items-end flex-wrap">
-        <div class="d-flex align-items-center gap-3 flex-wrap">
-            <span>🔎</span>
-            <?= $form->field($model, 'email') ?>
-            <?= $form->field($model, 'pick_up_id')->dropDownList($pickUps, ['prompt' => 'Выберите пункт выдачи']) ?>
-            <?= $form->field($model, 'status_id')->dropDownList($statuses, ['prompt' => 'Выберите статус']) ?>
-            <?= $form->field($model, 'date_delivery')->textInput(['type' => 'date']) ?>
-            <?= Html::a('Сбросить', ['/admin-panel/orders'], ['class' => 'btn btn-outline-secondary']) ?>
-        </div>
+    <div class="row align-items-center">
+        <div class="col-6 col-md-4 col-xl-3"><?= $form->field($model, 'email') ?></div>
+        <div class="col-6 col-md-4 col-xl-2"><?= $form->field($model, 'status_id')->dropDownList($statuses, ['prompt' => 'Выберите статус']) ?></div>
+        <div class="col-12 col-sm-6 col-md-4 col-xl-3"><?= $form->field($model, 'pick_up_id')->dropDownList($pickUps, ['prompt' => 'Выберите пункт выдачи']) ?></div>
+        <div class="col-6 col-sm-6 col-md-4 col-xl-2"><?= $form->field($model, 'date_delivery')->textInput(['type' => 'date']) ?></div>
+        <div class="col-6 col-sm-4 col-md-3 col-xl-2"><?= Html::a('Сбросить', ['/admin-panel/orders'], ['class' => 'btn btn-outline-secondary w-100']) ?></div>
     </div>
 
     <?php ActiveForm::end(); ?>

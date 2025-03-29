@@ -20,7 +20,7 @@ use yii\helpers\VarDumper;
             )
         ?>
 
-        <?php if (!empty($model->children)): ?>
+        <?php if (empty($noChild) && !empty($model->children)): ?>
             <div class="d-flex flex-wrap gap-3 float-end p-2">
                 <?php foreach ($model->children as $child): ?>
                     <?= $this->render('category', ['model' => $child]) ?>

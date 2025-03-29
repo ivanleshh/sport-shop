@@ -7,12 +7,82 @@
 }
 
 .btn-orange {
+    color: white !important;
     background: rgb(225, 146, 0) !important;
 }
 
 .btn-orange:hover {
     background: rgb(255, 179, 36) !important;
 }
+
+input:checked {
+    background-color: rgb(225, 146, 0) !important;
+    border: none;
+}
+
+.nav-link form {
+    width: 100%;
+}
+
+/* main-search start */
+
+.search-widget {
+    width: 350px;
+    max-height: 450px;
+    overflow-y: auto;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    background: #fff;
+    padding: 15px;
+    z-index: 1000;
+}
+
+.search-widget .search-result {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    background: #fafafa;
+    border-radius: 6px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#search-results .container-fluid .row > div span {
+    padding: 0.75rem 0;
+}
+
+.search-widget .match span {
+    display: none;
+}
+
+.search-widget .search-result:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.search-widget .search-result img {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.search-widget .search-result a {
+    text-decoration: none;
+    color: #222;
+}
+
+.search-widget .search-result a .title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.search-widget .search-result a .text {
+    font-size: 13px;
+    color: #666;
+}
+
+/* main-search end */
 
 .navbar-logo {
     width: 200px !important;
@@ -163,6 +233,12 @@ textarea {
     text-transform: capitalize;
 }
 
+@media screen and (max-width: 768px) {
+    .breadcrumbs {
+        padding: 7px;
+    }
+}
+
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .breadcrumbs .breadcrumbs-content .page-title {
         font-size: 17px;
@@ -193,7 +269,7 @@ textarea {
 @media (max-width: 767px) {
     .breadcrumbs .breadcrumb-nav {
         text-align: center;
-        margin-top: 15px;
+        margin-top: 10px;
     }
 }
 
