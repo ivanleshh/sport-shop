@@ -18,6 +18,13 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'gfs78gdf5gdf',
@@ -71,7 +78,7 @@ $config = [
                     'columns' => ['title'],
                     'matchTitle' => 'Результаты поиска:',
                     'matchText' => function ($model) {
-                        return "<img src='" . Product::IMG_PATH . $model->id . '/' . $model->productImages[0]->photo . "' alt='product'>";
+                        return "<img src='" . Product::IMG_PATH . $model->productImages[0]->photo . "' alt='product'>";
                     },
                     'route' => '/product/view',
                     'routeParams' => function ($model) {

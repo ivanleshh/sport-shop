@@ -33,12 +33,12 @@ $this->params['breadcrumbs'][] = $model->title;
                 <div class="product-images">
                     <main id="gallery">
                         <div class="main-img">
-                            <?= Html::img(Product::IMG_PATH . $model->id . '/' . $model->productImages[0]->photo, ['alt' => "product image", 'id' => "current"]) ?>
+                            <?= Html::img(Product::IMG_PATH . $model->productImages[0]->photo, ['alt' => "product image", 'id' => "current"]) ?>
                         </div>
                         <?php if (count($model->productImages) > 1) : ?>
                             <div class="images">
                                 <?php foreach ($model->productImages as $image)
-                                    echo Html::img(Product::IMG_PATH . $model->id . '/' . $image->photo, ['alt' => "product image", 'id' => "current"])
+                                    echo Html::img(Product::IMG_PATH . $image->photo, ['alt' => "product image", 'id' => "current"])
                                 ?>
                             </div>
                         <?php endif; ?>

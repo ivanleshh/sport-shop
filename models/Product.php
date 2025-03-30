@@ -24,7 +24,7 @@ use yii\helpers\VarDumper;
  */
 class Product extends \yii\db\ActiveRecord
 {
-    const IMG_PATH = '/images/products/product_';
+    const IMG_PATH = '/images/products/';
     const NO_PHOTO = '/images/noPhoto.jpg';
     public $imageFiles;
 
@@ -51,7 +51,7 @@ class Product extends \yii\db\ActiveRecord
             [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => Brand::class, 'targetAttribute' => ['brand_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
 
-            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, webp', 'maxFiles' => 4],
+            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, webp, jpeg', 'maxFiles' => 4],
         ];
     }
 
@@ -62,7 +62,6 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => '№',
-            'imageFiles' => 'Фотографии товара',
             'title' => 'Название',
             'description' => 'Описание',
             'price' => 'Цена',
@@ -160,28 +159,5 @@ class Product extends \yii\db\ActiveRecord
     public function getOrderItems()
     {
         return $this->hasMany(OrderItem::class, ['product_id' => 'id']);
-    }
-
-    public function upload()
-    {
-        if ($this->validate()) {
-            foreach ($this->imageFiles as $file) {
-                $fileName = Yii::$app->user->id
-                    . '_'
-                    . time()
-                    . '_'
-                    . Yii::$app->security->generateRandomString()
-                    . '.'
-                    . $file->extension;
-                $file->saveAs(self::IMG_PATH . $this->id . '/' . $fileName);
-                $product_image = new ProductImage([
-                    'photo' => $fileName
-                ]);
-                $product_image->save();
-            }
-            return true;
-        } else {
-            return false;
-        }
     }
 }

@@ -3,7 +3,7 @@
 use app\models\Product;
 use yii\bootstrap5\Html;
 ?>
-<div class="card" style="width: 18rem; height: 28rem;">
+<div class="card rounded-3" style="width: 18rem; height: 28rem;">
   <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
     <div class="d-flex justify-content-end w-100 bg-dark bg-gradient rounded-top-2 px-3 py-2 gap-3">
       <?= Html::a('сравнить', [''], ['class' => 'card-different text-decoration-none link-light']) ?>
@@ -15,7 +15,7 @@ use yii\bootstrap5\Html;
   <div class="card-body d-flex justify-content-between flex-column">
     <div class="card-img d-flex justify-content-center align-items-center border-bottom h-100">
       <?= Html::a(
-        Html::img(Product::IMG_PATH . $model->id . '/' . $model->productImages[0]->photo, ['class' => 'w-100']),
+        Html::img(isset($model->productImages[0]->photo) ? Product::IMG_PATH . $model->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-100']),
         ['/product/view', 'id' => $model->id], 
         ['class' => 'd-flex flex-column align-items-center']) ?>
     </div>
