@@ -17,7 +17,7 @@ use yii\bootstrap5\Html;
 
     <div class="card-img d-flex justify-content-center align-items-center border-bottom h-100">
       <?= Html::a(
-        Html::img(Product::IMG_PATH . $model->product->photo, ['class' => 'w-100']),
+        Html::img(Product::IMG_PATH . $model->product->id . '/' . $model->product->productImages[0]->photo, ['class' => 'w-100']),
         ['/product/view', 'id' => $model->product->id],
         ['class' => 'd-flex flex-column align-items-center w-75']
       ) ?>

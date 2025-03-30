@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Category;
 use app\models\Product;
 
 $params = require __DIR__ . '/params.php';
@@ -10,6 +11,7 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log', 'search'],
     'language' => 'ru-RU',
+    'timeZone' => 'Europe/Moscow',
     'defaultRoute' => '/site',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -69,7 +71,7 @@ $config = [
                     'columns' => ['title'],
                     'matchTitle' => 'Результаты поиска:',
                     'matchText' => function ($model) {
-                        return "<img src='" . Product::IMG_PATH . $model->photo . "' alt='product'>";
+                        return "<img src='" . Product::IMG_PATH . $model->id . '/' . $model->productImages[0]->photo . "' alt='product'>";
                     },
                     'route' => '/product/view',
                     'routeParams' => function ($model) {

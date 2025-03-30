@@ -30,7 +30,7 @@ use yii\bootstrap5\Html;
   <div class="d-flex gap-4 justify-content-between px-4 py-3">
     <div class="d-flex align-items-center gap-2">
       <?= Html::a(
-        Html::img(Product::IMG_PATH . $model->orderItems[0]->product->photo, ['class' => 'w-50']) .
+        Html::img(Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo, ['class' => 'w-50']) .
           "<div class='d-flex flex-column align-items-center gap-2'>"
           . $model->orderItems[0]->product->title
           . ((count($model->orderItems) > 1) ? '<span class="text-dark">... и ещё ' . count($model->orderItems) - 1 . '</span>' : '')

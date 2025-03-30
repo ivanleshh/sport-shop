@@ -78,9 +78,9 @@ class ProductController extends Controller
         $productProperties = []; // Значения характеристик будут заполнены после выбора категории
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
-            if (is_null($model->imageFile) || $model->upload()) {
-                if ($model->save(false)) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->save(false)) {
+                if ($model->upload()) {
                     $postData = $this->request->post('ProductProperty', []);
                     $productProperties = [];
                     // Получаем характеристики выбранной категории

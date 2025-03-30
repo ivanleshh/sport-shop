@@ -3452,13 +3452,10 @@ top: 2px;
 /*======================================
     Item Details CSS
 ========================================*/
-.item-details {
-  background-color: #f9f9f9;
-}
 
 .item-details .top-area {
   background-color: #fff;
-  padding: 30px;
+  padding: 1.5rem;
   border: 1px solid #eee;
   border-radius: 4px;
 }
@@ -3466,10 +3463,13 @@ top: 2px;
 .item-details .product-images img {
   width: 100%;
   cursor: pointer;
-  border: 1px solid #eee;
-  border-radius: 4px;
   overflow: hidden;
   padding: 5px;
+}
+
+.item-details .product-images img:not(:first-of-type ) {
+  border: 1px solid #eee;
+  border-radius: 4px;
 }
 
 .item-details .product-images .images {
@@ -3518,7 +3518,6 @@ top: 2px;
 .item-details .product-info .title {
   font-size: 22px;
   font-weight: 600;
-  margin-bottom: 10px;
 }
 
 @media (max-width: 767px) {
@@ -3552,7 +3551,7 @@ top: 2px;
 .item-details .product-info .price {
   color: #081828;
   display: block;
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
   margin-bottom: 15px;
 }
@@ -3807,7 +3806,7 @@ top: 2px;
 
 .item-details .product-info .wish-button .btn:hover {
   color: #fff;
-  background-color: #0167F3;
+  background-color: gray;
   border-color: transparent;
 }
 
@@ -3969,9 +3968,8 @@ top: 2px;
 /* Product Details Info */
 .product-details-info .single-block {
   background-color: #fff;
-  padding: 30px;
+  padding: 1.5rem;
   border: 1px solid #eee;
-  border-radius: 4px;
   margin-top: 30px;
 }
 
@@ -4006,7 +4004,7 @@ top: 2px;
   top: 8px;
   height: 6px;
   width: 6px;
-  background-color: #0167F3;
+  background-color: rgb(225, 146, 0);
   border-radius: 6px;
 }
 
@@ -4028,7 +4026,8 @@ top: 2px;
   position: relative;
 }
 
-.product-details-info .info-body .normal-list li span {
+.product-details-info .info-body .normal-list li span, 
+.product-details-info .info-body .features li span{
   font-weight: 500;
   color: #555;
 }

@@ -16,18 +16,18 @@ use yii\bootstrap5\ActiveForm;
 
 <div class="product-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
     <div class="row col-12">
         <div class="col">
-            <?php if (isset($model->photo)) : ?>
+            <?php if (isset($model->productImages[0])) : ?>
                 <div class="d-flex flex-column align-items-center">
                     <p>Загруженное фото</p>
-                    <div class="text-center"><?= Html::img(Product::IMG_PATH . $model->photo, ['class' => 'w-75']); ?></div>
+                    <div class="text-center"><?= Html::img(Product::IMG_PATH . $model->id . '/' . $model->productImages[0]->photo, ['class' => 'w-75']); ?></div>
                 </div>
-                
+
             <?php endif; ?>
-            <?= $form->field($model, 'imageFile')->fileInput() ?>
+            <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'count')->textInput() ?>
@@ -61,12 +61,12 @@ use yii\bootstrap5\ActiveForm;
                 <?php if (is_null($model->category_id)) : ?>
                     <p>Выберите категорию, чтобы отобразить характеристики.</p>
                 <?php endif; ?>
-                    <!-- <div class="border border-success rounded-3 p-3 my-3 category-props col-lg-6 w-100">
+                <!-- <div class="border border-success rounded-3 p-3 my-3 category-props col-lg-6 w-100">
                         <div class="d-flex gap-3 mt-2 flex-wrap">
                             
                         </div>
                     </div> -->
-               
+
             </div>
         </div>
     </div>

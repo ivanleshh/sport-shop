@@ -3,12 +3,12 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\VarDumper;
 
 /**
  * This is the model class for table "product".
  *
  * @property int $id
- * @property string $photo
  * @property string $title
  * @property string $description
  * @property float $price
@@ -24,9 +24,10 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
-    const IMG_PATH = '/images/products/';
+    const IMG_PATH = '/images/products/product_';
     const NO_PHOTO = '/images/noPhoto.jpg';
-    public $imageFile;
+    public $imageFiles;
+
     /**
      * {@inheritdoc}
      */
@@ -44,14 +45,13 @@ class Product extends \yii\db\ActiveRecord
             [['title', 'description', 'price', 'category_id', 'brand_id'], 'required'],
             [['description'], 'string'],
             [['price'], 'number'],
-            ['photo', 'safe'],
             ['count', 'default', 'value' => 0],
             [['category_id', 'count', 'brand_id'], 'integer'],
-            [['photo', 'title'], 'string', 'max' => 255],
+            [['title'], 'string', 'max' => 255],
             [['brand_id'], 'exist', 'skipOnError' => true, 'targetClass' => Brand::class, 'targetAttribute' => ['brand_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
 
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFiles'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, webp', 'maxFiles' => 4],
         ];
     }
 
@@ -62,8 +62,7 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             'id' => '№',
-            'photo' => 'Фото товара',
-            'imageFile' => 'Фото товара',
+            'imageFiles' => 'Фотографии товара',
             'title' => 'Название',
             'description' => 'Описание',
             'price' => 'Цена',
@@ -144,6 +143,16 @@ class Product extends \yii\db\ActiveRecord
     }
 
     /**
+     * Gets query for [[ProductImages]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProductImages()
+    {
+        return $this->hasMany(ProductImage::class, ['product_id' => 'id']);
+    }
+
+    /**
      * Gets query for [[OrderItems]].
      *
      * @return \yii\db\ActiveQuery
@@ -156,15 +165,20 @@ class Product extends \yii\db\ActiveRecord
     public function upload()
     {
         if ($this->validate()) {
-            $fileName = Yii::$app->user->id
-                . '_'
-                . time()
-                . '_'
-                . Yii::$app->security->generateRandomString()
-                . '.'
-                . $this->imageFile->extension;
-            $this->imageFile->saveAs(self::IMG_PATH . $fileName);
-            $this->photo = $fileName;
+            foreach ($this->imageFiles as $file) {
+                $fileName = Yii::$app->user->id
+                    . '_'
+                    . time()
+                    . '_'
+                    . Yii::$app->security->generateRandomString()
+                    . '.'
+                    . $file->extension;
+                $file->saveAs(self::IMG_PATH . $this->id . '/' . $fileName);
+                $product_image = new ProductImage([
+                    'photo' => $fileName
+                ]);
+                $product_image->save();
+            }
             return true;
         } else {
             return false;

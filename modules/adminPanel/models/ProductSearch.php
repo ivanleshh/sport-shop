@@ -18,7 +18,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'category_id', 'count', 'brand_id'], 'integer'],
-            [['photo', 'title', 'description'], 'safe'],
+            [['title', 'description'], 'safe'],
             [['price'], 'number'],
         ];
     }
@@ -67,8 +67,7 @@ class ProductSearch extends Product
             'brand_id' => $this->brand_id,
         ]);
 
-        $query->andFilterWhere(['like', 'photo', $this->photo])
-            ->andFilterWhere(['like', 'title', $this->title])
+        $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description]);
 
         return $dataProvider;

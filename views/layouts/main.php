@@ -283,12 +283,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <div class="breadcrumbs border rounded-4 mb-4">
                     <div class="container">
                         <div class="row align-items-center">
-                            <div class="col-lg-6 col-md-6 col-12">
+                            <div class="col-lg-4 col-md-6 col-12">
                                 <div class="breadcrumbs-content">
                                     <h3 class="page-title fs-4"><?= is_array($lastItem) ? $lastItem['label'] : $lastItem ?></h3>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-12">
+                            <div class="col-lg-8 col-md-6 col-12">
                                 <ul class="breadcrumb-nav">
                                     <?php foreach ($breadcrumbs as $item): ?>
                                         <li>

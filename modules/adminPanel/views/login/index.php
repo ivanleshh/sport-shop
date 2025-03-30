@@ -52,7 +52,7 @@ use yii\bootstrap5\Html;
                 </div>
                 <div class="col-12">
                     <div class="d-grid">
-                        <?= Html::submitButton('Войти', ['class' => 'btn bsb-btn-xl btn-orange']) ?>
+                        <?= Html::submitButton('Войти', ['class' => 'btn btn-orange']) ?>
                     </div>
                 </div>
                 <div class="col-12">
