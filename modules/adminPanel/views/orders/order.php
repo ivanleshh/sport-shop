@@ -17,7 +17,8 @@ use yii\bootstrap5\Html;
   <div class="d-flex gap-4 justify-content-between align-items-center px-4 py-3">
     <div class="d-none d-sm-flex align-items-center gap-2">
       <?= Html::a(
-        Html::img(Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo, ['class' => 'w-75']) .
+        Html::img(isset($model->orderItems[0]->product->productImages[0]) ?
+        Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-75']) .
           "<div class='mt-2'>"
           . $model->orderItems[0]->product->title
           . ((count($model->orderItems) > 1) ? '<div class="text-dark">... и ещё ' . count($model->orderItems) - 1 . '</div>' : '')
