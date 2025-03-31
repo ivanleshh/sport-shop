@@ -42,7 +42,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
                 <ul class="navbar-nav navbar-nav-right d-none d-lg-flex gap-3">
-                    <li class="">
+                    <li>
                         <div class="dropdown-header d-flex gap-3 align-items-center">
                             <img class="rounded-circle img-sm" src="<?= User::ADMIN_PHOTO ?>" alt="Profile image">
                             <div>
@@ -101,6 +101,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <li class="nav-item"> <a class="nav-link" href="/admin-panel/brand">Бренды</a></li>
                             </ul>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/site" class="nav-link logout bg-transparent border-0 text-muted w-100 text-center">
+                            <span class="menu-title">В магазин</span><i class="bi bi-shop"></i>
+                        </a>
                     </li>
                     <li class="nav-item">
                         <?= Html::beginForm(['/site/logout'])

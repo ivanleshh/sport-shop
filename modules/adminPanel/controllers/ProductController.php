@@ -14,6 +14,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
+use yii\helpers\VarDumper;
 use yii\web\UploadedFile;
 
 /**
@@ -76,114 +77,18 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
-        $productProperties = []; // Значения характеристик будут заполнены после выбора категории
-
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
-
-                $postData = $this->request->post('ProductProperty', []);
-                $productProperties = [];
-                // Получаем характеристики выбранной категории
-                $categoryProperties = CategoryProperty::find()
-                    ->where(['category_id' => $model->category_id])
-                    ->all();
-                $allowedPropertyIds = ArrayHelper::getColumn($categoryProperties, 'property_id');
-                // Обработка значений характеристик
-                foreach ($allowedPropertyIds as $index => $propertyId) {
-                    $value = $postData[$index]['value'] ?? null;
-
-                    if (!empty($value)) { // Сохраняем только заполненные значения
-                        $productProperty = new ProductProperty();
-                        $productProperty->product_id = $model->id;
-                        $productProperty->property_id = $propertyId;
-                        $productProperty->value = $value;
-                        $productProperties[] = $productProperty;
-                    }
-                }
-                if (Model::validateMultiple($productProperties)) {
-                    foreach ($productProperties as $prop) {
-                        $prop->save(false);
-                    }
-                    Yii::$app->session->setFlash('success', "Товар $model->title успешно создан");
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+                $this->saveProductProperties($model); // Обработка характеристик
+                $this->saveProductImages($model); // Обработка изображений
+                Yii::$app->session->setFlash('success', "Товар $model->title успешно создан");
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
-
         return $this->render('create', [
             'model' => $model,
-            'productProperties' => $productProperties,
-            'categories' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
-            'properties' => [],
         ]);
     }
-
-    public function actionUploadImages()
-    {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-
-        $files = UploadedFile::getInstancesByName('imageFiles');
-        $product_id = Yii::$app->request->post('product_id', 0);
-
-        $path = Yii::getAlias('@webroot' . Product::IMG_PATH);
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
-        }
-
-        $response = [];
-        foreach ($files as $file) {
-            $fileName = Yii::$app->user->id
-                . '_'
-                . time()
-                . '_'
-                . Yii::$app->security->generateRandomString()
-                . '.'
-                . $file->extension;
-            if ($file->saveAs($path . $fileName)) {
-                $productImage = new ProductImage();
-                $productImage->photo = $fileName;
-                $productImage->product_id = $product_id;
-                $productImage->save();
-
-                $response[] = [
-                    'success' => true,
-                    'file' => $fileName,
-                    'key' => $productImage->id,
-                ];
-            } else {
-                $response[] = [
-                    'success' => false,
-                    'error' => $file->error,
-                ];
-            }
-        }
-
-        return $response;
-    }
-
-    // public function upload($product_id)
-    // {
-    //     if ($this->validate()) {
-    //         foreach ($this->imageFiles as $file) {
-    //             $fileName = Yii::$app->user->id
-    //                 . '_'
-    //                 . time()
-    //                 . '_'
-    //                 . Yii::$app->security->generateRandomString()
-    //                 . '.'
-    //                 . $file->extension;
-    //             $file->saveAs(Product::IMG_PATH . $fileName);
-    //             $productImage = new ProductImage([
-    //                 'photo' => $fileName,
-    //                 'product_id' => $product_id
-    //             ]);
-    //             $productImage->save();
-    //         }
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
 
     /**
      * Updates an existing Product model.
@@ -194,19 +99,95 @@ class ProductController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
+        $model = Product::findOne($id);
+        if (!$model) {
+            throw new NotFoundHttpException('Товар не найден');
+        }
         if ($this->request->isPost && $model->load($this->request->post())) {
-
-            if ($model->save(false)) {
-                Yii::$app->session->setFlash('success', "Товар $model->title успешно обновлён");
+            if ($model->save()) {
+                $this->saveProductProperties($model); // Обработка характеристик
+                $this->saveProductImages($model); // Обработка изображений
+                Yii::$app->session->setFlash('success', "Товар $model->title успешно обновлен");
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * Сохранение характеристик продукта
+     */
+    private function saveProductProperties($model)
+    {
+        $postData = $this->request->post('ProductProperty', []);
+
+        $categoryProperties = CategoryProperty::find()
+            ->where(['category_id' => $model->category_id])
+            ->all();
+        $allowedPropertyIds = ArrayHelper::getColumn($categoryProperties, 'property_id');
+        ProductProperty::deleteAll(['product_id' => $model->id]); // Удаление старых характеристик
+
+        $productProperties = [];
+        foreach ($allowedPropertyIds as $index => $propertyId) { // Сохрание новых характеристик
+            $value = $postData[$index]['value'] ?? null;
+            if (!empty($value)) {
+                $productProperty = new ProductProperty();
+                $productProperty->product_id = $model->id;
+                $productProperty->property_id = $propertyId;
+                $productProperty->property_value = $value;
+                $productProperties[] = $productProperty;
+            }
+        }
+        if (Model::validateMultiple($productProperties)) {
+            foreach ($productProperties as $prop) {
+                $prop->save(false);
+            }
+        }
+    }
+
+    /**
+     * Сохранение и обновление изображений продукта
+     */
+    private function saveProductImages($model)
+    {
+        $files = UploadedFile::getInstancesByName('imageFiles');
+        $path = Yii::getAlias('@webroot' . Product::IMG_PATH);
+
+        $currentImages = $model->productImages;
+        $uploadedFileNames = array_map(fn($file) => $file->name, $files);
+        $transaction = Yii::$app->db->beginTransaction();
+
+        try {
+            foreach ($currentImages as $image) { // Удаление изображений, которых больше нет в списке
+                if (!in_array($image->photo, $uploadedFileNames)) {
+                    $filePath = $path . $image->photo;
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
+                    $image->delete();
+                }
+            }
+
+            foreach ($files as $file) { // Загрузка новых изображений
+                $isExisting = array_filter($currentImages, fn($img) => $img->photo === $file->name);
+                if (!$isExisting) {
+                    $fileName = Yii::$app->user->id . '_' . time() . '_' . Yii::$app->security->generateRandomString() . '.' . $file->extension;
+                    $file->saveAs($path . $fileName);
+
+                    $productImage = new ProductImage();
+                    $productImage->photo = $fileName;
+                    $productImage->product_id = $model->id;
+                    $productImage->save();
+                }
+            }
+
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'Ошибка обработки изображений: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -243,6 +224,8 @@ class ProductController extends Controller
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         $categoryId = Yii::$app->request->get('category_id');
+        $productId = Yii::$app->request->get('product_id', 0);
+
         if (!$categoryId) {
             return [];
         }
@@ -250,10 +233,23 @@ class ProductController extends Controller
             ->where(['category_id' => $categoryId])
             ->with('property')
             ->all();
-        return array_map(function ($prop) {
+
+        $productProperties = [];
+        if ($productId) {
+            $productProperties = ProductProperty::find()
+                ->where(['product_id' => $productId])
+                ->indexBy('property_id')
+                ->all();
+        }
+
+        return array_map(function ($prop) use ($productProperties) {
+            $propertyValue = isset($productProperties[$prop->property_id])
+                ? $productProperties[$prop->property_id]->property_value
+                : '';
             return [
                 'property_id' => $prop->property_id,
                 'property_title' => $prop->property->title,
+                'property_value' => $propertyValue,
             ];
         }, $categoryProperties);
     }

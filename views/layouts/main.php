@@ -76,7 +76,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     <li class="d-none d-sm-inline-block"><a href="/personal">Личный кабинет</a></li>
                                 <?php endif; ?>
                                 <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
-                                    <li class="d-none d-sm-inline-block"><a href="/admin-panel">Панель администратора</a></li>
+                                    <li class="d-none d-sm-inline-block"><a href="/admin-panel/orders">Панель администратора</a></li>
                                 <?php endif; ?>
                                 <?php if (Yii::$app->user->isGuest) : ?>
                                     <li><a href="/site/login">Вход</a></li>
