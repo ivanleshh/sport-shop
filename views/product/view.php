@@ -5,6 +5,7 @@ use app\models\Category;
 use app\models\Product;
 use hoomanMirghasemi\iviewer\IviewerGallery;
 use yii\helpers\Html;
+use yii\web\JqueryAsset;
 
 /** @var yii\web\View $this */
 /** @var app\models\Product $model */
@@ -29,17 +30,17 @@ $this->params['breadcrumbs'][] = $model->title;
 <section class="item-details hero-content">
     <div class="top-area rounded-4">
         <div class="row align-items-center justify-content-center">
-            <div class="col-lg-5 col-md-8 col-12">
+            <div class="col-md-8 col-12 col-lg-5">
                 <div class="product-images">
-                    <main id="gallery">
-                        <div class="main-img">
-                            <?= Html::img(Product::IMG_PATH . $model->productImages[0]->photo, ['alt' => "product image", 'id' => "current"]) ?>
-                        </div>
+                    <main class="row align-items-center justify-content-center" id="gallery">
                         <?php if (count($model->productImages) > 1) : ?>
-                            <div class="images">
+                            <div class="images col-9 col-sm-7 col-md-3 col-xl-2 d-flex d-md-grid gap-2 order-2 order-md-1">
                                 <?php foreach ($model->productImages as $image)
-                                    echo Html::img(Product::IMG_PATH . $image->photo, ['alt' => "product image", 'id' => "current"])
+                                    echo Html::img(Product::IMG_PATH . $image->photo, ['alt' => "product image", 'class' => 'gallery-img'])
                                 ?>
+                            </div>
+                            <div class="main-img col-12 col-sm-8 col-md-9 col-xl-10 order-1 order-md-2">
+                                <?= Html::img(Product::IMG_PATH . $model->productImages[0]->photo, ['alt' => "product image", 'id' => "current"]) ?>
                             </div>
                         <?php endif; ?>
                     </main>
@@ -118,3 +119,5 @@ $this->params['breadcrumbs'][] = $model->title;
 <!-- End Item Details -->
 
 <!-- Review Modal -->
+
+<?= $this->registerJsFile('/js/images-change.js', ['depends' => JqueryAsset::class]) ?>

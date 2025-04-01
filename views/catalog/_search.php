@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'title') ?>
         </div>
         <div class="col-6 col-md-3 col-lg-4 col-xl-3">
-            <?= Html::a('Сбросить', ['/admin-panel/category'], ['class' => 'btn btn-outline-secondary w-100']) ?>
+            <?= Html::a('Сбросить', ['view', 'id' => $model->category->id], ['class' => 'btn btn-outline-secondary w-100']) ?>
         </div>
     </div>
 

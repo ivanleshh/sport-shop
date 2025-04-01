@@ -3472,20 +3472,6 @@ top: 2px;
   border-radius: 4px;
 }
 
-.item-details .product-images .images {
-  display: -ms-grid;
-  display: grid;
-  Grid-template-columns: repeat(5, 1fr);
-  Grid-gap: 1em 1em;
-  Margin-top: 1em;
-}
-
-@media (max-width: 767px) {
-  .item-details .product-images .images {
-    Grid-template-columns: repeat(3, 1fr);
-  }
-}
-
 @-webkit-keyframes fadeIn {
   to {
     Opacity: 1;

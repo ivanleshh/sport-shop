@@ -17,31 +17,16 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
+$this->params['breadcrumbs'] = [
+    ['label' => 'Панель администратора', 'url' => ['/admin-panel'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Модерация заказов', 'url' => ['/admin-panel']],
+    "Заказ № $model->id",
+];
 ?>
-<div class="cart-index">
-    <h3>Заказ № <?= $model->id ?> от <?= Yii::$app->formatter->asDate($model->created_at, 'php:d-m-Y (H:i)') ?></h3>
-    <div class="order-details d-flex gap-4 mt-2">
-        <div class="order-details-items border rounded-3 px-4 py-3 w-50">
-            <h3 class="mb-3">Состав заказа</h3>
+<div class="cart-index hero-content">
+    <div class="row">
 
-            <?= ListView::widget([
-                'dataProvider' => $dataProvider,
-                'itemOptions' => ['class' => 'item'],
-                'itemView' => 'order-item',
-                'pager' => [
-                    'class' => LinkPager::class
-                ],
-                'layout' => "<div class='d-flex flex-column gap-3 my-2'>{items}</div>\n<div class='d-flex justify-content-end'>{pager}</div>"
-            ]) ?>
-
-            <div class="d-flex gap-1 align-items-end flex-column border-bottom py-2">
-                <div>Количество товаров в заказе: <span class="fw-bold fs-5"><?= $model->product_amount ?></span></div>
-                <div>Общая сумма заказа: <span class="fw-bold fs-5"><?= $model->total_amount ?> ₽</span></div>
-                <a class="text-decoration-none align-self-start" href="/admin-panel"><- Вернуться к заказам</a>
-            </div>
-        </div>
-        <div class="order-details-info border rounded-3 px-4 py-3 w-50">
-            <h3 class="mb-3">Информация о заказе</h3>
+        <div class="col-12 col-md-6 order-1 order-md-2">
 
             <?php Pjax::begin([
                 'id' => 'admin-orders-view-pjax',
@@ -69,18 +54,36 @@ use yii\widgets\Pjax;
                         'attribute' => 'new_date_delivery',
                         'value' => Yii::$app->formatter->asDatetime($model?->new_date_delivery, 'php:d.m.Y'),
                         'visible' => (bool)$model?->new_date_delivery,
+                        'captionOptions' => [
+                            'class' => 'text-wrap'
+                        ]
                     ],
                     [
                         'attribute' => 'delay_reason',
                         'value' => $model?->delay_reason,
                         'visible' => (bool)$model?->delay_reason,
+                        'captionOptions' => [
+                            'class' => 'text-wrap'
+                        ]
                     ],
                     [
                         'attribute' => 'pick_up_id',
                         'value' => $model->pickUp?->address,
                         'visible' => (bool)$model->pickUp?->address,
+                        'contentOptions' => [
+                            'class' => 'text-wrap'
+                        ],
+                        'captionOptions' => [
+                            'class' => 'text-wrap'
+                        ]
                     ],
-                    'email:email',
+                    [
+                        'attribute' => 'email',
+                        'value' => $model->email,
+                        'contentOptions' => [
+                            'class' => 'text-wrap'
+                        ],
+                    ],
                     [
                         'attribute' => 'date_delivery',
                         'value' => Yii::$app->formatter->asDatetime($model?->date_delivery, 'php:d.m.Y'),
@@ -108,40 +111,65 @@ use yii\widgets\Pjax;
                     [
                         'attribute' => 'created_at',
                         'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
+                        'captionOptions' => [
+                            'class' => 'text-wrap'
+                        ]
                     ],
                     [
                         'attribute' => 'updated_at',
                         'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
+                        'captionOptions' => [
+                            'class' => 'text-wrap'
+                        ]
                     ],
                 ],
             ]) ?>
-            <div class="d-flex flex-column gap-3 justify-content-center">
+
+            <?php Pjax::end(); ?>
+
+            <div class="row gy-3 mt-2 mb-3">
                 <?php if ($model->status->id == Status::getStatusId('Новый')) {
-                    echo Html::a('Принять в работу', ['work', 'id' => $model->id], [
-                        'class' => 'btn btn-outline-warning',
+                    echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6'>" . Html::a('Принять в работу', ['work', 'id' => $model->id], [
+                        'class' => 'btn btn-warning w-100',
                         'data' => [
                             'confirm' => 'Подтвердите действие',
                             'method' => 'post',
                         ],
-                    ]);
+                    ]) . "</div>";
                 } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
                     if (is_null($model->address) && $model->status_id == Status::getStatusId('В пути')) {
-                        echo Html::a('Перенести доставку', ['delay', 'id' => $model->id], [
-                            'class' => 'btn btn-outline-danger btn-delay',
-                        ]);
+                        echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6'>" . Html::a('Перенести доставку', ['delay', 'id' => $model->id], [
+                            'class' => 'btn btn-outline-danger btn-delay w-100',
+                        ]) . "</div>";
                     }
-                    echo Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
-                        'class' => 'btn btn-outline-success',
+                    echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6'>" . Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
+                        'class' => 'btn btn-success w-100',
                         'data' => [
                             'confirm' => 'Подтвердите действие',
                             'method' => 'post',
                         ],
-                    ]);
+                    ]) . "</div>";
                 }
                 ?>
             </div>
 
-            <?php Pjax::end(); ?>
+        </div>
+
+        <div class="col-12 col-md-6 order-3 order-md-1">
+            <div class="d-flex gap-2 align-items-end flex-column py-2 mb-3 border-top border-bottom">
+                <div>Количество товаров в заказе: <span class="fw-bold fs-5"><?= $model->product_amount ?></span></div>
+                <div>Общая сумма заказа: <span class="fw-bold fs-5"><?= $model->total_amount ?> ₽</span></div>
+                <a class="text-decoration-none align-self-start" href="/admin-panel/orders"><- Вернуться к заказам</a>
+            </div>
+            <?= ListView::widget([
+                'dataProvider' => $dataProvider,
+                'itemOptions' => ['class' => 'item'],
+                'itemView' => 'order-item',
+                'pager' => [
+                    'class' => LinkPager::class
+                ],
+                'layout' => "<div class='d-flex flex-column gap-3'>{items}</div>\n<div class='d-flex justify-content-end'>{pager}</div>"
+            ]) ?>
         </div>
     </div>
 </div>

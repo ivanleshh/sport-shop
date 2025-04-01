@@ -20,7 +20,7 @@ $this->params['breadcrumbs'] = [
     'Модерация заказов',
 ];
 ?>
-<div class="orders-index">
+<div class="orders-index hero-content">
 
     <div class="row justify-content-between align-items-center">
         <div class="col-12 col-xxl-9">
@@ -56,14 +56,14 @@ $this->params['breadcrumbs'] = [
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item col-12 col-xxl-6 g-3'],
+        'itemOptions' => ['class' => 'item col-12 col-xxl-6'],
         'pager' => [
             'class' => LinkPager::class,
         ],
         'layout' =>
-        '<div class="d-flex justify-content-center mt-4">{pager}</div>
-            <div class="row">{items}</div>
-            <div class="d-flex justify-content-center mt-4">{pager}</div>',
+        '<div class="d-flex mt-3">{pager}</div>
+            <div class="row gy-4">{items}</div>
+            <div class="d-flex mt-3">{pager}</div>',
         'itemView' => 'order',
     ]) ?>
 

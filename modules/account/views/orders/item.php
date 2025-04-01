@@ -33,7 +33,7 @@ use yii\bootstrap5\Html;
                     <?= Html::a(
                         '+',
                         ['/cart/inc-item', 'item_id' => $model->id],
-                        ['class' => 'btn btn-outline-success btn-cart-item-inc']
+                        ['class' => 'btn btn-success btn-cart-item-inc']
                     ) ?>
                 </div>
                 <div>

@@ -53,6 +53,8 @@ class OrdersController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'pickUps' => Pickup::getPickups(),
+            'statuses' => Status::getStatuses(),
         ]);
     }
 

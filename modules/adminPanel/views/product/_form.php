@@ -21,47 +21,49 @@ FontAwesomeAsset::register($this);
 
 <div class="product-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'product-form',
+        'options' => ['enctype' => 'multipart/form-data'],
+    ]); ?>
 
     <div class="m-0 row col-12">
         <div class="col-12 col-xl-6 mt-2">
-            <?/*= $form->field($uploadForm, 'imageFiles[]', ['enableClientValidation' => true])->widget(FileInput::class, [
-                'pluginOptions' => [
-                    'language' => 'ru',
-                    'options' => [
-                        'multiple' => true,
-                    ],
-                    'previewFileType' => 'image',
-                    'showUpload' => false,
-                    'showRemove' => true,
-                    'initialPreviewAsData' => true,
-                    'overwriteInitial' => false,
-                    'maxFileSize' => 2800,
-                    'initialPreview' => !empty($product->productImages) ? array_map(function ($image) {
-                        return Yii::getAlias('@web/images/products/') . $image->photo;
-                    }, $product->productImages) : [],
-                    'initialPreviewConfig' => !empty($product->productImages) ? array_map(function ($image) {
-                        return ['key' => $image->id];
-                    }, $product->productImages) : [],
-                ],
-            ]) */ ?>
             <div class="row">
                 <div class="col-12 mb-3">
                     <?= FileInput::widget([
                         'name' => 'imageFiles[]',
                         'language' => 'ru',
-                        'options' => ['multiple' => true],
+                        'options' => [
+                            'multiple' => true,
+                            'id' => 'product-file-input',
+                        ],
                         'pluginOptions' => [
-                            'previewFileType' => 'any',
-                            'showUpload' => false,
+                            'previewFileType' => 'image',
+                            'uploadUrl' => Url::to(['product/upload-images']),
+                            'uploadExtraData' => new \yii\web\JsExpression('function() {
+                                return { "product_id": $("#product-id").val() || 0 };
+                            }'),
+                            'deleteUrl' => Url::to(['product/delete-image']), // Для удаления существующих картинок
                             'showRemove' => true,
+                            'showCancel' => false,
+                            'showUpload' => false, // Отключаем кнопку "Загрузить", загрузка через форму
                             'initialPreviewAsData' => true,
                             'overwriteInitial' => false,
+                            'maxFileCount' => 10,
                             'initialPreview' => array_map(fn($image) => Product::IMG_PATH . $image->photo, $model->productImages),
-                            'initialPreviewConfig' => array_map(fn($image) => ['caption' => $image->photo], $model->productImages),
+                            'initialPreviewConfig' => array_map(fn($image) => [
+                                'caption' => $image->photo,
+                                'key' => $image->id,
+                                'url' => Url::to(['product/delete-image', 'id' => $image->id]), // URL для удаления
+                            ], $model->productImages),
+                            'filebatchuploadcomplete' => new \yii\web\JsExpression('function(event, files, extra) {
+                                var productId = $("#product-id").val();
+                                window.location = "/admin-panel/product/view?id=" + productId;
+                            }'),
                         ],
                     ]) ?>
                 </div>
+
                 <div class="col-12 col-sm-6"><?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?></div>
                 <div class="col-6 col-sm-3"><?= $form->field($model, 'price') ?></div>
                 <div class="col-6 col-sm-3"><?= $form->field($model, 'count') ?></div>
@@ -101,4 +103,5 @@ FontAwesomeAsset::register($this);
 
 </div>
 
+<?= $this->registerJsFile('/admin-panel-dist/assets/js-my/image-control.js', ['depends' => JqueryAsset::class]) ?>
 <?= $this->registerJsFile('/admin-panel-dist/assets/js-my/change-props.js', ['depends' => JqueryAsset::class]) ?>

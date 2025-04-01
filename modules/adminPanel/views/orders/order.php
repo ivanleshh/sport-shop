@@ -4,7 +4,7 @@ use app\models\Product;
 use app\models\Status;
 use yii\bootstrap5\Html;
 ?>
-<div class="card h-100 rounded-4">
+<div class="card h-100 rounded-4 border">
   <div class="border-bottom d-flex gap-2 align-items-center justify-content-between p-3">
     <div class="d-flex gap-2 align-items-center">
       <span class="fw-bold">Заказ № <?= $model->id ?></span>
@@ -14,14 +14,14 @@ use yii\bootstrap5\Html;
       <?= $model->status->title ?>
     </div>
   </div>
-  <div class="d-flex gap-4 justify-content-between align-items-center px-4 py-3">
-    <div class="d-none d-sm-flex align-items-center gap-2">
+  <div class="d-flex gap-4 justify-content-between align-items-center p-3">
+    <div class="d-none d-sm-flex justify-content-center align-items-center gap-2 w-25">
       <?= Html::a(
         Html::img(isset($model->orderItems[0]->product->productImages[0]) ?
-        Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-75']) .
+        Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-100']) .
           "<div class='mt-2'>"
           . $model->orderItems[0]->product->title
-          . ((count($model->orderItems) > 1) ? '<div class="text-dark">... и ещё ' . count($model->orderItems) - 1 . '</div>' : '')
+          . ((count($model->orderItems) > 1) ? '<span class="text-dark text-break"> ... и ещё ' . count($model->orderItems) - 1 . '</span>' : '')
           . "</div>",
         ['orders/view', 'id' => $model->id],
         ['class' => 'text-decoration-none text-center']
@@ -48,7 +48,7 @@ use yii\bootstrap5\Html;
       <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-dark']) ?>
       <?php if ($model->status->id == Status::getStatusId('Новый')) {
         echo Html::a('Принять в работу', ['work', 'id' => $model->id], [
-          'class' => 'btn btn-outline-warning',
+          'class' => 'btn btn-warning',
           'data' => [
             'confirm' => 'Подтвердите действие',
             'method' => 'post',
@@ -59,7 +59,7 @@ use yii\bootstrap5\Html;
           echo Html::a('Перенести доставку', ['delay', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-delay']);
         }
         echo Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
-          'class' => 'btn btn-outline-success',
+          'class' => 'btn btn-success',
           'data' => [
             'confirm' => 'Подтвердите действие',
             'method' => 'post',

@@ -79,8 +79,10 @@ class ProductController extends Controller
         $model = new Product();
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
-                $this->saveProductProperties($model); // Обработка характеристик
-                $this->saveProductImages($model); // Обработка изображений
+                $this->saveProductProperties($model);
+                if ($this->request->isAjax) {
+                    return $this->asJson(['success' => true, 'product_id' => $model->id]);
+                }
                 Yii::$app->session->setFlash('success', "Товар $model->title успешно создан");
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -105,12 +107,15 @@ class ProductController extends Controller
         }
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
-                $this->saveProductProperties($model); // Обработка характеристик
-                $this->saveProductImages($model); // Обработка изображений
+                $this->saveProductProperties($model);
+                if ($this->request->isAjax) {
+                    return $this->asJson(['success' => true, 'product_id' => $model->id]);
+                }
                 Yii::$app->session->setFlash('success', "Товар $model->title успешно обновлен");
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
+
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -150,43 +155,68 @@ class ProductController extends Controller
     /**
      * Сохранение и обновление изображений продукта
      */
-    private function saveProductImages($model)
+    public function actionUploadImages()
     {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
         $files = UploadedFile::getInstancesByName('imageFiles');
+        $product_id = Yii::$app->request->post('product_id', 0);
+
+        $product = Product::findOne($product_id);
+        if (!$product) {
+            return ['success' => false, 'error' => 'Продукт не найден'];
+        }
         $path = Yii::getAlias('@webroot' . Product::IMG_PATH);
 
-        $currentImages = $model->productImages;
-        $uploadedFileNames = array_map(fn($file) => $file->name, $files);
+        $response = [];
         $transaction = Yii::$app->db->beginTransaction();
-
         try {
-            foreach ($currentImages as $image) { // Удаление изображений, которых больше нет в списке
-                if (!in_array($image->photo, $uploadedFileNames)) {
-                    $filePath = $path . $image->photo;
-                    if (file_exists($filePath)) {
-                        unlink($filePath);
-                    }
-                    $image->delete();
+            foreach ($files as $file) {
+                $fileName = Yii::$app->user->id . '_' . time() . '_' . Yii::$app->security->generateRandomString() . '.' . $file->extension;
+                $file->saveAs($path . $fileName);
+                $productImage = new ProductImage();
+                $productImage->photo = $fileName;
+                $productImage->product_id = $product_id;
+                if (!$productImage->save()) {
+                    throw new \Exception('Ошибка сохранения изображения: ' . json_encode($productImage->getErrors()));
                 }
+                $response[] = [
+                    'success' => true,
+                    'file' => $fileName,
+                    'key' => $productImage->id,
+                ];
             }
-
-            foreach ($files as $file) { // Загрузка новых изображений
-                $isExisting = array_filter($currentImages, fn($img) => $img->photo === $file->name);
-                if (!$isExisting) {
-                    $fileName = Yii::$app->user->id . '_' . time() . '_' . Yii::$app->security->generateRandomString() . '.' . $file->extension;
-                    $file->saveAs($path . $fileName);
-
-                    $productImage = new ProductImage();
-                    $productImage->photo = $fileName;
-                    $productImage->product_id = $model->id;
-                    $productImage->save();
-                }
-            }
-
             $transaction->commit();
+            Yii::info("Файлы загружены: " . json_encode($response), __METHOD__);
+            return $response;
         } catch (\Exception $e) {
             $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'Ошибка обработки изображений: ' . $e->getMessage());
+            Yii::error("Ошибка в UploadImages: " . $e->getMessage(), __METHOD__);
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
+    }
+
+    public function actionDeleteImage($id)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $image = ProductImage::findOne($id);
+        if (!$image) {
+            return ['success' => false, 'error' => 'Изображение не найдено'];
+        }
+
+        $path = Yii::getAlias('@webroot' . Product::IMG_PATH);
+        $filePath = $path . $image->photo;
+
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+
+        if ($image->delete()) {
+            Yii::info("Изображение удалено, ID: $id", __METHOD__);
+            return ['success' => true];
+        } else {
+            Yii::error("Ошибка удаления изображения: " . json_encode($image->getErrors()), __METHOD__);
+            return ['success' => false, 'error' => 'Ошибка удаления'];
         }
     }
 
