@@ -20,13 +20,13 @@ class LoginController extends Controller
     public function actionIndex()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect("/");
         }
 
         $model = new LoginForm(['scenario' => LoginForm::SCENARIO_ADMIN]);
         
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            Yii::$app->session->setFlash('success', 'Вы успешно вошли в учётную запись');
+            Yii::$app->session->setFlash('success', 'Вы успешно вошли в панель администратора');
             return $this->redirect('/admin-panel/orders');
         }
 

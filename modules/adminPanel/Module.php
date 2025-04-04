@@ -33,17 +33,16 @@ class Module extends \yii\base\Module
                 'rules' => [
                     [
                         'allow' => true,
-                        'controllers' => ['admin-panel/login'],
-                        'actions' => ['index'],
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => fn() => Yii::$app->user->identity->isAdmin,
                     ],
+                    [
+                        'allow' => true,
+                        'roles' => ['?'],
+                        'controllers' => ['admin-panel/login'],
+                    ],
                 ],
-                'denyCallback' => fn() => Yii::$app->response->redirect('/admin-panel/login'),
+                'denyCallback' => fn() => Yii::$app->response->redirect('/'),
             ],
         ];
     }

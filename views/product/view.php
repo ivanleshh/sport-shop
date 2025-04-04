@@ -3,9 +3,13 @@
 use app\models\Brand;
 use app\models\Category;
 use app\models\Product;
+use app\models\Typepay;
 use hoomanMirghasemi\iviewer\IviewerGallery;
+use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
+use yii\widgets\ListView;
+use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var app\models\Product $model */
@@ -79,9 +83,20 @@ $this->params['breadcrumbs'][] = $model->title;
             </div>
         </div>
     </div>
-    <div class="product-details-info">
-        <div class="single-block rounded-4">
-            <div class="row">
+    <div class="product-details-info mt-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active rounded-top-3" id="info-tab" data-bs-toggle="tab" data-bs-target="#product-info" type="button" role="tab" aria-controls="home" aria-selected="true">Основное</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-top-3" id="review-tab" data-bs-toggle="tab" data-bs-target="#product-reviews" type="button" role="tab" aria-controls="profile" aria-selected="false">Отзывы</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link rounded-top-3" id="product-tab" data-bs-toggle="tab" data-bs-target="#product-delivery" type="button" role="tab" aria-controls="contact" aria-selected="false">Доставка и оплата</button>
+            </li>
+        </ul>
+        <div id="myTabContent" class="tab-content single-block rounded-bottom-4">
+            <div id="product-info" class="tab-pane fade show active row">
                 <div class="col-lg-6 col-12">
                     <div class="info-body custom-responsive-margin">
                         <h4>Описание</h4>
@@ -96,24 +111,55 @@ $this->params['breadcrumbs'][] = $model->title;
                 </div>
                 <div class="col-lg-6 col-12">
                     <div class="info-body">
-                        <h4>Specifications</h4>
-                        <ul class="normal-list">
-                            <li><span>Weight:</span> 35.5oz (1006g)</li>
-                            <li><span>Maximum Speed:</span> 35 mph (15 m/s)</li>
-                            <li><span>Maximum Distance:</span> Up to 9,840ft (3,000m)</li>
-                            <li><span>Operating Frequency:</span> 2.4GHz</li>
-                            <li><span>Manufacturer:</span> GoPro, USA</li>
-                        </ul>
-                        <h4>Информация по доставке:</h4>
-                        <ul class="normal-list">
-                            <li><span>Курьером:</span> завтра, от 150 руб</li>
-                            <li><span>В пункте выдачи:</span> <?= Yii::$app->formatter->asDate(date('d-m-Y', strtotime("3 day")), 'php:d.m') ?>, бесплатно</li>
+                        <h4>Характеристики</h4>
+                        <ul class="features">
+                            <?php foreach ($model->productProperties as $property) {
+                                echo "<li><span>" . $property->property->title . ":</span> $property->property_value</li>";
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
             </div>
+            <div id="product-reviews" class="tab-pane fade">
+                <div class="info-body w-100">
+                    <h4>Отзывы:</h4>
+
+                    <?php Pjax::begin(); ?>
+
+                    <?//= !Yii::$app->user->isGuest ? $this->render('_form-review.php', ['model' => $review]) : '' ?>
+
+                    <?= ListView::widget([
+                        'dataProvider' => $dataProvider,
+                        'layout' => "{pager}<div class='reviews row'>{items}</div>",
+                        'itemOptions' => ['class' => 'item col-12 col-md-6'],
+                        'itemView' => 'review',
+                        'pager' => [
+                            'class' => LinkPager::class,
+                        ]
+                    ]) ?>
+
+                    <?php Pjax::end(); ?>
+                </div>
+            </div>
+            <div id="product-delivery" class="tab-pane fade gap-5">
+                <div class="info-body">
+                    <h4>Информация по доставке:</h4>
+                    <ul class="normal-list">
+                        <li><span>Курьером:</span> завтра, от 150 руб</li>
+                        <li><span>В пункте выдачи:</span> <?= Yii::$app->formatter->asDate(date('d-m-Y', strtotime("3 day")), 'php:d.m') ?>, бесплатно</li>
+                    </ul>
+                </div>
+                <div class="info-body">
+                    <h4>Оплата:</h4>
+                    <ul class="features">
+                        <?php foreach (Typepay::getTypePays() as $typePay) {
+                            echo "<li><span>$typePay</span></li>";
+                        } ?>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
 </section>
 
 <!-- End Item Details -->

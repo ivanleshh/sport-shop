@@ -24,6 +24,7 @@ use Yii;
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     const ADMIN_PHOTO = '/images/admin.jpg';
+    const CLIENT_PHOTO = '/images/user.webp';
 
     public bool $check = false;
     public string $password_repeat = '';

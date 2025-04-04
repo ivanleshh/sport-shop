@@ -7,6 +7,7 @@ use app\models\CategorySearch;
 use app\models\FavouriteProducts;
 use app\models\Product;
 use app\models\ProductSearch;
+use app\models\Typepay;
 use Yii;
 use yii\bootstrap5\Html;
 use yii\web\Controller;

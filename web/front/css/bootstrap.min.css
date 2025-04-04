@@ -4415,7 +4415,7 @@ fieldset:disabled .btn {
 }
 
 .tab-content>.active {
-    display: block
+    display: flex;
 }
 
 .navbar {

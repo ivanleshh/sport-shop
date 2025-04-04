@@ -4,10 +4,13 @@ namespace app\controllers;
 
 use app\models\Product;
 use app\models\ProductSearch;
+use app\models\Review;
+use app\models\ReviewSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -56,8 +59,23 @@ class ProductController extends Controller
      */
     public function actionView($id)
     {
+        $searchModel = new ReviewSearch(['product_id' => $id]);
+        $dataProvider = $searchModel->search($this->request->queryParams);
+        $review = new Review();
+
+        if ($this->request->isPost && $review->load($this->request->post())) {
+            $review->parent_id = Yii::$app->request->post('parent_id') ?? null;
+            $review->user_id = Yii::$app->user->id;
+            $review->product_id = $id;
+            if ($review->save()) {
+                return $this->redirect(['view', 'id' => $id]);
+            }
+        }
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dataProvider' => $dataProvider,
+            'review' => $review,
         ]);
     }
 
