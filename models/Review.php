@@ -11,7 +11,7 @@ use Yii;
  * @property int $user_id
  * @property int $product_id
  * @property string $text
- * @property string $stars
+ * @property string|null $stars
  * @property int|null $parent_id
  * @property string $created_at
  *
@@ -36,8 +36,8 @@ class Review extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_id'], 'default', 'value' => null],
-            [['user_id', 'product_id', 'text', 'stars'], 'required'],
+            [['parent_id', 'stars'], 'default', 'value' => null],
+            [['user_id', 'product_id', 'text'], 'required'],
             [['user_id', 'product_id', 'parent_id'], 'integer'],
             [['text', 'stars'], 'string'],
             [['created_at'], 'safe'],
@@ -56,7 +56,7 @@ class Review extends \yii\db\ActiveRecord
             'id' => '№',
             'user_id' => 'User ID',
             'product_id' => 'Product ID',
-            'text' => 'Text',
+            'text' => 'Содержание комментария',
             'stars' => 'Stars',
             'parent_id' => 'Parent ID',
             'created_at' => 'Created At',

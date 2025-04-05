@@ -160,4 +160,17 @@ class Product extends \yii\db\ActiveRecord
     {
         return $this->hasMany(OrderItem::class, ['product_id' => 'id']);
     }
+
+    // Метод, определяющий среднюю оценку товара по оценкам в отзывах клиентов
+    public function getMediumStars()
+    {
+        $result = 0;
+        if ($reviews = $this->reviews) {
+            $arrayStars = array_map(function ($review) {
+                return $review->stars;
+            }, $reviews);
+            $result = round(array_sum($arrayStars) / count($arrayStars), 2);
+        }
+        return $result;
+    }
 }

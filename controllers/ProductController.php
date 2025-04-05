@@ -61,21 +61,11 @@ class ProductController extends Controller
     {
         $searchModel = new ReviewSearch(['product_id' => $id]);
         $dataProvider = $searchModel->search($this->request->queryParams);
-        $review = new Review();
-
-        if ($this->request->isPost && $review->load($this->request->post())) {
-            $review->parent_id = Yii::$app->request->post('parent_id') ?? null;
-            $review->user_id = Yii::$app->user->id;
-            $review->product_id = $id;
-            if ($review->save()) {
-                return $this->redirect(['view', 'id' => $id]);
-            }
-        }
 
         return $this->render('view', [
             'model' => $this->findModel($id),
             'dataProvider' => $dataProvider,
-            'review' => $review,
+            'model_review' => new Review(['product_id' => $id]),
         ]);
     }
 

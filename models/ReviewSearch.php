@@ -53,7 +53,7 @@ class ReviewSearch extends Review
                 ]
             ],
             'pagination' => [
-                'pageSize' => 5,
+                'pageSize' => 3,
             ]
         ]);
 

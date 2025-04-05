@@ -1,0 +1,75 @@
+<?php
+
+namespace app\controllers;
+
+use app\models\Review;
+use app\models\ReviewSearch;
+use Yii;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\helpers\VarDumper;
+
+/**
+ * ReviewController implements the CRUD actions for Review model.
+ */
+class ReviewController extends Controller
+{
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
+    {
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
+                    ],
+                ],
+            ]
+        );
+    }
+
+    /**
+     * Creates a new Review model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return string|\yii\web\Response
+     */
+    public function actionCreate($product_id)
+    {
+        $model = new Review();
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->parent_id = Yii::$app->request->post('parent_id') ?? null;
+            $model->user_id = Yii::$app->user->id;
+            $model->product_id = $product_id;
+            if ($model->save()) {
+                Yii::$app->session->setFlash('review-add', 'Ваш комментарий добавлен. Благодарим за оценку товара!');
+                return $this->render('_form-modal', ['model' => $model]);
+            }
+        }
+
+        return $this->render('_form-modal', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Finds the Review model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id №
+     * @return Review the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Review::findOne(['id' => $id])) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+}

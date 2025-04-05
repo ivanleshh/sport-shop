@@ -24,6 +24,7 @@ use yii\widgets\Pjax;
                         'name' => 'review-stars',
                         'value' => $model->stars,
                         'pluginOptions' => [
+                            'theme' => 'krajee-uni',
                             'readonly' => true,
                             'showClear' => false,
                             'showCaption' => false,
@@ -35,28 +36,17 @@ use yii\widgets\Pjax;
         </div>
         <div class="review-top-date d-flex gap-2 flex-column align-self-start">
             <?= Yii::$app->formatter->asDatetime($model->created_at, 'php:H:i d.m.Y') ?>
-            <?= is_null($model->parent_id) ? Html::button('Ответить', ['class' => 'btn border border-secondary p-0 btn-answer']) : '' ?>
+            <?= is_null($model->parent_id) ? Html::a("Ответить", ['/review/create', 'product_id' => $model->product->id],
+            ['data-parent-id' => $model->id, 'class' => 'btn btn-outline-secondary btn-add-reply px-4 py-2']) : '' ?>
         </div>
     </div>
     <p class="m-0"><?= Html::encode($model->text) ?></p>
 </div>
 
-<?php if (is_null($model->parent_id)) : ?>
-    <div class="answer-form answer-hide">
-        <?php Pjax::begin(); ?>
-
-        <?= !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin ?
-            $this->render('_form-review.php', ['model' => new Review(), 'parent_id' => $model->id]) : '' ?>
-        <?php Pjax::end(); ?>
-    </div>
-<?php endif; ?>
-
 <?php if (!empty($model->children)): ?>
     <div class="mt-3 ms-5 d-flex flex-column gap-3">
         <?php foreach ($model->children as $child): ?>
-            <?= $this->render('comment', ['model' => $child]) ?>
+            <?= $this->render('review', ['model' => $child]) ?>
         <?php endforeach; ?>
     </div>
 <?php endif; ?>
-
-<?= $this->registerJsFile('/js/answer.js', ['depends' => JqueryAsset::class]) ?>

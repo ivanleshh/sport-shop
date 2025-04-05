@@ -4,8 +4,11 @@ use app\models\Brand;
 use app\models\Category;
 use app\models\Product;
 use app\models\Typepay;
-use hoomanMirghasemi\iviewer\IviewerGallery;
+use app\widgets\Alert;
+use kartik\rating\StarRating;
+use kartik\rating\StarRatingAsset;
 use yii\bootstrap5\LinkPager;
+use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
 use yii\widgets\ListView;
@@ -13,6 +16,8 @@ use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var app\models\Product $model */
+
+StarRatingAsset::register($this);
 
 $this->params['breadcrumbs'] = [
     ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
@@ -29,6 +34,8 @@ $this->params['breadcrumbs'][] = ['label' => $model->category->title, 'url' => [
 $this->params['breadcrumbs'][] = $model->title;
 \yii\web\YiiAsset::register($this);
 
+$mediumStars = $model->mediumStars;
+
 ?>
 
 <section class="item-details hero-content">
@@ -43,22 +50,28 @@ $this->params['breadcrumbs'][] = $model->title;
                                     echo Html::img(Product::IMG_PATH . $image->photo, ['alt' => "product image", 'class' => 'gallery-img'])
                                 ?>
                             </div>
-                            <div class="main-img col-12 col-sm-8 col-md-9 col-xl-10 order-1 order-md-2">
-                                <?= Html::img(Product::IMG_PATH . $model->productImages[0]->photo, ['alt' => "product image", 'id' => "current"]) ?>
-                            </div>
                         <?php endif; ?>
+                        <div class="main-img col-12 col-sm-8 col-md-9 col-xl-10 order-1 order-md-2">
+                            <?= Html::img(isset($model->productImages[0]->photo) ? Product::IMG_PATH . $model->productImages[0]->photo : Product::NO_PHOTO, ['alt' => "product image", 'id' => "current"]) ?>
+                        </div>
                     </main>
                 </div>
             </div>
             <div class="col-lg-7 col-md-12 col-12">
                 <div class="product-info">
-                    <div class="d-flex gap-3 justify-content-between align-items-center mb-3 mb-sm-0">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap mb-sm-0">
                         <h2 class="title"><?= $model->title ?></h2>
                         <div class="product-info-brand">
                             <?= Html::img(Brand::IMG_PATH . $model->brand->photo, ['alt' => 'brand']) ?>
                         </div>
                     </div>
-                    <h3 class="price"><?= $model->price ?> ₽<span class="fs-6"><?= round($model->price * 1.1) ?> ₽</span></h3>
+                    <div class="d-flex align-items-center gap-2 mt-2">
+                        <i class="bi bi-star-fill text-warning border-2 fs-6"></i>
+                        <span class="fw-bold"><?= $mediumStars ?> </span>
+                        <span class="fs-4">|</span>
+                        <div>Отзывов: <?= count($model->reviews) ?></div>
+                    </div>
+                    <h3 class="price mt-3"><?= $model->price ?> ₽<span class="fs-6"><?= round($model->price * 1.1) ?> ₽</span></h3>
                     <p class="info-text">Осталось <?= $model->count ?> шт.</p>
                     <div class="bottom-content">
                         <div class="row align-items-end">
@@ -121,25 +134,64 @@ $this->params['breadcrumbs'][] = $model->title;
                     </div>
                 </div>
             </div>
-            <div id="product-reviews" class="tab-pane fade">
-                <div class="info-body w-100">
-                    <h4>Отзывы:</h4>
+            <div id="product-reviews" class="tab-pane fade"> 
+                <div class="info-body row w-100">
+                    <div class="d-flex flex-column gap-3 col-12 col-lg-4 mb-4">
+                        <div class="d-flex align-items-center justify-content-center gap-3 border rounded-4 py-2 px-3">
+                            <h2><?= $mediumStars ?></h2>
+                            <div class="position-relative">
+                                <?= StarRating::widget([
+                                    'name' => 'mediumStars',
+                                    'value' => $mediumStars,
+                                    'pluginOptions' => [
+                                        'theme' => 'krajee-uni',
+                                        'readonly' => true,
+                                        'showClear' => false,
+                                        'showCaption' => false,
+                                        'size' => 'sm',
+                                    ],
+                                ]); ?>
+                                <div class="position-absolute right-50 left-50 top-50 mt-1">Всего отзывов: <?= count($model->reviews) ?></div>
+                            </div>
+                        </div>
+                        <h5 class="fs-6 fw-bold">Есть что рассказать?</h5>
+                        <span>Оцените товар, ваш опыт будет полезен</span>
+                        <?php if (Yii::$app->user->isGuest) : ?>
+                            <div>
+                                <?= Html::a("Войдите, чтобы оценить товар", ['/site/login'], ['class' => 'btn btn-orange px-4 py-2']) ?>
+                            </div>
+                        <?php elseif (!Yii::$app->user->identity->isAdmin) : ?>
+                            <div>
+                                <?= Html::a("Оценить товар", ['/review/create', 'product_id' => $model->id], ['class' => 'btn btn-orange btn-add-review px-4 py-2']) ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <?php Pjax::begin([
+                            'id' => 'product-reviews-pjax',
+                            'enablePushState' => false,
+                            'timeout' => 5000,
+                        ]); ?>
 
-                    <?php Pjax::begin(); ?>
+                        <?php if (Yii::$app->session->hasFlash('review-add')) {
+                            Yii::$app->session->setFlash('success', Yii::$app->session->getFlash('review-add'));
+                            Yii::$app->session->removeFlash('review-add');
+                            echo Alert::widget();
+                        }
+                        ?>
 
-                    <?//= !Yii::$app->user->isGuest ? $this->render('_form-review.php', ['model' => $review]) : '' ?>
+                        <?= ListView::widget([
+                            'dataProvider' => $dataProvider,
+                            'layout' => "{pager}<div class='reviews row gap-3'>{items}</div>",
+                            'itemOptions' => ['class' => 'item col-12'],
+                            'itemView' => '/review/view',
+                            'pager' => [
+                                'class' => LinkPager::class,
+                            ]
+                        ]) ?>
 
-                    <?= ListView::widget([
-                        'dataProvider' => $dataProvider,
-                        'layout' => "{pager}<div class='reviews row'>{items}</div>",
-                        'itemOptions' => ['class' => 'item col-12 col-md-6'],
-                        'itemView' => 'review',
-                        'pager' => [
-                            'class' => LinkPager::class,
-                        ]
-                    ]) ?>
-
-                    <?php Pjax::end(); ?>
+                        <?php Pjax::end(); ?>
+                    </div>
                 </div>
             </div>
             <div id="product-delivery" class="tab-pane fade gap-5">
@@ -165,5 +217,17 @@ $this->params['breadcrumbs'][] = $model->title;
 <!-- End Item Details -->
 
 <!-- Review Modal -->
+
+<?php
+Modal::begin([
+    'id' => 'review-modal',
+    'title' => "Оценка $model->title",
+    'size' => 'model-md',
+]);
+echo $this->render('/review/_form-modal.php', ['model' => $model_review]);
+Modal::end();
+
+$this->registerJsFile('/js/review.js', ['depends' => JqueryAsset::class])
+?>
 
 <?= $this->registerJsFile('/js/images-change.js', ['depends' => JqueryAsset::class]) ?>
