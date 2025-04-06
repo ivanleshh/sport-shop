@@ -43,7 +43,9 @@ class ReviewController extends Controller
         $model = new Review();
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $model->parent_id = Yii::$app->request->post('parent_id') ?? null;
+            if (is_null($model->parent_id)) {
+                $model->scenario = Review::SCENARIO_REVIEW;
+            }
             $model->user_id = Yii::$app->user->id;
             $model->product_id = $product_id;
             if ($model->save()) {

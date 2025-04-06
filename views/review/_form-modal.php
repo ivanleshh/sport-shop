@@ -26,12 +26,9 @@ use yii\widgets\Pjax;
         ]
     ]); ?>
 
-    <?= Html::hiddenInput('parent_id', $parent_id ?? null) ?>
+    <?= $form->field($model, 'parent_id')->hiddenInput()->label(false) ?>
 
-
-    <?= StarRating::widget([
-        'model' => $model,
-        'attribute' => 'stars',
+    <?= $form->field($model, 'stars')->widget(StarRating::class, [
         'pluginOptions' => [
             'theme' => 'krajee-uni',
             'filledStar' => '★',
@@ -39,7 +36,7 @@ use yii\widgets\Pjax;
             'step' => 1,
             'size' => 'md',
         ]
-    ]); ?>
+    ])->label(false); ?>
 
     <?= $form->field($model, 'text')->textarea(['rows' => 2]) ?>
 

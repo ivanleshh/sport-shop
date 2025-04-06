@@ -2,29 +2,50 @@ $(() => {
     $('#product-reviews').on('click', '.btn-add-review', function (e) {
         e.preventDefault()
         $('#form-review').attr('action', $(this).attr('href'))
-        $('#review-stars').rating('refresh', { disabled: false });
+        $('#review-stars').rating('refresh', {
+            disabled: false
+        });
+        $('#review-parent_id').val(null);
+        $('#review-stars').parent().removeClass('d-none')
         $('#review-stars').rating('clear');
         $('#review-text').removeClass('is-valid')
         $('#review-text').val(null)
+
+        $('#form-review').yiiActiveForm('add', {
+            "id": "review-stars",
+            "name": "stars",
+            "container": ".field-review-stars",
+            "input": "#review-stars",
+            "error": ".invalid-feedback",
+            "validate": function (attribute, value, messages, deferred, $form) {
+                yii.validation.required(value, messages, {
+                    "message": "Необходимо заполнить «Количество звёзд»."
+                });
+                yii.validation.string(value, messages, {
+                    "message": "Значение «Количество звёзд» должно быть строкой.",
+                    "skipOnEmpty": 1
+                });
+            }
+        });
+
         $('#review-modal').modal('show')
     })
 
     $('#product-reviews').on('click', '.btn-add-reply', function (e) {
         e.preventDefault()
         const parent_id = $(this).data('parent-id')
-        $('#parent_id').val(parent_id)
+        $('#review-parent_id').val(parent_id)
         $('#review-stars').rating('clear');
         $('#review-text').removeClass('is-valid')
-        $('#review-stars').rating('refresh', { disabled: true });
+        $('#review-stars').removeClass('is-invalid')
+        $('#review-stars').parent().addClass('d-none')
         $('#form-review').attr('action', $(this).attr('href'))
-        console.log($('#review-stars').prev())
         $('#review-text').val(null)
-        $('#review-modal').modal('show')
-    })
 
-    $('#form-review-pjax').on('click', '.btn-modal-close', function (e) {
-        e.preventDefault()
-        $('#review-modal').modal('hide')
+        $('#form-review').yiiActiveForm('remove', 'review-stars')
+        $('#form-review').yiiActiveForm('remove', 'review-stars')
+
+        $('#review-modal').modal('show')
     })
 
     $('#form-review-pjax').on('pjax:end', function () {

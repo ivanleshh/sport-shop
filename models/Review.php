@@ -22,6 +22,8 @@ use Yii;
  */
 class Review extends \yii\db\ActiveRecord
 {
+    const SCENARIO_REVIEW = 'review';
+
     /**
      * {@inheritdoc}
      */
@@ -36,7 +38,7 @@ class Review extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_id', 'stars'], 'default', 'value' => null],
+            [['parent_id'], 'default', 'value' => null],
             [['user_id', 'product_id', 'text'], 'required'],
             [['user_id', 'product_id', 'parent_id'], 'integer'],
             [['text', 'stars'], 'string'],
@@ -44,6 +46,8 @@ class Review extends \yii\db\ActiveRecord
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Review::class, 'targetAttribute' => ['parent_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+
+            ['stars', 'required', 'on' => self::SCENARIO_REVIEW],
         ];
     }
 
@@ -57,7 +61,7 @@ class Review extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'product_id' => 'Product ID',
             'text' => 'Содержание комментария',
-            'stars' => 'Stars',
+            'stars' => 'Количество звёзд',
             'parent_id' => 'Parent ID',
             'created_at' => 'Created At',
         ];
