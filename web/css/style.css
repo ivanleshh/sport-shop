@@ -50,6 +50,10 @@ input:checked {
     height: 50px;
 }
 
+.review-top-user .rating-input[name="view-stars"] {
+    display: none;
+}
+
 /* main-search start */
 
 .search-widget {

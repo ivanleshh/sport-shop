@@ -38,10 +38,10 @@ class Review extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_id'], 'default', 'value' => null],
+            [['parent_id', 'stars'], 'default', 'value' => null],
             [['user_id', 'product_id', 'text'], 'required'],
             [['user_id', 'product_id', 'parent_id'], 'integer'],
-            [['text', 'stars'], 'string'],
+            [['text'], 'string'],
             [['created_at'], 'safe'],
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Review::class, 'targetAttribute' => ['parent_id' => 'id']],
             [['product_id'], 'exist', 'skipOnError' => true, 'targetClass' => Product::class, 'targetAttribute' => ['product_id' => 'id']],

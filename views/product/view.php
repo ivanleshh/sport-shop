@@ -61,7 +61,7 @@ $mediumStars = $model->mediumStars;
                 <div class="product-info">
                     <div class="d-flex justify-content-between align-items-center flex-wrap mb-sm-0">
                         <h2 class="title"><?= $model->title ?></h2>
-                        <div class="product-info-brand">
+                        <div class="product-info-brand mt-3 mt-sm-0">
                             <?= Html::img(Brand::IMG_PATH . $model->brand->photo, ['alt' => 'brand']) ?>
                         </div>
                     </div>
@@ -135,8 +135,8 @@ $mediumStars = $model->mediumStars;
                 </div>
             </div>
             <div id="product-reviews" class="tab-pane fade"> 
-                <div class="info-body row w-100">
-                    <div class="d-flex flex-column gap-3 col-12 col-lg-4 mb-4">
+                <div class="info-body row">
+                    <div class="d-flex flex-column gap-3 col-12 col-lg-4 mb-2">
                         <div class="d-flex align-items-center justify-content-center gap-3 border rounded-4 py-2 px-3">
                             <h2><?= $mediumStars ?></h2>
                             <div class="position-relative">
@@ -182,7 +182,7 @@ $mediumStars = $model->mediumStars;
 
                         <?= ListView::widget([
                             'dataProvider' => $dataProvider,
-                            'layout' => "{pager}<div class='reviews row gap-3'>{items}</div>",
+                            'layout' => "{pager}<div class='reviews row gap-3'>{items}</div>{pager}",
                             'itemOptions' => ['class' => 'item col-12'],
                             'itemView' => '/review/view',
                             'pager' => [
@@ -194,7 +194,7 @@ $mediumStars = $model->mediumStars;
                     </div>
                 </div>
             </div>
-            <div id="product-delivery" class="tab-pane fade gap-5">
+            <div id="product-delivery" class="tab-pane fade gap-3 gap-md-5 flex-wrap">
                 <div class="info-body">
                     <h4>Информация по доставке:</h4>
                     <ul class="normal-list">

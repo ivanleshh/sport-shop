@@ -165,11 +165,16 @@ class Product extends \yii\db\ActiveRecord
     public function getMediumStars()
     {
         $result = 0;
+        $count = 0;
+        $arrayStars = [];
         if ($reviews = $this->reviews) {
-            $arrayStars = array_map(function ($review) {
-                return $review->stars;
-            }, $reviews);
-            $result = round(array_sum($arrayStars) / count($arrayStars), 2);
+            foreach ($reviews as $review) {
+                if (isset($review->stars)) {
+                    $arrayStars[] = $review->stars;
+                    $count++;
+                }
+            }
+            $result = round(array_sum($arrayStars) / $count, 2);
         }
         return $result;
     }

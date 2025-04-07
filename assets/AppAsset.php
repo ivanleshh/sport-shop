@@ -31,7 +31,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/catalog.js',
-        "front/js/bootstrap.min.js",
+        // "front/js/bootstrap.min.js",
         "front/js/tiny-slider.js",
         "front/js/glightbox.min.js",
         "front/js/main.js",
