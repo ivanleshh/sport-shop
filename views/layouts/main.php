@@ -489,14 +489,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="d-flex justify-content-end gap-3 my-2 d-none cart-panel-top">
             <div class="d-flex justify-content-end gap-3">
                 <?= Html::a(
-                    "Очистить корзину",
+                    "Очистить",
                     ["/cart/clear"],
-                    ["class" => "btn btn-outline-danger btn-cart-clear"]
+                    ["class" => "btn btn-danger btn-cart-clear"]
                 ) ?>
                 <?= Html::a(
                     "Оформить заказ",
                     ["/personal/orders/create"],
-                    ["class" => "btn btn-outline-success"]
+                    ["class" => "btn btn-orange"]
                 ) ?>
             </div>
         </div>
@@ -504,14 +504,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="d-flex justify-content-between gap-3 mt-2">
             <div class="d-flex justify-content-end">
                 <?= Html::a(
-                    "Очистить корзину",
+                    "Очистить",
                     ["/cart/clear"],
-                    ["class" => "btn btn-outline-danger btn-cart-clear d-none btn-cart-manager"]
+                    ["class" => "btn btn-danger btn-cart-clear d-none btn-cart-manager"]
                 ) ?>
                 <?= Html::a(
                     "Оформить заказ",
                     ["/personal/orders/create"],
-                    ["class" => "btn btn-outline-success d-none btn-cart-manager"]
+                    ["class" => "btn btn-orange d-none btn-cart-manager"]
                 ) ?>
             </div>
         </div>

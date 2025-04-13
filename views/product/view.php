@@ -7,6 +7,7 @@ use app\models\Typepay;
 use app\widgets\Alert;
 use kartik\rating\StarRating;
 use kartik\rating\StarRatingAsset;
+use Symfony\Component\VarDumper\VarDumper;
 use yii\bootstrap5\LinkPager;
 use yii\bootstrap5\Modal;
 use yii\helpers\Html;
@@ -35,6 +36,7 @@ $this->params['breadcrumbs'][] = $model->title;
 \yii\web\YiiAsset::register($this);
 
 $mediumStars = $model->mediumStars;
+$countReviews = $model->countReviews;
 
 ?>
 
@@ -68,24 +70,59 @@ $mediumStars = $model->mediumStars;
                     <div class="d-flex align-items-center gap-2 mt-2">
                         <i class="bi bi-star-fill text-warning border-2 fs-6"></i>
                         <span class="fw-bold"><?= $mediumStars ?> </span>
-                        <span class="fs-4">|</span>
-                        <div>Отзывов: <?= count($model->reviews) ?></div>
+                        <span class="fs-5">|</span>
+                        <div>Отзывов: <?= $countReviews ?></div>
                     </div>
                     <h3 class="price mt-3"><?= $model->price ?> ₽<span class="fs-6"><?= round($model->price * 1.1) ?> ₽</span></h3>
                     <p class="info-text">Осталось <?= $model->count ?> шт.</p>
                     <div class="bottom-content">
                         <div class="row align-items-end">
-                            <div class="col-lg-4 col-md-4 col-12">
-                                <div class="button cart-button">
-                                    <button class="btn">В корзину</button>
+                            <div class="col-lg-6 col-md-4 col-12">
+
+                                <?php Pjax::begin([
+                                    'id' => 'product-buttons-pjax',
+                                    'enablePushState' => false,
+                                    'timeout' => 5000,
+                                    'enableReplaceState' => false,
+                                ]); ?>
+
+                                <div class="cart-button">
+                                    <?php if (isset($model->cartItems[0])) : ?>
+                                        <div class="d-flex align-items-center justify-content-center gap-4">
+                                            <?= Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange']) ?>
+                                            <div class="d-flex gap-3 align-items-center text-dark">
+                                                <?= Html::a(
+                                                    '-',
+                                                    ['/cart/dec-item', 'item_id' => $model->cartItems[0]->id],
+                                                    ['class' => 'btn btn-outline-warning btn-cart-item-dec text-dark px-3']
+                                                ) ?>
+                                                <?= $model->cartItems[0]->product_amount ?>
+                                                <?= Html::a(
+                                                    '+',
+                                                    ['/cart/inc-item', 'item_id' => $model->cartItems[0]->id],
+                                                    ['class' => 'btn btn-outline-warning btn-cart-item-inc text-dark px-3']
+                                                ) ?>
+                                            </div>
+                                        </div>
+                                    <?php else : ?>
+                                        <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
+                                            ? Html::a(
+                                                'В корзину',
+                                                ['/cart/add', 'product_id' => $model->id],
+                                                ['class' => 'btn-cart-add btn btn-warning w-100 mt-2']
+                                            ) : ""
+                                        ?>
+                                    <?php endif; ?>
                                 </div>
+
+                                <?php Pjax::end() ?>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12">
+                            <div class="col-lg-3 col-md-4 col-12">
                                 <div class="wish-button">
                                     <button class="btn"><i class="bi bi-plus-slash-minus"></i>В сравнение</button>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12">
+                            <div class="col-lg-3 col-md-4 col-12">
                                 <div class="wish-button">
                                     <button class="btn"><i class="lni lni-heart"></i>В избранное</button>
                                 </div>
@@ -125,73 +162,75 @@ $mediumStars = $model->mediumStars;
                 <div class="col-lg-6 col-12">
                     <div class="info-body">
                         <h4>Характеристики</h4>
-                        <ul class="features">
-                            <?php foreach ($model->productProperties as $property) {
-                                echo "<li><span>" . $property->property->title . ":</span> $property->property_value</li>";
-                            }
-                            ?>
-                        </ul>
+                        <?php if ($model->productProperties) : ?>
+                            <ul class="features">
+                                <?php foreach ($model->productProperties as $property) {
+                                    echo "<li><span>" . $property->property->title . ":</span> $property->property_value</li>";
+                                }
+                                ?>
+                            </ul>
+                        <?php else : ?>
+                            <span>Ничего не найдено</span>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
-            <div id="product-reviews" class="tab-pane fade"> 
-                <div class="info-body row">
-                    <div class="d-flex flex-column gap-3 col-12 col-lg-4 mb-2">
-                        <div class="d-flex align-items-center justify-content-center gap-3 border rounded-4 py-2 px-3">
-                            <h2><?= $mediumStars ?></h2>
-                            <div class="position-relative">
-                                <?= StarRating::widget([
-                                    'name' => 'mediumStars',
-                                    'value' => $mediumStars,
-                                    'pluginOptions' => [
-                                        'theme' => 'krajee-uni',
-                                        'readonly' => true,
-                                        'showClear' => false,
-                                        'showCaption' => false,
-                                        'size' => 'sm',
-                                    ],
-                                ]); ?>
-                                <div class="position-absolute right-50 left-50 top-50 mt-1">Всего отзывов: <?= count($model->reviews) ?></div>
-                            </div>
+            <div id="product-reviews" class="info-body row tab-pane fade">
+                <div class="d-flex flex-column gap-3 col-12 col-lg-4 mb-2">
+                    <div class="d-flex align-items-center justify-content-center gap-3 border rounded-4 py-2 px-3">
+                        <h2><?= $mediumStars ?></h2>
+                        <div class="position-relative">
+                            <?= StarRating::widget([
+                                'name' => 'mediumStars',
+                                'value' => $mediumStars,
+                                'pluginOptions' => [
+                                    'theme' => 'krajee-uni',
+                                    'readonly' => true,
+                                    'showClear' => false,
+                                    'showCaption' => false,
+                                    'size' => 'sm',
+                                ],
+                            ]); ?>
+                            <div class="position-absolute right-50 left-50 top-50 mt-1">Всего отзывов: <?= $countReviews ?></div>
                         </div>
-                        <h5 class="fs-6 fw-bold">Есть что рассказать?</h5>
-                        <span>Оцените товар, ваш опыт будет полезен</span>
-                        <?php if (Yii::$app->user->isGuest) : ?>
-                            <div>
-                                <?= Html::a("Войдите, чтобы оценить товар", ['/site/login'], ['class' => 'btn btn-orange px-4 py-2']) ?>
-                            </div>
-                        <?php elseif (!Yii::$app->user->identity->isAdmin) : ?>
-                            <div>
-                                <?= Html::a("Оценить товар", ['/review/create', 'product_id' => $model->id], ['class' => 'btn btn-orange btn-add-review px-4 py-2']) ?>
-                            </div>
-                        <?php endif; ?>
                     </div>
-                    <div class="col-12 col-lg-8">
-                        <?php Pjax::begin([
-                            'id' => 'product-reviews-pjax',
-                            'enablePushState' => false,
-                            'timeout' => 5000,
-                        ]); ?>
+                    <h5 class="fs-6 fw-bold">Есть что рассказать?</h5>
+                    <span>Оцените товар, ваш опыт будет полезен</span>
+                    <?php if (Yii::$app->user->isGuest) : ?>
+                        <div>
+                            <?= Html::a("Войдите, чтобы оценить товар", ['/site/login'], ['class' => 'btn btn-orange px-4 py-2']) ?>
+                        </div>
+                    <?php elseif (!Yii::$app->user->identity->isAdmin) : ?>
+                        <div>
+                            <?= Html::a("Оценить товар", ['/review/create', 'product_id' => $model->id], ['class' => 'btn btn-orange btn-add-review px-4 py-2']) ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <?php Pjax::begin([
+                        'id' => 'product-reviews-pjax',
+                        'enablePushState' => false,
+                        'timeout' => 5000,
+                    ]); ?>
 
-                        <?php if (Yii::$app->session->hasFlash('review-add')) {
-                            Yii::$app->session->setFlash('success', Yii::$app->session->getFlash('review-add'));
-                            Yii::$app->session->removeFlash('review-add');
-                            echo Alert::widget();
-                        }
-                        ?>
+                    <?php if (Yii::$app->session->hasFlash('review-add')) {
+                        Yii::$app->session->setFlash('success', Yii::$app->session->getFlash('review-add'));
+                        Yii::$app->session->removeFlash('review-add');
+                        echo Alert::widget();
+                    }
+                    ?>
 
-                        <?= ListView::widget([
-                            'dataProvider' => $dataProvider,
-                            'layout' => "{pager}<div class='reviews row gap-3'>{items}</div>{pager}",
-                            'itemOptions' => ['class' => 'item col-12'],
-                            'itemView' => '/review/view',
-                            'pager' => [
-                                'class' => LinkPager::class,
-                            ]
-                        ]) ?>
+                    <?= ListView::widget([
+                        'dataProvider' => $dataProvider,
+                        'layout' => "{pager}<div class='reviews row gap-3'>{items}</div>{pager}",
+                        'itemOptions' => ['class' => 'item col-12'],
+                        'itemView' => '/review/view',
+                        'pager' => [
+                            'class' => LinkPager::class,
+                        ]
+                    ]) ?>
 
-                        <?php Pjax::end(); ?>
-                    </div>
+                    <?php Pjax::end(); ?>
                 </div>
             </div>
             <div id="product-delivery" class="tab-pane fade gap-3 gap-md-5 flex-wrap">
@@ -221,7 +260,7 @@ $mediumStars = $model->mediumStars;
 <?php
 Modal::begin([
     'id' => 'review-modal',
-    'title' => "Оценка $model->title",
+    'title' => "Оценка товара",
     'size' => 'model-md',
 ]);
 echo $this->render('/review/_form-modal.php', ['model' => $model_review]);
@@ -231,3 +270,4 @@ $this->registerJsFile('/js/review.js', ['depends' => JqueryAsset::class])
 ?>
 
 <?= $this->registerJsFile('/js/images-change.js', ['depends' => JqueryAsset::class]) ?>
+<?= $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]); ?>

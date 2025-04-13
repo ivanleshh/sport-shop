@@ -10,14 +10,14 @@ use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var app\models\Category $model */
 
-$this->title = 'Избранное';
-$this->params['breadcrumbs'][] = ['label' => 'Личный кабинет', 'url' => ['/personal']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'] = [
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Личный кабинет', 'url' => ['/personal']],
+    'Избранное',
+];
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="category-view">
-    
-    <h3><?= Html::encode($this->title) ?></h3>
+<div class="category-view hero-content">
 
     <?php Pjax::begin([
         'id' => 'favourite-pjax',
@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'itemOptions' => ['class' => 'item'],
         'itemView' => 'product',
         'layout' =>
-            '<div class="d-flex justify-content-center mt-4">{pager}</div>
+        '<div class="d-flex justify-content-center mt-4">{pager}</div>
             <div class="catalog-items d-flex flex-wrap gap-3">{items}</div>
             <div class="d-flex justify-content-center mt-4">{pager}</div>',
     ]) ?>
@@ -42,4 +42,3 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <?= $this->registerJsFile('/js/favourite.js', ['depends' => JqueryAsset::class]); ?>
-

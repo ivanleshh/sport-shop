@@ -22,7 +22,7 @@ input:checked {
 
 .product-info-brand img {
     max-width: 125px;
-    max-height: 100px;
+    max-height: 75px;
 }
 
 .nav-link form {
@@ -76,7 +76,7 @@ input:checked {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-#search-results .container-fluid .row > div span {
+#search-results .container-fluid .row>div span {
     padding: 0.75rem 0;
 }
 
@@ -90,9 +90,9 @@ input:checked {
 }
 
 .search-widget .search-result img {
-    width: 75px;
+    width: 60px;
     height: 75px;
-    object-fit: cover;
+    /* object-fit: cover; */
     border-radius: 4px;
     margin-right: 10px;
 }
@@ -128,17 +128,19 @@ input:checked {
 }
 
 .hero-content {
-    padding: 1.25rem;
+    padding: 1.3rem;
     box-shadow: 0px 7px 30px rgba(0, 0, 0, 0.075);
     border-radius: var(--bs-border-radius-xl) !important;
     border: 1px solid #dee2e6 !important;
     background-color: #fff;
 }
 
-/* @media screen and (max-width: ) {
-    
+@media screen and (max-width: 768px) {
+    .hero-content {
+        padding: 0.75rem;
+    }
 }
-.hero-content */
+
 
 .file-input .file-caption .file-caption-name,
 .file-input .file-caption .file-caption-icon {
@@ -169,8 +171,7 @@ input:checked {
 }
 
 .card:hover .card-img img {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .card .card-img img {
@@ -249,20 +250,6 @@ textarea {
 
 .card:hover {
     transform: translateY(5px);
-}
-
-.create-order-cart,
-.create-order-form,
-.order-details-items,
-.order-details-info {
-    transition: 0.5s;
-}
-
-.create-order-cart:hover,
-.create-order-form:hover,
-.order-details-items:hover,
-.order-details-info:hover {
-    box-shadow: 0 0 15px rgb(189, 188, 188);
 }
 
 /* BREAD CRUMBS START */

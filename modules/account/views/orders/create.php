@@ -11,13 +11,27 @@ use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+
+$this->params['breadcrumbs'] = [
+    ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
+    'Оформление заказа',
+];
 ?>
 
 <?php if ($dataProvider && $dataProvider->totalCount) : ?>
 
-    <div class="create-order d-flex gap-4">
-        <div class="create-order-cart border rounded-3 px-4 py-3 w-50">
-            <h3>Состав заказа</h3>
+    <div class="create-order hero-content m-0 row">
+        <div class="create-order-cart col-12 col-lg-7 order-2 order-lg-1">
+            <div class="row my-4 mt-lg-0 align-items-center">
+                <h3 class="col-9 col-sm-6">Состав заказа</h3>
+                <div class="col-3 col-sm-6 text-end">
+                    <?= Html::a(
+                        "Очистить корзину",
+                        ["/cart/clear"],
+                        ["class" => "text-danger text-decoration-none btn-cart-clear"]
+                    ) ?>
+                </div>
+            </div>
 
             <?php Pjax::begin([
                 'id' => 'order-pjax',
@@ -25,14 +39,6 @@ use yii\widgets\Pjax;
                 'timeout' => 5000,
             ]);
             ?>
-
-            <div class="d-flex justify-content-end">
-                <?= Html::a(
-                    "Очистить корзину",
-                    ["/cart/clear"],
-                    ["class" => "text-danger text-decoration-none btn-cart-clear"]
-                ) ?>
-            </div>
 
             <?= ListView::widget([
                 'dataProvider' => $dataProvider,
@@ -43,16 +49,16 @@ use yii\widgets\Pjax;
                 ],
                 'layout' => "<div class='d-flex flex-column gap-3 my-2'>{items}</div>\n<div class='d-flex justify-content-end'>{pager}</div>"
             ]) ?>
-            <div class="d-flex gap-1 align-items-end flex-column border-bottom py-2">
+            <div class="d-flex justify-content-between flex-wrap border-top border-bottom py-3 text-dark gap-3">
+                <a class="text-decoration-none mt-2" href="/"><- Вернуться к покупкам</a>
                 <div>Позиций в корзине: <span class="fw-bold fs-5"><?= $cart->product_amount ?></span></div>
                 <div>Общая сумма: <span class="fw-bold fs-5"><?= $cart->total_amount ?> ₽</span></div>
-                <a class="text-decoration-none align-self-start" href="/"><- Вернуться к покупкам</a>
             </div>
 
             <?php Pjax::end(); ?>
         </div>
-        <div class="create-order-form border rounded-3 px-4 py-3">
-            <h3>Оформление заказа</h3>
+        <div class="create-order-form col-12 col-lg-5 order-1 order-lg-2">
+            <h3 class="mb-3">Оформление заказа</h3>
             <?= $this->render('_form', [
                 'model' => $model,
                 'typePays' => $typePays,

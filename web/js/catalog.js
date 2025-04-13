@@ -18,7 +18,7 @@ const catalog_reload = function () {
 }
 
 $(() => {
-  $("#catalog-pjax, #favourite-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
+  $("#catalog-pjax, #favourite-pjax, #product-buttons-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
     e.preventDefault();
     const a = $(this);
     $.ajax({
@@ -37,7 +37,12 @@ $(() => {
                 push: false,
                 timeout: 5000
               })
-            }
+            } else if ($('#product-buttons-pjax').length > 0) {
+              $.pjax.reload("#product-buttons-pjax", {
+                push: false,
+                timeout: 5000
+              })
+            } 
           } else {
             error_modal(data.message)
           }

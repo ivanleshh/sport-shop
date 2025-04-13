@@ -7,7 +7,7 @@ use yii\bootstrap5\Html;
   <div class="card-body d-flex gap-1 justify-content-between">
     <div class="d-flex align-items-center gap-1 w-50">
       <?= Html::a(
-        Html::img(Product::IMG_PATH . $model->product->productImages[0]->photo, ['class' => 'w-100']),
+        Html::img(isset($model->product->productImages[0]->photo) ? Product::IMG_PATH . $model->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-100']),
         ['/product/view', 'id' => $model->product->id],
         ['class' => 'd-flex align-items-center text-decoration-none gap-3']
       ) ?>

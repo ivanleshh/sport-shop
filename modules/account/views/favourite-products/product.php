@@ -17,44 +17,42 @@ use yii\bootstrap5\Html;
 
     <div class="card-img d-flex justify-content-center align-items-center border-bottom h-100">
       <?= Html::a(
-        Html::img(Product::IMG_PATH . $model->product->productImages[0]->photo, ['class' => 'w-100']),
+        Html::img(isset($model->product->productImages[0]->photo) ? Product::IMG_PATH . $model->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-100']),
         ['/product/view', 'id' => $model->product->id],
         ['class' => 'd-flex flex-column align-items-center w-75']
       ) ?>
     </div>
-    <div class="mt-3">
-      <h5 class="card-title"><?= Html::encode($model->product->title) ?></h5>
-      <p class="card-text fw-bold"><?= $model->product->price ?> ₽</p>
+    <div class="d-flex flex-column gap-2">
+      <span class="text-secondary mt-2"><?= $model->product->category->title ?></span>
+      <h5 class="card-body-title"><?= $model->product->title ?></h5>
+      <p class="card-text fw-bold fs-6 mb-2"><?= $model->product->price ?> ₽</p>
       <?php if (!isset($model->product->cartItems[0]) || $model->product->count > $model->product->cartItems[0]->product_amount) : ?>
-        <div class="mt-2 gap-3">
-          <?php if (isset($model->product->cartItems[0])) : ?>
-            <div class="d-flex align-items-center justify-content-center gap-4">
-              <span>В корзине</span>
-              <div class="d-flex gap-3 align-items-center">
-                <?= Html::a(
-                  '-',
-                  ['/cart/dec-item', 'item_id' => $model->product->cartItems[0]->id],
-                  ['class' => 'btn btn-outline-warning btn-cart-item-dec text-dark']
-                ) ?>
-                <?= $model->product->cartItems[0]->product_amount ?>
-                <?= Html::a(
-                  '+',
-                  ['/cart/inc-item', 'item_id' => $model->product->cartItems[0]->id],
-                  ['class' => 'btn btn-outline-warning btn-cart-item-inc text-dark']
-                ) ?>
-              </div>
+        <?php if (isset($model->product->cartItems[0])) : ?>
+          <div class="d-flex align-items-center justify-content-center gap-4">
+            <?= Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange']) ?>
+            <div class="d-flex gap-3 align-items-center">
+              <?= Html::a(
+                '-',
+                ['/cart/dec-item', 'item_id' => $model->product->cartItems[0]->id],
+                ['class' => 'btn btn-outline-warning btn-cart-item-dec text-dark']
+              ) ?>
+              <?= $model->product->cartItems[0]->product_amount ?>
+              <?= Html::a(
+                '+',
+                ['/cart/inc-item', 'item_id' => $model->product->cartItems[0]->id],
+                ['class' => 'btn btn-outline-warning btn-cart-item-inc text-dark']
+              ) ?>
             </div>
-          <?php else : ?>
-            <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
-              ? Html::a(
-                'В корзину',
-                ['/cart/add', 'product_id' => $model->product->id],
-                ['class' => 'btn-cart-add btn btn-warning w-100']
-              ) : ""
-            ?>
-          <?php endif; ?>
-
-        </div>
+          </div>
+        <?php else : ?>
+          <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
+            ? Html::a(
+              'В корзину',
+              ['/cart/add', 'product_id' => $model->product->id],
+              ['class' => 'btn-cart-add btn btn-warning w-100']
+            ) : ""
+          ?>
+        <?php endif; ?>
       <?php else : ?>
         <div class="w-100 mt-2 text-center border border-warning py-2 px-2 rounded-2 mt-3">
           Товар закончился

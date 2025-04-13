@@ -4,14 +4,13 @@
 /*======================================
     Normalize CSS
 ========================================*/
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"); */
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  font-family: "Manrope", sans-serif;
   font-weight: 500;
   font-style: normal;
   color: #888;
@@ -3759,8 +3758,7 @@ top: 2px;
 
 .item-details .product-info .cart-button .btn {
   width: 100%;
-  height: 46px;
-  padding: 0;
+  padding: 0.6rem;
 }
 
 .item-details .product-info .wish-button {
@@ -3953,7 +3951,7 @@ top: 2px;
 /* Product Details Info */
 .product-details-info .single-block {
   background-color: #fff;
-  padding: 1.5rem;
+  padding: 1rem;
   border: 1px solid #eee;
 }
 

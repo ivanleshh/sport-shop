@@ -1,6 +1,7 @@
 $(() => {
     $('#product-reviews').on('click', '.btn-add-review', function (e) {
         e.preventDefault()
+        $('#review-modal-label').text("Оценка товара")
         $('#form-review').attr('action', $(this).attr('href'))
         $('#review-stars').rating('refresh', {
             disabled: false
@@ -33,6 +34,7 @@ $(() => {
 
     $('#product-reviews').on('click', '.btn-add-reply', function (e) {
         e.preventDefault()
+        $('#review-modal-label').text("Ответ на комментарий")
         const parent_id = $(this).data('parent-id')
         $('#review-parent_id').val(parent_id)
         $('#review-stars').rating('clear');

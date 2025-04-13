@@ -161,6 +161,17 @@ class Product extends \yii\db\ActiveRecord
         return $this->hasMany(OrderItem::class, ['product_id' => 'id']);
     }
 
+    public function getCountReviews()
+    {
+        $count = 0;
+        foreach ($this->reviews as $review) {
+            if (isset($review->stars)) {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
     // Метод, определяющий среднюю оценку товара по оценкам в отзывах клиентов
     public function getMediumStars()
     {
