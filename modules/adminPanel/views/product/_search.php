@@ -22,9 +22,9 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <div class="row align-items-center">
-        <div class="col-6 col-md-4 col-xl-3"><?= $form->field($model, 'title') ?></div>
-        <div class="col-6 col-md-4 col-xl-3">
+    <div class="row align-items-end">
+        <div class="col-12 col-sm-6 col-xl-3 col-md-4"><?= $form->field($model, 'title') ?></div>
+        <div class="col-12 col-sm-6 col-xl-3 col-md-4">
             <?= $form->field($model, 'category_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Category::find()->all(), 'id', 'title'),
                 'options' => ['placeholder' => 'Выберите категорию'],
@@ -33,7 +33,7 @@ use yii\widgets\ActiveForm;
                 ],
             ]); ?>
         </div>
-        <div class="col-6 col-md-4 col-xl-3">
+        <div class="col-6 col-sm-4 col-xl-3 col-xxl-2">
             <?= $form->field($model, 'brand_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Brand::find()->all(), 'id', 'title'),
                 'options' => ['placeholder' => 'Выберите категорию'],
@@ -42,7 +42,10 @@ use yii\widgets\ActiveForm;
                 ],
             ]); ?>
         </div>
-        <div class="col-6 col-sm-3 col-md-3 col-xl-2"><?= Html::a('Сбросить', ['/admin-panel/product'], ['class' => 'btn btn-outline-secondary w-100']) ?></div>
+        <div class="col-6 col-sm-4 col-xl-3 col-xxl-2 mb-3"><?= Html::a('Сбросить', ['/admin-panel/product'], ['class' => 'btn btn-outline-secondary w-100']) ?></div>
+        <div class="col-6 col-sm-4 col-xl-3 col-xxl-2 mb-3">
+            <?= Html::a('<i class="bi bi-plus-circle me-2"></i>' . 'Добавить', ['create'], ['class' => 'btn btn-success w-100']) ?>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

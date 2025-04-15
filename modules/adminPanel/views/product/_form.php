@@ -43,10 +43,10 @@ FontAwesomeAsset::register($this);
                             'uploadExtraData' => new \yii\web\JsExpression('function() {
                                 return { "product_id": $("#product-id").val() || 0 };
                             }'),
-                            'deleteUrl' => Url::to(['product/delete-image']), // Для удаления существующих картинок
+                            'deleteUrl' => Url::to(['product/delete-image']), // удаление существующих картинок
                             'showRemove' => true,
                             'showCancel' => false,
-                            'showUpload' => false, // Отключаем кнопку "Загрузить", загрузка через форму
+                            'showUpload' => false, // загрузка через форму
                             'initialPreviewAsData' => true,
                             'overwriteInitial' => false,
                             'maxFileCount' => 10,

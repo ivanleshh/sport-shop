@@ -3,7 +3,7 @@
 use app\models\Product;
 use yii\bootstrap5\Html;
 ?>
-<div class="card d-flex gap-3 <?= $model->product_amount > $model->product->count ? 'border border-danger' : '' ?>">
+<div class="card d-flex gap-3 border-danger">
     <div class="card-body">
         <div class="d-flex gap-4 justify-content-between">
             <div class="w-10">

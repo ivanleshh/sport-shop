@@ -20,11 +20,7 @@ $this->params['breadcrumbs'] = [
     'Управление Категориями',
 ];
 ?>
-<div class="category-index">
-
-    <p class="my-4">
-        <?= Html::a('Создать категорию', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<div class="category-index hero-content">
 
     <div class="row justify-content-between align-items-center">
         <div class="col-12 col-xl-8">
@@ -32,8 +28,8 @@ $this->params['breadcrumbs'] = [
                 'model' => $searchModel,
             ]) ?>
         </div>
-        <div class="col-12 col-xl-4 d-flex gap-3 justify-content-end flex-wrap mt-3 mt-sm-0">
-            Сортировать по:
+        <div class="col-12 col-xl-4 d-flex gap-3 flex-wrap justify-content-end mt-3 mt-sm-0">
+            <span class="text-nowrap">Сортировать по:</span>
             <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
             <?= Html::a('Сбросить', ['/admin-panel/category'], ['class' => 'text-decoration-none link-danger']) ?>
         </div>
@@ -53,9 +49,9 @@ $this->params['breadcrumbs'] = [
             'class' => LinkPager::class,
         ],
         'layout' =>
-        '<div class="d-flex justify-content-center mt-4">{pager}</div>
+        '<div class="text-center mt-3">{pager}</div>
             <div class="row gy-4">{items}</div>
-            <div class="d-flex justify-content-center mt-4">{pager}</div>',
+            <div class="text-center mt-3">{pager}</div>',
         'itemView' => 'item',
     ]) ?>
 

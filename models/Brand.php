@@ -15,6 +15,8 @@ use Yii;
  */
 class Brand extends \yii\db\ActiveRecord
 {
+    public $imageFile;
+    const SCENARIO_CREATE = 'create';
     const IMG_PATH = '/images/brands/';
     const NO_PHOTO = '/images/noPhoto.jpg';
     /**
@@ -31,8 +33,12 @@ class Brand extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['photo', 'title'], 'required'],
+            [['title'], 'required'],
             [['photo', 'title'], 'string', 'max' => 255],
+            ['photo', 'safe'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+
+            ['imageFile', 'required', 'on' => self::SCENARIO_CREATE],
         ];
     }
 
@@ -44,6 +50,7 @@ class Brand extends \yii\db\ActiveRecord
         return [
             'id' => '№',
             'photo' => 'Логотип',
+            'imageFile' => 'Логотип',
             'title' => 'Название',
         ];
     }
@@ -56,5 +63,18 @@ class Brand extends \yii\db\ActiveRecord
     public function getProducts()
     {
         return $this->hasMany(Product::class, ['brand_id' => 'id']);
+    }
+
+    public function upload()
+    {
+        if ($this->validate()) {
+            $imagePath = Yii::$app->user->id . '_' . Yii::$app->security->generateRandomString()
+            . '.' . $this->imageFile->extension;
+            $this->imageFile->saveAs('images/brands/' . $imagePath);
+            $this->photo = $imagePath;
+            return true;
+        } else {
+            return false;
+        }
     }
 }

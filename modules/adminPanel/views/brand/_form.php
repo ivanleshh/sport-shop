@@ -1,7 +1,9 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use app\models\Brand;
+use yii\bootstrap5\Html;
+use yii\bootstrap5\ActiveForm;
+use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var app\models\Brand $model */
@@ -10,16 +12,31 @@ use yii\widgets\ActiveForm;
 
 <div class="brand-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php Pjax::begin([
+        'id' => 'form-brand-pjax',
+        'enablePushState' => false,
+        'timeout' => 5000,
+    ]); ?>
 
-    <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'form-brand',
+        'options' => [
+            'data-pjax' => true
+        ]
+    ]); ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+    <div id="brand-uploaded-image" class="text-center"></div>
 
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <?= $form->field($model, 'imageFile')->fileInput() ?>
+    <?= $form->field($model, 'title')->textInput() ?>
+
+    <div class="form-group d-flex justify-content-end gap-3">
+        <?= Html::button('Закрыть', ['class' => 'btn btn-secondary btn-modal-close']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
+
+    <?php Pjax::end(); ?>
 
 </div>

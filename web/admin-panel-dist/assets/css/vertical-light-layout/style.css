@@ -10461,7 +10461,7 @@ textarea.is-invalid.asColorPicker-input {
   --bs-modal-padding: 0.9375rem;
   --bs-modal-margin: 10px;
   --bs-modal-color: ;
-  --bs-modal-bg: #ecf0f4;
+  /* --bs-modal-bg: #ecf0f4; */
   --bs-modal-border-color: #e8e5e5;
   --bs-modal-border-width: 1px;
   --bs-modal-border-radius: var(--bs-border-radius-lg);

@@ -16,7 +16,8 @@ $this->params['breadcrumbs'] = [
 <div class="hero-content site-login">
     <div class="row">
         <div class="col-lg-4">
-            <h5 class="fw-bold fs-6 mb-3">Пожалуйста, заполните указанные ниже поля:</h5>
+
+            <h5 class="fs-6 mb-2">Пожалуйста, заполните указанные ниже поля:</h5>
 
             <?php $form = ActiveForm::begin([
                 'id' => 'login-form',

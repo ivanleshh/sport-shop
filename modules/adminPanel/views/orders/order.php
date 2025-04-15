@@ -14,11 +14,11 @@ use yii\bootstrap5\Html;
       <?= $model->status->title ?>
     </div>
   </div>
-  <div class="d-flex gap-4 justify-content-between align-items-center p-3">
-    <div class="d-none d-sm-flex justify-content-center align-items-center gap-2 w-25">
+  <div class="row align-items-center p-3 gx-4 gy-4">
+    <div class="col-3 d-none d-sm-flex justify-content-center align-items-center gap-2">
       <?= Html::a(
         Html::img(isset($model->orderItems[0]->product->productImages[0]) ?
-        Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-100']) .
+        Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-75']) .
           "<div class='mt-2'>"
           . $model->orderItems[0]->product->title
           . ((count($model->orderItems) > 1) ? '<span class="text-dark text-break"> ... и ещё ' . count($model->orderItems) - 1 . '</span>' : '')
@@ -27,7 +27,7 @@ use yii\bootstrap5\Html;
         ['class' => 'text-decoration-none text-center']
       ) ?>
     </div>
-    <div class="list d-flex flex-column justify-content-center gap-2">
+    <div class="col-12 col-sm-5 list d-flex flex-column justify-content-center gap-2">
       <div>Клиент: <span class="fw-bold"> <?= $model->name . " (" . $model->email . ")" ?></span></div>
       <?php if (isset($model->date_delivery)) {
         echo "
@@ -44,8 +44,8 @@ use yii\bootstrap5\Html;
       <div>Сумма: <span class="fw-bold"><?= $model->total_amount ?> ₽</span></div>
       <div>Товаров: <span class="fw-bold"><?= $model->product_amount ?></span></div>
     </div>
-    <div class="d-flex flex-column gap-3 justify-content-center">
-      <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-dark']) ?>
+    <div class="col-12 col-sm-4 d-flex flex-column gap-3 justify-content-center">
+      <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-secondary']) ?>
       <?php if ($model->status->id == Status::getStatusId('Новый')) {
         echo Html::a('Принять в работу', ['work', 'id' => $model->id], [
           'class' => 'btn btn-warning',

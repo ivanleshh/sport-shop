@@ -1,13 +1,16 @@
 <?php
 
 use app\models\Brand;
+use app\widgets\Alert;
 use yii\bootstrap5\LinkPager;
+use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\web\JqueryAsset;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
+
 /** @var yii\web\View $this */
 /** @var app\modules\adminPanel\models\BrandSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -17,19 +20,15 @@ $this->params['breadcrumbs'] = [
     'Управление брендами',
 ];
 ?>
-<div class="brand-index">
+<div class="brand-index hero-content">
 
-    <p class="my-4">
-        <?= Html::a('Добавить бренд', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <div class="row justify-content-between align-items-center">
-        <div class="col-12 col-xl-8">
+    <div class="row justify-content-between align-items-center gy-3 gx-3">
+        <div class="col-12 col-xl-7">
             <?= $this->render('_search', [
                 'model' => $searchModel,
             ]) ?>
         </div>
-        
+
         <div class="col-12 col-xl-4 d-flex gap-3 justify-content-end flex-wrap mt-3 mt-sm-0">
             Сортировать по:
             <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
@@ -43,6 +42,13 @@ $this->params['breadcrumbs'] = [
         'timeout' => 5000,
         'enableReplaceState' => false,
     ]); ?>
+
+    <?php if (Yii::$app->session->hasFlash('brand')) {
+        Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('brand'));
+        Yii::$app->session->removeFlash('brand');
+        echo Alert::widget();
+    }
+    ?>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
@@ -60,5 +66,16 @@ $this->params['breadcrumbs'] = [
     <?php Pjax::end() ?>
 
 </div>
+
+<?php
+Modal::begin([
+    'id' => 'brand-modal',
+    'title' => 'Редактирование производителя',
+    'size' => 'modal-md',
+]);
+echo $this->render('_form', ['model' => $model]) ?>
+<?php Modal::end();
+$this->registerJsFile('/js/brand-create-update.js', ['depends' => JqueryAsset::class]);
+?>
 
 <?= $this->registerJsFile('/admin-panel-dist/assets/js-my/filter-brand.js', ['depends' => JqueryAsset::class]) ?>

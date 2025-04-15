@@ -61,9 +61,9 @@ $this->params['breadcrumbs'] = [
             'class' => LinkPager::class,
         ],
         'layout' =>
-        '<div class="d-flex mt-3">{pager}</div>
+        '<div class="text-center mt-3">{pager}</div>
             <div class="row gy-4">{items}</div>
-            <div class="d-flex mt-3">{pager}</div>',
+            <div class="text-center mt-3">{pager}</div>',
         'itemView' => 'order',
     ]) ?>
 

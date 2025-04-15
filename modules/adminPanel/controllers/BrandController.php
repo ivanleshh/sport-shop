@@ -4,9 +4,11 @@ namespace app\modules\adminPanel\controllers;
 
 use app\models\Brand;
 use app\modules\adminPanel\models\BrandSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * BrandController implements the CRUD actions for Brand model.
@@ -44,6 +46,7 @@ class BrandController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => new Brand(),
         ]);
     }
 
@@ -67,17 +70,22 @@ class BrandController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Brand();
+        $model = new Brand(['scenario' => Brand::SCENARIO_CREATE]);
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->upload() && $model->save(false)) {
+                Yii::$app->session->setFlash('brand', "Бренд $model->title успешно обновлён");
+                return $this->render('_form', ['model' => $model]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
-        return $this->render('create', [
+        $searchModel = new BrandSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'model' => $model,
         ]);
     }
@@ -93,11 +101,22 @@ class BrandController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if (is_null($model->imageFile) || $model->upload()) {
+                if ($model->save(false)) {
+                    Yii::$app->session->setFlash('brand', "Бренд $model->title успешно обновлён");
+                    return $this->render('_form', ['model' => $model]);
+                }
+            }
         }
 
-        return $this->render('update', [
+        $searchModel = new BrandSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
             'model' => $model,
         ]);
     }

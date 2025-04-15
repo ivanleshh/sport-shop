@@ -20,21 +20,16 @@ $this->params['breadcrumbs'] = [
     'Управление товарами',
 ];
 ?>
-<div class="product-index">
-
-    <p class="my-4">
-        <?= Html::a('Создать товар', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+<div class="product-index hero-content">
 
     <div class="row justify-content-between align-items-center">
-        <div class="col-12 col-xxl-8">
+        <div class="col-12 col-xxl-9">
             <?= $this->render('_search', [
                 'model' => $searchModel,
             ]) ?>
         </div>
-        <div class="col-12 col-xxl-4 d-flex gap-3 justify-content-end flex-wrap">
+        <div class="col-12 col-xxl-3 d-flex gap-3 justify-content-end flex-wrap">
             Сортировать по:
-            <?= $dataProvider->sort->link('title', ['class' => 'text-decoration-none']) ?>
             <?= $dataProvider->sort->link('price', ['class' => 'text-decoration-none']) ?>
             <?= $dataProvider->sort->link('count', ['class' => 'text-decoration-none']) ?>
             <?= Html::a('Сбросить', ['/admin-panel/product'], ['class' => 'text-decoration-none link-danger']) ?>
@@ -55,9 +50,9 @@ $this->params['breadcrumbs'] = [
             'class' => LinkPager::class,
         ],
         'layout' =>
-        '<div class="d-flex justify-content-center mt-4">{pager}</div>
+        '<div class="text-center mt-3">{pager}</div>
             <div class="row gy-4">{items}</div>
-            <div class="d-flex justify-content-center mt-4">{pager}</div>',
+            <div class="text-center mt-3">{pager}</div>',
         'itemView' => 'item',
     ]) ?>
 

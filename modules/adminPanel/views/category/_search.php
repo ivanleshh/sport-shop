@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <div class="row align-items-center">
+    <div class="row align-items-end">
         <div class="col-12 col-sm-6 col-md-4 col-xl-4 col-xxl-3">
             <?= $form->field($model, 'title') ?>
         </div>
@@ -34,8 +34,11 @@ use yii\widgets\ActiveForm;
                 ],
             ]); ?>
         </div>
-        <div class="col-6 col-sm-4 col-md-3 col-xl-3 col-xxl-2">
+        <div class="col-6 mb-3 col-md-4 col-xl-3">
             <?= Html::a('Сбросить', ['/admin-panel/category'], ['class' => 'btn btn-outline-secondary w-100']) ?>
+        </div>
+        <div class="col-6 mb-3 col-xxl-3 col-md-4 col-xxl-2">
+            <?= Html::a('<i class="bi bi-plus-circle me-2"></i>' . 'Добавить', ['create'], ['class' => 'btn btn-success w-100']) ?>
         </div>
     </div>
 

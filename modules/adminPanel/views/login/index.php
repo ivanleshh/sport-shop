@@ -56,7 +56,7 @@ use yii\bootstrap5\Html;
                     </div>
                 </div>
                 <div class="col-12">
-                    <span class="mt-2">Данные администратора: sport-admin@ya.ru / Password1</span>
+                    <span class="mt-2 text-muted">Данные администратора: sport-admin@ya.ru / Password1</span>
                 </div>
             </div>
             <?php ActiveForm::end() ?>

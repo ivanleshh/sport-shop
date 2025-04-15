@@ -49,8 +49,8 @@ $this->params['breadcrumbs'] = [
                 ],
                 'layout' => "<div class='d-flex flex-column gap-3 my-2'>{items}</div>\n<div class='d-flex justify-content-end'>{pager}</div>"
             ]) ?>
-            <div class="d-flex justify-content-between flex-wrap border-top border-bottom py-3 text-dark gap-3">
-                <a class="text-decoration-none mt-2" href="/"><- Вернуться к покупкам</a>
+            <div class="d-flex justify-content-between flex-wrap border-top border-bottom py-2 my-2 text-dark gap-3">
+                <a class="text-decoration-none mt-2 text-danger" href="/"><- Вернуться к покупкам</a>
                 <div>Позиций в корзине: <span class="fw-bold fs-5"><?= $cart->product_amount ?></span></div>
                 <div>Общая сумма: <span class="fw-bold fs-5"><?= $cart->total_amount ?> ₽</span></div>
             </div>

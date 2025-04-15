@@ -496,7 +496,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <?= Html::a(
                     "Оформить заказ",
                     ["/personal/orders/create"],
-                    ["class" => "btn btn-orange"]
+                    ["class" => "btn btn-dark"]
                 ) ?>
             </div>
         </div>
@@ -511,7 +511,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <?= Html::a(
                     "Оформить заказ",
                     ["/personal/orders/create"],
-                    ["class" => "btn btn-orange d-none btn-cart-manager"]
+                    ["class" => "btn btn-dark d-none btn-cart-manager"]
                 ) ?>
             </div>
         </div>
