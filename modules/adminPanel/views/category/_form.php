@@ -20,12 +20,12 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
 
 <div class="category-form">
 
-    <?php $form = ActiveForm::begin(['options' => [
+    <?php $form = ActiveForm::begin([
         'id' => 'form-category',
-        'enctype' => 'multipart/form-data'
-    ]]); ?>
+        'enableAjaxValidation' => true,
+    ]); ?>
 
-    <div class="row col-12">
+    <div class="row">
         <div class="col">
             <?php if (isset($model->photo)) : ?>
                 <div class="d-flex flex-column align-items-center">
@@ -64,7 +64,10 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
                             </div>
                         </div>
                         <div class="d-flex gap-3 mt-2 flex-wrap">
-                            <?= $form->field($prop, "[$key]property_id", ['options' => ['class' => 'mb-0 w-220']])->widget(Select2::class, [
+                            <?= $form->field($prop, "[$key]property_id", [
+                                'enableAjaxValidation' => true,
+                                'options' => ['class' => 'mb-0 w-220']
+                            ])->widget(Select2::class, [
                                 'data' => $properties,
                                 'options' => [
                                     'placeholder' => 'Выбрать характеристику',
@@ -75,7 +78,7 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
                                     'allowClear' => true,
                                 ],
                             ])->label('Выбрать из списка'); ?>
-                            <?= $form->field($prop, "[$key]property_title")->textInput([
+                            <?= $form->field($prop, "[$key]property_title", ['enableAjaxValidation' => true])->textInput([
                                 'maxlength' => true,
                                 'id' => "categoryproperty-{$key}-property_title",
                                 'class' => 'form-control props-title',

@@ -5,7 +5,7 @@ $(() => {
 
     // Функция для генерации списка <option> из propertyOptions
     const generateOptions = () => {
-        let options = '<option value="">Выберите значение</option>';
+        let options = '<option value="">Выбрать характеристику</option>';
         for (let id in propertyOptions) {
             options += `<option value="${id}">${propertyOptions[id]}</option>`;
         }
@@ -45,63 +45,6 @@ $(() => {
     </div>
 </div>`
 
-    const initializeSelect2AndValidation = () => {
-        $('#block-props .property-select').each(function () {
-            // const select = $(this);
-            // select.select2({
-            //     placeholder: 'Выберите значение',
-            //     allowClear: true,
-            //     width: '100%'
-            // });
-
-            // const index = select.closest('.category-props').data('index');
-
-            // const propId = `categoryproperty-${index}-property_id`;
-            // $('#form-category').yiiActiveForm('add', {
-            //     id: propId,
-            //     name: `CategoryProperty[${index}][property_id]`,
-            //     container: `.field-categoryproperty-${index}-property_id`,
-            //     input: `#${propId}`,
-            //     error: '.invalid-feedback',
-            //     validate: function (attribute, value, messages, deferred, $form) {
-            //         yii.validation.required(value, messages, {
-            //             message: "Необходимо заполнить «Свойство»."
-            //         });
-            //         yii.validation.number(value, messages, {
-            //             pattern: /^[+-]?\d+$/,
-            //             message: "Значение «Свойство» должно быть целым числом.",
-            //             skipOnEmpty: 1
-            //         });
-            //     }
-            // });
-
-            // const prop_title = `categoryproperty-${index}-property_title`;
-            // $('#form-category').yiiActiveForm('add', {
-            //     "id": prop_title,
-            //     "name": `[${itemCount}]property_title`,
-            //     "container": `.field-${prop_title}`,
-            //     "input": `#${prop_title}`,
-            //     "error": ".invalid-feedback",
-            //     "validate": function (
-            //         attribute, value, messages, deferred, $form) {
-            //         yii.validation.required(value, messages, {
-            //             "message": "Необходимо заполнить «Значение»."
-            //         });
-            //         yii.validation.string(value, messages, {
-            //             "message": "Значение «Значение» должно быть строкой.",
-            //             "max": 255,
-            //             "tooLong": "Значение «Значение» должно содержать максимум 255 символа.",
-            //             "skipOnEmpty": 1
-            //         });
-            //     }
-            // })
-        });
-    };
-
-    $('#form-category').on('afterInit', function () {
-        initializeSelect2AndValidation();
-    });
-
 
     $('#block-props').on('click', '.btn-add', () => {
 
@@ -110,7 +53,7 @@ $(() => {
 
         const $newSelect = $newBlock.find('.property-select');
         $newSelect.select2({
-            placeholder: 'Выберите значение',
+            placeholder: 'Выбрать характеристику',
             allowClear: true,
             width: '100%',
         });
@@ -125,11 +68,11 @@ $(() => {
             "error": ".invalid-feedback",
             "validate": function (attribute, value, messages, deferred, $form) {
                 yii.validation.required(value, messages, {
-                    "message": "Необходимо заполнить «Property ID»."
+                    "message": "Необходимо заполнить характеристику."
                 });
                 yii.validation.number(value, messages, {
                     "pattern": /^[+-]?\d+$/,
-                    "message": "Значение «Property ID» должно быть целым числом.",
+                    "message": "Значение должно быть целым числом.",
                     "skipOnEmpty": 1
                 });
             }
@@ -147,12 +90,12 @@ $(() => {
             "validate": function (
                 attribute, value, messages, deferred, $form) {
                 yii.validation.required(value, messages, {
-                    "message": "Необходимо заполнить «Значение»."
+                    "message": "Необходимо заполнить значение."
                 });
                 yii.validation.string(value, messages, {
-                    "message": "Значение «Значение» должно быть строкой.",
+                    "message": "Значение должно быть строкой.",
                     "max": 255,
-                    "tooLong": "Значение «Значение» должно содержать максимум 255 символа.",
+                    "tooLong": "Значение должно содержать максимум 255 символа.",
                     "skipOnEmpty": 1
                 });
             }
@@ -192,7 +135,7 @@ $(() => {
                     error: '.invalid-feedback',
                     validate: function (attribute, value, messages, deferred, $form) {
                         yii.validation.required(value, messages, {
-                            message: "Необходимо заполнить «Свойство»."
+                            message: "Необходимо заполнить Свойство."
                         });
                         yii.validation.number(value, messages, {
                             pattern: /^[+-]?\d+$/,
@@ -237,9 +180,9 @@ $(() => {
                             message: "Необходимо заполнить «Значение»."
                         });
                         yii.validation.string(value, messages, {
-                            message: "Значение «Значение» должно быть строкой.",
+                            message: "Значение должно быть строкой.",
                             max: 255,
-                            tooLong: "Значение «Значение» должно содержать максимум 255 символа.",
+                            tooLong: "Значение должно содержать максимум 255 символа.",
                             skipOnEmpty: 1
                         });
                     }

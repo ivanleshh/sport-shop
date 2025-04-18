@@ -28130,7 +28130,7 @@ body.avgrund-active {
 
 /* Select2 */
 .select2-container--default .select2-results__option--highlighted[aria-selected] {
-  background: #1bdbe0;
+  background: #0d6efd;
 }
 
 .select2-container--default .select2-selection--single,

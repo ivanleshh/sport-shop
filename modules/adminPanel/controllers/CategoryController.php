@@ -8,11 +8,13 @@ use app\models\Property;
 use app\modules\adminPanel\models\CategorySearch;
 use Yii;
 use yii\base\Model;
+use yii\bootstrap5\ActiveForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
+use yii\web\Response;
 use yii\web\UploadedFile;
 
 /**
@@ -75,7 +77,21 @@ class CategoryController extends Controller
     public function actionCreate()
     {
         $model = new Category();
-        $categoryProperties = [new CategoryProperty()]; // Начальный массив для формы
+        $categoryProperties = [new CategoryProperty()];
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $categoryProp = [];
+            foreach ($this->request->post('CategoryProperty') as $index => $data) {
+                $prop = new CategoryProperty();
+                $prop->load($data, '');
+                $categoryProp[] = $prop;
+            }
+            if (!Model::validateMultiple($categoryProp)) {
+                return \yii\widgets\ActiveForm::validateMultiple($categoryProp);
+            }
+            return \yii\widgets\ActiveForm::validate($model);
+        }
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
@@ -83,38 +99,30 @@ class CategoryController extends Controller
                 if ($model->save(false)) {
                     $postData = $this->request->post('CategoryProperty', []);
                     $newCategoryProperties = [];
-                    // Обработка данных из формы
                     foreach ($postData as $item) {
                         $propertyId = $item['property_id'] ?? null;
                         $propertyTitle = $item['property_title'] ?? null;
-                        // Пропускаем пустые блоки (оба поля пусты)
                         if (empty($propertyId) && empty($propertyTitle)) {
                             continue;
                         }
-                        // Если заполнен property_id, проверяем, существует ли уже связь
                         if (!empty($propertyId)) {
-                            // Проверяем, есть ли уже запись с таким category_id и property_id
                             $existingProperty = CategoryProperty::findOne([
                                 'category_id' => $model->id,
                                 'property_id' => $propertyId
                             ]);
                             if ($existingProperty) {
-                                // Если связь уже существует, добавляем её в список без дублирования
                                 $newCategoryProperties[] = $existingProperty;
                             } else {
-                                // Если связи нет, создаём новую
                                 $categoryProperty = new CategoryProperty();
                                 $categoryProperty->category_id = $model->id;
                                 $categoryProperty->property_id = $propertyId;
                                 $newCategoryProperties[] = $categoryProperty;
                             }
                         }
-                        // Если заполнен property_title, создаём новое свойство и связь
                         if (!empty($propertyTitle)) {
                             $newProperty = new Property();
                             $newProperty->title = $propertyTitle;
                             if ($newProperty->save()) {
-                                // Проверяем, существует ли уже связь с новым property_id
                                 $existingProperty = CategoryProperty::findOne([
                                     'category_id' => $model->id,
                                     'property_id' => $newProperty->id
@@ -130,7 +138,6 @@ class CategoryController extends Controller
                             }
                         }
                     }
-                    // Валидация всех новых связей
                     if (Model::validateMultiple($newCategoryProperties)) {
                         foreach ($newCategoryProperties as $prop) {
                             if ($prop->isNewRecord) {
@@ -143,10 +150,10 @@ class CategoryController extends Controller
                 }
             }
         }
-        return $this->render('update', [
+        return $this->render('create', [
             'model' => $model,
             'categoryProperties' => $categoryProperties,
-            'properties' => ArrayHelper::map(Property::find()->all(), 'id', 'title'), // Для dropdown
+            'properties' => ArrayHelper::map(Property::find()->all(), 'id', 'title'),
         ]);
     }
 
@@ -162,9 +169,23 @@ class CategoryController extends Controller
         $model = $this->findModel($id);
         $categoryProperties = CategoryProperty::find()->where(['category_id' => $model->id])->all();
 
-        // Если нет существующих свойств, добавляем пустой блок для формы
         if (empty($categoryProperties)) {
             $categoryProperties = [new CategoryProperty()];
+        }
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $categoryProp = [];
+            foreach ($this->request->post('CategoryProperty') as $index => $data) {
+                $prop = new CategoryProperty();
+                $prop->load($data, '');
+                $prop->category_id = $model->id;
+                $categoryProp[] = $prop;
+            }
+            if (!Model::validateMultiple($categoryProp)) {
+                return \yii\widgets\ActiveForm::validateMultiple($categoryProp);
+            }
+            return \yii\widgets\ActiveForm::validate($model);
         }
 
         if ($this->request->isPost && $model->load($this->request->post())) {
@@ -173,38 +194,30 @@ class CategoryController extends Controller
                 if ($model->save(false)) {
                     $postData = $this->request->post('CategoryProperty', []);
                     $newCategoryProperties = [];
-                    // Обработка данных из формы
                     foreach ($postData as $item) {
                         $propertyId = $item['property_id'] ?? null;
                         $propertyTitle = $item['property_title'] ?? null;
-                        // Пропускаем пустые блоки (оба поля пусты)
                         if (empty($propertyId) && empty($propertyTitle)) {
                             continue;
                         }
-                        // Если заполнен property_id, проверяем, существует ли уже связь
                         if (!empty($propertyId)) {
-                            // Проверяем, есть ли уже запись с таким category_id и property_id
                             $existingProperty = CategoryProperty::findOne([
                                 'category_id' => $model->id,
                                 'property_id' => $propertyId
                             ]);
                             if ($existingProperty) {
-                                // Если связь уже существует, добавляем её в список без дублирования
                                 $newCategoryProperties[] = $existingProperty;
                             } else {
-                                // Если связи нет, создаём новую
                                 $categoryProperty = new CategoryProperty();
                                 $categoryProperty->category_id = $model->id;
                                 $categoryProperty->property_id = $propertyId;
                                 $newCategoryProperties[] = $categoryProperty;
                             }
                         }
-                        // Если заполнен property_title, создаём новое свойство и связь
                         if (!empty($propertyTitle)) {
                             $newProperty = new Property();
                             $newProperty->title = $propertyTitle;
                             if ($newProperty->save()) {
-                                // Проверяем, существует ли уже связь с новым property_id
                                 $existingProperty = CategoryProperty::findOne([
                                     'category_id' => $model->id,
                                     'property_id' => $newProperty->id
@@ -220,14 +233,11 @@ class CategoryController extends Controller
                             }
                         }
                     }
-                    // Валидация всех новых связей
                     if (Model::validateMultiple($newCategoryProperties)) {
-                        // Получаем список property_id из новых связей
                         $newPropertyIds = array_filter(
                             array_map(fn($prop) => $prop->property_id, $newCategoryProperties),
                             fn($id) => !is_null($id)
                         );
-                        // Удаляем все связи для данной категории, которых нет в новом списке
                         if (!empty($newPropertyIds)) {
                             CategoryProperty::deleteAll([
                                 'and',
@@ -235,10 +245,8 @@ class CategoryController extends Controller
                                 ['not in', 'property_id', $newPropertyIds]
                             ]);
                         } else {
-                            // Если нет новых свойств, удаляем все существующие связи
                             CategoryProperty::deleteAll(['category_id' => $model->id]);
                         }
-                        // Сохраняем новые связи (только те, которые ещё не существуют)
                         foreach ($newCategoryProperties as $prop) {
                             if ($prop->isNewRecord) {
                                 $prop->save(false);

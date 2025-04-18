@@ -33,9 +33,34 @@ class CategoryProperty extends \yii\db\ActiveRecord
         return [
             [['category_id'], 'integer'],
             [['property_title'], 'string', 'max' => 255],
+            [
+                ['property_id'],
+                'unique',
+                'targetClass' => CategoryProperty::class,
+                'targetAttribute' => 'property_id',
+                'filter' => function ($query) {
+                    if ($this->id) {
+                        $query->andWhere(['!=', 'id', $this->id]);
+                    }
+                    $query->andWhere(['category_id' => $this->category_id]);
+                },
+                'message' => 'Эта характеристика уже выбрана для данной категории.'
+            ],
+            [
+                ['property_title'],
+                'unique',
+                'targetClass' => Property::class,
+                'targetAttribute' => 'title',
+                'message' => 'Характеристика с таким названием уже существует',
+            ],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
             [['property_id'], 'exist', 'skipOnError' => true, 'targetClass' => Property::class, 'targetAttribute' => ['property_id' => 'id']],
         ];
+    }
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(), ['property_title']);
     }
 
     /**
