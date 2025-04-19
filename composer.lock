@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c80a26df54d15fe8992ec15ce81db53",
+    "content-hash": "ccc02fa6ad66acd8b47e08298767ad41",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
-            "version": "v5.3.4",
+            "version": "v5.2.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "51581ed235f0c63e70cef43b49da1e47b0c5f308"
+                "url": "git@github.com:twbs/bootstrap.git",
+                "reference": "cb021439c683d9805e2864c58095b92d405e9b11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/51581ed235f0c63e70cef43b49da1e47b0c5f308",
-                "reference": "51581ed235f0c63e70cef43b49da1e47b0c5f308"
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/cb021439c683d9805e2864c58095b92d405e9b11",
+                "reference": "cb021439c683d9805e2864c58095b92d405e9b11"
             },
             "type": "bower-asset"
         },
@@ -180,6 +180,71 @@
                 "source": "https://github.com/cebe/markdown"
             },
             "time": "2018-03-26T11:24:36+00:00"
+        },
+        {
+            "name": "coderius/yii2-swiper-slider",
+            "version": "1.0.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/coderius/yii2-swiper-slider.git",
+                "reference": "ec513a71c5b038682de09dfc97ddb6b14b57eb1c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/coderius/yii2-swiper-slider/zipball/ec513a71c5b038682de09dfc97ddb6b14b57eb1c",
+                "reference": "ec513a71c5b038682de09dfc97ddb6b14b57eb1c",
+                "shasum": ""
+            },
+            "require": {
+                "npm-asset/swiper": "^6",
+                "php": ">=5.6.0",
+                "yiisoft/yii2": "^2.0.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.2",
+                "phpunit/phpunit": "4.8.27|^5.0|^6.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "asset-installer-paths": {
+                    "npm-asset-library": "vendor/npm",
+                    "bower-asset-library": "vendor/bower"
+                },
+                "asset-vcs-driver-options": {
+                    "github-no-api": true
+                },
+                "asset-pattern-skip-version": "(-patch)"
+            },
+            "autoload": {
+                "psr-4": {
+                    "coderius\\swiperslider\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serg Coderius",
+                    "email": "sunrise4fun@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "yii2 swiper slider",
+            "keywords": [
+                "Yii2 Extension",
+                "slider",
+                "swiper",
+                "yii2",
+                "yii2 modules",
+                "yii2 slider"
+            ],
+            "support": {
+                "issues": "https://github.com/coderius/yii2-swiper-slider/issues",
+                "source": "https://github.com/coderius/yii2-swiper-slider/tree/1.0.0.1"
+            },
+            "time": "2020-11-04T20:12:35+00:00"
         },
         {
             "name": "components/flag-icon-css",
@@ -910,6 +975,49 @@
                 "source": "https://github.com/kazda01/yii2-search/tree/main"
             },
             "time": "2025-02-24T11:53:23+00:00"
+        },
+        {
+            "name": "npm-asset/dom7",
+            "version": "3.0.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/dom7/-/dom7-3.0.0.tgz"
+            },
+            "require": {
+                "npm-asset/ssr-window": ">=3.0.0-alpha.1,<4.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/ssr-window",
+            "version": "3.0.0",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/ssr-window/-/ssr-window-3.0.0.tgz"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
+        },
+        {
+            "name": "npm-asset/swiper",
+            "version": "6.8.4",
+            "dist": {
+                "type": "tar",
+                "url": "https://registry.npmjs.org/swiper/-/swiper-6.8.4.tgz"
+            },
+            "require": {
+                "npm-asset/dom7": ">=3.0.0,<4.0.0",
+                "npm-asset/ssr-window": ">=3.0.0,<4.0.0"
+            },
+            "type": "npm-asset",
+            "license": [
+                "MIT"
+            ]
         },
         {
             "name": "psr/container",
@@ -2798,22 +2906,22 @@
         },
         {
             "name": "codeception/verify",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Verify.git",
-                "reference": "2e5e707dfbdf4fbe722ba3d06ebd95bb564e2bb2"
+                "reference": "2591031f88a38b3b679315eac2b95ddda025afde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Verify/zipball/2e5e707dfbdf4fbe722ba3d06ebd95bb564e2bb2",
-                "reference": "2e5e707dfbdf4fbe722ba3d06ebd95bb564e2bb2",
+                "url": "https://api.github.com/repos/Codeception/Verify/zipball/2591031f88a38b3b679315eac2b95ddda025afde",
+                "reference": "2591031f88a38b3b679315eac2b95ddda025afde",
                 "shasum": ""
             },
             "require": {
                 "ext-dom": "*",
                 "php": "^7.4 || ^8.0",
-                "phpunit/phpunit": "^9.6.11 || ^10.0 || ^11.0"
+                "phpunit/phpunit": "^9.6.11 || ^10.0 || ^11.0 || ^12.0"
             },
             "type": "library",
             "autoload": {
@@ -2841,9 +2949,9 @@
             "description": "BDD assertion library for PHPUnit",
             "support": {
                 "issues": "https://github.com/Codeception/Verify/issues",
-                "source": "https://github.com/Codeception/Verify/tree/3.2.0"
+                "source": "https://github.com/Codeception/Verify/tree/3.3.0"
             },
-            "time": "2024-03-28T09:57:09+00:00"
+            "time": "2025-04-16T07:12:02+00:00"
         },
         {
             "name": "fakerphp/faker",

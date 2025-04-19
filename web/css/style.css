@@ -54,6 +54,12 @@ input:checked {
     display: none;
 }
 
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* main-search start */
 
 .search-widget {

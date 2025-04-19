@@ -18,7 +18,7 @@ $this->params['breadcrumbs'] = [
     <div class="row align-items-center">
         <div class="col-lg-6">
 
-            <h5 class="fw-bold fs-6">Пожалуйста, заполните указанные ниже поля:</h5>
+            <h5 class="fs-6">Пожалуйста, заполните указанные ниже поля:</h5>
             <div class="d-inline-block mt-3">
                 <span class="text-danger">*</span>
                 - обязательное поле

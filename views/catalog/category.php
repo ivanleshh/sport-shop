@@ -13,10 +13,10 @@ use yii\helpers\VarDumper;
                 ? (isset($model->photo) ? Html::img(Category::IMG_PATH . $model->photo, ['class' => 'w-mini']) : '')
                 : ''
                 ) . 
-                "<h5 class='card-title" . (isset($model->parent_id) ? 
+                "<h5 class='card-title ellipsis" . (isset($model->parent_id) ? 
                 " fs-6 mb-0 fw-medium" : 'text-uppercase fw-bold border-bottom border-3 border-danger pe-2') . "'>$model->title</h5>",
                 ['view', 'id' => $model->id],
-                ['class' => 'd-flex gap-3 align-items-center link-dark text-decoration-none p-2', 'data-pjax' => 0]
+                ['class' => 'd-flex gap-3 ' . (isset($model->parent_id) ? 'justify-content-center' : '') . ' align-items-center link-dark text-decoration-none p-2', 'data-pjax' => 0]
             )
         ?>
 

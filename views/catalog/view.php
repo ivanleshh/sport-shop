@@ -2,6 +2,7 @@
 
 use app\models\Category;
 use app\widgets\Alert;
+use coderius\swiperslider\SwiperSlider;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
 use yii\widgets\DetailView;
@@ -28,12 +29,43 @@ $this->params['breadcrumbs'][] = $model->title;
 ?>
 <div class="category-view hero-content">
 
-    <?php if (!empty($model->children)): ?>
+    <!-- <?php if (!empty($model->children)): ?>
         <div class="d-flex flex-wrap gap-3 mb-3">
             <?php foreach ($model->children as $child): ?>
                 <?= $this->render('category', ['model' => $child, 'noChild' => true]) ?>
             <?php endforeach; ?>
         </div>
+    <?php endif; ?> -->
+
+    <?php if (!empty($model->children)): ?>
+        <?= \coderius\swiperslider\SwiperSlider::widget([
+            'showScrollbar' => false,
+            'showPagination' => false,
+            'slides' => array_map(fn($child) => $this->render('category', ['model' => $child, 'noChild' => true]), $model->children),
+            'clientOptions' => [
+                'slidesPerView' => 6,
+                'spaceBetween' => 10,
+                'centeredSlides' => true,
+            ],
+            'options' => [
+                'styles' => [
+                    \coderius\swiperslider\SwiperSlider::BUTTON_PREV => [
+                        "color" => "#081828",
+                        'width' => "50px",
+                        'left' => 0,
+                        'background' => 'rgba(255, 255, 255, 0.7)'
+                    ],
+                    \coderius\swiperslider\SwiperSlider::BUTTON_NEXT => [
+                        "color" => "#081828",
+                        'width' => "50px",
+                        'right' => 0,
+                        'background' => 'rgba(255, 255, 255, 0.7)'
+                    ],
+                    \coderius\swiperslider\SwiperSlider::CONTAINER => ["padding" => "0 2rem"],
+                ],
+            ],
+
+        ]); ?>
     <?php endif; ?>
 
     <?php Pjax::begin([
@@ -43,7 +75,7 @@ $this->params['breadcrumbs'][] = $model->title;
         'enableReplaceState' => false,
     ]); ?>
 
-    <div class="row justify-content-between align-items-center mb-4">
+    <div class="row justify-content-between align-items-center my-4">
         <div class="col-12 col-lg-6">
             <?= $this->render('_search', ['model' => $searchModel]) ?>
         </div>

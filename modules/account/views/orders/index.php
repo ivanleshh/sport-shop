@@ -5,6 +5,7 @@ use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
+use yii\web\JqueryAsset;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
 
@@ -20,7 +21,14 @@ $this->params['breadcrumbs'] = [
 ?>
 <div class="orders-index hero-content">
 
-    <div class="row justify-content-between align-items-center">
+    <?php Pjax::begin([
+        'id' => 'personal-orders-pjax',
+        'enablePushState' => false,
+        'timeout' => 5000,
+        'enableReplaceState' => false,
+    ]); ?>
+
+    <div class="row gy-3 justify-content-between align-items-center">
         <div class="col-12 col-xxl-8">
             <?= $this->render('_search', [
                 'model' => $searchModel,
@@ -38,11 +46,9 @@ $this->params['breadcrumbs'] = [
         </div>
     </div>
 
-    <?php Pjax::begin(); ?>
-
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item col-12 col-lg-6 col-xxl-4'],
+        'itemOptions' => ['class' => 'item col-12 col-lg-6 col-xl-4'],
         'pager' => [
             'class' => LinkPager::class,
         ],
@@ -56,3 +62,5 @@ $this->params['breadcrumbs'] = [
     <?php Pjax::end(); ?>
 
 </div>
+
+<?= $this->registerJsFile('/js/filter-order.js', ['depends' => JqueryAsset::class]) ?>
