@@ -43,25 +43,38 @@ $this->params['breadcrumbs'][] = $model->title;
             'showPagination' => false,
             'slides' => array_map(fn($child) => $this->render('category', ['model' => $child, 'noChild' => true]), $model->children),
             'clientOptions' => [
+                'navigation' => false,
+                'autoplay' => [
+                    'delay' => 3000,
+                    'disableOnInteraction' => false,
+                ],
+                'breakpoints' => [
+                    0 => [
+                        'slidesPerView' => 1.5,
+                    ],
+                    576 => [
+                        'slidesPerView' => 2.5,
+                    ],
+                    768 => [
+                        'slidesPerView' => 3.5,
+                    ],
+                    992 => [
+                        'slidesPerView' => 4.5,
+                    ],
+                    1200 => [
+                        'slidesPerView' => 5.5,
+                    ],
+                    1400 => [
+                        'slidesPerView' => 6.5,
+                    ],
+                ],
                 'slidesPerView' => 6,
                 'spaceBetween' => 10,
-                'centeredSlides' => true,
+                // 'centeredSlides' => true,
             ],
             'options' => [
                 'styles' => [
-                    \coderius\swiperslider\SwiperSlider::BUTTON_PREV => [
-                        "color" => "#081828",
-                        'width' => "50px",
-                        'left' => 0,
-                        'background' => 'rgba(255, 255, 255, 0.7)'
-                    ],
-                    \coderius\swiperslider\SwiperSlider::BUTTON_NEXT => [
-                        "color" => "#081828",
-                        'width' => "50px",
-                        'right' => 0,
-                        'background' => 'rgba(255, 255, 255, 0.7)'
-                    ],
-                    \coderius\swiperslider\SwiperSlider::CONTAINER => ["padding" => "0 2rem"],
+                    \coderius\swiperslider\SwiperSlider::CONTAINER => ["height" => "60px"],
                 ],
             ],
 

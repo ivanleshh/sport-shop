@@ -48,7 +48,7 @@ class CategorySearch extends Category
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => '4',
+                'pageSize' => 8,
             ],
         ]);
 

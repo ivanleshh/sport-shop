@@ -20,7 +20,7 @@ use Yii;
  */
 class Category extends \yii\db\ActiveRecord
 {
-    const IMG_PATH = '/images/categories/';
+    const IMG_PATH = 'images/categories/';
     const NO_PHOTO = '/images/noPhoto.jpg';
     public $imageFile;
     /**
@@ -44,7 +44,7 @@ class Category extends \yii\db\ActiveRecord
             [['photo', 'title'], 'string', 'max' => 255],
             [['parent_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['parent_id' => 'id']],
 
-            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
         ];
     }
 

@@ -17,7 +17,7 @@ use yii\bootstrap5\Html;
   <div class="row px-4 py-3 align-items-center h-100">
     <div class="col-5">
       <?= Html::a(
-        Html::img(isset($model->photo) ? Category::IMG_PATH . $model->photo : Category::NO_PHOTO, ['class' => 'w-100']),
+        Html::img(isset($model->photo) ? "/" . Category::IMG_PATH . $model->photo : Category::NO_PHOTO, ['class' => 'w-100']),
         ['view', 'id' => $model->id],
         ['class' => 'd-flex justify-content-center']
       )

@@ -60,6 +60,15 @@ input:checked {
     text-overflow: ellipsis;
 }
 
+.card-category {
+    height: 55px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    display: none;
+}
+
 /* main-search start */
 
 .search-widget {

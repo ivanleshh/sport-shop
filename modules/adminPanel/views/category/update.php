@@ -9,7 +9,7 @@ $this->params['breadcrumbs'] = [
     ['label' => 'Панель администратора', 'url' => ['/admin-panel'], 'icon' => 'bi bi-house-fill mx-2'],
     ['label' => 'Категории', 'url' => ['/admin-panel/product']],
     ['label' => $model->title, 'url' => ['view', 'id' => $model->id]],
-    "Изменение '$model->title'",
+    "Изменение категории",
 ];
 ?>
 <div class="category-update hero-content">
