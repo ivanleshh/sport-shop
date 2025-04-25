@@ -1,26 +1,28 @@
 <?php
 
+use app\models\CompareProducts;
 use app\widgets\Alert;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
 use yii\web\JqueryAsset;
-use yii\widgets\DetailView;
 use yii\widgets\ListView;
 use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
-/** @var app\models\Category $model */
+/** @var app\modules\account\models\CompareProductsSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->params['breadcrumbs'] = [
     ['label' => 'Главная', 'url' => ['/site'], 'icon' => 'bi bi-house-fill mx-2'],
     ['label' => 'Личный кабинет', 'url' => ['/personal']],
-    'Избранное',
+    'Сравнение товаров',
 ];
-\yii\web\YiiAsset::register($this);
 ?>
-<div class="category-view hero-content">
+<div class="compare-products-index hero-content">
 
     <?php Pjax::begin([
-        'id' => 'favourite-pjax',
+        'id' => 'compare-pjax',
         'enablePushState' => false,
         'timeout' => 5000,
         'enableReplaceState' => false,
@@ -39,6 +41,7 @@ $this->params['breadcrumbs'] = [
     ]) ?>
 
     <?php Pjax::end(); ?>
+
 </div>
 
 <?= $this->registerJsFile('/js/favouriteCompare.js', ['depends' => JqueryAsset::class]); ?>

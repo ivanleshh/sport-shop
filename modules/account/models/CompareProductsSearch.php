@@ -4,13 +4,13 @@ namespace app\modules\account\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\FavouriteProducts;
+use app\models\CompareProducts;
 use Yii;
 
 /**
- * FavouriteProductsSearch represents the model behind the search form of `app\models\FavouriteProducts`.
+ * CompareProductsSearch represents the model behind the search form of `app\models\CompareProducts`.
  */
-class FavouriteProductsSearch extends FavouriteProducts
+class CompareProductsSearch extends CompareProducts
 {
     /**
      * {@inheritdoc}
@@ -41,7 +41,7 @@ class FavouriteProductsSearch extends FavouriteProducts
      */
     public function search($params, $formName = null)
     {
-        $query = FavouriteProducts::find()->where(['user_id' => Yii::$app->user->id])->joinWith([
+        $query = CompareProducts::find()->where(['user_id' => Yii::$app->user->id])->joinWith([
             'product' => fn($q) => $q->joinWith('category'),
         ]);
 
@@ -62,7 +62,7 @@ class FavouriteProductsSearch extends FavouriteProducts
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'user_id' => Yii::$app->user->id,
+            'user_id' => $this->user_id,
             'product_id' => $this->product_id,
             'status' => 1,
         ]);

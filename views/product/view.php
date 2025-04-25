@@ -53,7 +53,7 @@ $countReviews = $model->countReviews;
                                 ?>
                             </div>
                         <?php endif; ?>
-                        <div class="main-img col-12 col-sm-8 col-md-9 col-xl-10 order-1 order-md-2">
+                        <div class="main-img col-12 col-sm-8 col-md-9 col-xl-10 order-1 order-md-2 mb-3">
                             <?= Html::img(isset($model->productImages[0]->photo) ? Product::IMG_PATH . $model->productImages[0]->photo : Product::NO_PHOTO, ['alt' => "product image", 'id' => "current"]) ?>
                         </div>
                     </main>
@@ -80,7 +80,7 @@ $countReviews = $model->countReviews;
                             <div class="col-lg-6 col-md-4 col-12">
 
                                 <?php Pjax::begin([
-                                    'id' => 'product-buttons-pjax',
+                                    'id' => 'catalog-buttons-pjax',
                                     'enablePushState' => false,
                                     'timeout' => 5000,
                                     'enableReplaceState' => false,
@@ -94,13 +94,13 @@ $countReviews = $model->countReviews;
                                                 <?= Html::a(
                                                     '-',
                                                     ['/cart/dec-item', 'item_id' => $model->cartItems[0]->id],
-                                                    ['class' => 'btn btn-outline-warning btn-cart-item-dec text-dark px-3']
+                                                    ['class' => 'btn btn-outline-secondary btn-cart-item-dec px-3']
                                                 ) ?>
                                                 <?= $model->cartItems[0]->product_amount ?>
                                                 <?= Html::a(
                                                     '+',
                                                     ['/cart/inc-item', 'item_id' => $model->cartItems[0]->id],
-                                                    ['class' => 'btn btn-outline-warning btn-cart-item-inc text-dark px-3']
+                                                    ['class' => 'btn btn-outline-secondary btn-cart-item-inc px-3']
                                                 ) ?>
                                             </div>
                                         </div>
@@ -119,7 +119,7 @@ $countReviews = $model->countReviews;
                             </div>
                             <div class="col-lg-3 col-md-4 col-12">
                                 <div class="wish-button">
-                                    <button class="btn"><i class="bi bi-plus-slash-minus"></i>В сравнение</button>
+                                    <button class="btn"><i class="bi bi-bar-chart-line"></i>В сравнение</button>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-4 col-12">

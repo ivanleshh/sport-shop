@@ -29,6 +29,10 @@ input:checked {
     width: 100%;
 }
 
+#myTab .nav-item .nav-link:not(.active) {
+    color: gray;
+}
+
 .file-input .fileinput-remove {
     padding: 0.5rem;
     border: none;
@@ -64,8 +68,8 @@ input:checked {
     height: 55px;
 }
 
-.swiper-button-next,
-.swiper-button-prev {
+.category-view-slider .swiper-button-next,
+.category-view-slider .swiper-button-prev {
     display: none;
 }
 
@@ -190,10 +194,6 @@ input:checked {
     transform: translate(5px, -5px);
 }
 
-.card:hover .card-img img {
-    transform: scale(1.05);
-}
-
 .card .card-img img {
     transition: .5s;
 }
@@ -204,10 +204,6 @@ input:checked {
 
 .card .btn-favourite:hover i {
     color: red !important;
-}
-
-.card-different:hover {
-    color: rgb(255, 179, 36) !important;
 }
 
 .nav-hotline-ic {

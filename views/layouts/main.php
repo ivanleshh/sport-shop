@@ -118,13 +118,13 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <!-- Start Main Menu Search -->
                         <div class="main-menu-search">
                             <?= SearchInput::widget([
-                                    'search_id' => 'search',
-                                    'placeholder' => 'Поиск...',
-                                    'wrapperClass' => 'navbar-search search-style-5',
-                                    'buttonContent' => '<i class="bi bi-search text-light"></i>',
-                                    'buttonClass' => 'btn btn-orange',
-                                    'inputClass' => 'px-3 py-2',
-                                ]); ?>
+                                'search_id' => 'search',
+                                'placeholder' => 'Поиск...',
+                                'wrapperClass' => 'navbar-search search-style-5',
+                                'buttonContent' => '<i class="bi bi-search text-light"></i>',
+                                'buttonClass' => 'btn btn-orange',
+                                'inputClass' => 'px-3 py-2',
+                            ]); ?>
                         </div>
                         <!-- End Main Menu Search -->
                     </div>
@@ -136,31 +136,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     <span>(+100) 123 456 7890</span>
                                 </h3>
                             </div>
-                            <?php if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) : ?>
-                                <div class="nav-actions d-flex text-white align-items-center gap-3">
-                                    <div><?= Html::a('<i class="bi bi-bag-heart-fill"></i>', ['/personal/favourite-products'], ['class' => 'text-decoration-none']) ?></div>
-                                    <div class="position-relative">
-                                        <?= Html::a(
-                                            '<i class="bi bi-cart4"></i>',
-                                            ['/cart/index'],
-                                            ['id' => 'btn-cart']
-                                        ) ?>
-
-                                        <span class="cart-item-count">
-                                            <? Pjax::begin([
-                                                'id' => 'cart-item-count',
-                                                'enablePushState' => false,
-                                                'timeout' => 5000,
-                                                'options' => [
-                                                    'data-url' => '/cart/item-count',
-                                                ]
-                                            ]) ?>
-                                            <?= Cart::getItemCount() ?>
-                                            <? Pjax::end() ?>
-                                        </span>
-                                    </div>
-                                </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -248,20 +223,38 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 </div>
                 <div class="col-lg-4 col-md-6 col-12">
                     <!-- Start Nav Social -->
-                    <div class="nav-social">
-                        <h5 class="title">Мы в соц. сетях:</h5>
-                        <ul>
-                            <li>
-                                <a href="#"><i class="bi bi-github w-100"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="bi bi-telegram"></i></a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="lni lni-vk"></i></a>
-                            </li>
-                        </ul>
-                    </div>
+                    <?php if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) : ?>
+                        <div class="nav-social">
+                            <ul>
+                                <li>
+                                    <?= Html::a('<i class="bi bi-bar-chart-line"></i>', ['/personal/compare-products'], ['class' => 'text-decoration-none']) ?>
+                                </li>
+                                <li>
+                                    <?= Html::a('<i class="bi bi-bag-heart-fill"></i>', ['/personal/favourite-products'], ['class' => 'text-decoration-none']) ?>
+                                </li>
+                                <li class="position-relative">
+                                    <?= Html::a(
+                                        '<i class="bi bi-cart4"></i>',
+                                        ['/cart/index'],
+                                        ['id' => 'btn-cart']
+                                    ) ?>
+
+                                    <span class="cart-item-count">
+                                        <? Pjax::begin([
+                                            'id' => 'cart-item-count',
+                                            'enablePushState' => false,
+                                            'timeout' => 5000,
+                                            'options' => [
+                                                'data-url' => '/cart/item-count',
+                                            ]
+                                        ]) ?>
+                                        <?= Cart::getItemCount() ?>
+                                        <? Pjax::end() ?>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
                     <!-- End Nav Social -->
                 </div>
             </div>
@@ -489,14 +482,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="d-flex justify-content-end gap-3 my-2 d-none cart-panel-top">
             <div class="d-flex justify-content-end gap-3">
                 <?= Html::a(
-                    "Очистить",
+                    '<i class="bi bi-trash3"></i>',
                     ["/cart/clear"],
                     ["class" => "btn btn-danger btn-cart-clear"]
                 ) ?>
                 <?= Html::a(
-                    "Оформить заказ",
+                    "Перейти к оформлению",
                     ["/personal/orders/create"],
-                    ["class" => "btn btn-dark"]
+                    ["class" => "btn btn-orange"]
                 ) ?>
             </div>
         </div>
@@ -504,14 +497,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="d-flex justify-content-between gap-3 mt-2">
             <div class="d-flex justify-content-end">
                 <?= Html::a(
-                    "Очистить",
+                    '<i class="bi bi-trash3"></i>',
                     ["/cart/clear"],
                     ["class" => "btn btn-danger btn-cart-clear d-none btn-cart-manager"]
                 ) ?>
                 <?= Html::a(
-                    "Оформить заказ",
+                    "Перейти к оформлению",
                     ["/personal/orders/create"],
-                    ["class" => "btn btn-dark d-none btn-cart-manager"]
+                    ["class" => "btn btn-orange d-none btn-cart-manager"]
                 ) ?>
             </div>
         </div>

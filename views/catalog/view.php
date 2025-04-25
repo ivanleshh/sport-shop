@@ -29,57 +29,51 @@ $this->params['breadcrumbs'][] = $model->title;
 ?>
 <div class="category-view hero-content">
 
-    <!-- <?php if (!empty($model->children)): ?>
-        <div class="d-flex flex-wrap gap-3 mb-3">
-            <?php foreach ($model->children as $child): ?>
-                <?= $this->render('category', ['model' => $child, 'noChild' => true]) ?>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?> -->
+    <div class="category-view-slider">
+        <?php if (!empty($model->children)): ?>
+            <?= \coderius\swiperslider\SwiperSlider::widget([
+                'showScrollbar' => false,
+                'showPagination' => false,
+                'slides' => array_map(fn($child) => $this->render('category', ['model' => $child, 'noChild' => true]), $model->children),
+                'clientOptions' => [
+                    'navigation' => false,
+                    'autoplay' => [
+                        'delay' => 3000,
+                        'disableOnInteraction' => false,
+                    ],
+                    'breakpoints' => [
+                        0 => [
+                            'slidesPerView' => 1.5,
+                        ],
+                        576 => [
+                            'slidesPerView' => 2.5,
+                        ],
+                        768 => [
+                            'slidesPerView' => 3.5,
+                        ],
+                        992 => [
+                            'slidesPerView' => 4.5,
+                        ],
+                        1200 => [
+                            'slidesPerView' => 5.5,
+                        ],
+                        1400 => [
+                            'slidesPerView' => 6.5,
+                        ],
+                    ],
+                    'slidesPerView' => 6,
+                    'spaceBetween' => 10,
+                ],
+                'options' => [
+                    'styles' => [
+                        \coderius\swiperslider\SwiperSlider::CONTAINER => ["height" => "60px"],
+                    ],
+                ],
 
-    <?php if (!empty($model->children)): ?>
-        <?= \coderius\swiperslider\SwiperSlider::widget([
-            'showScrollbar' => false,
-            'showPagination' => false,
-            'slides' => array_map(fn($child) => $this->render('category', ['model' => $child, 'noChild' => true]), $model->children),
-            'clientOptions' => [
-                'navigation' => false,
-                'autoplay' => [
-                    'delay' => 3000,
-                    'disableOnInteraction' => false,
-                ],
-                'breakpoints' => [
-                    0 => [
-                        'slidesPerView' => 1.5,
-                    ],
-                    576 => [
-                        'slidesPerView' => 2.5,
-                    ],
-                    768 => [
-                        'slidesPerView' => 3.5,
-                    ],
-                    992 => [
-                        'slidesPerView' => 4.5,
-                    ],
-                    1200 => [
-                        'slidesPerView' => 5.5,
-                    ],
-                    1400 => [
-                        'slidesPerView' => 6.5,
-                    ],
-                ],
-                'slidesPerView' => 6,
-                'spaceBetween' => 10,
-                // 'centeredSlides' => true,
-            ],
-            'options' => [
-                'styles' => [
-                    \coderius\swiperslider\SwiperSlider::CONTAINER => ["height" => "60px"],
-                ],
-            ],
+            ]); ?>
+        <?php endif; ?>
+    </div>
 
-        ]); ?>
-    <?php endif; ?>
 
     <?php Pjax::begin([
         'id' => 'catalog-pjax',

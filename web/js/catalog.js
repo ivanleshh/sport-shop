@@ -11,14 +11,32 @@ const cartItemCount = () => $.pjax.reload('#cart-item-count', {
   timeout: 5000,
 })
 
-const catalog_reload = function () {
-  if ($('#catalog-pjax').length > 0) {
-    $.pjax.reload('#catalog-pjax')
+const pjax_array = [
+  'catalog-pjax',
+  'favourite-pjax',
+  'catalog-buttons-pjax',
+  'compare-pjax',
+]
+
+const pjax_reload = function (name = false) {
+  if (name) {
+    let title = `#${name}`
+    if ($(title).length > 0) {
+      $.pjax.reload(title)
+    }
+  } else {
+    for (let i = 0; i < pjax_array.length; i++) {
+      let title = `#${pjax_array[i]}`
+      if ($(title).length > 0) {
+        $.pjax.reload(title)
+        break
+      }
+    }
   }
 }
 
 $(() => {
-  $("#catalog-pjax, #favourite-pjax, #product-buttons-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
+  $("#catalog-pjax, #favourite-pjax, #catalog-buttons-pjax, #compare-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
     e.preventDefault();
     const a = $(this);
     $.ajax({
@@ -27,22 +45,7 @@ $(() => {
       success(data) {
         if (data) {
           if (data.status) {
-            if ($('#catalog-pjax').length > 0) {
-              $.pjax.reload("#catalog-pjax", {
-                push: false,
-                timeout: 5000
-              })
-            } else if ($('#favourite-pjax').length > 0) {
-              $.pjax.reload("#favourite-pjax", {
-                push: false,
-                timeout: 5000
-              })
-            } else if ($('#product-buttons-pjax').length > 0) {
-              $.pjax.reload("#product-buttons-pjax", {
-                push: false,
-                timeout: 5000
-              })
-            } 
+            pjax_reload()
           } else {
             error_modal(data.message)
           }
@@ -51,7 +54,7 @@ $(() => {
     });
   });
 
-  $("#catalog-pjax, #favourite-pjax").on('pjax:end', function () {
+  $("#catalog-pjax, #favourite-pjax, #compare-pjax").on('pjax:end', function () {
     let alert = $('.alert')
     if (alert.length > 0) {
       setTimeout(() => {
@@ -63,7 +66,7 @@ $(() => {
     }
   })
 
-  $("#catalog-pjax").on("click", ".btn-favourite", function (e) {
+  $("#catalog-pjax").on("click", ".btn-favourite, .btn-compare", function (e) {
     e.preventDefault();
     const a = $(this);
     $.ajax({
@@ -72,9 +75,8 @@ $(() => {
       data: {
         id: a.data("id")
       },
-      success(data) {
-        a.html(data == '1' ? "<i class='bi bi-suit-heart-fill text-danger'></i>" : "<i class='bi bi-suit-heart-fill text-light'></i>");
-        catalog_reload()
+      success() {
+        pjax_reload('catalog-pjax')
       },
     });
   });

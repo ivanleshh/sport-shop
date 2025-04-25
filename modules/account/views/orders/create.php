@@ -22,7 +22,7 @@ $this->params['breadcrumbs'] = [
 
     <div class="create-order hero-content m-0 row">
         <div class="create-order-cart col-12 col-lg-7 order-2 order-lg-1">
-            <div class="row my-4 mt-lg-0 align-items-center">
+            <div class="row mt-lg-0 align-items-center">
                 <h3 class="col-9 col-sm-6">Состав заказа</h3>
                 <div class="col-3 col-sm-6 text-end">
                     <?= Html::a(
@@ -47,7 +47,9 @@ $this->params['breadcrumbs'] = [
                 'pager' => [
                     'class' => LinkPager::class
                 ],
-                'layout' => "<div class='d-flex flex-column gap-3 my-2'>{items}</div>\n<div class='d-flex justify-content-end'>{pager}</div>"
+                'layout' => "<div class='d-flex justify-content-center'>{pager}</div>
+                <div class='d-flex flex-column gap-3 my-2'>{items}</div>
+                <div class='d-flex justify-content-center'>{pager}</div>"
             ]) ?>
             <div class="d-flex justify-content-between flex-wrap border-top border-bottom py-2 my-2 text-dark gap-3">
                 <a class="text-decoration-none mt-2 text-danger" href="/"><- Вернуться к покупкам</a>
