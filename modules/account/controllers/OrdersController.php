@@ -65,20 +65,18 @@ class OrdersController extends Controller
      */
     public function actionCreate()
     {
-        $dataProvider = null;
-        $cart = null;
-        $model = new Orders(['scenario' => Orders::SCENARIO_PICKUP]);
-
-        if ($cart = Cart::findOne(['user_id' => Yii::$app->user->id])) {
-            $dataProvider = new ActiveDataProvider([
-                'query' => CartItem::find(['cart_id' => $cart->id])->with('product'),
-                'pagination' => [
-                    'pageSize' => 3
-                ],
-            ]);
-        } else {
+        if (!($cart = Cart::findOne(['user_id' => Yii::$app->user->id])) || $cart->product_amount == 0) {
             return $this->redirect('/');
         }
+
+        $model = new Orders(['scenario' => Orders::SCENARIO_PICKUP]);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => CartItem::find(['cart_id' => $cart->id])->with('product'),
+            'pagination' => [
+                'pageSize' => 3
+            ],
+        ]);
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->check) {

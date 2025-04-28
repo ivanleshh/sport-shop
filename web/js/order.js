@@ -1,5 +1,5 @@
 $(() => {
-    $('#order-pjax').on('click', 
+    $('.create-order').on('click', 
         '.btn-cart-item-dec, .btn-cart-item-inc, .btn-cart-item-remove, .btn-cart-clear',
         function(e) {
             e.preventDefault();

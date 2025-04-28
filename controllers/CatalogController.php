@@ -160,7 +160,7 @@ class CatalogController extends Controller
                 ' добавлен в <a href="/personal/compare-products" class="text-decoration-none">Сравнение</a>');
             } else {
                 Yii::$app->session->setFlash('warning', $model->product->title . 
-                ' удалён из <a href="/personal/favourite-products" class="text-decoration-none">Сравнения</a>');
+                ' удалён из <a href="/personal/compare-products" class="text-decoration-none">Сравнения</a>');
             }
             $model->save();
             return $model->status;

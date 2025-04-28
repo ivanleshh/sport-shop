@@ -30,7 +30,7 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
             <?php if (isset($model->photo)) : ?>
                 <div class="d-flex flex-column align-items-center">
                     <p>Загруженное фото</p>
-                    <div class="text-center"><?= Html::img("/" . Category::IMG_PATH . $model->photo, ['class' => 'w-75']); ?></div>
+                    <div class="text-center"><?= Html::img("/" . Category::IMG_PATH . $model->photo, ['class' => 'w-50']); ?></div>
                 </div>
             <?php endif; ?>
             <?= $form->field($model, 'imageFile')->fileInput() ?>

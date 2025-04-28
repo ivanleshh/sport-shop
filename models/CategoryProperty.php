@@ -34,19 +34,6 @@ class CategoryProperty extends \yii\db\ActiveRecord
             [['category_id'], 'integer'],
             [['property_title'], 'string', 'max' => 255],
             [
-                ['property_id'],
-                'unique',
-                'targetClass' => CategoryProperty::class,
-                'targetAttribute' => 'property_id',
-                'filter' => function ($query) {
-                    if ($this->id) {
-                        $query->andWhere(['!=', 'id', $this->id]);
-                    }
-                    $query->andWhere(['category_id' => $this->category_id]);
-                },
-                'message' => 'Эта характеристика уже выбрана для данной категории.'
-            ],
-            [
                 ['property_title'],
                 'unique',
                 'targetClass' => Property::class,

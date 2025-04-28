@@ -41,6 +41,11 @@ input:checked {
     border-radius: 0.5rem;
 }
 
+.compare-wrapper th.col-3,
+.compare-wrapper td.col-3 {
+    width: 30%;
+}
+
 .file-input .file-preview .fileinput-remove {
     display: none;
 }
@@ -164,7 +169,6 @@ input:checked {
         padding: 0.75rem;
     }
 }
-
 
 .file-input .file-caption .file-caption-name,
 .file-input .file-caption .file-caption-icon {

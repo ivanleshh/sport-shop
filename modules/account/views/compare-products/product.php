@@ -4,13 +4,17 @@ use app\models\Product;
 use coderius\swiperslider\SwiperSlider;
 use yii\bootstrap5\Html;
 ?>
-<div class="card rounded-3" style="width: 18rem; height: 29rem;">
+
+<div class="card rounded-3 h-100" style="width: 18rem;">
 
   <div class="d-flex rounded-top align-items-center justify-content-end w-100 rounded-top-2 px-3 pt-2 gap-3">
     <?= Html::a(
       "<i class='bi bi-suit-heart-fill fs-6 " . (empty($model->product->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
       ['/catalog/favourite'],
-      ['data-id' => $model->product->id, 'class' => 'btn-favourite text-decoration-none align-self-end']
+      ['data' => [
+        'id' => $model->product->id,
+        'category' => $model->product->category->id
+      ], 'class' => 'btn-favourite text-decoration-none align-self-end']
     ) ?>
     <?= Html::a(
       '<i class="bi bi-trash3-fill text-danger fs-6"></i>',
@@ -19,54 +23,20 @@ use yii\bootstrap5\Html;
     ) ?>
   </div>
 
-  <div class="card-body d-flex justify-content-between flex-column">
-
-    <?php if (count($model->product->productImages) > 1) : ?>
-      <?= SwiperSlider::widget([
-        'showPagination' => false,
-        'slides' => array_map(
-          fn($image) =>
-          '<div class="card-img d-flex justify-content-center align-items-center h-100">' .
-            Html::a(
-              Html::img(
-                isset($image->photo) ? Product::IMG_PATH . $image->photo : Product::NO_PHOTO,
-                ['class' => 'card-img-product']
-              ),
-              ['/product/view', 'id' => $model->product->id],
-              ['class' => 'd-flex flex-column align-items-center']
-            ) . '</div>',
-          $model->product->productImages
-        ),
-        'clientOptions' => [
-          'pagination' => [
-            'clickable' => true,
-          ],
-        ],
-        'options' => [
-          'styles' => [
-            \coderius\swiperslider\SwiperSlider::CONTAINER => ["width" => "100%"],
-            \coderius\swiperslider\SwiperSlider::BUTTON_NEXT => ["color" => "lightgray", 'right' => 0],
-            \coderius\swiperslider\SwiperSlider::BUTTON_PREV => ["color" => "lightgray", 'left' => 0],
-          ],
-        ],
-      ]); ?>
-    <?php else : ?>
-      <div class="card-img d-flex justify-content-center align-items-center h-100">
-        <?= Html::a(
-          Html::img(isset($model->product->productImages[0]->photo) ? Product::IMG_PATH . $model->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'card-img-product']),
-          ['/product/view', 'id' => $model->product->id],
-          ['class' => 'd-flex flex-column align-items-center']
-        ) ?>
-      </div>
-    <?php endif; ?>
+  <div class="card-body d-flex justify-content-between flex-column gap-3">
+    <div class="card-img d-flex justify-content-center align-items-center h-100">
+      <?= Html::a(
+        Html::img(isset($model->product->productImages[0]->photo) ? Product::IMG_PATH . $model->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'card-img-product']),
+        ['/product/view', 'id' => $model->product->id],
+        ['class' => 'd-flex flex-column align-items-center']
+      ) ?>
+    </div>
 
     <div class="d-flex flex-column gap-2 border-top">
-      <div class="d-flex justify-content-between align-items-center mt-3">
+      <div class="d-flex justify-content-between align-items-center mt-3 gap-3">
         <span class="fs-6 text-dark"><?= $model->product->title ?></span>
-        <span class="text-secondary"><?= $model->product->category->title ?></span>
+        <span class="card-text text-dark text-nowrap fw-bold fs-6"><?= $model->product->price ?> ₽</span>
       </div>
-
-      <span class="card-text text-dark fw-bold fs-6"><?= $model->product->price ?> ₽</span>
 
       <?php if (isset($model->product->cartItems[0])) : ?>
         <div class="d-flex align-items-center gap-3">
@@ -77,7 +47,7 @@ use yii\bootstrap5\Html;
             <?= Html::a(
               '-',
               ['/cart/dec-item', 'item_id' => $model->product->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-dec']
+              ['class' => 'btn btn-outline-secondary btn-cart-item-dec', 'data-category' => $model->product->category->id]
             ) ?>
           </div>
           <div>
@@ -87,7 +57,7 @@ use yii\bootstrap5\Html;
             <?= Html::a(
               '+',
               ['/cart/inc-item', 'item_id' => $model->product->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-inc']
+              ['class' => 'btn btn-outline-secondary btn-cart-item-inc', 'data-category' => $model->product->category->id]
             ) ?>
           </div>
         </div>
@@ -96,7 +66,7 @@ use yii\bootstrap5\Html;
           ? Html::a(
             'В корзину',
             ['/cart/add', 'product_id' => $model->product->id],
-            ['class' => 'btn-cart-add btn btn-warning w-100']
+            ['class' => 'btn-cart-add btn btn-warning w-100', 'data-category' => $model->product->category->id]
           ) : ""
         ?>
       <?php endif; ?>

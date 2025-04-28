@@ -4,7 +4,7 @@ use app\models\Product;
 use coderius\swiperslider\SwiperSlider;
 use yii\bootstrap5\Html;
 ?>
-<div class="card rounded-3" style="width: 18rem; height: 29rem;">
+<div class="card rounded-3 h-100" style="width: 18rem">
   <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
     <div class="d-flex rounded-top align-items-center justify-content-end w-100 rounded-top-2 px-3 pt-2 gap-3">
       <?= Html::a(
@@ -14,13 +14,13 @@ use yii\bootstrap5\Html;
       ) ?>
     </div>
   <?php endif; ?>
-  <div class="card-body d-flex justify-content-between flex-column">
+  <div class="card-body d-flex gap-3 justify-content-between flex-column">
     <?php if (count($model->productImages) > 1) : ?>
       <?= SwiperSlider::widget([
         'showPagination' => false,
         'slides' => array_map(
           fn($image) =>
-          '<div class="card-img d-flex justify-content-center align-items-center h-100">' .
+          '<div class="card-img d-flex justify-content-center align-items-center">' .
             Html::a(
               Html::img(
                 isset($image->photo) ? Product::IMG_PATH . $image->photo : Product::NO_PHOTO,
@@ -57,20 +57,23 @@ use yii\bootstrap5\Html;
     <div class="d-flex flex-column gap-2 border-top">
       <div class="d-flex justify-content-between align-items-center mt-3">
         <span class="text-secondary"><?= $model->category->title ?></span>
-        <div>
-          <?php
+
+        <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) {
           $isCompare = !empty($model->compareProducts[0]->status);
-          echo Html::a($isCompare ? "в сравнении" : "сравнить",
+          echo "<div>" . Html::a(
+            $isCompare ? "в сравнении" : "сравнить",
             ['compare'],
             ['data-id' => $model->id, 'class' => "btn-compare btn btn-sm " . ($isCompare ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
-          ) ?>
-        </div>
+          ) . "</div>";
+        }
+        ?>
+
       </div>
       <span class="fs-6 text-dark"><?= $model->title ?></span>
 
       <span class="card-text text-dark fw-bold fs-6"><?= $model->price ?> ₽</span>
 
-      <?php if (isset($model->cartItems[0])) : ?>
+      <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin && isset($model->cartItems[0])) : ?>
         <div class="d-flex align-items-center gap-3">
           <div class="w-100">
             <?= Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange w-100']) ?>

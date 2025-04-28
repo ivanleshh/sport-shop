@@ -7,14 +7,14 @@ use yii\bootstrap5\Html;
     <div class="card-body">
         <div class="row justify-content-between align-items-center gy-3">
             <div class="col-5 col-md-7 d-flex flex-column align-items-center flex-sm-row gap-3">
-                <div class="col-12 col-sm-8 col-md-4 col-xl-3">
+                <div class="col-12 col-sm-8 col-md-3">
                     <?= Html::a(
                         Html::img(isset($model->product->productImages[0]->photo) ? Product::IMG_PATH . $model->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'img-cart_product w-100']),
                         ['/product/view', 'id' => $model->product->id],
                         ['data-pjax' => 0],
                     ) ?>
                 </div>
-                <div class="col-12 col-md-6 d-none d-md-block text-center">
+                <div class="col-12 col-md-9 d-none d-md-block text-center">
                     <h6 class="card-title">
                         <?= Html::a(
                             $model->product->title,
@@ -55,7 +55,7 @@ use yii\bootstrap5\Html;
                 ) ?>
             </div>
 
-            <div class="col-12 d-flex gap-3 d-md-none">
+            <div class="col-12 gap-3 d-flex justify-content-between d-md-none">
                 <h6 class="card-title">
                     <?= Html::a(
                         $model->product->title,
@@ -63,7 +63,7 @@ use yii\bootstrap5\Html;
                         ['data-pjax' => 0, 'class' => 'text-dark link-danger']
                     ) ?>
                 </h6>
-                <div>
+                <div class="text-nowrap">
                     <?= $model->product->price ?> ₽
                 </div>
             </div>

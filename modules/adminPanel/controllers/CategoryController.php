@@ -79,20 +79,6 @@ class CategoryController extends Controller
         $model = new Category();
         $categoryProperties = [new CategoryProperty()];
 
-        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            $categoryProp = [];
-            foreach ($this->request->post('CategoryProperty') as $index => $data) {
-                $prop = new CategoryProperty();
-                $prop->load($data, '');
-                $categoryProp[] = $prop;
-            }
-            if (!Model::validateMultiple($categoryProp)) {
-                return \yii\widgets\ActiveForm::validateMultiple($categoryProp);
-            }
-            return \yii\widgets\ActiveForm::validate($model);
-        }
-
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if (is_null($model->imageFile) || $model->upload()) {

@@ -45,8 +45,6 @@ class CompareProductsSearch extends CompareProducts
             'product' => fn($q) => $q->joinWith('category'),
         ]);
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -54,12 +52,9 @@ class CompareProductsSearch extends CompareProducts
         $this->load($params, $formName);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'user_id' => $this->user_id,

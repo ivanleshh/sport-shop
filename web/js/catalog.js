@@ -35,10 +35,13 @@ const pjax_reload = function (name = false) {
   }
 }
 
+let ategory_id = undefined
+
 $(() => {
   $("#catalog-pjax, #favourite-pjax, #catalog-buttons-pjax, #compare-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
     e.preventDefault();
     const a = $(this);
+    category_id = a.data('category')
     $.ajax({
       url: a.attr("href"),
       method: 'POST',

@@ -75,9 +75,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
                                     <li class="d-none d-sm-inline-block"><a href="/personal">Личный кабинет</a></li>
                                 <?php endif; ?>
-                                <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
-                                    <li class="d-none d-sm-inline-block"><a href="/admin-panel/orders">Панель администратора</a></li>
-                                <?php endif; ?>
                                 <?php if (Yii::$app->user->isGuest) : ?>
                                     <li><a href="/site/login">Вход</a></li>
                                     <li><a href="/site/register">Регистрация</a></li>
@@ -175,6 +172,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             </button>
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
+                                    <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
+                                        <li class="nav-item">
+                                            <a href="/admin-panel">Панель администратора</a>
+                                        </li>
+                                    <?php endif; ?>
                                     <li class="nav-item">
                                         <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
                                             data-bs-target="#submenu-1-2" aria-controls="navbarSupportedContent"
@@ -211,9 +213,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                             <li class="nav-item"><a href="blog-single-sidebar.html">Blog Single
                                                     Sibebar</a></li>
                                         </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="contact.html" aria-label="Toggle navigation">Contact Us</a>
                                     </li>
                                 </ul>
                             </div> <!-- navbar collapse -->
@@ -533,6 +532,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
     <?php $this->endBody() ?>
 </body>
+
+<?= Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin ? $this->registerJsFile("/front/js/bootstrap.min.js") : '' ?>
 
 </html>
 <?php $this->endPage() ?>
