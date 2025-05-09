@@ -87,7 +87,8 @@ class UserController extends Controller
                 $model->password = $password_old;
             }
             if ($model->save(false)) {
-                Yii::$app->session->setFlash('change-personal', 'Ваши персональные данные были изменены');
+                Yii::$app->session->set('bg_color', 'bg-success');
+                Yii::$app->session->set('text', 'Вы успешно изменили персональные данные');
                 return $this->render('_form', [
                     'model' => $model,
                 ]);

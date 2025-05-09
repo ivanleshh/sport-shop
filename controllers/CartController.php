@@ -107,7 +107,10 @@ class CartController extends Controller
                         $cart->total_amount += $product->price;
                         $cart->save();
 
-                        Yii::$app->session->setFlash('success', $product->title . ' добавлен в корзину');
+                        Yii::$app->session->set('bg_color', 'bg-success');
+                        Yii::$app->session->set('text', $product->title .
+                            ' добавлен в Корзину');
+
                         return $this->asJson([
                             'status' => true,
                         ]);
@@ -129,7 +132,9 @@ class CartController extends Controller
                 $product = Product::findOne($cart_item->product_id);
                 if ($cart_item->product_amount < $product->count) {
                     if ($cart_item->product_amount == 0) {
-                        Yii::$app->session->setFlash('success', $product->title . ' добавлен в корзину');
+                        Yii::$app->session->set('bg_color', 'bg-success');
+                        Yii::$app->session->set('text', $product->title .
+                            ' добавлен в Корзину');
                     }
                     $cart_item->product_amount++;
                     $cart_item->total_amount = $cart_item->product_amount * $product->price;
@@ -142,9 +147,9 @@ class CartController extends Controller
 
                     if ($cart)
 
-                    return $this->asJson([
-                        'status' => true,
-                    ]);
+                        return $this->asJson([
+                            'status' => true,
+                        ]);
                 }
                 return $this->asJson([
                     'status' => false,
@@ -191,7 +196,9 @@ class CartController extends Controller
                 $cart->save();
 
                 $cart_item->delete();
-                Yii::$app->session->setFlash('warning', $cart_item->product->title . ' удалён из корзины');
+                Yii::$app->session->set('bg_color', 'bg-danger');
+                Yii::$app->session->set('text', $cart_item->product->title .
+                    ' удалён из Корзины');
                 return $this->asJson([
                     'status' => true,
                 ]);
@@ -205,7 +212,8 @@ class CartController extends Controller
         if ($this->request->isPost && $this->request->isAjax) {
             if ($cart = Cart::findOne(['user_id' => Yii::$app->user->id])) {
                 $cart->delete();
-                Yii::$app->session->setFlash('warning', 'Корзина очищена');
+                Yii::$app->session->set('bg_color', 'bg-warning');
+                Yii::$app->session->set('text', 'Корзина очищена');
                 return $this->asJson([
                     'status' => true,
                 ]);

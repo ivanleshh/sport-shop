@@ -76,7 +76,9 @@ class CompareProductsController extends Controller
             if ($model = $this->findModel($id)) {
                 $model->status = (int)(! $model->status);
                 if ($model->status == 0) {
-                    Yii::$app->session->setFlash('warning', $model->product->title . ' удалён из Сравнения');
+                    Yii::$app->session->set('bg_color', 'bg-danger');
+                    Yii::$app->session->set('text', $model->product->title .
+                        ' удалён из Сравнения');
                 }
                 $model->save();
                 return true;

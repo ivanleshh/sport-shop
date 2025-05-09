@@ -61,74 +61,99 @@ $countReviews = $model->countReviews;
             </div>
             <div class="col-lg-7 col-md-12 col-12">
                 <div class="product-info">
-                    <div class="d-flex justify-content-between align-items-center flex-wrap mb-sm-0">
-                        <h2 class="title"><?= $model->title ?></h2>
-                        <div class="product-info-brand mt-3 mt-sm-0">
+                    <h3 class="title fs-5"><?= $model->title ?></h3>
+                    <div class="d-flex justify-content-between align-items-center flex-wrap border-bottom pb-3 gap-3">
+                        <div>
+                            <div class="d-flex align-items-center gap-2 mt-2">
+                                <i class="bi bi-star-fill text-warning fs-6"></i>
+                                <span class="fw-bold"><?= $mediumStars ?> </span>
+                                <span class="fs-5">|</span>
+                                <div>Отзывов: <?= $countReviews ?></div>
+                            </div>
+                            <h3 class="price mt-2"><?= $model->price ?> ₽<span class="fs-6"><?= round($model->price * 1.1) ?> ₽</span></h3>
+                            <p class="info-text">Осталось <?= $model->count ?> шт.</p>
+                        </div>
+                        <div class="product-info-brand">
                             <?= Html::img(Brand::IMG_PATH . $model->brand->photo, ['alt' => 'brand']) ?>
                         </div>
                     </div>
-                    <div class="d-flex align-items-center gap-2 mt-2">
-                        <i class="bi bi-star-fill text-warning border-2 fs-6"></i>
-                        <span class="fw-bold"><?= $mediumStars ?> </span>
-                        <span class="fs-5">|</span>
-                        <div>Отзывов: <?= $countReviews ?></div>
-                    </div>
-                    <h3 class="price mt-3"><?= $model->price ?> ₽<span class="fs-6"><?= round($model->price * 1.1) ?> ₽</span></h3>
-                    <p class="info-text">Осталось <?= $model->count ?> шт.</p>
-                    <div class="bottom-content">
-                        <div class="row align-items-end">
-                            <div class="col-lg-6 col-md-4 col-12">
 
-                                <?php Pjax::begin([
-                                    'id' => 'catalog-buttons-pjax',
-                                    'enablePushState' => false,
-                                    'timeout' => 5000,
-                                    'enableReplaceState' => false,
-                                ]); ?>
+                    <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
 
-                                <div class="cart-button">
-                                    <?php if (isset($model->cartItems[0])) : ?>
-                                        <div class="d-flex align-items-center justify-content-center gap-4">
-                                            <?= Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange']) ?>
-                                            <div class="d-flex gap-3 align-items-center text-dark">
-                                                <?= Html::a(
+                        <div class="toast-container position-fixed top-0 end-0 px-4"></div>
+
+                        <div class="bottom-content">
+
+                            <?php Pjax::begin([
+                                'id' => 'catalog-buttons-pjax',
+                                'enablePushState' => false,
+                                'timeout' => 5000,
+                                'enableReplaceState' => false,
+                            ]); ?>
+
+                            <div class="toast-data position-fixed top-0 end-0 p-4"
+                                data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
+
+                            <?php if (Yii::$app->session->get('bg_color') !== null) {
+                                Yii::$app->session->remove('bg_color');
+                                Yii::$app->session->remove('text');
+                            } ?>
+
+                            <div class="row align-items-end justify-content-end gy-3">
+                                <div class="col-12 col-sm-7 col-xxl-5">
+                                    <div class="cart-button">
+                                        <?php if (isset($model->cartItems[0])) {
+                                            echo '<div class="d-flex align-items-center justify-content-center gap-3">'
+                                                . Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange w-100']) .
+                                                '<div class="d-flex gap-3 align-items-center text-dark">'
+                                                . Html::a(
                                                     '-',
                                                     ['/cart/dec-item', 'item_id' => $model->cartItems[0]->id],
                                                     ['class' => 'btn btn-outline-secondary btn-cart-item-dec px-3']
-                                                ) ?>
-                                                <?= $model->cartItems[0]->product_amount ?>
-                                                <?= Html::a(
+                                                ) . $model->cartItems[0]->product_amount . Html::a(
                                                     '+',
                                                     ['/cart/inc-item', 'item_id' => $model->cartItems[0]->id],
                                                     ['class' => 'btn btn-outline-secondary btn-cart-item-inc px-3']
-                                                ) ?>
-                                            </div>
-                                        </div>
-                                    <?php else : ?>
-                                        <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
-                                            ? Html::a(
+                                                ) .
+                                                '</div>
+                                        </div>';
+                                        } else {
+                                            echo Html::a(
                                                 'В корзину',
                                                 ['/cart/add', 'product_id' => $model->id],
-                                                ['class' => 'btn-cart-add btn btn-warning w-100 mt-2']
-                                            ) : ""
-                                        ?>
-                                    <?php endif; ?>
+                                                ['class' => 'btn-cart-add btn btn-warning w-100']
+                                            );
+                                        } ?>
+                                    </div>
                                 </div>
+                                <div class="col-12 col-sm-5 col-xxl-4">
+                                    <?php
+                                    $isFavourite = !empty($model->favouriteProducts[0]->status);
+                                    echo Html::a(
+                                        '<i class="bi bi-suit-heart-fill me-2"></i>' .
+                                            ($isFavourite ? "в избранном" : "в избранное"),
+                                        ['/catalog/favourite'],
+                                        ['data-id' => $model->id, 'class' => "btn btn-compare w-100 " . ($isFavourite ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
+                                    );
+                                    ?>
+                                </div>
+                                <div class="col-12 col-sm-5 col-xxl-3">
+                                    <?php
+                                    $isCompare = !empty($model->compareProducts[0]->status);
+                                    echo Html::a(
+                                        '<i class="bi bi-bar-chart-line me-2"></i>' .
+                                            ($isCompare ? "в сравнении" : "сравнить"),
+                                        ['/catalog/compare'],
+                                        ['data-id' => $model->id, 'class' => "btn btn-compare w-100 " . ($isCompare ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
+                                    );
+                                    ?>
+                                </div>
+                            </div>
 
-                                <?php Pjax::end() ?>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-12">
-                                <div class="wish-button">
-                                    <button class="btn"><i class="bi bi-bar-chart-line"></i>В сравнение</button>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-4 col-12">
-                                <div class="wish-button">
-                                    <button class="btn"><i class="lni lni-heart"></i>В избранное</button>
-                                </div>
-                            </div>
+                            <?php Pjax::end() ?>
                         </div>
-                    </div>
+
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -196,29 +221,27 @@ $countReviews = $model->countReviews;
                     </div>
                     <h5 class="fs-6 fw-bold">Есть что рассказать?</h5>
                     <span>Оцените товар, ваш опыт будет полезен</span>
-                    <?php if (Yii::$app->user->isGuest) : ?>
-                        <div>
+                    <div class="mb-2">
+                        <?php if (Yii::$app->user->isGuest) : ?>
                             <?= Html::a("Войдите, чтобы оценить товар", ['/site/login'], ['class' => 'btn btn-orange px-4 py-2']) ?>
-                        </div>
-                    <?php elseif (!Yii::$app->user->identity->isAdmin) : ?>
-                        <div>
+                        <?php elseif (!Yii::$app->user->identity->isAdmin) : ?>
                             <?= Html::a("Оценить товар", ['/review/create', 'product_id' => $model->id], ['class' => 'btn btn-orange btn-add-review px-4 py-2']) ?>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
+
                 </div>
                 <div class="col-12 col-lg-8">
+
+                    <div class="toast-container-reviews position-fixed top-0 end-0 px-4"></div>
+
                     <?php Pjax::begin([
                         'id' => 'product-reviews-pjax',
                         'enablePushState' => false,
                         'timeout' => 5000,
                     ]); ?>
 
-                    <?php if (Yii::$app->session->hasFlash('review-add')) {
-                        Yii::$app->session->setFlash('success', Yii::$app->session->getFlash('review-add'));
-                        Yii::$app->session->removeFlash('review-add');
-                        echo Alert::widget();
-                    }
-                    ?>
+                    <div class="toast-data-reviews position-fixed top-0 end-0 p-4"
+                        data-bg-color="<?= Yii::$app->session->get('bg_color-review') ?>" data-text="<?= Yii::$app->session->get('text-review') ?>"></div>
 
                     <?= ListView::widget([
                         'dataProvider' => $dataProvider,
@@ -258,15 +281,17 @@ $countReviews = $model->countReviews;
 <!-- Review Modal -->
 
 <?php
-Modal::begin([
-    'id' => 'review-modal',
-    'title' => "Оценка товара",
-    'size' => 'model-md',
-]);
-echo $this->render('/review/_form-modal.php', ['model' => $model_review]);
-Modal::end();
+if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) {
+    Modal::begin([
+        'id' => 'review-modal',
+        'title' => "Оценка товара",
+        'size' => 'model-md',
+    ]);
+    echo $this->render('/review/_form-modal.php', ['model' => $model_review]);
+    Modal::end();
 
-$this->registerJsFile('/js/review.js', ['depends' => JqueryAsset::class])
+    $this->registerJsFile('/js/review.js', ['depends' => JqueryAsset::class]);
+}
 ?>
 
 <?= $this->registerJsFile('/js/images-change.js', ['depends' => JqueryAsset::class]) ?>

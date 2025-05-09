@@ -5,7 +5,7 @@
 $this->title = 'My Yii Application';
 ?>
 
-<div class="row mt-5">
+<div class="row mt-3">
     <div class="col-lg-8 col-12 custom-padding-right">
         <div class="slider-head">
             <!-- Start Hero Slider -->

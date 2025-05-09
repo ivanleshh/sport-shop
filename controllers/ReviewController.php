@@ -49,7 +49,12 @@ class ReviewController extends Controller
             $model->user_id = Yii::$app->user->id;
             $model->product_id = $product_id;
             if ($model->save()) {
-                Yii::$app->session->setFlash('review-add', 'Ваш комментарий успешно добавлен');
+                Yii::$app->session->set('bg_color-review', 'bg-success');
+                if (is_null($model->parent_id)) {
+                    Yii::$app->session->set('text-review', 'Благодарим за оценку товара!');
+                } else {
+                    Yii::$app->session->set('text-review', 'Ваш комментарий опубликован');
+                }
                 return $this->render('_form-modal', ['model' => $model]);
             }
         }

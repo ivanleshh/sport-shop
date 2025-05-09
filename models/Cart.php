@@ -81,4 +81,22 @@ class Cart extends \yii\db\ActiveRecord
         }
         return $count;
     }
+
+    // Метод для пересчета количества товаров корзины и её общей суммы
+    public function recalculate()
+    {
+        $items = CartItem::find()->where(['cart_id' => $this->id])->with('product')->all();
+
+        $productAmount = 0;
+        $totalAmount = 0;
+
+        foreach ($items as $item) {
+            $productAmount += $item->product_amount;
+            $totalAmount += $item->product_amount * $item->product->price;
+        }
+
+        $this->product_amount = $productAmount;
+        $this->total_amount = $totalAmount;
+        $this->save(false);
+    }
 }

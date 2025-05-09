@@ -62,7 +62,7 @@ use yii\bootstrap5\Html;
           $isCompare = !empty($model->compareProducts[0]->status);
           echo "<div>" . Html::a(
             $isCompare ? "в сравнении" : "сравнить",
-            ['compare'],
+            ['/catalog/compare'],
             ['data-id' => $model->id, 'class' => "btn-compare btn btn-sm " . ($isCompare ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
           ) . "</div>";
         }

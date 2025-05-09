@@ -20,6 +20,10 @@ input:checked {
     border: none;
 }
 
+.toast-container-reviews {
+    z-index: 100;
+}
+
 .product-info-brand img {
     max-width: 125px;
     max-height: 75px;

@@ -4,9 +4,9 @@ use app\models\Product;
 use coderius\swiperslider\SwiperSlider;
 use yii\bootstrap5\Html;
 ?>
-<div class="card rounded-3" style="width: 18rem; height: 29rem;">
+<div class="card rounded-3 position-relative h-100" style="width: 18rem;">
 
-  <div class="d-flex rounded-top align-items-center justify-content-end w-100 rounded-top-2 px-3 pt-2 gap-3">
+  <div class="position-absolute text-end w-100 px-2 py-1">
 
     <?= Html::a(
       '<i class="bi bi-trash3-fill text-danger fs-6"></i>',
@@ -15,7 +15,7 @@ use yii\bootstrap5\Html;
     ) ?>
   </div>
 
-  <div class="card-body d-flex justify-content-between flex-column">
+  <div class="card-body d-flex justify-content-between flex-column mt-2">
 
     <?php if (count($model->product->productImages) > 1) : ?>
       <?= SwiperSlider::widget([

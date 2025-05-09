@@ -27,139 +27,150 @@ $this->params['breadcrumbs'] = [
     <div class="row">
 
         <div class="col-12 col-md-6 order-1 order-md-2">
+            <div class="row gy-3">
+                <div class="col-12">
+                    <?php Pjax::begin([
+                        'id' => 'admin-orders-view-pjax',
+                        'enablePushState' => false,
+                        'timeout' => 5000,
+                    ]); ?>
 
-            <?php Pjax::begin([
-                'id' => 'admin-orders-view-pjax',
-                'enablePushState' => false,
-                'timeout' => 5000,
-            ]); ?>
-
-            <?php if (Yii::$app->session->hasFlash('order-delay')) {
-                Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('order-delay'));
-                Yii::$app->session->removeFlash('order-delay');
-                echo Alert::widget();
-            }
-            ?>
-
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'name',
-                    'phone',
-                    [
-                        'attribute' => 'status_id',
-                        'value' => $model->status->title,
-                    ],
-                    [
-                        'attribute' => 'new_date_delivery',
-                        'value' => Yii::$app->formatter->asDatetime($model?->new_date_delivery, 'php:d.m.Y'),
-                        'visible' => (bool)$model?->new_date_delivery,
-                        'captionOptions' => [
-                            'class' => 'text-wrap'
-                        ]
-                    ],
-                    [
-                        'attribute' => 'delay_reason',
-                        'value' => $model?->delay_reason,
-                        'visible' => (bool)$model?->delay_reason,
-                        'captionOptions' => [
-                            'class' => 'text-wrap'
-                        ]
-                    ],
-                    [
-                        'attribute' => 'pick_up_id',
-                        'value' => $model->pickUp?->address,
-                        'visible' => (bool)$model->pickUp?->address,
-                        'contentOptions' => [
-                            'class' => 'text-wrap'
-                        ],
-                        'captionOptions' => [
-                            'class' => 'text-wrap'
-                        ]
-                    ],
-                    [
-                        'attribute' => 'email',
-                        'value' => $model->email,
-                        'contentOptions' => [
-                            'class' => 'text-wrap'
-                        ],
-                    ],
-                    [
-                        'attribute' => 'date_delivery',
-                        'value' => Yii::$app->formatter->asDatetime($model?->date_delivery, 'php:d.m.Y'),
-                        'visible' => (bool)$model?->date_delivery,
-                    ],
-                    [
-                        'attribute' => 'time_delivery',
-                        'value' => Yii::$app->formatter->asDatetime($model?->time_delivery, 'php:H:i'),
-                        'visible' => (bool)$model?->time_delivery,
-                    ],
-                    [
-                        'attribute' => 'address',
-                        'value' => $model->address,
-                        'visible' => (bool)$model->address,
-                    ],
-                    [
-                        'attribute' => 'comment',
-                        'value' => $model?->comment,
-                        'visible' => (bool)$model?->comment,
-                    ],
-                    [
-                        'attribute' => 'type_pay_id',
-                        'value' => $model->typePay->title,
-                    ],
-                    [
-                        'attribute' => 'created_at',
-                        'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
-                        'captionOptions' => [
-                            'class' => 'text-wrap'
-                        ]
-                    ],
-                    [
-                        'attribute' => 'updated_at',
-                        'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
-                        'captionOptions' => [
-                            'class' => 'text-wrap'
-                        ]
-                    ],
-                ],
-            ]) ?>
-
-            <?php Pjax::end(); ?>
-
-            <div class="row gy-3 mt-2 mb-3">
-                <?php if ($model->status->id == Status::getStatusId('Новый')) {
-                    echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6'>" . Html::a('Принять в работу', ['work', 'id' => $model->id], [
-                        'class' => 'btn btn-warning w-100',
-                        'data' => [
-                            'confirm' => 'Подтвердите действие',
-                            'method' => 'post',
-                        ],
-                    ]) . "</div>";
-                } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
-                    if (is_null($model->address) && $model->status_id == Status::getStatusId('В пути')) {
-                        echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6'>" . Html::a('Перенести доставку', ['delay', 'id' => $model->id], [
-                            'class' => 'btn btn-outline-danger btn-delay w-100',
-                        ]) . "</div>";
+                    <?php if (Yii::$app->session->hasFlash('order-delay')) {
+                        Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('order-delay'));
+                        Yii::$app->session->removeFlash('order-delay');
+                        echo Alert::widget();
                     }
-                    echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6'>" . Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
-                        'class' => 'btn btn-success w-100',
-                        'data' => [
-                            'confirm' => 'Подтвердите действие',
-                            'method' => 'post',
-                        ],
-                    ]) . "</div>";
-                }
-                ?>
-            </div>
+                    ?>
 
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'name',
+                            'phone',
+                            [
+                                'attribute' => 'status_id',
+                                'value' => $model->status->title,
+                            ],
+                            [
+                                'attribute' => 'new_date_delivery',
+                                'value' => Yii::$app->formatter->asDatetime($model?->new_date_delivery, 'php:d.m.Y'),
+                                'visible' => (bool)$model?->new_date_delivery,
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'delay_reason',
+                                'value' => $model?->delay_reason,
+                                'visible' => (bool)$model?->delay_reason,
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'pick_up_id',
+                                'value' => $model->pickUp?->address,
+                                'visible' => (bool)$model->pickUp?->address,
+                                'contentOptions' => [
+                                    'class' => 'text-wrap'
+                                ],
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'email',
+                                'value' => $model->email,
+                                'contentOptions' => [
+                                    'class' => 'text-wrap'
+                                ],
+                            ],
+                            [
+                                'attribute' => 'date_delivery',
+                                'value' => Yii::$app->formatter->asDatetime($model?->date_delivery, 'php:d.m.Y'),
+                                'visible' => (bool)$model?->date_delivery,
+                            ],
+                            [
+                                'attribute' => 'time_delivery',
+                                'value' => Yii::$app->formatter->asDatetime($model?->time_delivery, 'php:H:i'),
+                                'visible' => (bool)$model?->time_delivery,
+                            ],
+                            [
+                                'attribute' => 'address',
+                                'value' => $model->address,
+                                'visible' => (bool)$model->address,
+                            ],
+                            [
+                                'attribute' => 'comment',
+                                'value' => $model?->comment,
+                                'visible' => (bool)$model?->comment,
+                            ],
+                            [
+                                'attribute' => 'type_pay_id',
+                                'value' => $model->typePay->title,
+                            ],
+                            [
+                                'attribute' => 'created_at',
+                                'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'updated_at',
+                                'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                        ],
+                    ]) ?>
+
+                    <?php Pjax::end(); ?>
+                </div>
+                <div class="col-12">
+                    <div class="row gy-3">
+                        <?php if ($model->status->id == Status::getStatusId('Новый')) {
+                            echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6 col-xxl-4'>" . Html::a('Принять в работу', ['work', 'id' => $model->id], [
+                                'class' => 'btn btn-warning w-100',
+                                'data' => [
+                                    'confirm' => 'Подтвердите действие',
+                                    'method' => 'post',
+                                ],
+                            ]) . "</div>";
+                        } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
+                            if (is_null($model->address) && $model->status_id == Status::getStatusId('В пути')) {
+                                echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6 col-xxl-4'>" . Html::a('Перенести доставку', ['delay', 'id' => $model->id], [
+                                    'class' => 'btn btn-outline-danger btn-delay w-100',
+                                ]) . "</div>";
+                            }
+                            echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6 col-xxl-4'>" . Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
+                                'class' => 'btn btn-success w-100',
+                                'data' => [
+                                    'confirm' => 'Подтвердите действие',
+                                    'method' => 'post',
+                                ],
+                            ]) . "</div>";
+                        }
+                        ?>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <div class="col-12 col-md-6 order-3 order-md-1">
-            <div class="d-flex gap-2 align-items-end flex-column py-2 mb-3 border-top border-bottom">
-                <div>Количество товаров в заказе: <span class="fw-bold fs-5"><?= $model->product_amount ?></span></div>
-                <div>Общая сумма заказа: <span class="fw-bold fs-5"><?= $model->total_amount ?> ₽</span></div>
-                <a class="text-decoration-none align-self-start" href="/admin-panel/orders"><- Вернуться к заказам</a>
+            <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between py-2 my-3 border-top border-bottom">
+                <div>
+                    <a class="text-decoration-none text-danger" href="/admin-panel/orders">
+                        <i class="bi bi-arrow-return-left"></i>
+                        Вернуться к заказам
+                    </a>
+                </div>
+                <div class="d-flex gap-3 flex-wrap justify-content-end w-100">
+                    <div>Количество товаров: <span class="fw-bold fs-5"><?= $model->product_amount ?></span></div>
+                    <div>Общая сумма: <span class="fw-bold fs-5"><?= $model->total_amount ?> ₽</span></div>
+                </div>
             </div>
             <?= ListView::widget([
                 'dataProvider' => $dataProvider,

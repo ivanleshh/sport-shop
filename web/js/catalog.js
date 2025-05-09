@@ -16,6 +16,7 @@ const pjax_array = [
   'favourite-pjax',
   'catalog-buttons-pjax',
   'compare-pjax',
+  'order-pjax',
 ]
 
 const pjax_reload = function (name = false) {
@@ -34,8 +35,6 @@ const pjax_reload = function (name = false) {
     }
   }
 }
-
-let ategory_id = undefined
 
 $(() => {
   $("#catalog-pjax, #favourite-pjax, #catalog-buttons-pjax, #compare-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
@@ -57,19 +56,13 @@ $(() => {
     });
   });
 
-  $("#catalog-pjax, #favourite-pjax, #compare-pjax").on('pjax:end', function () {
-    let alert = $('.alert')
-    if (alert.length > 0) {
-      setTimeout(() => {
-        alert[alert.length - 1].remove()
-      }, 5000)
-    }
+  $("#catalog-pjax, #favourite-pjax, #compare-pjax, #catalog-buttons-pjax").on('pjax:end', function () {
     if ($('#cart-item-count').length > 0) {
       cartItemCount()
     }
   })
 
-  $("#catalog-pjax").on("click", ".btn-favourite, .btn-compare", function (e) {
+  $("#catalog-pjax, #catalog-buttons-pjax").on("click", ".btn-favourite, .btn-compare", function (e) {
     e.preventDefault();
     const a = $(this);
     $.ajax({
@@ -79,7 +72,7 @@ $(() => {
         id: a.data("id")
       },
       success() {
-        pjax_reload('catalog-pjax')
+        pjax_reload()
       },
     });
   });

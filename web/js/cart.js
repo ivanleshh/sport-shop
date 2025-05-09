@@ -43,11 +43,13 @@ $(() => {
                 .find('.btn-cart-manger, .cart-panel-top')
                 .removeClass('d-none')
         }
-        if ($('#cart-item-count').length > 0) {
-            cartItemCount()
+        cartItemCount()
+        if ($(".toast-container").length) {
+            $('.toast').fadeOut('slow', function () {
+                $(this).remove();
+            });
         }
         pjax_reload()
         $('#cart-modal').modal('show');
-
     })
 })

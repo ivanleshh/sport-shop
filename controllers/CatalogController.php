@@ -66,10 +66,6 @@ class CatalogController extends Controller
         $category = $this->findModel($id);
         $categoryIds = $this->getAllCategoryIds($id);
 
-        if (empty($categoryIds)) {
-            $categoryIds = [0];
-        }
-
         $searchModel = new ProductSearch();
         $params = $this->request->queryParams;
         $params['ProductSearch']['category_id'] = $categoryIds;
@@ -126,13 +122,17 @@ class CatalogController extends Controller
             } else {
                 $model->status = (int)!$model->status;
             }
+
             if ($model->status == 1) {
-                Yii::$app->session->setFlash('success', $model->product->title . 
-                ' добавлен в <a href="/personal/favourite-products" class="text-decoration-none">Избранное</a>');
+                Yii::$app->session->set('bg_color', 'bg-success');
+                Yii::$app->session->set('text', $model->product->title .
+                    ' добавлен в Избранное');
             } else {
-                Yii::$app->session->setFlash('warning', $model->product->title . 
-                ' удалён из <a href="/personal/favourite-products" class="text-decoration-none">Избранного</a>');
+                Yii::$app->session->set('bg_color', 'bg-danger');
+                Yii::$app->session->set('text', $model->product->title .
+                    ' удалён из Избранного');
             }
+
             $model->save();
             return $model->status;
         }
@@ -155,13 +155,17 @@ class CatalogController extends Controller
             } else {
                 $model->status = (int)!$model->status;
             }
+
             if ($model->status == 1) {
-                Yii::$app->session->setFlash('success', $model->product->title . 
-                ' добавлен в <a href="/personal/compare-products" class="text-decoration-none">Сравнение</a>');
+                Yii::$app->session->set('bg_color', 'bg-success');
+                Yii::$app->session->set('text', $model->product->title .
+                    ' добавлен в Сравнение');
             } else {
-                Yii::$app->session->setFlash('warning', $model->product->title . 
-                ' удалён из <a href="/personal/compare-products" class="text-decoration-none">Сравнения</a>');
+                Yii::$app->session->set('bg_color', 'bg-danger');
+                Yii::$app->session->set('text', $model->product->title .
+                    ' удалён из Сравнения');
             }
+
             $model->save();
             return $model->status;
         }

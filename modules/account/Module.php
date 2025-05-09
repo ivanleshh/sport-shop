@@ -36,7 +36,7 @@ class Module extends \yii\base\Module
                         'matchCallback' => fn() => !Yii::$app->user->identity->isAdmin,
                     ],
                 ],
-                'denyCallback' => fn() => Yii::$app->response->redirect('/'),
+                'denyCallback' => fn() => Yii::$app->response->redirect('/site/login'),
             ],
         ];
     }

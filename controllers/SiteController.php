@@ -36,7 +36,7 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
-                'denyCallback' => fn() => Yii::$app->response->redirect('/')
+                'denyCallback' => fn() => Yii::$app->response->redirect('/personal')
             ],
             'verbs' => [
                 'class' => VerbFilter::class,

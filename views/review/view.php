@@ -41,11 +41,14 @@ use yii\widgets\Pjax;
         </div>
         <div class="review-top-date col-12 col-sm-4 d-flex gap-2 gap-sm-0 flex-sm-column justify-content-between aling-items-end">
             <span class="text-end mt-1"><?= Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y') ?></span>
-            <?= Html::a(
-                "<i class='bi bi-reply-fill me-2 text-warning fs-5'></i>" . "Ответить",
-                ['/review/create', 'product_id' => $model->product->id],
-                ['data-parent-id' => $model->id, 'class' => 'btn-add-reply text-dark text-end']
-            ) ?>
+            <?php if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) {
+                echo Html::a(
+                    "<i class='bi bi-reply-fill me-2 text-warning fs-5'></i>" . "Ответить",
+                    ['/review/create', 'product_id' => $model->product->id],
+                    ['data-parent-id' => $model->id, 'class' => 'btn-add-reply text-dark text-end']
+                );
+            }
+            ?>
         </div>
     </div>
     <p class="my-2"><?= Html::encode($model->text) ?></p>

@@ -1982,20 +1982,8 @@ ol {
     border-radius: 6px;
   }
 
-  .header .navbar .navbar-nav .nav-item a:hover {
-    color: #0167F3 !important;
-  }
-
-  .header .navbar .navbar-nav .nav-item a.active {
-    color: #0167F3 !important;
-  }
-
   .header .navbar-nav .nav-item {
     margin: 0;
-  }
-
-  .header .navbar-nav .nav-item:hover a {
-    color: #0167F3;
   }
 
   .header .navbar-nav .nav-item a {
@@ -2024,7 +2012,7 @@ ol {
   }
 
   .header .navbar-nav .nav-item .sub-menu .nav-item a:hover {
-    color: #0167F3 !important;
+    color: rgb(225, 146, 0) !important;
   }
 
   .header .navbar-nav .nav-item a {
@@ -2101,19 +2089,11 @@ ol {
   }
 
   .header .navbar .navbar-nav .nav-item a:hover {
-    color: #0167F3 !important;
-  }
-
-  .header .navbar .navbar-nav .nav-item a.active {
-    color: #0167F3 !important;
+    color: rgb(225, 146, 0) !important;
   }
 
   .header .navbar-nav .nav-item {
     margin: 0;
-  }
-
-  .header .navbar-nav .nav-item:hover a {
-    color: #0167F3;
   }
 
   .header .navbar-nav .nav-item a {
@@ -2139,10 +2119,6 @@ ol {
 
   .header .navbar-nav .nav-item .sub-menu .nav-item a {
     padding: 12px 12px;
-  }
-
-  .header .navbar-nav .nav-item .sub-menu .nav-item a:hover {
-    color: #0167F3 !important;
   }
 
   .header .navbar-nav .nav-item a {
@@ -2259,7 +2235,7 @@ top: 2px;
   border-radius: 0;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
-  padding: 15px 0;
+  /* padding: 15px 0; */
 }
 
 .header .mega-category-menu .sub-category li {
@@ -2274,7 +2250,7 @@ top: 2px;
 }
 
 .header .mega-category-menu .sub-category li .inner-sub-category {
-  padding: 15px 0;
+  /* padding: 15px 0; */
   position: absolute;
   top: 8px;
   width: 240px;
@@ -3561,12 +3537,6 @@ top: 2px;
   }
 }
 
-.item-details .product-info .info-text {
-  margin-bottom: 10px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
-}
-
 .item-details .product-info .form-group {
   margin-top: 20px;
 }
@@ -3754,11 +3724,6 @@ top: 2px;
 
 .item-details .product-info .cart-button {
   width: 100%;
-}
-
-.item-details .product-info .cart-button .btn {
-  width: 100%;
-  padding: 0.6rem;
 }
 
 .item-details .product-info .wish-button {

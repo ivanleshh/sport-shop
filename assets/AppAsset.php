@@ -31,6 +31,7 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/catalog.js',
+        'js/toast.js',
         "front/js/tiny-slider.js",
         "front/js/glightbox.min.js",
         "front/js/main.js",

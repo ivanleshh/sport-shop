@@ -21,7 +21,7 @@ $this->params['breadcrumbs'] = [
 <div class="create-order hero-content m-0 row">
     <div class="create-order-cart col-12 col-lg-7 order-2 order-lg-1 mt-4 mt-lg-0">
         <div class="row mt-lg-0 align-items-center">
-            <h3 class="col-9 col-sm-6">Состав заказа</h3>
+            <h3 class="col-9 col-sm-6 fs-5">Состав заказа</h3>
             <div class="col-3 col-sm-6 text-end">
                 <?= Html::a(
                     "Очистить корзину",
@@ -58,7 +58,7 @@ $this->params['breadcrumbs'] = [
         <?php Pjax::end(); ?>
     </div>
     <div class="create-order-form col-12 col-lg-5 order-1 order-lg-2">
-        <h3 class="mb-3">Данные заказа</h3>
+        <h3 class="mb-3 fs-5">Данные заказа</h3>
         <?= $this->render('_form', [
             'model' => $model,
             'typePays' => $typePays,

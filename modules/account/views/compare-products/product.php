@@ -1,13 +1,12 @@
 <?php
 
 use app\models\Product;
-use coderius\swiperslider\SwiperSlider;
 use yii\bootstrap5\Html;
 ?>
 
-<div class="card rounded-3 h-100" style="width: 18rem;">
+<div class="card rounded-3 position-relative h-100" style="width: 17rem;">
 
-  <div class="d-flex rounded-top align-items-center justify-content-end w-100 rounded-top-2 px-3 pt-2 gap-3">
+  <div class="position-absolute d-flex gap-2 justify-content-end w-100 px-2 py-1">
     <?= Html::a(
       "<i class='bi bi-suit-heart-fill fs-6 " . (empty($model->product->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
       ['/catalog/favourite'],
@@ -23,7 +22,7 @@ use yii\bootstrap5\Html;
     ) ?>
   </div>
 
-  <div class="card-body d-flex justify-content-between flex-column gap-3">
+  <div class="card-body d-flex justify-content-between flex-column gap-3 mt-3">
     <div class="card-img d-flex justify-content-center align-items-center h-100">
       <?= Html::a(
         Html::img(isset($model->product->productImages[0]->photo) ? Product::IMG_PATH . $model->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'card-img-product']),

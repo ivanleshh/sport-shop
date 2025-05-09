@@ -61,7 +61,7 @@ class LoginForm extends Model
             'email' => 'Почта',
             'login' => 'Логин',
             'password' => 'Пароль',
-            'rememberMe' => 'Запомнить меня'
+            'rememberMe' => 'Не выходить из системы'
         ];
     }
 

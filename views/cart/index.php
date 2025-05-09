@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Cart;
+use app\models\Product;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -13,14 +14,26 @@ use yii\widgets\Pjax;
 
 $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
 ?>
+
+<div class="toast-container-cart position-fixed top-0 end-0 px-4"></div>
+
 <div class="cart-index">
-    <?php
-    Pjax::begin([
+
+    <?php Pjax::begin([
         'id' => 'cart-pjax',
         'enablePushState' => false,
         'timeout' => 5000,
     ]);
     ?>
+
+    <div class="toast-data-cart position-fixed top-0 end-0 px-4"
+        data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
+
+    <?php if (Yii::$app->session->get('bg_color') !== null) {
+        Yii::$app->session->remove('bg_color');
+        Yii::$app->session->remove('text');
+    } ?>
+
     <?php if ($dataProvider && $dataProvider->totalCount) : ?>
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
@@ -35,13 +48,20 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
         </div>
     <?php else: ?>
         <div class="cart-empty">
-            <div class="cart-empty-wrapper d-flex justify-content-center">
-                <div class="d-flex flex-column justify-content-center align-items-center gap-3">
-                    <h4 class="fw-medium">Здесь пока что пусто</h4>
-                    <div class="d-flex gap-1 align-items-center">
-                        <span>Вы можете добавить товары в </span>
-                        <?= Html::a('каталоге', ['/catalog'], ['class' => 'text-decoration-none fs-6 fw-bold text-danger', 'data-pjax' => 0]) ?>
+            <div class="row position-relative justify-content-center text-center">
+                <div class="position-absolute d-flex align-items-center bg-warning rounded-4 col-11 col-lg-7 p-2 bottom-0 fs-6">
+                    <div class="text-danger fs-1">
+                        <i class="bi bi-exclamation-lg"></i>
                     </div>
+                    <div class="text-dark">
+                        <span>Корзина пока что пустая. Вы можете добавить товары в
+                            <?= Html::a('каталоге', ['/catalog'], ['class' => "text-uppercase text-danger", 'data-pjax' => 0]) ?>
+                        </span>
+                    </div>
+
+                </div>
+                <div class="col-8 col-sm-8 col-lg-5 mb-5 mb-sm-0">
+                    <?= Html::img(Product::NOTHING_FIND, ['class' => 'rounded-circle']) ?>
                 </div>
             </div>
         </div>

@@ -18,13 +18,13 @@ use yii\bootstrap5\Html;
     <div class="col-5">
       <?= Html::a(
         Html::img(isset($model->photo) ? "/" . Category::IMG_PATH . $model->photo : Category::NO_PHOTO, ['class' => 'w-100']),
-        ['view', 'id' => $model->id],
+        ['/catalog/view', 'id' => $model->id],
         ['class' => 'd-flex justify-content-center']
       )
       ?>
     </div>
     <div class="col-7 d-flex flex-column gap-3 justify-content-center">
-      <?= Html::a('Перейти', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-dark']) ?>
+      <?#= Html::a('Перейти', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-dark']) ?>
       <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']); ?>
       <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
         'class' => 'btn btn-outline-danger',

@@ -72,6 +72,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <div class="col-lg-6 col-md-6 col-12">
                         <div class="top-end">
                             <ul class="user-login">
+
+                                <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
+                                    <li><a href="/admin-panel">Панель администратора</a></li>
+                                <?php endif; ?>
+
                                 <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
                                     <li class="d-none d-sm-inline-block"><a href="/personal">Личный кабинет</a></li>
                                 <?php endif; ?>
@@ -153,7 +158,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     echo "<li>" . Html::a($parent['title'] . '<i class="lni lni-chevron-right"></i>', ['catalog/view', 'id' => $parent['id']]) .
                                         '<ul class="inner-sub-category">';
                                     foreach (Category::find()->select(['id', 'title'])->where(['parent_id' => $parent['id']])->asArray()->all() as $child) {
-                                        echo "<li>" . Html::a($child['title'], ['catalog/view', 'id' => $child['id']]) . '</li>';
+                                        echo "<li>" . Html::a($child['title'], ['/catalog/view', 'id' => $child['id']]) . '</li>';
                                     }
                                     echo '</ul><li>';
                                 }
@@ -263,7 +268,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <!-- End Header Area -->
 
     <!-- Start Hero Area -->
-    <section id="main" class="hero-area my-4">
+    <section id="main" class="hero-area">
         <div class="container">
 
             <!-- Start Breadcrumbs -->
@@ -272,7 +277,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 $breadcrumbs = $this->params['breadcrumbs'];
                 $lastItem = array_pop($breadcrumbs); // Извлекаем последний элемент (текущая страница)
             ?>
-                <div class="breadcrumbs border rounded-4 mb-4">
+                <div class="breadcrumbs border rounded-4 my-3">
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-lg-4 col-md-6 col-12">
@@ -303,7 +308,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?php } ?>
             <!-- End Breadcrumbs -->
 
-            <?= Alert::widget() ?>
+            <?= "<div class='mt-3'>" . Alert::widget() . "</div>"?>
+
             <?= $content ?>
         </div>
     </section>
@@ -314,7 +320,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?php endif; ?>
 
     <!-- Start Footer Area -->
-    <footer class="footer">
+    <footer class="footer mt-3">
         <!-- Start Footer Top -->
         <div class="footer-top">
             <div class="container">

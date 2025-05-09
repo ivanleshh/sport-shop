@@ -144,10 +144,10 @@ class Orders extends \yii\db\ActiveRecord
                 return $orderShop->id;
             } catch (\Exception $e) { // пользовательские ошибки
                 $transaction->rollBack();
-                Yii::$app->session->setFlash('shop', $e->getMessage());
+                // Yii::$app->session->setFlash('shop', $e->getMessage());
             } catch (\Throwable $e) {
                 $transaction->rollBack(); // стандартные ошибки
-                Yii::$app->session->setFlash('shop', $e->getMessage());
+                // Yii::$app->session->setFlash('shop', $e->getMessage());
             }
         }
         return false;

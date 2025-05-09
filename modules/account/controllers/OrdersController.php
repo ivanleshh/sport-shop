@@ -78,6 +78,23 @@ class OrdersController extends Controller
             ],
         ]);
 
+        $wasAdjusted = false;
+
+        foreach ($dataProvider->models as $item) {
+            if ($item->product_amount > $item->product->count) {
+                $adjustCount = $item->product_amount - $item->product->count;
+                $item->total_amount -= $adjustCount * $item->product->price;
+                $item->product_amount = $item->product->count;
+                $item->save(false);
+                $wasAdjusted = true;
+            }
+        }
+
+        if ($wasAdjusted) {
+            $cart->recalculate();
+            Yii::$app->session->setFlash('danger', "Количество товаров из вашей корзины было скорректировано из-за недостатка на складе.");
+        }
+
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->check) {
                 $model->scenario = Orders::SCENARIO_DELIVERY;
