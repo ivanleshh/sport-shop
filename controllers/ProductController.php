@@ -62,6 +62,10 @@ class ProductController extends Controller
         $searchModel = new ReviewSearch(['product_id' => $id]);
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        Product::saveToRecentlyViewed($id);
+
+        Yii::$app->session->get('recently_viewed');
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'dataProvider' => $dataProvider,

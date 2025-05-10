@@ -206,6 +206,10 @@ input:checked {
     transition: .5s;
 }
 
+.recently-viewed-slider {
+    max-width: 1272px;
+}
+
 .card .btn-favourite i {
     transition: .5s;
 }

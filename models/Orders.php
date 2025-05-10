@@ -64,7 +64,7 @@ class Orders extends \yii\db\ActiveRecord
             [['type_pay_id'], 'exist', 'skipOnError' => true, 'targetClass' => Typepay::class, 'targetAttribute' => ['type_pay_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => Status::class, 'targetAttribute' => ['status_id' => 'id']],
 
-            [['address', 'comment'],'default', 'value' => null],
+            [['address', 'comment'], 'default', 'value' => null],
 
             [['delay_reason', 'new_date_delivery'], 'required', 'on' => self::SCENARIO_DELAY],
 
@@ -122,21 +122,17 @@ class Orders extends \yii\db\ActiveRecord
                     ->all();
 
                 foreach ($cartItems as $cartItem) {
-                    if ($cartItem->product_amount <= $cartItem->product->count) {
-                        $orderItem = new OrderItem();
-                        $orderItem->attributes = $cartItem->attributes;
-                        $orderItem->order_id = $orderShop->id;
-                        $orderItem->product_title = $cartItem->product->title;
-                        $orderItem->product_cost = $cartItem->product->price;
-                        
-                        $product = Product::findOne($cartItem->product_id);
-                        $product->count -= $cartItem->product_amount;
-                        $product->save();
+                    $orderItem = new OrderItem();
+                    $orderItem->attributes = $cartItem->attributes;
+                    $orderItem->order_id = $orderShop->id;
+                    $orderItem->product_title = $cartItem->product->title;
+                    $orderItem->product_cost = $cartItem->product->price;
 
-                        $orderItem->save(false);
-                    } else {
-                        throw new \Exception("Товар из вашей корзины закончился!");
-                    }
+                    $product = Product::findOne($cartItem->product_id);
+                    $product->count -= $cartItem->product_amount;
+                    $product->save();
+
+                    $orderItem->save(false);
                 }
 
                 $transaction->commit();
@@ -144,10 +140,8 @@ class Orders extends \yii\db\ActiveRecord
                 return $orderShop->id;
             } catch (\Exception $e) { // пользовательские ошибки
                 $transaction->rollBack();
-                // Yii::$app->session->setFlash('shop', $e->getMessage());
             } catch (\Throwable $e) {
                 $transaction->rollBack(); // стандартные ошибки
-                // Yii::$app->session->setFlash('shop', $e->getMessage());
             }
         }
         return false;

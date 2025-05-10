@@ -308,7 +308,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?php } ?>
             <!-- End Breadcrumbs -->
 
-            <?= "<div class='mt-3'>" . Alert::widget() . "</div>"?>
+            <?= "<div class='mt-3'>" . Alert::widget() . "</div>" ?>
 
             <?= $content ?>
         </div>
@@ -318,6 +318,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?php if (isset($this->blocks['additional'])): ?>
         <?= $this->blocks['additional'] ?> <!-- Секция для дополнительного контента -->
     <?php endif; ?>
+
+    <?= \app\widgets\RecentlyViewed::widget() ?>
 
     <!-- Start Footer Area -->
     <footer class="footer mt-3">

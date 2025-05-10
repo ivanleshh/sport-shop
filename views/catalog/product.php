@@ -3,19 +3,17 @@
 use app\models\Product;
 use coderius\swiperslider\SwiperSlider;
 use yii\bootstrap5\Html;
+
+$navigation = true;
+if (isset($nav)) {
+  $navigation = $nav;
+}
+
 ?>
 <div class="card rounded-3 h-100" style="width: 18rem">
-  <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
-    <div class="d-flex rounded-top align-items-center justify-content-end w-100 rounded-top-2 px-3 pt-2 gap-3">
-      <?= Html::a(
-        "<i class='bi bi-suit-heart-fill " . (empty($model->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
-        ['favourite'],
-        ['data-id' => $model->id, 'class' => 'btn-favourite text-decoration-none align-self-end']
-      ) ?>
-    </div>
-  <?php endif; ?>
   <div class="card-body d-flex gap-3 justify-content-between flex-column">
-    <?php if (count($model->productImages) > 1) : ?>
+
+    <?php if ($navigation && count($model->productImages) > 1) : ?>
       <?= SwiperSlider::widget([
         'showPagination' => false,
         'slides' => array_map(
@@ -54,24 +52,39 @@ use yii\bootstrap5\Html;
       </div>
     <?php endif; ?>
 
-    <div class="d-flex flex-column gap-2 border-top">
-      <div class="d-flex justify-content-between align-items-center mt-3">
-        <span class="text-secondary"><?= $model->category->title ?></span>
+    <div class="d-flex flex-column gap-2 border-top pt-2">
 
-        <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) {
-          $isCompare = !empty($model->compareProducts[0]->status);
-          echo "<div>" . Html::a(
-            $isCompare ? "в сравнении" : "сравнить",
-            ['/catalog/compare'],
-            ['data-id' => $model->id, 'class' => "btn-compare btn btn-sm " . ($isCompare ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
-          ) . "</div>";
-        }
-        ?>
-
-      </div>
       <span class="fs-6 text-dark"><?= $model->title ?></span>
 
-      <span class="card-text text-dark fw-bold fs-6"><?= $model->price ?> ₽</span>
+      <div class="d-flex gap-2 justify-content-between align-items-center">
+
+        <span class="card-text text-dark fw-bold fs-6"><?= $model->price ?> ₽</span>
+
+        <div class="d-flex gap-3 align-items-center">
+          <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) {
+
+            echo "<div>" .
+              Html::a(
+                "<i class='bi bi-bar-chart-line " . (empty($model->compareProducts[0]->status) ? 'text-secondary' : 'text-warning') . "'></i>",
+                ['compare'],
+                ['data-id' => $model->id, 'class' => 'btn-compare text-decoration-none']
+              ) .
+              "</div>";
+
+            echo "<div>" .
+              Html::a(
+                "<i class='bi bi-suit-heart-fill " . (empty($model->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
+                ['favourite'],
+                ['data-id' => $model->id, 'class' => 'btn-favourite text-decoration-none']
+              ) .
+              "</div>";
+          }
+          ?>
+        </div>
+
+
+
+      </div>
 
       <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin && isset($model->cartItems[0])) : ?>
         <div class="d-flex align-items-center gap-3">

@@ -18,9 +18,11 @@ $this->params['breadcrumbs'] = [
 ];
 ?>
 
+<div class="toast-container position-fixed top-0 end-0 px-4"></div>
+
 <div class="create-order hero-content m-0 row">
     <div class="create-order-cart col-12 col-lg-7 order-2 order-lg-1 mt-4 mt-lg-0">
-        <div class="row mt-lg-0 align-items-center">
+        <div class="row mt-lg-0 align-items-center mb-3">
             <h3 class="col-9 col-sm-6 fs-5">Состав заказа</h3>
             <div class="col-3 col-sm-6 text-end">
                 <?= Html::a(
@@ -38,6 +40,14 @@ $this->params['breadcrumbs'] = [
         ]);
         ?>
 
+        <div class="toast-data position-fixed top-0 end-0 px-4"
+            data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
+
+        <?php if (Yii::$app->session->get('bg_color') !== null) {
+            Yii::$app->session->remove('bg_color');
+            Yii::$app->session->remove('text');
+        } ?>
+
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
             'itemOptions' => ['class' => 'item'],
@@ -45,11 +55,10 @@ $this->params['breadcrumbs'] = [
             'pager' => [
                 'class' => LinkPager::class
             ],
-            'layout' => "<div class='d-flex justify-content-center'>{pager}</div>
-                <div class='d-flex flex-column gap-3 my-3'>{items}</div>
+            'layout' => "<div class='d-flex flex-column gap-3'>{items}</div>
                 <div class='d-flex justify-content-center'>{pager}</div>"
         ]) ?>
-        <div class="d-flex justify-content-between flex-wrap border-top border-bottom py-2 my-2 text-dark gap-3">
+        <div class="d-flex justify-content-between flex-wrap border-top border-bottom py-2 text-dark gap-3 mt-3">
             <a class="text-decoration-none mt-1 text-danger" href="/"><- Вернуться к покупкам</a>
                     <div>Позиций в корзине: <span class="fw-bold fs-5"><?= $cart->product_amount ?></span></div>
                     <div>Общая сумма: <span class="fw-bold fs-5"><?= $cart->total_amount ?> ₽</span></div>

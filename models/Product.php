@@ -190,4 +190,21 @@ class Product extends \yii\db\ActiveRecord
         }
         return $result;
     }
+
+    // Метод, сохраняющий просмотренный клиентом товар для вывода на странице
+    public static function saveToRecentlyViewed($productId)
+    {
+        $session = Yii::$app->session;
+        $session_key = 'recently_viewed';
+        if (!$session->has($session_key)) {
+            $session->set($session_key, []);
+        }
+        $items = $session->get($session_key);
+        $index = array_search($productId, $items);
+        if ($index !== false) {
+            unset($items[$index]);
+        }
+        array_unshift($items, $productId);
+        $session->set($session_key, $items);
+    }
 }

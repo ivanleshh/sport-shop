@@ -23,7 +23,7 @@ $(() => {
         }, 5000)
     }
 
-    $("#catalog-pjax, #catalog-buttons-pjax, #compare-pjax, #favourite-pjax, #personal-pjax").on("pjax:end", () => {
+    $("#catalog-pjax, #catalog-buttons-pjax, #compare-pjax, #favourite-pjax, #personal-pjax, #order-pjax").on("pjax:end", () => {
         if ($(".toast-container").length && $(".toast-data").data('text').length) {
             const container = $(".toast-container")
             const container_data = $('.toast-data')

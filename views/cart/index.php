@@ -42,9 +42,9 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
             'pager' => ['class' => LinkPager::class],
             'layout' => "<div class='d-flex flex-column gap-3 my-3'>{items}</div>\n{pager}"
         ]) ?>
-        <div class="d-flex gap-1 align-items-end flex-column border-top border-bottom py-2 text-dark">
-            <div>Количество товаров в корзине: <span class="fw-bold fs-5"><?= $cart->product_amount ?></span></div>
-            <div>Общая сумма: <span class="fw-bold fs-5"><?= $cart->total_amount ?></span></div>
+        <div class="d-flex gap-2 justify-content-end flex-wrap border-top border-bottom py-2 text-dark">
+            <div>Количество товаров: <span class="fw-bold fs-5"><?= $cart->product_amount ?></span></div>
+            <div>Общая сумма: <span class="fw-bold fs-5"><?= $cart->total_amount ?> ₽</span></div>
         </div>
     <?php else: ?>
         <div class="cart-empty">
