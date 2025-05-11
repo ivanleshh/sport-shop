@@ -18,87 +18,137 @@ $this->title = 'Заказ № ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Личный кабинет', 'url' => ['/personal']];
 $this->params['breadcrumbs'][] = ['label' => 'Мои заказы', 'url' => ['/personal/orders']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->params['breadcrumbs'] = [
+    ['label' => 'Личный кабинет', 'url' => ['/personal'], 'icon' => 'bi bi-house-fill mx-2'],
+    ['label' => 'Мои заказы', 'url' => ['/personal/orders']],
+    "Заказ № $model->id",
+];
+
 ?>
-<div class="cart-index">
-    <h3>Заказ № <?= $model->id ?> от <?= Yii::$app->formatter->asDate($model->created_at, 'php:d-m-Y (H:i)') ?></h3>
-    <div class="order-details d-flex gap-4 mt-2">
-        <div class="order-details-items border rounded-3 px-4 py-3 w-50">
-            <h3 class="mb-3">Состав заказа</h3>
 
-            <?= ListView::widget([
-            'dataProvider' => $dataProvider,
-            'itemOptions' => ['class' => 'item'],
-            'itemView' => 'order-item',
-            'pager' => [
-                'class' => LinkPager::class
-            ],
-            'layout' => "<div class='d-flex flex-column gap-3 my-2'>{items}</div>\n<div class='d-flex justify-content-end'>{pager}</div>"
-            ]) ?>
+<div class="cart-index hero-content">
+    <div class="row">
 
-            <div class="d-flex gap-1 align-items-end flex-column border-bottom py-2">
-                <div>Количество товаров в заказе: <span class="fw-bold fs-5"><?= $model->product_amount ?></span></div>
-                <div>Общая сумма заказа: <span class="fw-bold fs-5"><?= $model->total_amount ?> ₽</span></div>
-                <a class="text-decoration-none align-self-start" href="/"><- Вернуться к покупкам</a>
+        <div class="col-12 col-md-6 order-1 order-md-2">
+            <div class="row gy-3">
+                <div class="col-12">
+                    <?php Pjax::begin([
+                        'id' => 'admin-orders-view-pjax',
+                        'enablePushState' => false,
+                        'timeout' => 5000,
+                    ]); ?>
+
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            'name',
+                            'phone',
+                            [
+                                'attribute' => 'status_id',
+                                'value' => $model->status->title,
+                            ],
+                            [
+                                'attribute' => 'new_date_delivery',
+                                'value' => Yii::$app->formatter->asDatetime($model?->new_date_delivery, 'php:d.m.Y'),
+                                'visible' => (bool)$model?->new_date_delivery,
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'delay_reason',
+                                'value' => $model?->delay_reason,
+                                'visible' => (bool)$model?->delay_reason,
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'pick_up_id',
+                                'value' => $model->pickUp?->address,
+                                'visible' => (bool)$model->pickUp?->address,
+                                'contentOptions' => [
+                                    'class' => 'text-wrap'
+                                ],
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'email',
+                                'value' => $model->email,
+                                'contentOptions' => [
+                                    'class' => 'text-wrap'
+                                ],
+                            ],
+                            [
+                                'attribute' => 'date_delivery',
+                                'value' => Yii::$app->formatter->asDatetime($model?->date_delivery, 'php:d.m.Y'),
+                                'visible' => (bool)$model?->date_delivery,
+                            ],
+                            [
+                                'attribute' => 'time_delivery',
+                                'value' => Yii::$app->formatter->asDatetime($model?->time_delivery, 'php:H:i'),
+                                'visible' => (bool)$model?->time_delivery,
+                            ],
+                            [
+                                'attribute' => 'address',
+                                'value' => $model->address,
+                                'visible' => (bool)$model->address,
+                            ],
+                            [
+                                'attribute' => 'comment',
+                                'value' => $model?->comment,
+                                'visible' => (bool)$model?->comment,
+                            ],
+                            [
+                                'attribute' => 'type_pay_id',
+                                'value' => $model->typePay->title,
+                            ],
+                            [
+                                'attribute' => 'created_at',
+                                'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                            [
+                                'attribute' => 'updated_at',
+                                'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
+                                'captionOptions' => [
+                                    'class' => 'text-wrap'
+                                ]
+                            ],
+                        ],
+                    ]) ?>
+
+                    <?php Pjax::end(); ?>
+                </div>
             </div>
         </div>
-        <div class="order-details-info border rounded-3 px-4 py-3 w-50">
-            <h3 class="mb-3">Информация о заказе</h3>
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    [
-                        'attribute' => 'pick_up_id',
-                        'value' => $model->pickUp?->address,
-                        'visible' => (bool)$model->pickUp?->address,
-                    ],
-                    'email:email',
-                    [
-                        'attribute' => 'status_id',
-                        'value' => $model->status->title,
-                    ],
-                    [
-                        'attribute' => 'date_delivery',
-                        'value' => $model?->date_delivery,
-                        'visible' => (bool)$model?->date_delivery,
-                    ],
-                    [
-                        'attribute' => 'delay_reason',
-                        'value' => $model?->delay_reason,
-                        'visible' => (bool)$model?->delay_reason,
-                    ],
-                    [
-                        'attribute' => 'new_date_delivery',
-                        'value' => $model?->new_date_delivery,
-                        'visible' => (bool)$model?->new_date_delivery,
-                    ],
-                    [
-                        'attribute' => 'time_delivery',
-                        'value' => $model?->time_delivery,
-                        'visible' => (bool)$model?->time_delivery,
-                    ],
-                    [
-                        'attribute' => 'address',
-                        'value' => $model->address,
-                        'visible' => (bool)$model->address,
-                    ],
-                    [
-                        'attribute' => 'comment',
-                        'value' => $model?->comment,
-                        'visible' => (bool)$model?->comment,
-                    ],
-                    [
-                        'attribute' => 'type_pay_id',
-                        'value' => $model->typePay->title,
-                    ],
-                    [
-                        'attribute' => 'created_at',
-                        'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
-                    ],
-                    [
-                        'attribute' => 'updated_at',
-                        'value' => Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i'),
-                    ],
+
+        <div class="col-12 col-md-6 order-3 order-md-1">
+            <div class="d-flex gap-3 align-items-center justify-content-between py-2 my-3 border-top border-bottom flex-wrap">
+                <div>
+                    <a class="text-decoration-none text-danger" href="/admin-panel/orders">
+                        <i class="bi bi-arrow-return-left"></i>
+                        Вернуться к заказам
+                    </a>
+                </div>
+                <div class="d-flex gap-3 flex-wrap justify-content-end w-100 text-dark">
+                    <div>Количество товаров: <span class="fw-bold fs-5"><?= $model->product_amount ?></span></div>
+                    <div>Общая сумма: <span class="fw-bold fs-5"><?= $model->total_amount ?> ₽</span></div>
+                </div>
+            </div>
+            <?= ListView::widget([
+                'dataProvider' => $dataProvider,
+                'itemOptions' => ['class' => 'item'],
+                'itemView' => 'order-item',
+                'pager' => [
+                    'class' => LinkPager::class
                 ],
+                'layout' => "<div class='d-flex flex-column gap-3'>{items}</div>\n<div class='d-flex justify-content-end'>{pager}</div>"
             ]) ?>
         </div>
     </div>

@@ -23,7 +23,7 @@ $(() => {
         }, 5000)
     }
 
-    $("#catalog-pjax, #catalog-buttons-pjax, #compare-pjax, #favourite-pjax, #personal-pjax, #order-pjax").on("pjax:end", () => {
+    $("#catalog-pjax, #catalog-buttons-pjax, #compare-pjax, #favourite-pjax, #personal-pjax, #order-pjax, #admin-orders-pjax, #brand-index-pjax").on("pjax:end", () => {
         if ($(".toast-container").length && $(".toast-data").data('text').length) {
             const container = $(".toast-container")
             const container_data = $('.toast-data')
@@ -40,10 +40,17 @@ $(() => {
     })
 
     $("#product-reviews-pjax").on("pjax:end", () => {
-        console.log($(".toast-container-reviews").length)
         if ($(".toast-container-reviews").length && $(".toast-data-reviews").data('text').length) {
             const container = $(".toast-container-reviews")
             const container_data = $('.toast-data-reviews')
+            updateToast(container, container_data)
+        }
+    })
+
+    $("#recently-viewed-pjax").on("pjax:end", () => {
+        if ($(".toast-container-recently").length && $(".toast-data-recently").data('text').length) {
+            const container = $(".toast-container-recently")
+            const container_data = $('.toast-data-recently')
             updateToast(container, container_data)
         }
     })

@@ -311,15 +311,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?= "<div class='mt-3'>" . Alert::widget() . "</div>" ?>
 
             <?= $content ?>
+
+            <?php if (isset($this->blocks['additional'])): ?>
+                <?= $this->blocks['additional'] ?> <!-- Секция для дополнительного контента -->
+            <?php endif; ?>
+
+            <?= \app\widgets\RecentlyViewed::widget() ?>
         </div>
     </section>
     <!-- End Hero Area -->
-
-    <?php if (isset($this->blocks['additional'])): ?>
-        <?= $this->blocks['additional'] ?> <!-- Секция для дополнительного контента -->
-    <?php endif; ?>
-
-    <?= \app\widgets\RecentlyViewed::widget() ?>
 
     <!-- Start Footer Area -->
     <footer class="footer mt-3">

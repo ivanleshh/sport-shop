@@ -80,11 +80,10 @@ class ProductController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
                 $this->saveProductProperties($model);
+                Yii::$app->session->setFlash('success', "Товар $model->title успешно создан");
                 if ($this->request->isAjax) {
                     return $this->asJson(['success' => true, 'product_id' => $model->id]);
                 }
-                Yii::$app->session->setFlash('success', "Товар $model->title успешно создан");
-                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
         return $this->render('create', [
@@ -108,11 +107,10 @@ class ProductController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->save()) {
                 $this->saveProductProperties($model);
+                Yii::$app->session->setFlash('success', "Товар $model->title успешно обновлен");
                 if ($this->request->isAjax) {
                     return $this->asJson(['success' => true, 'product_id' => $model->id]);
                 }
-                Yii::$app->session->setFlash('success', "Товар $model->title успешно обновлен");
-                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
 
@@ -229,8 +227,9 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->delete();
+        Yii::$app->session->setFlash('danger', "Продукт '$model->title' был удалён");
         return $this->redirect(['index']);
     }
 

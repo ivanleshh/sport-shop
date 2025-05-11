@@ -35,6 +35,7 @@ class AdminPanelAsset extends AssetBundle
         "admin-panel-dist/assets/js/misc.js",
         "admin-panel-dist/assets/js/settings.js",
         "admin-panel-dist/assets/js/todolist.js",
+        "js/toast.js",
     ];
     public $depends = [
         'yii\web\YiiAsset',

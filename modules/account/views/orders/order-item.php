@@ -3,21 +3,28 @@
 use app\models\Product;
 use yii\bootstrap5\Html;
 ?>
-<div class="card d-flex gap-3">
-  <div class="card-body d-flex gap-1 justify-content-between">
-    <div class="d-flex align-items-center gap-1 w-50">
-      <?= Html::a(
-        Html::img(isset($model->product->productImages[0]->photo) ? Product::IMG_PATH . $model->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-100']),
-        ['/product/view', 'id' => $model->product->id],
-        ['class' => 'd-flex align-items-center text-decoration-none gap-3']
-      ) ?>
-      <?= Html::a($model->product->title, ['/product/view', 'id' => $model->product->id],
-      ['class' => 'd-flex align-items-center text-decoration-none gap-3']) ?>
+<div class="card border rounded-4">
+  <div class="card-body row align-items-center">
+    <div class="col-12 col-sm-6 col-xxl-6">
+      <div class="row align-items-center justify-content-center">
+        <?= Html::a(
+          Html::img(isset($model->product->productImages[0]->photo) ?
+            Product::IMG_PATH . $model->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-100']),
+          ['/product/view', 'id' => $model->product->id],
+          ['class' => 'col-5 col-md-8 col-xl-6 col-xxl-5']
+        ) ?>
+        <?= Html::a(
+          $model->product->title,
+          ['/product/view', 'id' => $model->product->id],
+          ['class' => 'col-7 col-md-12 col-xxl-7 text-decoration-none link-dark fw-semibold mt-1 text-center']
+        ) ?>
+      </div>
+
     </div>
-    <div class="d-flex flex-column align-items-end justify-content-center">
-      <div class="card-cost d-flex gap-2">Стоимость: <span class="fw-bold"><?= $model->product_cost ?> ₽</span></div>
-      <div class="card-cost d-flex gap-2">Количество: <span class="fw-bold"><?= $model->product_amount ?> </span></div>
-      <div class="card-total d-flex gap-2">Общая стоимость: <span class="fw-bold"><?= $model->total_amount ?> ₽</span></div>
+    <div class="col-12 col-sm-6 col-xxl-6 d-flex flex-column align-items-end text-end gap-2 mt-2">
+      <div class="card-cost">Стоимость: <span class="fw-bold text-nowrap"><?= $model->product_cost ?> ₽</span></div>
+      <div class="card-cost">Количество: <span class="fw-bold"><?= $model->product_amount ?> </span></div>
+      <div class="card-total">Общая стоимость: <span class="fw-bold"><?= $model->total_amount ?> ₽</span></div>
     </div>
 
   </div>

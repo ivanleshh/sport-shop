@@ -101,12 +101,9 @@ class OrdersController extends Controller
             }
             $model->status_id = Status::getStatusId('Новый');
             if ($id = Orders::orderCreate($model)) {
+                Yii::$app->session->setFlash('success', "Заказ № $model->id сформирован и отправлен в работу");
                 return $this->redirect(['view', 'id' => $id]);
             }
-        }
-
-        if (Yii::$app->session->hasFlash('shop')) {
-            Yii::$app->session->setFlash('error', Yii::$app->session->getFlash('shop', '', true));
         }
 
         return $this->render('create', [
@@ -138,8 +135,7 @@ class OrdersController extends Controller
             ]);
         }
         Yii::$app->session->setFlash('error', 'Заказ не найден');
-        // редирект на список заказов пользователя
-        return $this->redirect('/');
+        return $this->redirect('/personal/order');
     }
 
     /**

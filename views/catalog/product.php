@@ -10,7 +10,7 @@ if (isset($nav)) {
 }
 
 ?>
-<div class="card rounded-3 h-100" style="width: 18rem">
+<div class="card rounded-3 h-100" style="width: 18rem; height: 26rem !important;">
   <div class="card-body d-flex gap-3 justify-content-between flex-column">
 
     <?php if ($navigation && count($model->productImages) > 1) : ?>
@@ -25,7 +25,7 @@ if (isset($nav)) {
                 ['class' => 'card-img-product']
               ),
               ['/product/view', 'id' => $model->id],
-              ['class' => 'd-flex flex-column align-items-center']
+              ['class' => 'd-flex flex-column align-items-center', 'data-pjax' => 0]
             ) . '</div>',
           $model->productImages
         ),
@@ -47,7 +47,7 @@ if (isset($nav)) {
         <?= Html::a(
           Html::img(isset($model->productImages[0]->photo) ? Product::IMG_PATH . $model->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'card-img-product']),
           ['/product/view', 'id' => $model->id],
-          ['class' => 'd-flex flex-column align-items-center']
+          ['class' => 'd-flex flex-column align-items-center', 'data-pjax' => 0]
         ) ?>
       </div>
     <?php endif; ?>
@@ -66,7 +66,7 @@ if (isset($nav)) {
             echo "<div>" .
               Html::a(
                 "<i class='bi bi-bar-chart-line " . (empty($model->compareProducts[0]->status) ? 'text-secondary' : 'text-warning') . "'></i>",
-                ['compare'],
+                ['/catalog/compare'],
                 ['data-id' => $model->id, 'class' => 'btn-compare text-decoration-none']
               ) .
               "</div>";
@@ -74,7 +74,7 @@ if (isset($nav)) {
             echo "<div>" .
               Html::a(
                 "<i class='bi bi-suit-heart-fill " . (empty($model->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
-                ['favourite'],
+                ['/catalog/favourite'],
                 ['data-id' => $model->id, 'class' => 'btn-favourite text-decoration-none']
               ) .
               "</div>";
@@ -89,12 +89,12 @@ if (isset($nav)) {
       <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin && isset($model->cartItems[0])) : ?>
         <div class="d-flex align-items-center gap-3">
           <div class="w-100">
-            <?= Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange w-100']) ?>
+            <?= Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange w-100', 'data-pjax' => 0]) ?>
           </div>
           <div>
             <?= Html::a(
               '-',
-              ['cart/dec-item', 'item_id' => $model->cartItems[0]->id],
+              ['/cart/dec-item', 'item_id' => $model->cartItems[0]->id],
               ['class' => 'btn btn-outline-secondary btn-cart-item-dec']
             ) ?>
           </div>
@@ -104,7 +104,7 @@ if (isset($nav)) {
           <div>
             <?= Html::a(
               '+',
-              ['cart/inc-item', 'item_id' => $model->cartItems[0]->id],
+              ['/cart/inc-item', 'item_id' => $model->cartItems[0]->id],
               ['class' => 'btn btn-outline-secondary btn-cart-item-inc']
             ) ?>
           </div>
@@ -113,7 +113,7 @@ if (isset($nav)) {
         <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
           ? Html::a(
             'В корзину',
-            ['cart/add', 'product_id' => $model->id],
+            ['/cart/add', 'product_id' => $model->id],
             ['class' => 'btn-cart-add btn btn-warning w-100']
           ) : ""
         ?>

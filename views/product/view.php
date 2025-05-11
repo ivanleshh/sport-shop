@@ -243,6 +243,11 @@ $countReviews = $model->countReviews;
                     <div class="toast-data-reviews position-fixed top-0 end-0 p-4"
                         data-bg-color="<?= Yii::$app->session->get('bg_color-review') ?>" data-text="<?= Yii::$app->session->get('text-review') ?>"></div>
 
+                    <?php if (Yii::$app->session->get('bg_color-review') !== null) {
+                        Yii::$app->session->remove('bg_color-review');
+                        Yii::$app->session->remove('text-review');
+                    } ?>
+
                     <?= ListView::widget([
                         'dataProvider' => $dataProvider,
                         'layout' => "{pager}<div class='reviews row gap-3'>{items}</div>{pager}",

@@ -131,7 +131,7 @@ class CategoryController extends Controller
                             }
                         }
                         Yii::$app->session->setFlash('success', "Категория $model->title успешно создана");
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        return $this->redirect(['index']);
                     }
                 }
             }
@@ -239,7 +239,7 @@ class CategoryController extends Controller
                             }
                         }
                         Yii::$app->session->setFlash('success', "Категория $model->title успешно обновлена");
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        return $this->redirect(['index']);
                     }
                 }
             }
@@ -260,8 +260,9 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->delete();
+        Yii::$app->session->setFlash('danger', "Категория '$model->title' была удалена");
         return $this->redirect(['index']);
     }
 

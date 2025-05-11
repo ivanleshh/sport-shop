@@ -1,5 +1,6 @@
 <?php
 
+use app\widgets\Alert;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -21,6 +22,8 @@ $this->params['breadcrumbs'] = [
 ];
 ?>
 <div class="category-index hero-content">
+
+    <?= Alert::widget() ?>
 
     <div class="row justify-content-between align-items-center">
         <div class="col-12 col-xl-8">

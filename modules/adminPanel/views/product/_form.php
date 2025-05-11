@@ -58,7 +58,7 @@ FontAwesomeAsset::register($this);
                             ], $model->productImages),
                             'filebatchuploadcomplete' => new \yii\web\JsExpression('function(event, files, extra) {
                                 var productId = $("#product-id").val();
-                                window.location = "/admin-panel/product/view?id=" + productId;
+                                window.location = "/admin-panel/product";
                             }'),
                         ],
                     ]) ?>

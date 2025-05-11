@@ -13,31 +13,27 @@ const cartItemCount = () => $.pjax.reload('#cart-item-count', {
 
 const pjax_array = [
   'catalog-pjax',
+  'recently-viewed-pjax',
   'favourite-pjax',
   'catalog-buttons-pjax',
   'compare-pjax',
   'order-pjax',
 ]
 
-const pjax_reload = function (name = false) {
-  if (name) {
-    let title = `#${name}`
+const pjax_reload = function () {
+  for (let i = 0; i < pjax_array.length; i++) {
+    let title = `#${pjax_array[i]}`
     if ($(title).length > 0) {
-      $.pjax.reload(title)
-    }
-  } else {
-    for (let i = 0; i < pjax_array.length; i++) {
-      let title = `#${pjax_array[i]}`
-      if ($(title).length > 0) {
-        $.pjax.reload(title)
-        break
-      }
+      $.pjax.reload({
+        container: title,
+        async: false
+      })
     }
   }
 }
 
 $(() => {
-  $("#catalog-pjax, #favourite-pjax, #catalog-buttons-pjax, #compare-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
+  $("#catalog-pjax, #favourite-pjax, #catalog-buttons-pjax, #compare-pjax, #recently-viewed-pjax").on("click", ".btn-cart-add, .btn-cart-item-dec, .btn-cart-item-inc", function (e) {
     e.preventDefault();
     const a = $(this);
     category_id = a.data('category')
@@ -56,13 +52,11 @@ $(() => {
     });
   });
 
-  $("#catalog-pjax, #favourite-pjax, #compare-pjax, #catalog-buttons-pjax").on('pjax:end', function () {
-    if ($('#cart-item-count').length > 0) {
-      cartItemCount()
-    }
+  $("#catalog-pjax, #favourite-pjax, #compare-pjax, #catalog-buttons-pjax, #recently-viewed-pjax").on('pjax:end', function () {
+    cartItemCount()
   })
 
-  $("#catalog-pjax, #catalog-buttons-pjax").on("click", ".btn-favourite, .btn-compare", function (e) {
+  $("#catalog-pjax, #catalog-buttons-pjax, #recently-viewed-pjax").on("click", ".btn-favourite, .btn-compare", function (e) {
     e.preventDefault();
     const a = $(this);
     $.ajax({

@@ -42,11 +42,11 @@ $(() => {
             $('#orders-comment').val('')
 
             $('#form-order').yiiActiveForm('remove', 'orders-address')
-            // $('#form-order').yiiActiveForm('remove', 'orders-address')
+            $('#form-order').yiiActiveForm('remove', 'orders-address')
             $('#form-order').yiiActiveForm('remove', 'orders-date_delivery')
-            // $('#form-order').yiiActiveForm('remove', 'orders-date_delivery')
+            $('#form-order').yiiActiveForm('remove', 'orders-date_delivery')
             $('#form-order').yiiActiveForm('remove', 'orders-time_delivery')
-            // $('#form-order').yiiActiveForm('remove', 'orders-time_delivery')
+            $('#form-order').yiiActiveForm('remove', 'orders-time_delivery')
         }
     })
 })

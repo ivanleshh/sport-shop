@@ -45,7 +45,7 @@ $(() => {
         }
         cartItemCount()
         if ($(".toast-container").length) {
-            $('.toast').fadeOut('slow', function () {
+           $(".toast-container").find('.toast').fadeOut('slow', function () {
                 $(this).remove();
             });
         }

@@ -14,7 +14,7 @@ use yii\bootstrap5\Html;
       <?= $model->status->title ?>
     </div>
   </div>
-  <div class="row align-items-center p-3 gx-4 gy-4">
+  <div class="row align-items-center p-3 gx-4 gy-4 h-100">
     <div class="col-3 d-none d-sm-flex justify-content-center align-items-center gap-2">
       <?= Html::a(
         Html::img(isset($model->orderItems[0]->product->productImages[0]) ?
@@ -45,25 +45,17 @@ use yii\bootstrap5\Html;
       <div>Товаров: <span class="fw-bold"><?= $model->product_amount ?></span></div>
     </div>
     <div class="col-12 col-sm-4 d-flex flex-column gap-3 justify-content-center">
-      <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-secondary']) ?>
+      <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-secondary', 'data-pjax' => 0]) ?>
       <?php if ($model->status->id == Status::getStatusId('Новый')) {
         echo Html::a('Принять в работу', ['work', 'id' => $model->id], [
-          'class' => 'btn btn-warning',
-          'data' => [
-            'confirm' => 'Подтвердите действие',
-            'method' => 'post',
-          ],
+          'class' => 'btn btn-warning btn-toast',
         ]);
       } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
-        if (isset($model->address) && $model->status_id == Status::getStatusId('В пути')) {
-          echo Html::a('Перенести доставку', ['delay', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-delay']);
+        if (empty($model->address) && $model->status_id == Status::getStatusId('В пути')) {
+          echo Html::a('Перенести доставку', ['delay', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-delay', 'data-pjax' => 0]);
         }
         echo Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
-          'class' => 'btn btn-success',
-          'data' => [
-            'confirm' => 'Подтвердите действие',
-            'method' => 'post',
-          ],
+          'class' => 'btn btn-success btn-toast',
         ]);
       }
       ?>

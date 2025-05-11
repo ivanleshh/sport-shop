@@ -46,7 +46,7 @@ $this->params['breadcrumbs'] = [
     <div class="d-flex flex-wrap gap-3">
         <?= Html::a("🥇 Сравнение товаров", ['/personal/compare-products'], ['class' => 'btn btn-outline-dark']) ?>
         <?= Html::a("<i class='bi bi-bag-heart-fill me-2'></i>Избранное", ['/personal/favourite-products'], ['class' => 'btn btn-outline-danger']) ?>
-        <?= Html::a("<i class='bi bi-truck me-2'></i>История заказов", ['/personal/orders'], ['class' => 'btn btn-outline-warning']) ?>
+        <?= Html::a("<i class='bi bi-truck me-2'></i>История заказов", ['/personal/orders'], ['class' => 'btn btn-warning']) ?>
     </div>
 
     <div class="user-personal-form col-md-4 mt-3">

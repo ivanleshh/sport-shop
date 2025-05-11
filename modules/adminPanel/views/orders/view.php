@@ -97,12 +97,24 @@ $this->params['breadcrumbs'] = [
                             ],
                             [
                                 'attribute' => 'address',
+                                'contentOptions' => [
+                                    'class' => 'text-wrap lh-base'
+                                ],
+                                'captionOptions' => [
+                                    'class' => 'text-wrap lh-base'
+                                ],
                                 'value' => $model->address,
                                 'visible' => (bool)$model->address,
                             ],
                             [
                                 'attribute' => 'comment',
                                 'value' => $model?->comment,
+                                'contentOptions' => [
+                                    'class' => 'text-wrap lh-base'
+                                ],
+                                'captionOptions' => [
+                                    'class' => 'text-wrap lh-base'
+                                ],
                                 'visible' => (bool)$model?->comment,
                             ],
                             [
@@ -128,7 +140,7 @@ $this->params['breadcrumbs'] = [
 
                     <?php Pjax::end(); ?>
                 </div>
-                <div class="col-12">
+                <!-- <div class="col-12">
                     <div class="row gy-3">
                         <?php if ($model->status->id == Status::getStatusId('Новый')) {
                             echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6 col-xxl-4'>" . Html::a('Принять в работу', ['work', 'id' => $model->id], [
@@ -155,7 +167,7 @@ $this->params['breadcrumbs'] = [
                         ?>
                     </div>
 
-                </div>
+                </div> -->
             </div>
         </div>
 

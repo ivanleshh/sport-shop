@@ -75,7 +75,8 @@ class BrandController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if ($model->upload() && $model->save(false)) {
-                Yii::$app->session->setFlash('brand', "Бренд $model->title успешно обновлён");
+                Yii::$app->session->set('bg_color', 'bg-success');
+                Yii::$app->session->set('text', "Бренд $model->title успешно создан");
                 return $this->render('_form', ['model' => $model]);
             }
         }
@@ -105,7 +106,8 @@ class BrandController extends Controller
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if (is_null($model->imageFile) || $model->upload()) {
                 if ($model->save(false)) {
-                    Yii::$app->session->setFlash('brand', "Бренд $model->title успешно обновлён");
+                    Yii::$app->session->set('bg_color', 'bg-success');
+                    Yii::$app->session->set('text', "Бренд $model->title успешно обновлён");
                     return $this->render('_form', ['model' => $model]);
                 }
             }
@@ -130,8 +132,9 @@ class BrandController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->delete();
+        Yii::$app->session->setFlash('danger', "Бренд '$model->title' был удалён");
         return $this->redirect(['index']);
     }
 

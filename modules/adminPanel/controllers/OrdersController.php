@@ -95,7 +95,7 @@ class OrdersController extends Controller
             ]);
         }
         Yii::$app->session->setFlash('error', 'Заказ не найден');
-        // редирект на список заказов пользователя
+        // редирект на список заказов
         return $this->redirect('/admin-panel');
     }
 
@@ -136,10 +136,11 @@ class OrdersController extends Controller
                 if ($model->status_id == Status::getStatusId('В пути')) {
                     $model->status_id = Status::getStatusId('Доставка перенесена');
                     if ($model->save()) {
-                        Yii::$app->session->setFlash('order-delay', "Статус заказа № $model->id изменён на 'Доставка перенесена'");
+                        Yii::$app->session->set('bg_color', 'bg-danger');
+                        Yii::$app->session->set('text', "Статус заказа № $model->id изменён на 'Доставка перенесена'");
                         $model->delay_reason = null;
                         return $this->render('_form-modal', [
-                            'model' => $model,
+                            'model_delay' => $model,
                         ]);
                     }
                 }
@@ -156,10 +157,11 @@ class OrdersController extends Controller
             if ($model->status_id == Status::getStatusId('Новый')) {
                 $model->status_id = Status::getStatusId('В пути');
                 $model->save();
-                Yii::$app->session->setFlash('warning', "Статус заказа № $model->id изменён на 'В пути'");
+                Yii::$app->session->set('bg_color', 'bg-warning');
+                Yii::$app->session->set('text', "Статус заказа № $model->id изменён на 'В пути'");
             }
         }
-        return $this->redirect(['view', 'id' => $id]);
+        return $this->actionIndex();
     }
 
     public function actionSuccess($id)
@@ -168,10 +170,11 @@ class OrdersController extends Controller
             if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
                 $model->status_id = Status::getStatusId('Доставлен');
                 $model->save();
-                Yii::$app->session->setFlash('warning', "Статус заказа № $model->id изменён на 'Доставлен'");
+                Yii::$app->session->set('bg_color', 'bg-success');
+                Yii::$app->session->set('text', "Статус заказа № $model->id изменён на 'Доставлен'");
             }
         }
-        return $this->redirect(['view', 'id' => $id]);
+        return $this->actionIndex();
     }
 
     /**

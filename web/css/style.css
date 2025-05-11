@@ -20,8 +20,31 @@ input:checked {
     border: none;
 }
 
-.toast-container-reviews {
+.toast-container-reviews,
+.toast-container-recently {
     z-index: 100;
+}
+
+.toast.bg-success {
+    background-color: green !important;
+}
+
+.toast.bg-warning {
+    background-color: orange !important;
+}
+
+.toast {
+    animation: toast .5s ease-in;
+}
+
+@keyframes toast {
+    from {
+        transform: translateY(50px);
+    }
+
+    to {
+        transform: translateY(0);
+    }
 }
 
 .product-info-brand img {
@@ -206,10 +229,6 @@ input:checked {
     transition: .5s;
 }
 
-.recently-viewed-slider {
-    max-width: 1272px;
-}
-
 .card .btn-favourite i {
     transition: .5s;
 }
@@ -377,7 +396,7 @@ textarea {
     text-decoration: none;
     color: #888;
     font-size: 14px;
-    font-weight: 500;
+    /* font-weight: 500; */
 }
 
 .breadcrumbs .breadcrumb-nav li i,
