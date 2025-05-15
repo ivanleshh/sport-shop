@@ -141,7 +141,7 @@ $countReviews = $model->countReviews;
                                     <?php
                                     $isCompare = !empty($model->compareProducts[0]->status);
                                     echo Html::a(
-                                        '<i class="bi bi-bar-chart-line me-2"></i>' .
+                                        '<i class="bi bi-bar-chart-line-fill me-2"></i>' .
                                             ($isCompare ? "в сравнении" : "сравнить"),
                                         ['/catalog/compare'],
                                         ['data-id' => $model->id, 'class' => "btn btn-compare w-100 " . ($isCompare ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
@@ -265,7 +265,7 @@ $countReviews = $model->countReviews;
                 <div class="info-body">
                     <h4>Информация по доставке:</h4>
                     <ul class="normal-list">
-                        <li><span>Курьером:</span> завтра, от 150 руб</li>
+                        <li><span>Курьером:</span> завтра, от 300 руб</li>
                         <li><span>В пункте выдачи:</span> <?= Yii::$app->formatter->asDate(date('d-m-Y', strtotime("3 day")), 'php:d.m') ?>, бесплатно</li>
                     </ul>
                 </div>

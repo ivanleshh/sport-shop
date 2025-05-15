@@ -2,8 +2,15 @@
 
 /** @var yii\web\View $this */
 
+use app\widgets\TrandingBrands;
+use app\widgets\TrandingCategories;
+use app\widgets\TrandingProducts;
+use yii\bootstrap5\Html;
+
 $this->title = 'My Yii Application';
 ?>
+
+<?php $this->beginBlock('additional') ?>
 
 <div class="row mt-3">
     <div class="col-lg-8 col-12 custom-padding-right">
@@ -11,37 +18,34 @@ $this->title = 'My Yii Application';
             <!-- Start Hero Slider -->
             <div class="hero-slider">
                 <!-- Start Single Slider -->
-                <div class="single-slider"
-                    style="background-image: url(front/images/hero/slider-bg1.jpg);">
+                <div class="single-slider position-relative">
+                    <div class="position-absolute bottom-0 start-0 w-100 h-100">
+                        <?= Html::img('/images/main-page/slider1.jpg', ['class' => 'slider-img w-100 h-100 object-fit-cover', 'alt' => 'slide']) ?>
+                    </div>
                     <div class="content">
-                        <h2><span>No restocking fee ($35 savings)</span>
-                            M75 Sport Watch
+                        <h2>
+                            NutraBio Labs
                         </h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua.</p>
-                        <h3><span>Now Only</span> $320.99</h3>
+                        <p class="text-light fw-semibold">Поможет вам оптимизировать свой потенциал и укрепить здоровье с помощью высококачественных добавок для повышения производительности и улучшения самочувствия</p>
                         <div class="button">
-                            <a href="product-grids.html" class="btn">Shop Now</a>
+                            <a href="#" class="btn">Перейти</a>
                         </div>
                     </div>
                 </div>
-                <!-- End Single Slider -->
-                <!-- Start Single Slider -->
-                <div class="single-slider"
-                    style="background-image: url(front/images/hero/slider-bg2.jpg);">
+                <div class="single-slider position-relative">
+                    <div class="position-absolute bottom-0 start-0 w-100 h-100">
+                        <?= Html::img('/images/main-page/slider3.jpg', ['class' => 'slider-img w-100 h-100 object-fit-cover', 'alt' => 'slide']) ?>
+                    </div>
                     <div class="content">
-                        <h2><span>Big Sale Offer</span>
-                            Get the Best Deal on CCTV Camera
+                        <h2 class="text-danger">
+                            MuscleTech
                         </h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                            incididunt ut labore et dolore magna aliqua.</p>
-                        <h3><span>Combo Only:</span> $590.00</h3>
+                        <p class="text-light fw-semibold">Откройте для себя полную линейку MuscleTech, от энергетических предтренировочных комплексов, креатина для увеличения силы до белков для наращивания мышечной массы.</p>
                         <div class="button">
-                            <a href="product-grids.html" class="btn">Shop Now</a>
+                            <a href="#" class="btn">Перейти</a>
                         </div>
                     </div>
                 </div>
-                <!-- End Single Slider -->
             </div>
             <!-- End Hero Slider -->
         </div>
@@ -50,14 +54,16 @@ $this->title = 'My Yii Application';
         <div class="row">
             <div class="col-lg-12 col-md-6 col-12 md-custom-padding">
                 <!-- Start Small Banner -->
-                <div class="hero-small-banner"
-                    style="background-image: url('front/images/hero/slider-bnr.jpg');">
+                <div class="hero-small-banner position-relative">
+                    <div class="position-absolute bottom-0 start-0 w-100 h-100">
+                        <?= Html::a(Html::img('/images/main-page/slider2.jpg', ['class' => 'slider-img w-100 h-100 object-fit-cover', 'alt' => 'slide']), [''], ['class' => 'w-100 h-100']) ?>
+                    </div>
                     <div class="content">
-                        <h2>
-                            <span>New line required</span>
-                            iPhone 12 Pro Max
+                        <h2 class="text-light">
+                            <span class="text-success fw-bold">Теперь в наличии</span>
+                            Gold Standart 100% Whey
                         </h2>
-                        <h3>$259.99</h3>
+                        <h3 class="text-light">5199 ₽</h3>
                     </div>
                 </div>
                 <!-- End Small Banner -->
@@ -66,10 +72,10 @@ $this->title = 'My Yii Application';
                 <!-- Start Small Banner -->
                 <div class="hero-small-banner style2">
                     <div class="content">
-                        <h2>Weekly Sale!</h2>
-                        <p>Saving up to 50% off all online store items this week.</p>
+                        <h2>Распродажа только эту неделю!</h2>
+                        <p class="text-secondary">Скидки до 50% на все товары интернет-магазина</p>
                         <div class="button">
-                            <a class="btn" href="product-grids.html">Shop Now</a>
+                            <a class="btn" href="/catalog">Перейти</a>
                         </div>
                     </div>
                 </div>
@@ -79,363 +85,75 @@ $this->title = 'My Yii Application';
     </div>
 </div>
 
-<?php $this->beginBlock('additional') ?>
-    <!-- Start Trending Product Area -->
-    <section class="trending-product section">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="section-title">
-                        <h2>Trending Product</h2>
-                        <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                            suffered alteration in some form.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="front/images/products/product-1.jpg" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Watches</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Xiaomi Mi Band 5</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$199.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="front/images/products/product-2.jpg" alt="#">
-                            <span class="sale-tag">-25%</span>
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Speaker</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Big Power Sound Speaker</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><span>5.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$275.00</span>
-                                <span class="discount-price">$300.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="front/images/products/product-3.jpg" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Camera</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">WiFi Security Camera</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><span>5.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$399.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="front/images/products/product-4.jpg" alt="#">
-                            <span class="new-tag">New</span>
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Phones</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">iphone 6x plus</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><span>5.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$400.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="front/images/products/product-5.jpg" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Headphones</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Wireless Headphones</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><span>5.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$350.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="front/images/products/product-6.jpg" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Speaker</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Mini Bluetooth Speaker</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$70.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="front/images/products/product-7.jpg" alt="#">
-                            <span class="sale-tag">-50%</span>
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Headphones</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">PX7 Wireless Headphones</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star"></i></li>
-                                <li><span>4.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$100.00</span>
-                                <span class="discount-price">$200.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-                <div class="col-lg-3 col-md-6 col-12">
-                    <!-- Start Single Product -->
-                    <div class="single-product">
-                        <div class="product-image">
-                            <img src="front/images/products/product-8.jpg" alt="#">
-                            <div class="button">
-                                <a href="product-details.html" class="btn"><i class="lni lni-cart"></i> Add to Cart</a>
-                            </div>
-                        </div>
-                        <div class="product-info">
-                            <span class="category">Laptop</span>
-                            <h4 class="title">
-                                <a href="product-grids.html">Apple MacBook Air</a>
-                            </h4>
-                            <ul class="review">
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><i class="lni lni-star-filled"></i></li>
-                                <li><span>5.0 Review(s)</span></li>
-                            </ul>
-                            <div class="price">
-                                <span>$899.00</span>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Single Product -->
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Trending Product Area -->
+<!-- Start Trending Categories Area -->
+<?= TrandingCategories::widget() ?>
+<!-- End Trending Categories Area -->
 
-    <!-- Start Call Action Area -->
-    <section class="call-action section">
-        <div class="container">
-            <div class="row ">
-                <div class="col-lg-8 offset-lg-2 col-12">
-                    <div class="inner">
-                        <div class="content">
-                            <h2 class="wow fadeInUp" data-wow-delay=".4s">Currently You are using free<br>
-                                Lite version of ShopGrids</h2>
-                            <p class="wow fadeInUp" data-wow-delay=".6s">Please, purchase full version of the template
-                                to get all pages,<br> features and commercial license.</p>
-                            <div class="button wow fadeInUp" data-wow-delay=".8s">
-                                <a href="javascript:void(0)" class="btn">Purchase Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Call Action Area -->
+<!-- Start Trending Brands Area -->
+<?= TrandingBrands::widget() ?>
+<!-- End Trending Brands Area -->
 
-    <!-- Start Banner Area -->
-    <section class="banner section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner" style="background-image:url('front/images/banner/banner-1-bg.jpg')">
-                        <div class="content">
-                            <h2>Smart Watch 2.0</h2>
-                            <p>Space Gray Aluminum Case with <br>Black/Volt Real Sport Band </p>
-                            <div class="button">
-                                <a href="product-grids.html" class="btn">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="single-banner custom-responsive-margin"
-                        style="background-image:url('front/images/banner/banner-2-bg.jpg')">
-                        <div class="content">
-                            <h2>Smart Headphone</h2>
-                            <p>Lorem ipsum dolor sit amet, <br>eiusmod tempor
-                                incididunt ut labore.</p>
-                            <div class="button">
-                                <a href="product-grids.html" class="btn">Shop Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Start Call Action Area -->
+<section class="call-action section position-relative py-4 px-2 bg-warning">
+    <!-- <div class="position-absolute bottom-0 start-0 w-100 h-100">
+        <?= Html::img('/images/main-page/call-to-action.png', ['class' => 'slider-img w-100 h-100 object-fit-cover', 'alt' => 'banner']) ?>
+    </div> -->
+    <div class="content">
+        <h2 class="wow">Начни путь к своей лучшей форме уже сегодня</h2>
+        <p class="fw-semibold">Выбери добавку под индивидуальные цели!</p>
+        <div class="button">
+            <a href="/catalog" class="btn">Перейти</a>
         </div>
-    </section>
-    <!-- End Banner Area -->
+    </div>
+</section>
+<!-- End Call Action Area -->
 
-    <!-- Start Shipping Info -->
-    <section class="shipping-info">
-        <div class="container">
-            <ul>
-                <!-- Free Shipping -->
-                <li>
-                    <div class="media-icon">
-                        <i class="lni lni-delivery"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>Free Shipping</h5>
-                        <span>On order over $99</span>
-                    </div>
-                </li>
-                <!-- Money Return -->
-                <li>
-                    <div class="media-icon">
-                        <i class="lni lni-support"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>24/7 Support.</h5>
-                        <span>Live Chat Or Call.</span>
-                    </div>
-                </li>
-                <!-- Support 24/7 -->
-                <li>
-                    <div class="media-icon">
-                        <i class="lni lni-credit-cards"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>Online Payment.</h5>
-                        <span>Secure Payment Services.</span>
-                    </div>
-                </li>
-                <!-- Safe Payment -->
-                <li>
-                    <div class="media-icon">
-                        <i class="lni lni-reload"></i>
-                    </div>
-                    <div class="media-body">
-                        <h5>Easy Return.</h5>
-                        <span>Hassle Free Shopping.</span>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </section>
-    <!-- End Shipping Info -->
+<!-- Start Shipping Info -->
+<section class="shipping-info">
+    <div class="container">
+        <ul>
+            <!-- Free Shipping -->
+            <li>
+                <div class="media-icon">
+                    <i class="lni lni-delivery text-warning"></i>
+                </div>
+                <div class="media-body">
+                    <h5>Бесплатная доставка</h5>
+                    <span>При заказе от 2000 ₽</span>
+                </div>
+            </li>
+            <!-- Money Return -->
+            <li>
+                <div class="media-icon">
+                    <i class="lni lni-bar-chart text-warning"></i>
+                </div>
+                <div class="media-body">
+                    <h5>Сравнение товаров</h5>
+                    <span>Выбирайте по характеристикам</span>
+                </div>
+            </li>
+            <!-- Support 24/7 -->
+            <li>
+                <div class="media-icon">
+                    <i class="lni lni-credit-cards text-warning"></i>
+                </div>
+                <div class="media-body">
+                    <h5>Онлайн оплата</h5>
+                    <span>Безопасные платежные сервисы</span>
+                </div>
+            </li>
+            <!-- Safe Payment -->
+            <li>
+                <div class="media-icon">
+                    <i class="lni lni-reload text-warning"></i>
+                </div>
+                <div class="media-body">
+                    <h5>Бесплатный возврат</h5>
+                    <span>Покупки без проблем!</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+<!-- End Shipping Info -->
 <?php $this->endBlock() ?>

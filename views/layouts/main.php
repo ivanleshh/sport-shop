@@ -45,19 +45,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
       </p>
     <![endif]-->
 
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader-inner">
-            <div class="preloader-icon">
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-    </div>
-    <!-- /End Preloader -->
-
     <!-- Start Header Area -->
-    <header class="header navbar-area">
+    <header class="header navbar-area position-relative">
         <!-- Start Topbar -->
         <div class="topbar">
             <div class="container">
@@ -74,7 +63,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             <ul class="user-login">
 
                                 <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
-                                    <li><a href="/admin-panel">Панель администратора</a></li>
+                                    <li class="d-none d-sm-inline-block"><a href="/admin-panel">Панель Администратора</a></li>
                                 <?php endif; ?>
 
                                 <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
@@ -146,7 +135,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         </div>
         <!-- End Header Middle -->
         <!-- Start Header Bottom -->
-        <div class="container">
+        <div class="container header-bottom">
             <div class="row align-items-center">
                 <div class="col-lg-8 col-md-6 col-12">
                     <div class="nav-inner">
@@ -177,48 +166,22 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             </button>
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul id="nav" class="navbar-nav ms-auto">
+                                    <li class="nav-item">
+                                        <a href="/">Главная</a>
+                                    </li>
                                     <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
                                         <li class="nav-item">
                                             <a href="/admin-panel">Панель администратора</a>
                                         </li>
                                     <?php endif; ?>
-                                    <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-2" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Pages</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-2">
-                                            <li class="nav-item"><a href="about-us.html">About Us</a></li>
-                                            <li class="nav-item"><a href="faq.html">Faq</a></li>
-                                            <li class="nav-item"><a href="login.html">Login</a></li>
-                                            <li class="nav-item"><a href="register.html">Register</a></li>
-                                            <li class="nav-item"><a href="mail-success.html">Mail Success</a></li>
-                                            <li class="nav-item"><a href="404.html">404 Error</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-3" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Shop</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-3">
-                                            <li class="nav-item"><a href="product-grids.html">Shop Grid</a></li>
-                                            <li class="nav-item"><a href="product-list.html">Shop List</a></li>
-                                            <li class="nav-item"><a href="product-details.html">shop Single</a></li>
-                                            <li class="nav-item"><a href="cart.html">Cart</a></li>
-                                            <li class="nav-item"><a href="checkout.html">Checkout</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="dd-menu collapsed" href="javascript:void(0)" data-bs-toggle="collapse"
-                                            data-bs-target="#submenu-1-4" aria-controls="navbarSupportedContent"
-                                            aria-expanded="false" aria-label="Toggle navigation">Blog</a>
-                                        <ul class="sub-menu collapse" id="submenu-1-4">
-                                            <li class="nav-item"><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a>
-                                            </li>
-                                            <li class="nav-item"><a href="blog-single.html">Blog Single</a></li>
-                                            <li class="nav-item"><a href="blog-single-sidebar.html">Blog Single
-                                                    Sibebar</a></li>
-                                        </ul>
-                                    </li>
+                                    <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
+                                        <li class="nav-item">
+                                            <a href="/personal">Личный кабинет</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="/personal/orders">Мои заказы</a>
+                                        </li>
+                                    <?php endif; ?>
                                 </ul>
                             </div> <!-- navbar collapse -->
                         </nav>
@@ -227,38 +190,36 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 </div>
                 <div class="col-lg-4 col-md-6 col-12">
                     <!-- Start Nav Social -->
-                    <?php if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) : ?>
-                        <div class="nav-social">
-                            <ul>
-                                <li>
-                                    <?= Html::a('<i class="bi bi-bar-chart-line"></i>', ['/personal/compare-products'], ['class' => 'text-decoration-none']) ?>
-                                </li>
-                                <li>
-                                    <?= Html::a('<i class="bi bi-bag-heart-fill"></i>', ['/personal/favourite-products'], ['class' => 'text-decoration-none']) ?>
-                                </li>
-                                <li class="position-relative">
-                                    <?= Html::a(
-                                        '<i class="bi bi-cart4"></i>',
-                                        ['/cart/index'],
-                                        ['id' => 'btn-cart']
-                                    ) ?>
+                    <div class="nav-social">
+                        <ul>
+                            <li>
+                                <?= Html::a('<i class="bi bi-bar-chart-line"></i>', ['/personal/compare-products']) ?>
+                            </li>
+                            <li>
+                                <?= Html::a('<i class="bi bi-bag-heart-fill"></i>', ['/personal/favourite-products'], ['class' => 'text-decoration-none']) ?>
+                            </li>
+                            <li class="position-relative">
+                                <?= Html::a(
+                                    '<i class="bi bi-cart4"></i>',
+                                    [!Yii::$app->user->isGuest ? '/cart/index' : '/site/login'],
+                                    ['id' => 'btn-cart']
+                                ) ?>
 
-                                    <span class="cart-item-count">
-                                        <? Pjax::begin([
-                                            'id' => 'cart-item-count',
-                                            'enablePushState' => false,
-                                            'timeout' => 5000,
-                                            'options' => [
-                                                'data-url' => '/cart/item-count',
-                                            ]
-                                        ]) ?>
-                                        <?= Cart::getItemCount() ?>
-                                        <? Pjax::end() ?>
-                                    </span>
-                                </li>
-                            </ul>
-                        </div>
-                    <?php endif; ?>
+                                <span class="cart-item-count">
+                                    <? Pjax::begin([
+                                        'id' => 'cart-item-count',
+                                        'enablePushState' => false,
+                                        'timeout' => 5000,
+                                        'options' => [
+                                            'data-url' => '/cart/item-count',
+                                        ]
+                                    ]) ?>
+                                    <?= Cart::getItemCount() ?>
+                                    <? Pjax::end() ?>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
                     <!-- End Nav Social -->
                 </div>
             </div>
@@ -308,7 +269,18 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <?php } ?>
             <!-- End Breadcrumbs -->
 
-            <?= "<div class='mt-3'>" . Alert::widget() . "</div>" ?>
+            <!-- Preloader -->
+            <!-- <div class="preloader">
+                <div class="preloader-inner">
+                    <div class="preloader-icon">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div> -->
+            <!-- /End Preloader -->
+
+            <div class="mt-3"><?php echo Alert::widget() ?></div>
 
             <?= $content ?>
 
@@ -542,6 +514,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </body>
 
 <?= Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin ? $this->registerJsFile("/front/js/bootstrap.min.js") : '' ?>
+<?= $this->registerJsFile("/front/js/header.js") ?>
 
 </html>
 <?php $this->endPage() ?>

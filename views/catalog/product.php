@@ -2,6 +2,7 @@
 
 use app\models\Product;
 use coderius\swiperslider\SwiperSlider;
+use kartik\rating\StarRating;
 use yii\bootstrap5\Html;
 
 $navigation = true;
@@ -11,7 +12,21 @@ if (isset($nav)) {
 
 ?>
 <div class="card rounded-3 h-100" style="width: 18rem; height: 26rem !important;">
-  <div class="card-body d-flex gap-3 justify-content-between flex-column">
+  <div class="card-body position-relative d-flex gap-3 justify-content-between flex-column">
+
+    <div class="position-absolute top-0 end-0 px-2 z-3">
+      <?= StarRating::widget([
+        'name' => 'mediumStars',
+        'value' => $model->mediumStars,
+        'pluginOptions' => [
+          'theme' => 'krajee-uni',
+          'readonly' => true,
+          'showClear' => false,
+          'showCaption' => false,
+          'size' => 'xs',
+        ],
+      ]); ?>
+    </div>
 
     <?php if ($navigation && count($model->productImages) > 1) : ?>
       <?= SwiperSlider::widget([
@@ -54,7 +69,9 @@ if (isset($nav)) {
 
     <div class="d-flex flex-column gap-2 border-top pt-2">
 
-      <span class="fs-6 text-dark"><?= $model->title ?></span>
+      <div>
+        <?= Html::a($model->title, ['/product/view', 'id' => $model->id], ['class' => 'fs-6 text-dark']) ?>
+      </div>
 
       <div class="d-flex gap-2 justify-content-between align-items-center">
 
@@ -65,7 +82,7 @@ if (isset($nav)) {
 
             echo "<div>" .
               Html::a(
-                "<i class='bi bi-bar-chart-line " . (empty($model->compareProducts[0]->status) ? 'text-secondary' : 'text-warning') . "'></i>",
+                "<i class='bi bi-bar-chart-line-fill " . (empty($model->compareProducts[0]->status) ? 'text-secondary' : 'text-warning') . "'></i>",
                 ['/catalog/compare'],
                 ['data-id' => $model->id, 'class' => 'btn-compare text-decoration-none']
               ) .

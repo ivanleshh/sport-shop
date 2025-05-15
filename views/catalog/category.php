@@ -5,8 +5,8 @@ use yii\bootstrap5\Html;
 use yii\helpers\VarDumper;
 
 ?>
-<div class="card <?= isset($model->parent_id) ? "rounded-4 card-category" : 'border-0' ?>">
-    <div class="card-body <?= isset($model->parent_id) ? "rounded-4 p-0" : 'border-0 p-0' ?>">
+<div class="card h-auto <?= isset($model->parent_id) ? "rounded-4 card-category p-2" : 'border-0 p-0' ?>">
+    <div class="card-body p-0 <?= isset($model->parent_id) ? "rounded-4" : 'border-0' ?>">
         <?php
             echo Html::a(
                 (isset($model->parent_id)
@@ -16,7 +16,7 @@ use yii\helpers\VarDumper;
                 "<h5 class='card-title ellipsis" . (isset($model->parent_id) ? 
                 " fs-6 mb-0 fw-medium" : ' border-bottom border-3 border-danger pe-2') . "'>$model->title</h5>",
                 ['view', 'id' => $model->id],
-                ['class' => 'd-flex gap-3 h-100 ' . (isset($model->parent_id) ? 'justify-content-center' : '') . ' align-items-center link-dark text-decoration-none p-2', 'data-pjax' => 0]
+                ['class' => 'd-flex gap-2 h-100 ' . (isset($model->parent_id) ? 'justify-content-center' : '') . ' align-items-center link-dark text-decoration-none px-2', 'data-pjax' => 0]
             )
         ?>
 

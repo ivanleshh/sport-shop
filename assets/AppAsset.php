@@ -34,8 +34,8 @@ class AppAsset extends AssetBundle
         'js/toast.js',
         "front/js/tiny-slider.js",
         "front/js/glightbox.min.js",
-        "front/js/main.js",
         "front/js/other.js",
+        "front/js/main.js",
     ];
     public $depends = [
         'yii\web\YiiAsset',

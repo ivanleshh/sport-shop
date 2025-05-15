@@ -27,7 +27,7 @@ FontAwesomeAsset::register($this);
     ]); ?>
 
     <div class="m-0 row col-12">
-        <div class="col-12 col-xl-6 mt-2">
+        <div class="col-12 col-xl-7 mt-2">
             <div class="row">
                 <div class="col-12 mb-3">
                     <?= FileInput::widget([
@@ -92,7 +92,7 @@ FontAwesomeAsset::register($this);
                 </div>
             </div>
         </div>
-        <div class="mt-3 mt-md-1 col-12 col-xl-6">
+        <div class="mt-3 mt-md-1 col-12 col-xl-5">
             <h4 class="fs-5">Характеристики товара</h4>
             <?= Html::hiddenInput('product_id', $model->id ?: 0, ['id' => 'product-id']) ?>
             <div id="block-props" class="d-flex flex-wrap gap-3 border rounded-4 p-3 mt-3 characters-block h-auto"></div>
