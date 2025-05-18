@@ -56,22 +56,22 @@ use yii\bootstrap5\Html;
       </div>
     <?php endif; ?>
 
-    <div class="d-flex flex-column gap-2 border-top">
-      <div class="d-flex justify-content-between align-items-center mt-3">
-        <span class="text-secondary"><?= $model->product->category->title ?></span>
-        <div>
-          <?php
-          $isCompare = !empty($model->product->compareProducts[0]->status);
-          echo Html::a(
-            $isCompare ? "в сравнении" : "сравнить",
+    <div class="d-flex flex-column gap-2 border-top mt-3 pt-2">
+
+      <span class="fs-6 text-dark"><?= $model->product->title ?></span>
+
+      <div class="d-flex justify-content-between">
+        <span class="card-text text-dark fw-bold fs-6"><?= $model->product->price ?> ₽</span>
+        <div class="me-2">
+          <?= Html::a(
+            "<i class='bi bi-bar-chart-line-fill " . (empty($model->product->compareProducts[0]->status) ? ' text-secondary' : 'text-warning') . "'></i>",
             ['/catalog/compare'],
-            ['data-id' => $model->product->id, 'class' => "btn-compare btn btn-sm " . ($isCompare ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
+            ['data-id' => $model->product->id, 'class' => 'btn-compare text-decoration-none']
           ) ?>
         </div>
       </div>
-      <span class="fs-6 text-dark"><?= $model->product->title ?></span>
 
-      <span class="card-text text-dark fw-bold fs-6"><?= $model->product->price ?> ₽</span>
+
 
       <?php if (isset($model->product->cartItems[0])) : ?>
         <div class="d-flex align-items-center gap-3">

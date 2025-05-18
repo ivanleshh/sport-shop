@@ -3411,7 +3411,7 @@ top: 2px;
 
 .call-action .content .button .btn:hover {
   color: #fff;
-  background: rgb(255, 179, 36);
+  background: rgb(84, 84, 84);
 }
 
 /*======================================
@@ -4694,7 +4694,7 @@ top: 2px;
 }
 
 .footer .footer-bottom .socila li a:hover {
-  background-color: #0167F3;
+  background-color: orange;
   color: #fff;
   border-color: transparent;
 }

@@ -5,7 +5,7 @@ use yii\bootstrap5\Html;
 use yii\helpers\VarDumper;
 
 ?>
-<div class="card h-auto <?= isset($model->parent_id) ? "rounded-4 card-category p-2" : 'border-0 p-0' ?>">
+<div class="card <?= isset($model->parent_id) ? "rounded-4 card-category" : 'border-0' ?>">
     <div class="card-body p-0 <?= isset($model->parent_id) ? "rounded-4" : 'border-0' ?>">
         <?php
             echo Html::a(

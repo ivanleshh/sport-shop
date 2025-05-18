@@ -131,7 +131,7 @@ $this->params['breadcrumbs'] = [
         <div class="col-12 col-md-6 order-3 order-md-1">
             <div class="d-flex gap-3 align-items-center justify-content-between py-2 my-3 border-top border-bottom flex-wrap">
                 <div>
-                    <a class="text-decoration-none text-danger" href="/admin-panel/orders">
+                    <a class="text-decoration-none text-danger" href="/personal/orders">
                         <i class="bi bi-arrow-return-left"></i>
                         Вернуться к заказам
                     </a>

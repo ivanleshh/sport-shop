@@ -8,14 +8,6 @@ use yii\bootstrap5\Html;
 
   <div class="position-absolute d-flex gap-2 justify-content-end w-100 px-2 py-1">
     <?= Html::a(
-      "<i class='bi bi-suit-heart-fill fs-6 " . (empty($model->product->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
-      ['/catalog/favourite'],
-      ['data' => [
-        'id' => $model->product->id,
-        'category' => $model->product->category->id
-      ], 'class' => 'btn-favourite text-decoration-none align-self-end']
-    ) ?>
-    <?= Html::a(
       '<i class="bi bi-trash3-fill text-danger fs-6"></i>',
       ['index', 'id' => $model->id],
       ['data' => ['id' => $model->id, 'pjax' => 0], 'class' => 'btn-compare text-decoration-none align-self-end']
@@ -32,10 +24,22 @@ use yii\bootstrap5\Html;
     </div>
 
     <div class="d-flex flex-column gap-2 border-top">
-      <div class="d-flex justify-content-between align-items-center mt-3 gap-3">
-        <span class="fs-6 text-dark"><?= $model->product->title ?></span>
-        <span class="card-text text-dark text-nowrap fw-bold fs-6"><?= $model->product->price ?> ₽</span>
+      <span class="fs-6 text-dark mt-2"><?= $model->product->title ?></span>
+      <div class="d-flex justify-content-between">
+        <span class="card-text text-dark text-nowrap fw-bold"><?= $model->product->price ?> ₽</span>
+        <div class="me-2">
+          <?= Html::a(
+            "<i class='bi bi-suit-heart-fill " . (empty($model->product->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
+            ['/catalog/favourite'],
+            ['data' => [
+              'id' => $model->product->id,
+              'category' => $model->product->category->id
+            ], 'class' => 'btn-favourite text-decoration-none align-self-end']
+          ) ?>
+        </div>
+
       </div>
+
 
       <?php if (isset($model->product->cartItems[0])) : ?>
         <div class="d-flex align-items-center gap-3">

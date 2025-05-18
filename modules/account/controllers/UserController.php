@@ -2,8 +2,12 @@
 
 namespace app\modules\account\controllers;
 
+use app\models\CompareProducts;
+use app\models\FavouriteProducts;
+use app\models\Orders;
 use app\models\User;
 use app\modules\account\models\UserSearch;
+use Faker\Provider\ar_EG\Company;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -43,6 +47,14 @@ class UserController extends Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
+        $orders = Orders::find()
+            ->where(['user_id' => Yii::$app->user->id])
+            ->orderBy(['created_at' => SORT_DESC])
+            ->limit(4)
+            ->all();
+        $countFavourites = FavouriteProducts::getCountAdded();
+        $countCompare = CompareProducts::getCountAdded();
+
         $model = null;
         if ($dataProvider->count) {
             $model = $this->findModel($dataProvider->models[0]->id);
@@ -51,6 +63,9 @@ class UserController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model' => $model,
+            'orders' => $orders,
+            'countFavourites' => $countFavourites,
+            'countCompare' => $countCompare,
         ]);
     }
 

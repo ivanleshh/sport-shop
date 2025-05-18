@@ -73,4 +73,9 @@ class CompareProducts extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
+
+    public static function getCountAdded()
+    {
+        return self::find()->where(['user_id' => Yii::$app->user->id, 'status' => 1])->count();
+    }
 }

@@ -124,7 +124,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             <div class="nav-hotline-ic">
                                 <i class="bi bi-telephone-fill"></i>
                                 <h3>Горячая линия:
-                                    <span>(+100) 123 456 7890</span>
+                                    <span>+7(123)-456-78-90</span>
                                 </h3>
                             </div>
                         </div>
@@ -310,14 +310,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="col-lg-9 col-md-8 col-12 align-self-center gx-3">
                             <div class="footer-newsletter gap-3">
                                 <h4 class="title">
-                                    Subscribe to our Newsletter
-                                    <span>Get all the latest information, Sales and Offers.</span>
+                                    Подпишитесь на рассылку
+                                    <span>Узнавайте первыми о новинках, скидках и многом другом</span>
                                 </h4>
                                 <div class="newsletter-form-head">
                                     <form action="#" method="get" target="_blank" class="newsletter-form">
-                                        <input name="EMAIL" placeholder="Email address here..." type="email">
+                                        <input name="EMAIL" placeholder="Ваш e-mail адрес" type="email">
                                         <div class="button">
-                                            <button class="btn">Subscribe<span class="dir-part"></span></button>
+                                            <button class="btn">Подписаться<span class="dir-part"></span></button>
                                         </div>
                                     </form>
                                 </div>
@@ -332,69 +332,53 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="footer-middle">
             <div class="container">
                 <div class="bottom-inner">
-                    <div class="row">
+                    <div class="row justify-content-center">
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer f-contact">
-                                <h3>Get In Touch With Us</h3>
-                                <p class="phone">Phone: +1 (900) 33 169 7720</p>
+                                <h3>Как с нами связаться</h3>
+                                <p class="phone">Телефон: +7(123)-456-78-90</p>
                                 <ul>
-                                    <li><span>Monday-Friday: </span> 9.00 am - 8.00 pm</li>
-                                    <li><span>Saturday: </span> 10.00 am - 6.00 pm</li>
+                                    <li><span>Понедельник-Пятница: </span> 09:00 - 21.00 pm</li>
+                                    <li><span>Суббота: </span> 10:00 - 20:00 pm</li>
                                 </ul>
-                                <p class="mail">
-                                    <a href="mailto:support@shopgrids.com">support@shopgrids.com</a>
-                                </p>
-                            </div>
-                            <!-- End Single Widget -->
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-12">
-                            <!-- Single Widget -->
-                            <div class="single-footer our-app">
-                                <h3>Our Mobile App</h3>
-                                <ul class="app-btn">
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <i class="lni lni-apple"></i>
-                                            <span class="small-title">Download on the</span>
-                                            <span class="big-title">App Store</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <i class="lni lni-play-store"></i>
-                                            <span class="small-title">Download on the</span>
-                                            <span class="big-title">Google Play</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                                <p class="mail">proteinPioneerShop@yandex.ru</p>
                             </div>
                             <!-- End Single Widget -->
                         </div>
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer f-link">
-                                <h3>Information</h3>
+                                <h3>Популярные категории</h3>
                                 <ul>
-                                    <li><a href="javascript:void(0)">About Us</a></li>
-                                    <li><a href="javascript:void(0)">Contact Us</a></li>
-                                    <li><a href="javascript:void(0)">Downloads</a></li>
-                                    <li><a href="javascript:void(0)">Sitemap</a></li>
-                                    <li><a href="javascript:void(0)">FAQs Page</a></li>
+                                    <li><a href="javascript:void(0)">Протеины</a></li>
+                                    <li><a href="javascript:void(0)">Батончики</a></li>
+                                    <li><a href="javascript:void(0)">Гейнеры</a></li>
+                                    <li><a href="javascript:void(0)">Креатин</a></li>
+                                    <li><a href="javascript:void(0)">Жирозжигатели</a></li>
                                 </ul>
                             </div>
                             <!-- End Single Widget -->
                         </div>
-                        <div class="col-lg-3 col-md-6 col-12">
+                        <div class="col-lg-2 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer f-link">
-                                <h3>Shop Departments</h3>
+                                <h3>Страницы</h3>
                                 <ul>
-                                    <li><a href="javascript:void(0)">Computers & Accessories</a></li>
-                                    <li><a href="javascript:void(0)">Smartphones & Tablets</a></li>
-                                    <li><a href="javascript:void(0)">TV, Video & Audio</a></li>
-                                    <li><a href="javascript:void(0)">Cameras, Photo & Video</a></li>
-                                    <li><a href="javascript:void(0)">Headphones</a></li>
+                                    <li><a href="javascript:void(0)">Главная</a></li>
+                                    <li><a href="javascript:void(0)">Каталог</a></li>
+                                    <?php if (!Yii::$app->user->isGuest) : ?>
+                                        <?php if (Yii::$app->user->identity->isAdmin) : ?>
+                                            <li><a href="/admin-panel">Панель администратора</a></li>
+                                        <?php else : ?>
+                                            <li><a href="/personal">Личный кабинет</a></li>
+                                            <li><a href="/personal/favourite-products">Избранное</a></li>
+                                            <li><a href="/personal/compare-products">Сравнение товаров</a></li>
+                                        <?php endif; ?>
+                                    <?php else : ?>
+                                        <li><a href="/site/login">Вход</a></li>
+                                        <li><a href="/site/register">Регистрация</a></li>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                             <!-- End Single Widget -->
@@ -411,20 +395,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <div class="row align-items-center">
                         <div class="col-lg-4 col-12">
                             <div class="payment-gateway">
-                                <span>We Accept:</span>
+                                <span>Мы принимаем:</span>
                                 <img src="/front/images/footer/credit-cards-footer.png" alt="#">
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="copyright">
-                                <p>Developed by<a href="https://graygrids.com/" rel="nofollow"
-                                        target="_blank">Javalets</a></p>
+                                <p>Разработано by <span class="text-warning fw-bold" href="https://graygrids.com/" rel="nofollow"
+                                        target="_blank">Javalets</span></p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
                             <ul class="socila">
                                 <li>
                                     <span>Мы в соц.сетях:</span>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="lni lni-vk"></i></a>
                                 </li>
                                 <li>
                                     <a href="#"><i class="bi bi-github w-100"></i></a>

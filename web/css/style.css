@@ -20,7 +20,7 @@
     transition: .5s;
 }
 
-.header_fixed {
+.header-bottom.header_fixed {
     position: fixed;
     top: 0;
     left: 0;
@@ -29,14 +29,15 @@
     background-color: #ffffff;
     border: 1px solid rgb(204, 204, 204);
     border-radius: 0 0 1rem 1rem;
-    animation: header .5s ease-in-out ;
-    transition: animation 1s;
+    animation: header .5s ease-in-out;
 }
 
 @keyframes header {
     from {
         transform: translateY(-100%);
-    } to {
+    }
+
+    to {
         transform: translateY(0);
     }
 }
@@ -87,6 +88,10 @@ input:checked {
 .product-info-brand img {
     max-width: 125px;
     max-height: 75px;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: transparent !important;
 }
 
 .nav-link form {

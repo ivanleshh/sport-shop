@@ -70,7 +70,7 @@ if (isset($nav)) {
     <div class="d-flex flex-column gap-2 border-top pt-2">
 
       <div>
-        <?= Html::a($model->title, ['/product/view', 'id' => $model->id], ['class' => 'fs-6 text-dark']) ?>
+        <?= Html::a($model->title, ['/product/view', 'id' => $model->id], ['class' => 'fs-6 text-dark', 'data-pjax' => 0]) ?>
       </div>
 
       <div class="d-flex gap-2 justify-content-between align-items-center">

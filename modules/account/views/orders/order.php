@@ -30,7 +30,7 @@ use yii\bootstrap5\Html;
     <div class="col-12 col-sm-6 col-lg-7 d-flex flex-column align-items-center justify-content-end gap-2">
       <?php if (isset($model->date_delivery)) {
         echo "
-          <div class='d-flex gap-2 flex-wrap justify-content-end'>Дата и время доставки: <div class='fw-bold'>"
+          <div class='d-flex gap-2 flex-wrap justify-content-center'>Дата и время доставки: <div class='fw-bold'>"
           . Yii::$app->formatter->asDate($model->date_delivery, 'php:d-m-Y')
           . "<span class='ms-2'>" . Yii::$app->formatter->asTime($model->time_delivery, 'php:H:i') .
           "</span></div>
