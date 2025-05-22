@@ -40,10 +40,10 @@ $this->params['breadcrumbs'][] = $model->title;
                 'clientOptions' => [
                     'loop' => false,
                     'navigation' => false,
-                    'autoplay' => [
-                        'delay' => 3000,
-                        'disableOnInteraction' => false,
-                    ],
+                    // 'autoplay' => [
+                    //     'delay' => 3000,
+                    //     'disableOnInteraction' => false,
+                    // ],
                     'breakpoints' => [
                         0 => [
                             'slidesPerView' => 1.5,
@@ -68,7 +68,8 @@ $this->params['breadcrumbs'][] = $model->title;
                 ],
                 'options' => [
                     'styles' => [
-                        \coderius\swiperslider\SwiperSlider::CONTAINER => ["height" => "60px"],
+                        \coderius\swiperslider\SwiperSlider::SLIDE => ["height" => "75%"],
+                        \coderius\swiperslider\SwiperSlider::WRAPPER => ["height" => "50px"],
                     ],
                 ],
 

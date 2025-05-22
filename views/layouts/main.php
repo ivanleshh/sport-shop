@@ -169,6 +169,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     <li class="nav-item">
                                         <a href="/">Главная</a>
                                     </li>
+                                    <li class="nav-item d-lg-none">
+                                        <a href="/catalog">Каталог</a>
+                                    </li>
                                     <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
                                         <li class="nav-item">
                                             <a href="/admin-panel">Панель администратора</a>

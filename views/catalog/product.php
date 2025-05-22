@@ -11,7 +11,7 @@ if (isset($nav)) {
 }
 
 ?>
-<div class="card rounded-3 h-100" style="width: 18rem; height: 26rem !important;">
+<div class="card rounded-3 h-100" style="width: 18rem;">
   <div class="card-body position-relative d-flex gap-3 justify-content-between flex-column">
 
     <div class="position-absolute top-0 end-0 px-2 z-3">
