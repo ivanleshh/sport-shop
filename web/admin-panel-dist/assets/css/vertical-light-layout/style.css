@@ -14457,7 +14457,7 @@ textarea.is-invalid.asColorPicker-input {
 .settings-panel .color-tiles .tiles.success,
 .swal2-modal .swal2-buttonswrapper .swal2-styled.swal2-confirm {
   --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-success-rgb), var(--bs-bg-opacity)) !important;
+  background-color: green !important;
 }
 
 .bg-info,

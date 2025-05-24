@@ -29,7 +29,7 @@ use yii\widgets\Pjax;
                                 'theme' => 'krajee-uni',
                                 'showClear' => false,
                                 'showCaption' => false,
-                                'size' => 'sm',
+                                'size' => 'xs',
                                 'displayOnly' => true,
                                 'disabled' => true,
                                 'readonly' => true,

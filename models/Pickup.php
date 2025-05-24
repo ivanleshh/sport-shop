@@ -9,8 +9,6 @@ use Yii;
  *
  * @property int $id
  * @property string $address
- * @property string $work_from
- * @property string $work_to
  *
  * @property Orders[] $orders
  */
@@ -30,8 +28,7 @@ class Pickup extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['address', 'work_from', 'work_to'], 'required'],
-            [['work_from', 'work_to'], 'safe'],
+            [['address'], 'required'],
             [['address'], 'string'],
         ];
     }
@@ -44,8 +41,6 @@ class Pickup extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'address' => 'Address',
-            'work_from' => 'Work From',
-            'work_to' => 'Work To',
         ];
     }
 

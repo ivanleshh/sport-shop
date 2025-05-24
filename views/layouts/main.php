@@ -63,7 +63,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             <ul class="user-login">
 
                                 <?php if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) : ?>
-                                    <li class="d-none d-sm-inline-block"><a href="/admin-panel">Панель Администратора</a></li>
+                                    <li class="d-none d-sm-inline-block"><a href="/admin-panel">Панель администратора</a></li>
                                 <?php endif; ?>
 
                                 <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
@@ -191,40 +191,42 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <!-- End Navbar -->
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 col-12">
-                    <!-- Start Nav Social -->
-                    <div class="nav-social">
-                        <ul>
-                            <li>
-                                <?= Html::a('<i class="bi bi-bar-chart-line"></i>', ['/personal/compare-products']) ?>
-                            </li>
-                            <li>
-                                <?= Html::a('<i class="bi bi-bag-heart-fill"></i>', ['/personal/favourite-products'], ['class' => 'text-decoration-none']) ?>
-                            </li>
-                            <li class="position-relative">
-                                <?= Html::a(
-                                    '<i class="bi bi-cart4"></i>',
-                                    [!Yii::$app->user->isGuest ? '/cart/index' : '/site/login'],
-                                    ['id' => 'btn-cart']
-                                ) ?>
+                <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
+                    <div class="col-lg-4 col-md-6 col-12">
+                        <!-- Start Nav Social -->
+                        <div class="nav-social">
+                            <ul>
+                                <li>
+                                    <?= Html::a('<i class="bi bi-bar-chart-line"></i>', ['/personal/compare-products']) ?>
+                                </li>
+                                <li>
+                                    <?= Html::a('<i class="bi bi-bag-heart-fill"></i>', ['/personal/favourite-products'], ['class' => 'text-decoration-none']) ?>
+                                </li>
+                                <li class="position-relative">
+                                    <?= Html::a(
+                                        '<i class="bi bi-cart4"></i>',
+                                        [!Yii::$app->user->isGuest ? '/cart/index' : '/site/login'],
+                                        ['id' => 'btn-cart']
+                                    ) ?>
 
-                                <span class="cart-item-count">
-                                    <? Pjax::begin([
-                                        'id' => 'cart-item-count',
-                                        'enablePushState' => false,
-                                        'timeout' => 5000,
-                                        'options' => [
-                                            'data-url' => '/cart/item-count',
-                                        ]
-                                    ]) ?>
-                                    <?= Cart::getItemCount() ?>
-                                    <? Pjax::end() ?>
-                                </span>
-                            </li>
-                        </ul>
+                                    <span class="cart-item-count">
+                                        <? Pjax::begin([
+                                            'id' => 'cart-item-count',
+                                            'enablePushState' => false,
+                                            'timeout' => 5000,
+                                            'options' => [
+                                                'data-url' => '/cart/item-count',
+                                            ]
+                                        ]) ?>
+                                        <?= Cart::getItemCount() ?>
+                                        <? Pjax::end() ?>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- End Nav Social -->
                     </div>
-                    <!-- End Nav Social -->
-                </div>
+                <?php endif; ?>
             </div>
         </div>
         <!-- End Header Bottom -->

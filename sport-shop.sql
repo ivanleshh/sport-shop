@@ -86,7 +86,7 @@ CREATE TABLE `cart_item` (
   KEY `product_Id` (`product_id`),
   CONSTRAINT `cart_item_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cart_item_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=1048 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1051 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +293,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (5,'Иван','fds@fds.fd','+7(312)-321-32-23',1,2,NULL,NULL,NULL,NULL,11560.00,4,1,5,'2025-03-02 09:24:06','2025-04-01 11:08:27','123','2025-03-07'),(6,'Иван','sdfjds@jfds.fd','+7(321)-312-31-23',1,2,NULL,NULL,NULL,NULL,9750.00,5,2,5,'2025-03-06 21:03:24','2025-04-01 11:08:27','123','2025-03-14'),(7,'Иван','kfds@kfds.fsd','+7(321)-321-32-13',1,NULL,'fdsfsd','2025-03-27','12:33:00',NULL,3980.00,2,2,5,'2025-03-24 22:31:38','2025-03-24 22:38:15',NULL,NULL),(12,'аываыв','fsd@2fas.sd','+7(321)-432-43-24',1,1,NULL,NULL,NULL,NULL,21310.00,9,1,5,'2025-04-15 11:11:56','2025-04-15 11:11:56',NULL,NULL),(13,'аваыв','3f@fds.fd','+7(231)-432-43-24',1,1,NULL,NULL,NULL,NULL,6270.00,3,2,5,'2025-04-15 11:12:34','2025-04-15 11:14:20',NULL,NULL),(17,'Андрей','andrew2@gm.ad','+7(423)-432-43-24',2,4,NULL,NULL,NULL,NULL,9297.00,7,3,5,'2025-05-11 10:52:43','2025-05-11 21:30:27',NULL,NULL),(18,'Иван','fdsd@fsd.f','+7(324)-234-32-43',1,1,NULL,NULL,NULL,NULL,1712.00,2,2,5,'2025-05-11 11:13:54','2025-05-11 21:37:16','123','2025-05-13'),(19,'Савелий','fsd@f.fds','+7(432)-432-43-24',1,3,NULL,NULL,NULL,NULL,2739.00,3,2,5,'2025-05-11 11:37:02','2025-05-11 21:42:48','312','2025-05-22'),(20,'Савелий','fds@fsd.fd','+7(423)-432-43-24',1,NULL,'Россия, г. Долгопрудный, Тихая ул., д. 20 кв.197','2025-05-28','15:30:00','Комментарий курьеру Комментарий курьеру',4570.00,3,3,5,'2025-05-11 12:30:38','2025-05-11 22:22:31',NULL,NULL),(21,'аываыв','fsd@fds.fd','+7(321)-312-41-24',2,2,NULL,NULL,NULL,NULL,6528.00,4,1,5,'2025-05-18 15:54:49','2025-05-18 15:54:49',NULL,NULL);
+INSERT INTO `orders` VALUES (5,'Иван','fds@fds.fd','+7(312)-321-32-23',1,2,NULL,NULL,NULL,NULL,11560.00,4,1,5,'2025-03-02 09:24:06','2025-04-01 11:08:27','123','2025-03-07'),(6,'Иван','sdfjds@jfds.fd','+7(321)-312-31-23',1,2,NULL,NULL,NULL,NULL,9750.00,5,2,5,'2025-03-06 21:03:24','2025-04-01 11:08:27','123','2025-03-14'),(7,'Иван','kfds@kfds.fsd','+7(321)-321-32-13',1,NULL,'fdsfsd','2025-03-27','12:33:00',NULL,3980.00,2,2,5,'2025-03-24 22:31:38','2025-03-24 22:38:15',NULL,NULL),(12,'аываыв','fsd@2fas.sd','+7(321)-432-43-24',1,1,NULL,NULL,NULL,NULL,21310.00,9,1,5,'2025-04-15 11:11:56','2025-04-15 11:11:56',NULL,NULL),(13,'аваыв','3f@fds.fd','+7(231)-432-43-24',1,1,NULL,NULL,NULL,NULL,6270.00,3,2,5,'2025-04-15 11:12:34','2025-04-15 11:14:20',NULL,NULL),(17,'Андрей','andrew2@gm.ad','+7(423)-432-43-24',2,4,NULL,NULL,NULL,NULL,9297.00,7,3,5,'2025-05-11 10:52:43','2025-05-11 21:30:27',NULL,NULL),(18,'Иван','fdsd@fsd.f','+7(324)-234-32-43',1,1,NULL,NULL,NULL,NULL,1712.00,2,2,5,'2025-05-11 11:13:54','2025-05-11 21:37:16','123','2025-05-13'),(19,'Савелий','fsd@f.fds','+7(432)-432-43-24',1,3,NULL,NULL,NULL,NULL,2739.00,3,3,5,'2025-05-11 11:37:02','2025-05-24 19:08:25','312','2025-05-22'),(20,'Савелий','fds@fsd.fd','+7(423)-432-43-24',1,NULL,'Россия, г. Долгопрудный, Тихая ул., д. 20 кв.197','2025-05-28','15:30:00','Комментарий курьеру Комментарий курьеру',4570.00,3,3,5,'2025-05-11 12:30:38','2025-05-11 22:22:31',NULL,NULL),(21,'аываыв','fsd@fds.fd','+7(321)-312-41-24',2,2,NULL,NULL,NULL,NULL,6528.00,4,1,5,'2025-05-18 15:54:49','2025-05-18 15:54:49',NULL,NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,8 +307,6 @@ DROP TABLE IF EXISTS `pickup`;
 CREATE TABLE `pickup` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `work_from` time NOT NULL,
-  `work_to` time NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -319,7 +317,7 @@ CREATE TABLE `pickup` (
 
 LOCK TABLES `pickup` WRITE;
 /*!40000 ALTER TABLE `pickup` DISABLE KEYS */;
-INSERT INTO `pickup` VALUES (1,'Солнечногорск, пл. Бухарестская, 38','09:00:00','21:00:00'),(2,'Солнечногорск, пер. Гоголя, 08','09:30:00','21:30:00'),(3,'Солнечногорск, ул. Косиора, 54','08:30:00','20:30:00'),(4,'Солнечногорск, ул. Гагарина, 29','08:45:00','20:45:00'),(5,'Солнечногорск, наб. Домодедовская, 65','09:15:00','21:15:00');
+INSERT INTO `pickup` VALUES (1,'Солнечногорск, пл. Бухарестская, 38'),(2,'Солнечногорск, пер. Гоголя, 08'),(3,'Солнечногорск, ул. Косиора, 54'),(4,'Солнечногорск, ул. Гагарина, 29'),(5,'Солнечногорск, наб. Домодедовская, 65');
 /*!40000 ALTER TABLE `pickup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -460,7 +458,7 @@ CREATE TABLE `review` (
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `review` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `review_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -469,7 +467,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT INTO `review` VALUES (25,5,3,'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','5',NULL,'2025-04-07 18:48:51'),(26,5,3,'Thanks a lot!',NULL,25,'2025-04-07 18:49:07'),(27,5,3,'123','4',NULL,'2025-04-07 18:50:33'),(28,5,3,'Очень вкусный казеин','5',NULL,'2025-04-07 20:04:26'),(81,5,3,'123',NULL,28,'2025-05-10 22:59:03'),(82,5,3,'123','3',NULL,'2025-05-10 22:59:11'),(83,5,3,'432',NULL,82,'2025-05-10 23:01:59'),(84,5,3,'321','5',NULL,'2025-05-10 23:02:06'),(85,5,4,'Всё очень хорошо!','5',NULL,'2025-05-18 15:22:34'),(86,5,4,'Дополнние комментария',NULL,85,'2025-05-18 15:22:53'),(87,5,4,'Норм','3',NULL,'2025-05-18 15:23:08'),(88,5,4,'Тест','1',NULL,'2025-05-18 15:23:33'),(89,5,4,'3','4',NULL,'2025-05-18 15:23:48');
+INSERT INTO `review` VALUES (25,5,3,'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','5',NULL,'2025-04-07 18:48:51'),(26,5,3,'Thanks a lot!',NULL,25,'2025-04-07 18:49:07'),(27,5,3,'123','4',NULL,'2025-04-07 18:50:33'),(28,5,3,'Очень вкусный казеин','5',NULL,'2025-04-07 20:04:26'),(81,5,3,'123',NULL,28,'2025-05-10 22:59:03'),(82,5,3,'123','3',NULL,'2025-05-10 22:59:11'),(83,5,3,'432',NULL,82,'2025-05-10 23:01:59'),(84,5,3,'321','5',NULL,'2025-05-10 23:02:06'),(85,5,4,'Всё очень хорошо!','5',NULL,'2025-05-18 15:22:34'),(86,5,4,'Дополнние комментария',NULL,85,'2025-05-18 15:22:53'),(87,5,4,'Норм','3',NULL,'2025-05-18 15:23:08'),(88,5,4,'Тест','1',NULL,'2025-05-18 15:23:33'),(89,5,4,'3','4',NULL,'2025-05-18 15:23:48'),(90,8,3,'Комментарий администратора',NULL,84,'2025-05-24 19:33:45');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,7 +516,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,'Новый','info'),(2,'В пути','primary'),(3,'Доставлен','success'),(4,'Доставка перенесена','warning');
+INSERT INTO `status` VALUES (1,'Новый','primary'),(2,'В пути','warning'),(3,'Доставлен','success'),(4,'Доставка перенесена','danger');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -589,4 +587,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-18 19:18:51
+-- Dump completed on 2025-05-24 22:35:31
