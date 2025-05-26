@@ -17,18 +17,15 @@ $this->params['breadcrumbs'] = [
 <div class="site-register hero-content">
     <div class="row align-items-center">
         <div class="col-lg-6">
-
             <h5 class="fs-6">Пожалуйста, заполните указанные ниже поля:</h5>
             <div class="d-inline-block mt-3">
                 <span class="text-danger">*</span>
                 - обязательное поле
             </div>
             <hr class="border-2 border-secondary">
-
             <?php $form = ActiveForm::begin([
                 'id' => 'contact-form',
             ]); ?>
-
             <div class="row">
                 <div class="col-12 col-sm-6">
                     <?= $form->field($model, 'name') ?>
@@ -53,18 +50,14 @@ $this->params['breadcrumbs'] = [
                     <?= $form->field($model, 'password_repeat')->passwordInput() ?>
                 </div>
             </div>
-
             <div class="text-secondary fs-7 mb-3 text-center">Для пароля разрешено использование специальных символов: ^, +, -, <,>
             </div>
             <?= $form->field($model, 'personal')->checkbox() ?>
             <?= $form->field($model, 'rules')->checkbox() ?>
-
             <div class="form-group text-end">
                 <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-orange', 'name' => 'contact-button']) ?>
             </div>
-
             <?php ActiveForm::end(); ?>
-
         </div>
         <div class="col-lg-6 d-lg-flex align-items-center text-end justify-content-center gap-3 mt-2">
             <h6 class="my-3 my-lg-0">Уже зарегистрированы?</h6>
@@ -73,5 +66,4 @@ $this->params['breadcrumbs'] = [
             </div>
         </div>
     </div>
-
 </div>

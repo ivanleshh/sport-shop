@@ -40,10 +40,10 @@ $this->params['breadcrumbs'][] = $model->title;
                 'clientOptions' => [
                     'loop' => false,
                     'navigation' => false,
-                    // 'autoplay' => [
-                    //     'delay' => 3000,
-                    //     'disableOnInteraction' => false,
-                    // ],
+                    'autoplay' => [
+                        'delay' => 3000,
+                        'disableOnInteraction' => false,
+                    ],
                     'breakpoints' => [
                         0 => [
                             'slidesPerView' => 1.5,
