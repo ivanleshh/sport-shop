@@ -11,7 +11,7 @@ if (isset($nav)) {
 }
 
 ?>
-<div class="card rounded-3 h-100" style="width: 18rem;">
+<div class="card rounded-3" style="width: 18rem; height: 26rem;">
   <div class="card-body position-relative d-flex gap-3 justify-content-between flex-column">
 
     <div class="position-absolute top-0 end-0 px-2 z-3">
@@ -33,7 +33,7 @@ if (isset($nav)) {
         'showPagination' => false,
         'slides' => array_map(
           fn($image) =>
-          '<div class="card-img d-flex justify-content-center align-items-center">' .
+          '<div class="card-img d-flex justify-content-center align-items-center h-100">' .
             Html::a(
               Html::img(
                 isset($image->photo) ? Product::IMG_PATH . $image->photo : Product::NO_PHOTO,
@@ -51,7 +51,8 @@ if (isset($nav)) {
         ],
         'options' => [
           'styles' => [
-            \coderius\swiperslider\SwiperSlider::CONTAINER => ["width" => "100%"],
+            \coderius\swiperslider\SwiperSlider::CONTAINER => ["width" => "100%", 'height' => '100%'],
+
             \coderius\swiperslider\SwiperSlider::BUTTON_NEXT => ["color" => "lightgray", 'right' => 0],
             \coderius\swiperslider\SwiperSlider::BUTTON_PREV => ["color" => "lightgray", 'left' => 0],
           ],

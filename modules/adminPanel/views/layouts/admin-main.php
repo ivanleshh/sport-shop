@@ -159,6 +159,23 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 </div>
                             <?php } ?>
                             <?= Alert::widget() ?>
+
+                            <div class="toast-container position-fixed top-0 end-0 px-4"></div>
+
+                            <?php Pjax::begin([
+                                'id' => 'toast-pjax',
+                                'enablePushState' => false,
+                                'timeout' => 5000,
+                                'enableReplaceState' => false,
+                            ]); ?>
+                            <div class="toast-data position-fixed top-0 end-0 px-4"
+                                data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
+                            <?php if (Yii::$app->session->get('bg_color') !== null) {
+                                Yii::$app->session->remove('bg_color');
+                                Yii::$app->session->remove('text');
+                            } ?>
+                            <?php Pjax::end(); ?>
+
                             <?= $content ?>
                         </div>
                     </div>

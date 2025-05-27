@@ -271,12 +271,21 @@ input:checked {
     transition: .5s;
 }
 
-.card .btn-favourite i {
-    transition: .5s;
+.card .btn-favourite i,
+.card .btn-compare i {
+    transition: .7s;
+}
+
+.select2 .selection {
+    width: 100%;
 }
 
 .card .btn-favourite:hover i {
     color: red !important;
+}
+
+.card .btn-compare:hover i {
+    color: orange !important;
 }
 
 .nav-hotline-ic {

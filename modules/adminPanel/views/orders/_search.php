@@ -11,10 +11,11 @@ use yii\widgets\ActiveForm;
 <div class="orders-search">
 
     <?php $form = ActiveForm::begin([
+        'id' => 'orders-form',
         'action' => ['index'],
         'method' => 'get',
         'options' => [
-            'data-pjax' => true
+            'data-pjax' => true,
         ],
     ]); ?>
 

@@ -24,6 +24,13 @@ $this->params['breadcrumbs'] = [
 
     <?= Alert::widget() ?>
 
+    <?php Pjax::begin([
+        'id' => 'brand-index-pjax',
+        'enablePushState' => false,
+        'timeout' => 5000,
+        'enableReplaceState' => false,
+    ]); ?>
+
     <div class="row justify-content-between align-items-center gy-3 gx-3">
         <div class="col-12 col-xl-7">
             <?= $this->render('_search', [
@@ -37,23 +44,6 @@ $this->params['breadcrumbs'] = [
             <?= Html::a('Сбросить', ['/admin-panel/brand'], ['class' => 'text-decoration-none link-danger']) ?>
         </div>
     </div>
-
-    <div class="toast-container position-fixed top-0 end-0 px-4"></div>
-
-    <?php Pjax::begin([
-        'id' => 'brand-index-pjax',
-        'enablePushState' => false,
-        'timeout' => 5000,
-        'enableReplaceState' => false,
-    ]); ?>
-
-    <div class="toast-data position-fixed top-0 end-0 px-4"
-        data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
-
-    <?php if (Yii::$app->session->get('bg_color') !== null) {
-        Yii::$app->session->remove('bg_color');
-        Yii::$app->session->remove('text');
-    } ?>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,

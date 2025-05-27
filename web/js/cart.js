@@ -17,17 +17,15 @@ $(() => {
                 url: $(this).attr("href"),
                 method: 'POST',
                 success(data) {
-                    if (data) {
-                        if (data.status) {
-                            $.pjax.reload("#cart-pjax", {
-                                url: $('#btn-cart').attr('href'),
-                                push: false,
-                                replace: false,
-                                timeout: 5000,
-                            });
-                        } else {
-                            error_modal(data.message);
-                        }
+                    if (data.status) {
+                        $.pjax.reload("#cart-pjax", {
+                            url: $('#btn-cart').attr('href'),
+                            push: false,
+                            replace: false,
+                            timeout: 5000,
+                        });
+                    } else {
+                        error_modal(data.message);
                     }
                 },
             });
@@ -43,13 +41,14 @@ $(() => {
                 .find('.btn-cart-manger, .cart-panel-top')
                 .removeClass('d-none')
         }
-        cartItemCount()
-        if ($(".toast-container").length) {
-           $(".toast-container").find('.toast').fadeOut('slow', function () {
-                $(this).remove();
-            });
+        if (!$('#cart-modal').hasClass('show')) {
+            $('#cart-modal').modal('show');
+        } else {
+            pjax_reload()
         }
-        pjax_reload()
-        $('#cart-modal').modal('show');
+    })
+
+    $('#toast-pjax').on('pjax:end', function () {
+        cartItemCount()
     })
 })

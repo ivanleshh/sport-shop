@@ -36,7 +36,7 @@ use yii\widgets\ActiveForm;
         <div class="col-6 col-sm-4 col-xl-3 col-xxl-2">
             <?= $form->field($model, 'brand_id')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Brand::find()->all(), 'id', 'title'),
-                'options' => ['placeholder' => 'Выберите категорию'],
+                'options' => ['placeholder' => 'Выберите изготовителя'],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],

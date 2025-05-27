@@ -63,4 +63,6 @@ $this->params['breadcrumbs'] = [
 
 </div>
 
+<?= \app\widgets\RecentlyViewed::widget() ?>
+
 <?= $this->registerJsFile('/js/filter-order.js', ['depends' => JqueryAsset::class]) ?>

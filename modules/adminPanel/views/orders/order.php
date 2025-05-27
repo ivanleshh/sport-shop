@@ -48,14 +48,22 @@ use yii\bootstrap5\Html;
       <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-secondary', 'data-pjax' => 0]) ?>
       <?php if ($model->status->id == Status::getStatusId('Новый')) {
         echo Html::a('Принять в работу', ['work', 'id' => $model->id], [
-          'class' => 'btn btn-warning btn-toast',
+          'class' => 'btn btn-warning btn-work',
+          'data' => [
+            'confirm' => 'Подтвердите действие',
+            'method' => 'post'
+          ],
         ]);
       } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
         if (empty($model->address) && $model->status_id == Status::getStatusId('В пути')) {
           echo Html::a('Перенести доставку', ['delay', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-delay', 'data-pjax' => 0]);
         }
         echo Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
-          'class' => 'btn btn-success btn-toast',
+          'class' => 'btn btn-success btn-confirm',
+          'data' => [
+            'confirm' => 'Подтвердите действие',
+            'method' => 'post'
+          ],
         ]);
       }
       ?>

@@ -164,11 +164,9 @@ class CartController extends Controller
                     $cart->total_amount += $product->price;
                     $cart->save();
 
-                    if ($cart)
-
-                        return $this->asJson([
-                            'status' => true,
-                        ]);
+                    return $this->asJson([
+                        'status' => true,
+                    ]);
                 }
                 return $this->asJson([
                     'status' => false,

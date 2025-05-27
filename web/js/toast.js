@@ -23,34 +23,10 @@ $(() => {
         }, 5000)
     }
 
-    $("#catalog-pjax, #catalog-buttons-pjax, #compare-pjax, #favourite-pjax, #personal-pjax, #order-pjax, #admin-orders-pjax, #brand-index-pjax").on("pjax:end", () => {
+    $("#toast-pjax").on("pjax:end", () => {
         if ($(".toast-container").length && $(".toast-data").data('text').length) {
             const container = $(".toast-container")
             const container_data = $('.toast-data')
-            updateToast(container, container_data)
-        }
-    })
-
-    $("#cart-pjax").on("pjax:end", () => {
-        if ($(".toast-container-cart").length && $(".toast-data-cart").data('text').length) {
-            const container = $(".toast-container-cart")
-            const container_data = $('.toast-data-cart')
-            updateToast(container, container_data)
-        }
-    })
-
-    $("#product-reviews-pjax").on("pjax:end", () => {
-        if ($(".toast-container-reviews").length && $(".toast-data-reviews").data('text').length) {
-            const container = $(".toast-container-reviews")
-            const container_data = $('.toast-data-reviews')
-            updateToast(container, container_data)
-        }
-    })
-
-    $("#recently-viewed-pjax").on("pjax:end", () => {
-        if ($(".toast-container-recently").length && $(".toast-data-recently").data('text').length) {
-            const container = $(".toast-container-recently")
-            const container_data = $('.toast-data-recently')
             updateToast(container, container_data)
         }
     })

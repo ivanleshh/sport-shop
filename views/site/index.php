@@ -155,5 +155,8 @@ $this->title = 'My Yii Application';
         </ul>
     </div>
 </section>
+
+<?= \app\widgets\RecentlyViewed::widget() ?>
+
 <!-- End Shipping Info -->
 <?php $this->endBlock() ?>

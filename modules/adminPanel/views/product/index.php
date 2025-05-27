@@ -25,6 +25,13 @@ $this->params['breadcrumbs'] = [
 
     <?= Alert::widget(); ?>
 
+    <?php Pjax::begin([
+        'id' => 'product-index-pjax',
+        'enablePushState' => false,
+        'timeout' => 5000,
+        'enableReplaceState' => false,
+    ]); ?>
+
     <div class="row justify-content-between align-items-center">
         <div class="col-12 col-xxl-9">
             <?= $this->render('_search', [
@@ -38,13 +45,6 @@ $this->params['breadcrumbs'] = [
             <?= Html::a('Сбросить', ['/admin-panel/product'], ['class' => 'text-decoration-none link-danger']) ?>
         </div>
     </div>
-
-    <?php Pjax::begin([
-        'id' => 'product-index-pjax',
-        'enablePushState' => false,
-        'timeout' => 5000,
-        'enableReplaceState' => false,
-    ]); ?>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,

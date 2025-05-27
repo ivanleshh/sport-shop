@@ -22,6 +22,13 @@ $this->params['breadcrumbs'] = [
 ?>
 <div class="orders-index hero-content">
 
+    <?php Pjax::begin([
+        'id' => 'admin-orders-pjax',
+        'enablePushState' => false,
+        'enableReplaceState' => false,
+        'timeout' => 5000,
+    ]); ?>
+
     <div class="row justify-content-between align-items-center">
         <div class="col-12 col-xxl-9">
             <?= $this->render('_search', [
@@ -39,23 +46,6 @@ $this->params['breadcrumbs'] = [
 
         </div>
     </div>
-
-    <div class="toast-container position-fixed top-0 end-0 px-4"></div>
-
-    <?php Pjax::begin([
-        'id' => 'admin-orders-pjax',
-        'enablePushState' => false,
-        'enableReplaceState' => false,
-        'timeout' => 5000,
-    ]); ?>
-
-    <div class="toast-data position-fixed top-0 end-0 px-4"
-        data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
-
-    <?php if (Yii::$app->session->get('bg_color') !== null) {
-        Yii::$app->session->remove('bg_color');
-        Yii::$app->session->remove('text');
-    } ?>
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
@@ -88,3 +78,4 @@ if ($dataProvider->count) {
 ?>
 
 <?= $this->registerJsFile('/admin-panel-dist/assets/js-my/filter-order.js', ['depends' => JqueryAsset::class]) ?>
+<?= $this->registerJsFile('/admin-panel-dist/assets/js-my/order-buttons.js', ['depends' => JqueryAsset::class]) ?>

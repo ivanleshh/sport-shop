@@ -80,24 +80,14 @@ $countReviews = $model->countReviews;
 
                     <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
 
-                        <div class="toast-container position-fixed top-0 end-0 px-4"></div>
-
                         <div class="bottom-content">
 
                             <?php Pjax::begin([
-                                'id' => 'catalog-buttons-pjax',
+                                'id' => 'product-buttons-pjax',
                                 'enablePushState' => false,
                                 'timeout' => 5000,
                                 'enableReplaceState' => false,
                             ]); ?>
-
-                            <div class="toast-data position-fixed top-0 end-0 p-4"
-                                data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
-
-                            <?php if (Yii::$app->session->get('bg_color') !== null) {
-                                Yii::$app->session->remove('bg_color');
-                                Yii::$app->session->remove('text');
-                            } ?>
 
                             <div class="row align-items-end justify-content-end gy-3">
                                 <div class="col-12 col-sm-7 col-xxl-5">
@@ -128,23 +118,21 @@ $countReviews = $model->countReviews;
                                 </div>
                                 <div class="col-12 col-sm-5 col-xxl-4">
                                     <?php
-                                    $isFavourite = !empty($model->favouriteProducts[0]->status);
+                                    $favourite = empty($model->favouriteProducts[0]->status);
                                     echo Html::a(
-                                        '<i class="bi bi-suit-heart-fill me-2"></i>' .
-                                            ($isFavourite ? "в избранном" : "в избранное"),
+                                        '<i class="bi bi-suit-heart-fill me-2"></i>' . ($favourite ? 'В избранное' : 'В избранном'),
                                         ['/catalog/favourite'],
-                                        ['data-id' => $model->id, 'class' => "btn btn-compare w-100 " . ($isFavourite ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
+                                        ['data-id' => $model->id, 'class' => "btn btn-favourite w-100 btn-" . ($favourite ? "outline-secondary" : "secondary") . " text-decoration-none"]
                                     );
                                     ?>
                                 </div>
                                 <div class="col-12 col-sm-5 col-xxl-3">
                                     <?php
-                                    $isCompare = !empty($model->compareProducts[0]->status);
+                                    $compare = empty($model->compareProducts[0]->status);
                                     echo Html::a(
-                                        '<i class="bi bi-bar-chart-line-fill me-2"></i>' .
-                                            ($isCompare ? "в сравнении" : "сравнить"),
+                                        '<i class="bi bi-bar-chart-line-fill me-2"></i>' . ($compare ? 'В сравнение' : 'В сравнении'),
                                         ['/catalog/compare'],
-                                        ['data-id' => $model->id, 'class' => "btn btn-compare w-100 " . ($isCompare ? "btn-secondary" : "btn-outline-secondary") . " text-decoration-none"]
+                                        ['data-id' => $model->id, 'class' => "btn btn-compare w-100 btn-" . ($compare ? "outline-secondary" : "secondary") . " text-decoration-none"]
                                     );
                                     ?>
                                 </div>
@@ -232,21 +220,11 @@ $countReviews = $model->countReviews;
                 </div>
                 <div class="col-12 col-lg-8">
 
-                    <div class="toast-container-reviews position-fixed top-0 end-0 px-4"></div>
-
                     <?php Pjax::begin([
                         'id' => 'product-reviews-pjax',
                         'enablePushState' => false,
                         'timeout' => 5000,
                     ]); ?>
-
-                    <div class="toast-data-reviews position-fixed top-0 end-0 p-4"
-                        data-bg-color="<?= Yii::$app->session->get('bg_color-review') ?>" data-text="<?= Yii::$app->session->get('text-review') ?>"></div>
-
-                    <?php if (Yii::$app->session->get('bg_color-review') !== null) {
-                        Yii::$app->session->remove('bg_color-review');
-                        Yii::$app->session->remove('text-review');
-                    } ?>
 
                     <?= ListView::widget([
                         'dataProvider' => $dataProvider,
@@ -280,6 +258,8 @@ $countReviews = $model->countReviews;
             </div>
         </div>
 </section>
+
+<?= \app\widgets\RecentlyViewed::widget(['excludeId' => $model->id]) ?>
 
 <!-- End Item Details -->
 

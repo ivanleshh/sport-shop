@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Brand;
 use app\models\Category;
 use app\models\CategorySearch;
 use app\models\CompareProducts;
@@ -14,6 +15,7 @@ use yii\bootstrap5\Html;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\helpers\VarDumper;
 
 /**
@@ -71,7 +73,20 @@ class CatalogController extends Controller
         $params['ProductSearch']['category_id'] = $categoryIds;
         $dataProvider = $searchModel->search($params);
 
+        $brandIds = Product::find()
+            ->select('brand_id')
+            ->where(['category_id' => $categoryIds])
+            ->distinct()
+            ->column();
+
+        $brands = Brand::find()
+            ->where(['in', 'id', $brandIds])
+            ->select(['id','title'])
+            ->asArray()
+            ->all();
+
         return $this->render('view', [
+            'brands' => ArrayHelper::map($brands, 'id', 'title'),
             'model' => $category,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -134,7 +149,7 @@ class CatalogController extends Controller
             }
 
             $model->save();
-            return $model->status;
+            return $this->asJson(['status' => $model->status]);
         }
     }
 
@@ -167,7 +182,7 @@ class CatalogController extends Controller
             }
 
             $model->save();
-            return $model->status;
+            return $this->asJson(['status' => $model->status]);
         }
     }
 }

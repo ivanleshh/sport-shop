@@ -20,8 +20,6 @@ $this->params['breadcrumbs'] = [
 \yii\web\YiiAsset::register($this);
 ?>
 
-<div class="toast-container position-fixed top-0 end-0 px-4"></div>
-
 <div class="category-view hero-content">
 
     <?php if ($dataProvider->models) : ?>
@@ -32,14 +30,6 @@ $this->params['breadcrumbs'] = [
             'timeout' => 5000,
             'enableReplaceState' => false,
         ]); ?>
-
-        <div class="toast-data position-fixed top-0 end-0 px-4"
-            data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
-
-        <?php if (Yii::$app->session->get('bg_color') !== null) {
-            Yii::$app->session->remove('bg_color');
-            Yii::$app->session->remove('text');
-        } ?>
 
         <?= ListView::widget([
             'dataProvider' => $dataProvider,

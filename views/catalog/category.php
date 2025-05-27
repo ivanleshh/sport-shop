@@ -2,7 +2,6 @@
 
 use app\models\Category;
 use yii\bootstrap5\Html;
-use yii\helpers\VarDumper;
 
 ?>
 <div class="card h-100 <?= isset($model->parent_id) ? "rounded-4 card-category" : 'border-0' ?>">
@@ -16,7 +15,8 @@ use yii\helpers\VarDumper;
                 "<h5 class='card-title ellipsis" . (isset($model->parent_id) ? 
                 " fs-6 mb-0 fw-medium" : ' border-bottom border-3 border-danger') . "'>$model->title</h5>",
                 ['view', 'id' => $model->id],
-                ['class' => 'd-flex gap-2 p-2 h-100 ' . (isset($model->parent_id) ? 'justify-content-center' : '') . ' align-items-center link-dark text-decoration-none', 'data-pjax' => 0]
+                ['class' => 'd-flex gap-2 p-2 h-100 ' . (isset($model->parent_id) ? 'justify-content-center' : '') 
+                . ' align-items-center link-dark text-decoration-none', 'data-pjax' => 0]
             )
         ?>
 

@@ -24,8 +24,6 @@ $this->params['breadcrumbs'] = [
 
 ?>
 
-<div class="toast-container position-fixed top-0 end-0 px-4"></div>
-
 <div class="compare-products-index hero-content">
 
     <?php if ($groupedProducts) : ?>
@@ -36,14 +34,6 @@ $this->params['breadcrumbs'] = [
             'timeout' => 5000,
             'enableReplaceState' => false,
         ]); ?>
-
-        <div class="toast-data position-fixed top-0 end-0 px-4"
-            data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
-
-        <?php if (Yii::$app->session->get('bg_color') !== null) {
-            Yii::$app->session->remove('bg_color');
-            Yii::$app->session->remove('text');
-        } ?>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <?php foreach ($categories as $index => $category): ?>

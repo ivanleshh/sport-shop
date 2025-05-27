@@ -155,26 +155,26 @@ class OrdersController extends Controller
     {
         if ($model = $this->findModel($id)) {
             if ($model->status_id == Status::getStatusId('Новый')) {
-                $model->status_id = Status::getStatusId('В пути');
+                // $model->status_id = Status::getStatusId('В пути');
                 $model->save();
                 Yii::$app->session->set('bg_color', 'bg-warning');
                 Yii::$app->session->set('text', "Статус заказа № $model->id изменён на 'В пути'");
             }
         }
-        return $this->actionIndex();
+        // return $this->actionIndex();
     }
 
     public function actionSuccess($id)
     {
         if ($model = $this->findModel($id)) {
             if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
-                $model->status_id = Status::getStatusId('Доставлен');
+                // $model->status_id = Status::getStatusId('Доставлен');
                 $model->save();
                 Yii::$app->session->set('bg_color', 'bg-success');
                 Yii::$app->session->set('text', "Статус заказа № $model->id изменён на 'Доставлен'");
             }
         }
-        return $this->actionIndex();
+        // return $this->actionIndex();
     }
 
     /**

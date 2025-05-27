@@ -15,8 +15,6 @@ use yii\widgets\Pjax;
 $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
 ?>
 
-<div class="toast-container-cart position-fixed top-0 end-0 px-4"></div>
-
 <div class="cart-index">
 
     <?php Pjax::begin([
@@ -25,14 +23,6 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
         'timeout' => 5000,
     ]);
     ?>
-
-    <div class="toast-data-cart position-fixed top-0 end-0 px-4"
-        data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
-
-    <?php if (Yii::$app->session->get('bg_color') !== null) {
-        Yii::$app->session->remove('bg_color');
-        Yii::$app->session->remove('text');
-    } ?>
 
     <?php if ($dataProvider && $dataProvider->totalCount) : ?>
         <?= ListView::widget([
@@ -49,7 +39,7 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
     <?php else: ?>
         <div class="cart-empty">
             <div class="row position-relative justify-content-center text-center">
-                <div class="position-absolute d-flex align-items-center bg-warning rounded-4 col-11 col-lg-7 p-2 bottom-0 fs-6">
+                <div class="position-absolute d-flex align-items-center bg-warning rounded-4 col-11 col-lg-6 p-2 bottom-0 fs-6">
                     <div class="text-danger fs-1">
                         <i class="bi bi-exclamation-lg"></i>
                     </div>
@@ -60,7 +50,7 @@ $this->params['cart-data'] = $dataProvider && $dataProvider->totalCount;
                     </div>
 
                 </div>
-                <div class="col-8 col-sm-8 col-lg-5 mb-5 mb-sm-0">
+                <div class="col-7 col-sm-8 col-lg-5 mb-5 mb-sm-0">
                     <?= Html::img(Product::NOTHING_FIND, ['class' => 'rounded-circle']) ?>
                 </div>
             </div>

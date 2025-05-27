@@ -287,57 +287,45 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
             <div class="mt-3"><?php echo Alert::widget() ?></div>
 
+            <div class="toast-container position-fixed top-0 end-0 px-4"></div>
+
+            <?php Pjax::begin([
+                'id' => 'toast-pjax',
+                'enablePushState' => false,
+                'timeout' => 5000,
+                'enableReplaceState' => false,
+            ]); ?>
+            <div class="toast-data position-fixed top-0 end-0 px-4"
+                data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
+            <?php if (Yii::$app->session->get('bg_color') !== null) {
+                Yii::$app->session->remove('bg_color');
+                Yii::$app->session->remove('text');
+            } ?>
+            <?php Pjax::end(); ?>
+
             <?= $content ?>
 
             <?php if (isset($this->blocks['additional'])): ?>
                 <?= $this->blocks['additional'] ?> <!-- Секция для дополнительного контента -->
             <?php endif; ?>
-
-            <?= \app\widgets\RecentlyViewed::widget() ?>
         </div>
     </section>
     <!-- End Hero Area -->
 
     <!-- Start Footer Area -->
     <footer class="footer mt-3">
-        <!-- Start Footer Top -->
-        <div class="footer-top">
-            <div class="container">
-                <div class="inner-content">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-2 col-md-3 col-6">
-                            <div class="footer-logo">
-                                <a href="/">
-                                    <?= Html::img("/images/logo_dark.png", ['class' => "w-75", 'alt' => "Logo"]) ?>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-8 col-12 align-self-center gx-3">
-                            <div class="footer-newsletter gap-3">
-                                <h4 class="title">
-                                    Подпишитесь на рассылку
-                                    <span>Узнавайте первыми о новинках, скидках и многом другом</span>
-                                </h4>
-                                <div class="newsletter-form-head">
-                                    <form action="#" method="get" target="_blank" class="newsletter-form">
-                                        <input name="EMAIL" placeholder="Ваш e-mail адрес" type="email">
-                                        <div class="button">
-                                            <button class="btn">Подписаться<span class="dir-part"></span></button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- End Footer Top -->
         <!-- Start Footer Middle -->
         <div class="footer-middle">
             <div class="container">
                 <div class="bottom-inner">
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center justify-content-md-between g-5">
+                        <div class="footer-logo col-lg-3 col-xl-2 col-md-4 col-6 align-self-center">
+                            <div class="single-footer">
+                                <a href="/">
+                                    <?= Html::img("/images/logo_dark.png", ['class' => "w-100", 'alt' => "Logo"]) ?>
+                                </a>
+                            </div>
+                        </div>
                         <div class="col-lg-3 col-md-6 col-12">
                             <!-- Single Widget -->
                             <div class="single-footer f-contact">
@@ -370,8 +358,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             <div class="single-footer f-link">
                                 <h3>Страницы</h3>
                                 <ul>
-                                    <li><a href="javascript:void(0)">Главная</a></li>
-                                    <li><a href="javascript:void(0)">Каталог</a></li>
+                                    <li><a href="/">Главная</a></li>
+                                    <li><a href="/catalog">Каталог</a></li>
                                     <?php if (!Yii::$app->user->isGuest) : ?>
                                         <?php if (Yii::$app->user->identity->isAdmin) : ?>
                                             <li><a href="/admin-panel">Панель администратора</a></li>

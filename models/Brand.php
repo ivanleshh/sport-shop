@@ -69,12 +69,20 @@ class Brand extends \yii\db\ActiveRecord
     {
         if ($this->validate()) {
             $imagePath = Yii::$app->user->id . '_' . Yii::$app->security->generateRandomString()
-            . '.' . $this->imageFile->extension;
+                . '.' . $this->imageFile->extension;
             $this->imageFile->saveAs('images/brands/' . $imagePath);
             $this->photo = $imagePath;
             return true;
         } else {
             return false;
         }
+    }
+
+    public static function getBrands()
+    {
+        return self::find()
+            ->select('title')
+            ->indexBy('id')
+            ->column();
     }
 }

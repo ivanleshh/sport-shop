@@ -155,6 +155,8 @@ $this->params['breadcrumbs'] = [
     <?php Pjax::end(); ?>
 </div>
 
+<?= \app\widgets\RecentlyViewed::widget() ?>
+
 <?php
 if ($dataProvider->count) {
     Modal::begin([
