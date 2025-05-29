@@ -22,7 +22,6 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
 
     <?php $form = ActiveForm::begin([
         'id' => 'form-category',
-        'enableAjaxValidation' => true,
     ]); ?>
 
     <div class="row">
@@ -78,7 +77,9 @@ $this->registerJs("var propertyOptions = " . Json::encode($properties) . ";", \y
                                     'allowClear' => true,
                                 ],
                             ])->label('Выбрать из списка'); ?>
-                            <?= $form->field($prop, "[$key]property_title", ['enableAjaxValidation' => true])->textInput([
+                            <?= $form->field($prop, "[$key]property_title", [
+                                'enableAjaxValidation' => true
+                            ])->textInput([
                                 'maxlength' => true,
                                 'id' => "categoryproperty-{$key}-property_title",
                                 'class' => 'form-control props-title',

@@ -73,8 +73,33 @@ if ($dataProvider->count) {
     ]);
     echo $this->render('delay', compact('model_delay'));
     Modal::end();
-    $this->registerJsFile('/js/orders-delay.js', ['depends' => JqueryAsset::class]);
+    $this->registerJsFile('/admin-panel-dist/assets/js-my/orders-delay.js', ['depends' => JqueryAsset::class]);
 }
+?>
+
+<?php
+Modal::begin([
+    'id' => 'orders-actions',
+    'title' => '',
+    'size' => 'modal-md',
+]);
+?>
+<div class="d-flex justify-content-end gap-3 my-2 cart-panel-top">
+    <div class="d-flex justify-content-end gap-3">
+        <?= Html::a(
+            'Подтвердить',
+            ["success"],
+            ["class" => "btn btn-success btn-agree", 'data-pjx' => '#admin-orders-pjax']
+        ) ?>
+        <?= Html::a(
+            "Назад",
+            '',
+            ["class" => "btn btn-secondary btn-disagree"]
+        ) ?>
+    </div>
+</div>
+<?php
+Modal::end();
 ?>
 
 <?= $this->registerJsFile('/admin-panel-dist/assets/js-my/filter-order.js', ['depends' => JqueryAsset::class]) ?>

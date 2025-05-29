@@ -24,8 +24,6 @@ $this->params['breadcrumbs'] = [
 ];
 ?>
 
-<div class="toast-container position-fixed top-0 end-0 px-4"></div>
-
 <div class="user-index">
 
     <?php Pjax::begin([
@@ -34,14 +32,6 @@ $this->params['breadcrumbs'] = [
         'timeout' => 5000,
     ]);
     ?>
-
-    <div class="toast-data position-fixed top-0 end-0 px-4"
-        data-bg-color="<?= Yii::$app->session->get('bg_color') ?>" data-text="<?= Yii::$app->session->get('text') ?>"></div>
-
-    <?php if (Yii::$app->session->get('bg_color') !== null) {
-        Yii::$app->session->remove('bg_color');
-        Yii::$app->session->remove('text');
-    } ?>
 
     <div class="row g-3">
         <div class="col-12 col-md-6">
@@ -83,7 +73,7 @@ $this->params['breadcrumbs'] = [
                         <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#personal-orders" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                                 <i class='bi bi-truck me-2 text-dark'></i>
-                                <span class="text-dark mb-1">История заказов</span>
+                                <span class="text-dark fw-semibold">История заказов</span>
                             </button>
                         </h2>
                         <div id="personal-orders" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
@@ -121,7 +111,7 @@ $this->params['breadcrumbs'] = [
                         <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#personal-info" aria-expanded="true" aria-controls="panelsStayOpen-collapseTwo">
                                 <i class="bi bi-file-earmark-person-fill text-dark me-2"></i>
-                                <span class="text-dark mb-1">Персональные данные</span>
+                                <span class="text-dark fw-semibold">Персональные данные</span>
                             </button>
                         </h2>
                         <div id="personal-info" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">

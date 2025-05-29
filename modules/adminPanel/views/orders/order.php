@@ -10,7 +10,7 @@ use yii\bootstrap5\Html;
       <span class="fw-bold">Заказ № <?= $model->id ?></span>
       <span>от <?= Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i') ?></span>
     </div>
-    <div class="bg-<?= $model->status->bg_color ?> px-3 py-2 rounded-3 text-nowrap">
+    <div class="bg-<?= $model->status->bg_color ?> px-3 py-2 rounded-3">
       <?= $model->status->title ?>
     </div>
   </div>
@@ -18,7 +18,7 @@ use yii\bootstrap5\Html;
     <div class="col-3 d-none d-sm-flex justify-content-center align-items-center gap-2">
       <?= Html::a(
         Html::img(isset($model->orderItems[0]->product->productImages[0]) ?
-        Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-75']) .
+          Product::IMG_PATH . $model->orderItems[0]->product->productImages[0]->photo : Product::NO_PHOTO, ['class' => 'w-75']) .
           "<div class='mt-2'>"
           . $model->orderItems[0]->product->title
           . ((count($model->orderItems) > 1) ? '<span class="text-dark text-break"> ... и ещё ' . count($model->orderItems) - 1 . '</span>' : '')
@@ -46,13 +46,11 @@ use yii\bootstrap5\Html;
     </div>
     <div class="col-12 col-sm-4 d-flex flex-column gap-3 justify-content-center">
       <?= Html::a('Подробнее', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-secondary', 'data-pjax' => 0]) ?>
-      <?php if ($model->status->id == Status::getStatusId('Новый')) {
+      <?php if ($model->status_id == Status::getStatusId('Новый')) {
         echo Html::a('Принять в работу', ['work', 'id' => $model->id], [
           'class' => 'btn btn-warning btn-work',
-          'data' => [
-            'confirm' => 'Подтвердите действие',
-            'method' => 'post'
-          ],
+          'data-id' => $model->id,
+          'data-pjax' => 0,
         ]);
       } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
         if (empty($model->address) && $model->status_id == Status::getStatusId('В пути')) {
@@ -60,10 +58,8 @@ use yii\bootstrap5\Html;
         }
         echo Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
           'class' => 'btn btn-success btn-confirm',
-          'data' => [
-            'confirm' => 'Подтвердите действие',
-            'method' => 'post'
-          ],
+          'data-id' => $model->id,
+          'data-pjax' => 0,
         ]);
       }
       ?>

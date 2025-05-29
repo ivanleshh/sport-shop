@@ -21,7 +21,6 @@ $this->params['breadcrumbs'] = [
     ['label' => 'Личный кабинет', 'url' => ['/personal']],
     'Сравнение товаров',
 ];
-
 ?>
 
 <div class="compare-products-index hero-content">
@@ -44,6 +43,7 @@ $this->params['breadcrumbs'] = [
         </ul>
         <div class="tab-content" id="myTabContent">
             <?php foreach ($categories as $index => $category): ?>
+
                 <div class="tab-pane fade <?= $index == 0 ? 'show active' : '' ?>" id="content-<?= $category->id ?>" role="tabpanel" aria-labelledby="home-tab">
                     <div class="d-flex overflow-auto flex-column w-100 overflow-scroll">
                         <?php $products = $groupedProducts[$category->id]; ?>
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'] = [
                             'dataProvider' => new ArrayDataProvider([
                                 'allModels' => $products
                             ]),
-                            'itemOptions' => ['class' => 'item'],
+                            'itemOptions' => ['class' => "item"],
                             'itemView' => 'product',
                             'layout' =>
                             '<div class="d-flex justify-content-center mt-4">{pager}</div>
@@ -120,8 +120,10 @@ $this->params['breadcrumbs'] = [
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
+
             <?php endforeach; ?>
         </div>
 

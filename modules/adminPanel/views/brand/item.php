@@ -16,22 +16,15 @@ use yii\bootstrap5\Html;
       <?= Html::img(isset($model->photo) ? Brand::IMG_PATH . $model->photo : Brand::NO_PHOTO, ['class' => 'w-100']) ?>
     </div>
     <div class="col-7 d-flex flex-column gap-3 justify-content-center">
-      <?#= Html::a('Перейти', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-dark']) ?>
-      <?= Html::a(
-        'Изменить',
-        ['update', 'id' => $model->id],
-        [
-          'class' => 'btn btn-warning btn-brand-update',
-          'data-title' => $model->title,
-          'data-image' => Brand::IMG_PATH . $model->photo,
-        ]
-      ); ?>
+      <?= Html::a('Изменить', ['update', 'id' => $model->id], [
+        'class' => 'btn btn-warning btn-brand-update',
+        'data-title' => $model->title,
+        'data-image' => Brand::IMG_PATH . $model->photo,
+      ]); ?>
       <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
-        'class' => 'btn btn-outline-danger',
-        'data' => [
-          'confirm' => 'Вы уверены, что хотите удалить элемент?',
-          'method' => 'post',
-        ],
+        'class' => 'btn btn-outline-danger btn-remove',
+        'data-title' => $model->title,
+        'data-pjax' => 0,
       ]); ?>
     </div>
   </div>

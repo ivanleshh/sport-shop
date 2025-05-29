@@ -79,6 +79,20 @@ class CategoryController extends Controller
         $model = new Category();
         $categoryProperties = [new CategoryProperty()];
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            $categoryProp = [];
+            foreach ($this->request->post('CategoryProperty') as $index => $data) {
+                $prop = new CategoryProperty();
+                $prop->load($data, '');
+                $categoryProp[] = $prop;
+            }
+            if (!Model::validateMultiple($categoryProp)) {
+                return \yii\widgets\ActiveForm::validateMultiple($categoryProp);
+            }
+            return \yii\widgets\ActiveForm::validate($model);
+        }
+
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if (is_null($model->imageFile) || $model->upload()) {
@@ -261,9 +275,12 @@ class CategoryController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->delete();
-        Yii::$app->session->setFlash('danger', "Категория '$model->title' была удалена");
-        return $this->redirect(['index']);
+        if ($model->delete()) {
+            Yii::$app->session->set('bg_color', 'bg-danger');
+            Yii::$app->session->set('text', "Категория '$model->title' была удалена");
+            return $this->asJson(true);
+        }
+        return $this->asJson(false);
     }
 
     /**

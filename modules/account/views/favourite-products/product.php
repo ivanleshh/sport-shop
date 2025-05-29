@@ -3,6 +3,8 @@
 use app\models\Product;
 use coderius\swiperslider\SwiperSlider;
 use yii\bootstrap5\Html;
+use yii\widgets\Pjax;
+
 ?>
 <div class="card rounded-3 position-relative h-100" style="width: 18rem;">
 
@@ -71,7 +73,14 @@ use yii\bootstrap5\Html;
         </div>
       </div>
 
-
+      <?php Pjax::begin([
+        'id' => "product-" . $model->product->id . "-pjax",
+        'enablePushState' => false,
+        'timeout' => 5000,
+        'enableReplaceState' => false,
+      ]);
+      $pjx = "#product-" . $model->product->id . "-pjax";
+      ?>
 
       <?php if (isset($model->product->cartItems[0])) : ?>
         <div class="d-flex align-items-center gap-3">
@@ -82,7 +91,7 @@ use yii\bootstrap5\Html;
             <?= Html::a(
               '-',
               ['/cart/dec-item', 'item_id' => $model->product->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-dec']
+              ['class' => 'btn btn-outline-secondary btn-cart-item-dec', 'data-pjx' => $pjx]
             ) ?>
           </div>
           <div>
@@ -92,7 +101,7 @@ use yii\bootstrap5\Html;
             <?= Html::a(
               '+',
               ['/cart/inc-item', 'item_id' => $model->product->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-inc']
+              ['class' => 'btn btn-outline-secondary btn-cart-item-inc', 'data-pjx' => $pjx]
             ) ?>
           </div>
         </div>
@@ -101,10 +110,12 @@ use yii\bootstrap5\Html;
           ? Html::a(
             'В корзину',
             ['/cart/add', 'product_id' => $model->product->id],
-            ['class' => 'btn-cart-add btn btn-warning w-100']
+            ['class' => 'btn-cart-add btn btn-warning w-100', 'data-pjx' => $pjx]
           ) : ""
         ?>
       <?php endif; ?>
+
+      <?php Pjax::end(); ?>
 
     </div>
   </div>

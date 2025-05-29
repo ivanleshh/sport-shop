@@ -2,6 +2,8 @@
 
 use app\models\Product;
 use yii\bootstrap5\Html;
+use yii\widgets\Pjax;
+
 ?>
 
 <div class="card rounded-3 position-relative h-100" style="width: 17rem;">
@@ -10,7 +12,7 @@ use yii\bootstrap5\Html;
     <?= Html::a(
       '<i class="bi bi-trash3-fill text-danger fs-6"></i>',
       ['index', 'id' => $model->id],
-      ['data' => ['id' => $model->id, 'pjax' => 0], 'class' => 'btn-compare text-decoration-none align-self-end']
+      ['data-id' => $model->id, 'class' => 'btn-compare text-decoration-none align-self-end'] // 'data-category' => $model->product->category_id
     ) ?>
   </div>
 
@@ -31,15 +33,20 @@ use yii\bootstrap5\Html;
           <?= Html::a(
             "<i class='bi bi-suit-heart-fill " . (empty($model->product->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
             ['/catalog/favourite'],
-            ['data' => [
-              'id' => $model->product->id,
-              'category' => $model->product->category->id
-            ], 'class' => 'btn-favourite text-decoration-none align-self-end']
+            ['data-id' => $model->product->id, 'class' => 'btn-favourite text-decoration-none align-self-end']
           ) ?>
         </div>
 
       </div>
 
+      <?php Pjax::begin([
+        'id' => "product-" . $model->product->id . "-pjax",
+        'enablePushState' => false,
+        'timeout' => 5000,
+        'enableReplaceState' => false,
+      ]);
+      $pjx = "#product-" . $model->product->id . "-pjax";
+      ?>
 
       <?php if (isset($model->product->cartItems[0])) : ?>
         <div class="d-flex align-items-center gap-3">
@@ -50,7 +57,7 @@ use yii\bootstrap5\Html;
             <?= Html::a(
               '-',
               ['/cart/dec-item', 'item_id' => $model->product->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-dec', 'data-category' => $model->product->category->id]
+              ['class' => 'btn btn-outline-secondary btn-cart-item-dec', 'data-pjx' => $pjx]
             ) ?>
           </div>
           <div>
@@ -60,7 +67,7 @@ use yii\bootstrap5\Html;
             <?= Html::a(
               '+',
               ['/cart/inc-item', 'item_id' => $model->product->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-inc', 'data-category' => $model->product->category->id]
+              ['class' => 'btn btn-outline-secondary btn-cart-item-inc', 'data-pjx' => $pjx]
             ) ?>
           </div>
         </div>
@@ -69,11 +76,14 @@ use yii\bootstrap5\Html;
           ? Html::a(
             'В корзину',
             ['/cart/add', 'product_id' => $model->product->id],
-            ['class' => 'btn-cart-add btn btn-warning w-100', 'data-category' => $model->product->category->id]
+            ['class' => 'btn-cart-add btn btn-warning w-100', 'data-pjx' => $pjx]
           ) : ""
         ?>
       <?php endif; ?>
 
+      <?php Pjax::end(); ?>
+
     </div>
+
   </div>
 </div>

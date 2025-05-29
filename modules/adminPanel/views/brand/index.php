@@ -70,7 +70,33 @@ Modal::begin([
 ]);
 echo $this->render('_form', ['model' => $model]) ?>
 <?php Modal::end();
-$this->registerJsFile('/js/brand-create-update.js', ['depends' => JqueryAsset::class]);
+$this->registerJsFile('/admin-panel-dist/assets/js-my/brand-create-update.js', ['depends' => JqueryAsset::class]);
+?>
+
+<?php
+Modal::begin([
+    'id' => 'brand-delete',
+    'title' => '',
+    'size' => 'modal-md',
+]);
+?>
+<div class="d-flex justify-content-end gap-3 my-2 cart-panel-top">
+    <div class="d-flex justify-content-end gap-3">
+        <?= Html::a(
+            'Удалить',
+            ["success"],
+            ["class" => "btn btn-danger btn-agree", 'data-pjx' => '#brand-index-pjax']
+        ) ?>
+        <?= Html::a(
+            "Назад",
+            '',
+            ["class" => "btn btn-secondary btn-disagree"]
+        ) ?>
+    </div>
+</div>
+<?php
+Modal::end();
 ?>
 
 <?= $this->registerJsFile('/admin-panel-dist/assets/js-my/filter-brand.js', ['depends' => JqueryAsset::class]) ?>
+<?= $this->registerJsFile('/admin-panel-dist/assets/js-my/brand-delete.js', ['depends' => JqueryAsset::class]) ?>

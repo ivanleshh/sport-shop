@@ -3,7 +3,7 @@ $(() => {
         .on("click", ".btn-compare, .btn-favourite", function (e) {
             e.preventDefault();
             const a = $(this);
-            category_id = a.data('category')
+            // category_id = a.data('category')
             $.ajax({
                 url: a.attr("href"),
                 type: "POST",
@@ -46,11 +46,11 @@ $(() => {
             });
         });
 
-    $('#compare-pjax').on('pjax:end', function () {
-        if (typeof category_id !== 'undefined') {
-            $('.active').removeClass('active show')
-            $(`#content-${category_id}`).addClass('active show')
-            $(`#category-${category_id}`).addClass('active show')
-        }
-    })
+    // $('#compare-pjax').on('pjax:end', function () {
+    //     if (typeof category_id !== 'undefined') {
+    //         $('.active').removeClass('active show')
+    //         $(`#content-${category_id}`).addClass('active show')
+    //         $(`#category-${category_id}`).addClass('active show')
+    //     }
+    // })
 });

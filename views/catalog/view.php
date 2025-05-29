@@ -73,7 +73,8 @@ $this->params['breadcrumbs'][] = $model->title;
         'enablePushState' => false,
         'timeout' => 5000,
         'enableReplaceState' => false,
-    ]); ?>
+    ]);
+    ?>
 
     <div class="row justify-content-between align-items-center">
         <div class="col-12 col-lg-7 col-xl-8">
@@ -95,7 +96,12 @@ $this->params['breadcrumbs'][] = $model->title;
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
             'itemOptions' => ['class' => 'item'],
-            'itemView' => 'product',
+            'itemView' => function ($model) {
+                return $this->render('product', [
+                    'model' => $model,
+                    'pjx' => '#catalog-pjax'
+                ]);
+            },
             'layout' =>
             '<div class="d-flex justify-content-center mt-4">{pager}</div>
             <div class="catalog-items d-flex justify-content-center justify-content-xl-start flex-wrap gap-3">{items}</div>

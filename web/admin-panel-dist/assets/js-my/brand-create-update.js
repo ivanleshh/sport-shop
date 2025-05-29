@@ -49,4 +49,10 @@ $(() => {
         $('#brand-modal').modal('hide')
         $.pjax.reload('#brand-index-pjax')
     });
+
+    $('#brand-index-pjax').on('pjax:end', function () {
+        $.pjax.reload({
+            container: '#toast-pjax'
+        })
+    });
 })

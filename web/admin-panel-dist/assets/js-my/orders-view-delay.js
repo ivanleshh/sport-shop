@@ -14,7 +14,6 @@ $(() => {
 
     $('#form-delay-pjax').on('pjax:end', function() {
         $('#orders-view-delay-modal').modal('hide')
-        setTimeout($('.alert').remove(), 5000)
         $.pjax.reload('#admin-orders-view-pjax')
     });
 })

@@ -458,7 +458,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <?= Html::a(
                     '<i class="bi bi-trash3"></i>',
                     ["/cart/clear"],
-                    ["class" => "btn btn-danger btn-cart-clear d-none btn-cart-manager"]
+                    ["class" => "btn btn-danger btn-cart-clear d-none btn-cart-manager", "data-pjx" => ""]
                 ) ?>
                 <?= Html::a(
                     "Перейти к оформлению",

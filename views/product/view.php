@@ -82,12 +82,15 @@ $countReviews = $model->countReviews;
 
                         <div class="bottom-content">
 
-                            <?php Pjax::begin([
+                            <?php 
+                            Pjax::begin([
                                 'id' => 'product-buttons-pjax',
                                 'enablePushState' => false,
                                 'timeout' => 5000,
                                 'enableReplaceState' => false,
-                            ]); ?>
+                            ]); 
+                            $pjx = '#product-buttons-pjax'
+                            ?>
 
                             <div class="row align-items-end justify-content-end gy-3">
                                 <div class="col-12 col-sm-7 col-xxl-5">
@@ -99,11 +102,11 @@ $countReviews = $model->countReviews;
                                                 . Html::a(
                                                     '-',
                                                     ['/cart/dec-item', 'item_id' => $model->cartItems[0]->id],
-                                                    ['class' => 'btn btn-outline-secondary btn-cart-item-dec px-3']
+                                                    ['class' => 'btn btn-outline-secondary btn-cart-item-dec px-3', 'data-pjx' => $pjx]
                                                 ) . $model->cartItems[0]->product_amount . Html::a(
                                                     '+',
                                                     ['/cart/inc-item', 'item_id' => $model->cartItems[0]->id],
-                                                    ['class' => 'btn btn-outline-secondary btn-cart-item-inc px-3']
+                                                    ['class' => 'btn btn-outline-secondary btn-cart-item-inc px-3', 'data-pjx' => $pjx]
                                                 ) .
                                                 '</div>
                                         </div>';
@@ -111,7 +114,7 @@ $countReviews = $model->countReviews;
                                             echo Html::a(
                                                 'В корзину',
                                                 ['/cart/add', 'product_id' => $model->id],
-                                                ['class' => 'btn-cart-add btn btn-warning w-100']
+                                                ['class' => 'btn-cart-add btn btn-warning w-100', 'data-pjx' => $pjx]
                                             );
                                         } ?>
                                     </div>
@@ -122,7 +125,7 @@ $countReviews = $model->countReviews;
                                     echo Html::a(
                                         '<i class="bi bi-suit-heart-fill me-2"></i>' . ($favourite ? 'В избранное' : 'В избранном'),
                                         ['/catalog/favourite'],
-                                        ['data-id' => $model->id, 'class' => "btn btn-favourite w-100 btn-" . ($favourite ? "outline-secondary" : "secondary") . " text-decoration-none"]
+                                        ['data-id' => $model->id, 'data-pjx' => $pjx, 'class' => "btn btn-favourite w-100 btn-" . ($favourite ? "outline-secondary" : "secondary") . " text-decoration-none"]
                                     );
                                     ?>
                                 </div>
@@ -132,7 +135,7 @@ $countReviews = $model->countReviews;
                                     echo Html::a(
                                         '<i class="bi bi-bar-chart-line-fill me-2"></i>' . ($compare ? 'В сравнение' : 'В сравнении'),
                                         ['/catalog/compare'],
-                                        ['data-id' => $model->id, 'class' => "btn btn-compare w-100 btn-" . ($compare ? "outline-secondary" : "secondary") . " text-decoration-none"]
+                                        ['data-id' => $model->id, 'data-pjx' => $pjx, 'class' => "btn btn-compare w-100 btn-" . ($compare ? "outline-secondary" : "secondary") . " text-decoration-none"]
                                     );
                                     ?>
                                 </div>

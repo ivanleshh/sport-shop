@@ -23,7 +23,7 @@ $this->params['breadcrumbs'] = [
     "Заказ № $model->id",
 ];
 ?>
-<div class="cart-index hero-content">
+<div class="order-index hero-content">
     <div class="row">
 
         <div class="col-12 col-md-6 order-1 order-md-2">
@@ -34,13 +34,6 @@ $this->params['breadcrumbs'] = [
                         'enablePushState' => false,
                         'timeout' => 5000,
                     ]); ?>
-
-                    <?php if (Yii::$app->session->hasFlash('order-delay')) {
-                        Yii::$app->session->setFlash('info', Yii::$app->session->getFlash('order-delay'));
-                        Yii::$app->session->removeFlash('order-delay');
-                        echo Alert::widget();
-                    }
-                    ?>
 
                     <?= DetailView::widget([
                         'model' => $model,
@@ -138,36 +131,30 @@ $this->params['breadcrumbs'] = [
                         ],
                     ]) ?>
 
-                    <?php Pjax::end(); ?>
-                </div>
-                <!-- <div class="col-12">
-                    <div class="row gy-3">
-                        <?php if ($model->status->id == Status::getStatusId('Новый')) {
-                            echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6 col-xxl-4'>" . Html::a('Принять в работу', ['work', 'id' => $model->id], [
-                                'class' => 'btn btn-warning w-100',
-                                'data' => [
-                                    'confirm' => 'Подтвердите действие',
-                                    'method' => 'post',
-                                ],
-                            ]) . "</div>";
+                    <div class="row mt-1 g-3">
+                        <div class="col-12 col-sm-2 col-md-12 col-xxl-2">
+                            <?= Html::a('Назад', ['index'], ['class' => 'btn btn-outline-secondary w-100', 'data-pjax' => 0]) ?>
+                        </div>
+                        <?php if ($model->status_id == Status::getStatusId('Новый')) {
+                            echo "<div class='col-12 col-sm-5 col-md-12 col-xxl-5'>" . Html::a('Принять в работу', ['work', 'id' => $model->id], [
+                                'class' => 'btn btn-warning btn-work w-100',
+                                'data-id' => $model->id,
+                            ]) . '</div>';
                         } else if ($model->status_id == Status::getStatusId('В пути') || $model->status_id == Status::getStatusId('Доставка перенесена')) {
-                            if (is_null($model->address) && $model->status_id == Status::getStatusId('В пути')) {
-                                echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6 col-xxl-4'>" . Html::a('Перенести доставку', ['delay', 'id' => $model->id], [
-                                    'class' => 'btn btn-outline-danger btn-delay w-100',
-                                ]) . "</div>";
+                            if (empty($model->address) && $model->status_id == Status::getStatusId('В пути')) {
+                                echo "<div class='col-12 col-sm-5 col-md-12 col-xxl-5'>" . Html::a('Перенести доставку', ['delay', 'id' => $model->id], ['class' => 'btn btn-outline-danger btn-delay w-100', 'data-pjax' => 0]) . '</div>';;
                             }
-                            echo "<div class='col-12 col-sm-6 col-md-12 col-xl-6 col-xxl-4'>" . Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
-                                'class' => 'btn btn-success w-100',
-                                'data' => [
-                                    'confirm' => 'Подтвердите действие',
-                                    'method' => 'post',
-                                ],
-                            ]) . "</div>";
+                            echo "<div class='col-12 col-sm-5 col-md-12 col-xxl-5'>" . Html::a('Подтвердить получение', ['success', 'id' => $model->id], [
+                                'class' => 'btn btn-success btn-confirm w-100',
+                                'data-id' => $model->id,
+                            ]) . '</div>';
                         }
                         ?>
                     </div>
 
-                </div> -->
+                    <?php Pjax::end(); ?>
+
+                </div>
             </div>
         </div>
 
@@ -206,6 +193,33 @@ if ($dataProviderr->count) {
     ]);
     echo $this->render('delay', compact('model_delay'));
     Modal::end();
-    $this->registerJsFile('/js/orders-view-delay.js', ['depends' => JqueryAsset::class]);
+    $this->registerJsFile('/admin-panel-dist/assets/js-my/orders-view-delay.js', ['depends' => JqueryAsset::class]);
 }
 ?>
+
+<?php
+Modal::begin([
+    'id' => 'orders-actions',
+    'title' => 'Вы уверены, что хотите принять заказ в работу?',
+    'size' => 'modal-md',
+]);
+?>
+<div class="d-flex justify-content-end gap-3 my-2 cart-panel-top">
+    <div class="d-flex justify-content-end gap-3">
+        <?= Html::a(
+            'Подтвердить',
+            ["success"],
+            ["class" => "btn btn-success btn-agree", 'data-pjx' => '#admin-orders-view-pjax']
+        ) ?>
+        <?= Html::a(
+            "Назад",
+            '',
+            ["class" => "btn btn-secondary btn-disagree"]
+        ) ?>
+    </div>
+</div>
+<?php
+Modal::end();
+?>
+
+<?= $this->registerJsFile('/admin-panel-dist/assets/js-my/order-buttons.js', ['depends' => JqueryAsset::class]) ?>

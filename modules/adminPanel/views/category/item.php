@@ -24,14 +24,11 @@ use yii\bootstrap5\Html;
       ?>
     </div>
     <div class="col-7 d-flex flex-column gap-3 justify-content-center">
-      <?#= Html::a('Перейти', ['view', 'id' => $model->id], ['class' => 'btn btn-outline-dark']) ?>
       <?= Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-warning']); ?>
       <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
-        'class' => 'btn btn-outline-danger',
-        'data' => [
-          'confirm' => 'Вы уверены, что хотите удалить элемент?',
-          'method' => 'post',
-        ],
+        'class' => 'btn btn-outline-danger btn-remove',
+        'data-title' => $model->title,
+        'data-pjax' => 0,
       ]); ?>
     </div>
   </div>

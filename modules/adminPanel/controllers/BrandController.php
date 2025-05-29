@@ -133,9 +133,12 @@ class BrandController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->delete();
-        Yii::$app->session->setFlash('danger', "Бренд '$model->title' был удалён");
-        return $this->redirect(['index']);
+        if ($model->delete()) {
+            Yii::$app->session->set('bg_color', 'bg-danger');
+            Yii::$app->session->set('text', "Бренд '$model->title' был удалён");
+            return $this->asJson(true);
+        }
+        return $this->asJson(false);
     }
 
     /**

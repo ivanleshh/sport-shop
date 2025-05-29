@@ -4,6 +4,7 @@ use app\models\Product;
 use coderius\swiperslider\SwiperSlider;
 use kartik\rating\StarRating;
 use yii\bootstrap5\Html;
+use yii\widgets\Pjax;
 
 $navigation = true;
 if (isset($nav)) {
@@ -68,6 +69,15 @@ if (isset($nav)) {
       </div>
     <?php endif; ?>
 
+    <?php Pjax::begin([
+      'id' => "product-$model->id-pjax",
+      'enablePushState' => false,
+      'timeout' => 5000,
+      'enableReplaceState' => false,
+    ]);
+    $pjx = "#product-$model->id-pjax";
+    ?>
+
     <div class="d-flex flex-column gap-2 border-top pt-2">
 
       <div>
@@ -85,7 +95,7 @@ if (isset($nav)) {
               Html::a(
                 "<i class='bi bi-bar-chart-line-fill " . (empty($model->compareProducts[0]->status) ? 'text-secondary' : 'text-warning') . "'></i>",
                 ['/catalog/compare'],
-                ['data-id' => $model->id, 'class' => 'btn-compare text-decoration-none']
+                ['data-id' => $model->id, 'class' => 'btn-compare text-decoration-none', 'data-pjx' => $pjx]
               ) .
               "</div>";
 
@@ -93,15 +103,12 @@ if (isset($nav)) {
               Html::a(
                 "<i class='bi bi-suit-heart-fill " . (empty($model->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
                 ['/catalog/favourite'],
-                ['data-id' => $model->id, 'class' => 'btn-favourite text-decoration-none']
+                ['data-id' => $model->id, 'class' => 'btn-favourite text-decoration-none', 'data-pjx' => $pjx]
               ) .
               "</div>";
           }
           ?>
         </div>
-
-
-
       </div>
 
       <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin && isset($model->cartItems[0])) : ?>
@@ -113,7 +120,7 @@ if (isset($nav)) {
             <?= Html::a(
               '-',
               ['/cart/dec-item', 'item_id' => $model->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-dec']
+              ['class' => 'btn btn-outline-secondary btn-cart-item-dec', 'data-pjx' => $pjx]
             ) ?>
           </div>
           <div>
@@ -123,7 +130,7 @@ if (isset($nav)) {
             <?= Html::a(
               '+',
               ['/cart/inc-item', 'item_id' => $model->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-inc']
+              ['class' => 'btn btn-outline-secondary btn-cart-item-inc', 'data-pjx' => $pjx]
             ) ?>
           </div>
         </div>
@@ -132,11 +139,14 @@ if (isset($nav)) {
           ? Html::a(
             'В корзину',
             ['/cart/add', 'product_id' => $model->id],
-            ['class' => 'btn-cart-add btn btn-warning w-100']
+            ['class' => 'btn-cart-add btn btn-warning w-100', 'data-pjx' => $pjx]
           ) : ""
         ?>
       <?php endif; ?>
 
     </div>
+
+    <?php Pjax::end(); ?>
+
   </div>
 </div>

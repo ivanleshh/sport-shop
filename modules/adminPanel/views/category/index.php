@@ -2,6 +2,7 @@
 
 use app\widgets\Alert;
 use yii\bootstrap5\LinkPager;
+use yii\bootstrap5\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -62,4 +63,30 @@ $this->params['breadcrumbs'] = [
 
 </div>
 
+<?php
+Modal::begin([
+    'id' => 'category-delete',
+    'title' => '',
+    'size' => 'modal-md',
+]);
+?>
+<div class="d-flex justify-content-end gap-3 my-2 cart-panel-top">
+    <div class="d-flex justify-content-end gap-3">
+        <?= Html::a(
+            'Удалить',
+            ["success"],
+            ["class" => "btn btn-danger btn-agree", 'data-pjx' => '#category-index-pjax']
+        ) ?>
+        <?= Html::a(
+            "Назад",
+            '',
+            ["class" => "btn btn-secondary btn-disagree"]
+        ) ?>
+    </div>
+</div>
+<?php
+Modal::end();
+?>
+
 <?= $this->registerJsFile('/admin-panel-dist/assets/js-my/filter-category.js', ['depends' => JqueryAsset::class]) ?>
+<?= $this->registerJsFile('/admin-panel-dist/assets/js-my/category-delete.js', ['depends' => JqueryAsset::class]) ?>

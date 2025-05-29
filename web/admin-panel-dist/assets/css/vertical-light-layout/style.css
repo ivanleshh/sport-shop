@@ -14477,6 +14477,7 @@ textarea.is-invalid.asColorPicker-input {
 .settings-panel .color-tiles .tiles.danger {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-danger-rgb), var(--bs-bg-opacity)) !important;
+  color: white !important;
 }
 
 .bg-light,
