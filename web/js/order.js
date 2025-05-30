@@ -10,12 +10,7 @@ $(() => {
         success(data) {
           if (data) {
             if (data.status) {
-              $.pjax.reload("#order-pjax", {
-                url: $('#btn-order').attr('href'),
-                push: false,
-                replace: false,
-                timeout: 5000,
-              });
+              $.pjax.reload({container: "#order-pjax"});
             } else {
               error_modal(data.message);
             }
@@ -23,8 +18,4 @@ $(() => {
         },
       });
     })
-
-  $('#order-pjax').on('pjax:end', () => {
-    cartItemCount();
-  })
 })

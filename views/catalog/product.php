@@ -95,7 +95,7 @@ if (isset($nav)) {
               Html::a(
                 "<i class='bi bi-bar-chart-line-fill " . (empty($model->compareProducts[0]->status) ? 'text-secondary' : 'text-warning') . "'></i>",
                 ['/catalog/compare'],
-                ['data-id' => $model->id, 'class' => 'btn-compare text-decoration-none', 'data-pjx' => $pjx]
+                ['data-id' => $model->id, 'class' => 'btn-compare text-decoration-none']
               ) .
               "</div>";
 
@@ -103,7 +103,7 @@ if (isset($nav)) {
               Html::a(
                 "<i class='bi bi-suit-heart-fill " . (empty($model->favouriteProducts[0]->status) ? 'text-secondary' : 'text-danger') . "'></i>",
                 ['/catalog/favourite'],
-                ['data-id' => $model->id, 'class' => 'btn-favourite text-decoration-none', 'data-pjx' => $pjx]
+                ['data-id' => $model->id, 'class' => 'btn-favourite text-decoration-none']
               ) .
               "</div>";
           }

@@ -57,20 +57,15 @@ $(() => {
       });
     });
 
-  $("#catalog-pjax, #product-buttons-pjax, #recently-viewed-pjax").on("click", ".btn-favourite, .btn-compare", function (e) {
+  $("#catalog-pjax, #product-buttons-pjax, #recently-viewed-pjax")
+.on("click", ".btn-favourite, .btn-compare", function (e) {
     e.preventDefault();
     const a = $(this);
     $.ajax({
-      url: a.attr("href"),
-      type: "POST",
-      data: {
-        id: a.data("id")
-      },
+      url: a.attr("href"),type: "POST",data: {id: a.data("id")},
       success(data) {
-        if (typeof (a.data('pjx')) !== undefined) {
-          $.pjax.reload({
-            container: a.data('pjx')
-          })
+        if (typeof(a.data('pjx')) !== 'undefined') {
+          $.pjax.reload({container: a.data('pjx')})
         } else {
           if (a.hasClass('btn-favourite')) {
             a.html(`<i class="bi bi-suit-heart-fill ${data.status ? 'text-danger' : 'text-secondary'}"></i>`)
@@ -83,7 +78,7 @@ $(() => {
     })
   });
 
-  $("#catalog-pjax, #favourite-pjax, #compare-pjax, #product-buttons-pjax, #recently-viewed-pjax, #product-reviews-pjax, #personal-pjax").on('pjax:end', function () {
+  $("#catalog-pjax, #favourite-pjax, #compare-pjax, #product-buttons-pjax, #recently-viewed-pjax, #product-reviews-pjax, #personal-pjax, #order-pjax").on('pjax:end', function () {
     toastReload()
   })
 

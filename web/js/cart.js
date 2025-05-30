@@ -47,8 +47,4 @@ $(() => {
             pjax_reload()
         }
     })
-
-    $('#toast-pjax').on('pjax:end', function () {
-        cartItemCount()
-    })
 })
