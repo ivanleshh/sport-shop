@@ -1,5 +1,8 @@
 $(() => {
+    let scrollPosition = '';
+
     $('.orders-index').on('change', "#orderssearch-pick_up_id, #orderssearch-status_id, #orderssearch-date_delivery", function (e) {
+        scrollPosition = $(window).scrollTop();
         const pick_up = $("#orderssearch-pick_up_id").val();
         const status = $("#orderssearch-status_id").val();
         const date = $("#orderssearch-date_delivery").val();
@@ -12,4 +15,10 @@ $(() => {
             replace: false,
         });
     });
+
+    $('#personal-orders-pjax').on('pjax:end', function () {
+        if (typeof(scrollPosition) == 'number') {
+            $(window).scrollTop(scrollPosition);
+        }
+    })
 })

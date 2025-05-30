@@ -23,11 +23,13 @@ $(() => {
     });
 
     $('#admin-orders-pjax').on('pjax:end', function () {
-        $(window).scrollTop(scrollPosition)
-        let email = $('#orderssearch-email')
-        const input = email.get(0); // Получаем нативный DOM-элемент
-        const length = input.value.length; // Длина текста
-        input.setSelectionRange(length, length); // Устанавливаем курсор в конец
-        email.focus();
+        if (typeof(scrollPosition) == 'number') {
+            $(window).scrollTop(scrollPosition)
+            let email = $('#orderssearch-email')
+            const input = email.get(0); // Получаем нативный DOM-элемент
+            const length = input.value.length; // Длина текста
+            input.setSelectionRange(length, length); // Устанавливаем курсор в конец
+            email.focus();
+        }
     })
 })

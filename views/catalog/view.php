@@ -129,5 +129,4 @@ $this->params['breadcrumbs'][] = $model->title;
 
 </div>
 
-<?= $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]); ?>
 <?= $this->registerJsFile('/js/filter-catalog.js', ['depends' => JqueryAsset::class]); ?>

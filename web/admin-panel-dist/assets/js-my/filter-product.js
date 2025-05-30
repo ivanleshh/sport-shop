@@ -22,11 +22,13 @@ $(() => {
     });
 
     $('#product-index-pjax').on('pjax:end', function () {
-        $(window).scrollTop(scrollPosition)
-        let title = $('#productsearch-title')
-        const input = title.get(0); // Получаем нативный DOM-элемент
-        const length = input.value.length; // Длина текста
-        input.setSelectionRange(length, length); // Устанавливаем курсор в конец
-        title.focus();
+        if (typeof(scrollPosition) == 'number') {
+            $(window).scrollTop(scrollPosition)
+            let title = $('#productsearch-title')
+            const input = title.get(0); // Получаем нативный DOM-элемент
+            const length = input.value.length; // Длина текста
+            input.setSelectionRange(length, length); // Устанавливаем курсор в конец
+            title.focus();
+        }
     })
 })

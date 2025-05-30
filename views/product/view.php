@@ -283,4 +283,3 @@ if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) {
 ?>
 
 <?= $this->registerJsFile('/js/images-change.js', ['depends' => JqueryAsset::class]) ?>
-<?= $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]); ?>

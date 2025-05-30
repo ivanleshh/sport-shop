@@ -468,7 +468,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             </div>
         </div>
         <?php Modal::end(); ?>
-        <?php $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]); ?>
     <?php endif; ?>
 
     <?php
