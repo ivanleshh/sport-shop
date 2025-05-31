@@ -216,10 +216,10 @@ $countReviews = $model->countReviews;
                         <?php if (Yii::$app->user->isGuest) : ?>
                             <?= Html::a("Войдите, чтобы оценить товар", ['/site/login'], ['class' => 'btn btn-orange px-4 py-2']) ?>
                         <?php elseif (!Yii::$app->user->identity->isAdmin) : ?>
-                            <?= Html::a("Оценить товар", ['/review/create', 'product_id' => $model->id], ['class' => 'btn btn-orange btn-add-review px-4 py-2']) ?>
+                            <?= Html::a("Оценить товар", ['/review/create', 'product_id' => $model->id], 
+                            ['class' => 'btn btn-orange btn-add-review px-4 py-2']) ?>
                         <?php endif; ?>
                     </div>
-
                 </div>
                 <div class="col-12 col-lg-8">
 

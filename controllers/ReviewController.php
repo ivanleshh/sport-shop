@@ -38,6 +38,7 @@ class ReviewController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
+    // Метод для сохранения отзывов и комментариев
     public function actionCreate($product_id)
     {
         $model = new Review();

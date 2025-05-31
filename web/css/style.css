@@ -470,12 +470,6 @@ textarea {
 /* BREAD CRUMBS END */
 
 @media screen and (max-width: 768px) {
-    .catalog-items {
-        justify-content: center;
-    }
-}
-
-@media screen and (max-width: 768px) {
     .container-admin {
         padding-right: 1rem;
         padding-left: 1rem;

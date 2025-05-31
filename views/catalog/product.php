@@ -111,37 +111,33 @@ if (isset($nav)) {
         </div>
       </div>
 
-      <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin && isset($model->cartItems[0])) : ?>
-        <div class="d-flex align-items-center gap-3">
-          <div class="w-100">
-            <?= Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange w-100', 'data-pjax' => 0]) ?>
+      <?php if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) : ?>
+        <?php if (isset($model->cartItems[0])) : ?>
+          <div class="d-flex align-items-center gap-3">
+            <div class="w-100">
+              <?= Html::a('Оформить', ['/personal/orders/create'], ['class' => 'btn btn-orange w-100', 'data-pjax' => 0]) ?>
+            </div>
+            <div>
+              <?= Html::a('-',['/cart/dec-item', 'item_id' => $model->cartItems[0]->id],
+                ['class' => 'btn btn-outline-secondary btn-cart-item-dec', 'data-pjx' => $pjx]
+              ) ?>
+            </div>
+            <div>
+              <?= $model->cartItems[0]->product_amount ?>
+            </div>
+            <div>
+              <?= Html::a(
+                '+',['/cart/inc-item', 'item_id' => $model->cartItems[0]->id],
+                ['class' => 'btn btn-outline-secondary btn-cart-item-inc', 'data-pjx' => $pjx]
+              ) ?>
+            </div>
           </div>
-          <div>
-            <?= Html::a(
-              '-',
-              ['/cart/dec-item', 'item_id' => $model->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-dec', 'data-pjx' => $pjx]
-            ) ?>
-          </div>
-          <div>
-            <?= $model->cartItems[0]->product_amount ?>
-          </div>
-          <div>
-            <?= Html::a(
-              '+',
-              ['/cart/inc-item', 'item_id' => $model->cartItems[0]->id],
-              ['class' => 'btn btn-outline-secondary btn-cart-item-inc', 'data-pjx' => $pjx]
-            ) ?>
-          </div>
-        </div>
-      <?php else : ?>
-        <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
-          ? Html::a(
-            'В корзину',
-            ['/cart/add', 'product_id' => $model->id],
-            ['class' => 'btn-cart-add btn btn-warning w-100', 'data-pjx' => $pjx]
-          ) : ""
-        ?>
+        <?php else : ?>
+          <?= Html::a(
+            'В корзину',['/cart/add', 'product_id' => $model->id],
+            ['class' => 'btn-cart-add btn btn-warning w-100', 'data-pjx' => $pjx])
+          ?>
+        <?php endif; ?>
       <?php endif; ?>
 
     </div>

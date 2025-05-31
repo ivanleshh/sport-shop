@@ -19,7 +19,6 @@ const pjax_array = [
   'catalog-pjax',
   'recently-viewed-pjax',
   'favourite-pjax',
-  'product-buttons-pjax',
   'compare-pjax',
   'order-pjax',
 ]

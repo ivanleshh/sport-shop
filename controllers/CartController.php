@@ -107,10 +107,7 @@ class CartController extends Controller
             }
             if ($product = Product::findOne($product_id)) {
                 if ($product->count) {
-                    $cart_item = CartItem::findOne([
-                        'cart_id' => $cart->id,
-                        'product_id' => $product->id,
-                    ]);
+                    $cart_item = CartItem::findOne(['cart_id' => $cart->id,'product_id' => $product->id]);
                     if (!$cart_item) {
                         $cart_item = new CartItem();
                         $cart_item->cart_id = $cart->id;
@@ -120,25 +117,16 @@ class CartController extends Controller
                     if ($cart_item->product_amount < $product->count) {
                         $cart_item->product_amount++;
                         $cart_item->total_amount = $cart_item->product_amount * $product->price;
-
                         $cart_item->save();
                         $cart->product_amount++;
                         $cart->total_amount += $product->price;
                         $cart->save();
-
                         Yii::$app->session->set('bg_color', 'bg-success');
-                        Yii::$app->session->set('text', $product->title .
-                            ' добавлен в Корзину');
-
-                        return $this->asJson([
-                            'status' => true,
-                        ]);
+                        Yii::$app->session->set('text', $product->title . ' добавлен в Корзину');
+                        return $this->asJson(['status' => true]);
                     }
                 }
-                return $this->asJson([
-                    'status' => false,
-                    'message' => 'Извините, товар закончился :('
-                ]);
+                return $this->asJson(['status' => false,'message' => 'Извините, товар закончился :(']);
             }
         }
     }

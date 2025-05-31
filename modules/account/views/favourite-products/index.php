@@ -37,7 +37,7 @@ $this->params['breadcrumbs'] = [
             'itemView' => 'product',
             'layout' =>
             '<div class="d-flex justify-content-center mt-4">{pager}</div>
-            <div class="catalog-items d-flex flex-wrap gap-3">{items}</div>
+            <div class="catalog-items d-flex justify-content-center justify-content-xl-start flex-wrap gap-3">{items}</div>
             <div class="d-flex justify-content-center mt-4">{pager}</div>',
         ]) ?>
 

@@ -81,7 +81,7 @@ class CompareProductsController extends Controller
                         ' удалён из Сравнения');
                 }
                 $model->save();
-                return true;
+                return $this->asJson(['status' => true]);
             }
         }
 

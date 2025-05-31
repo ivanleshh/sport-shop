@@ -41,24 +41,18 @@ class FavouriteProductsController extends Controller
     {
         $searchModel = new FavouriteProductsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
-
         if ($id) {
             if ($model = $this->findModel($id)) {
                 $model->status = (int)(! $model->status);
                 if ($model->status == 0) {
                     Yii::$app->session->set('bg_color', 'bg-danger');
-                    Yii::$app->session->set('text', $model->product->title .
-                        ' удалён из Избранного');
+                    Yii::$app->session->set('text', $model->product->title . ' удалён из Избранного');
                 }
                 $model->save();
-                return true;
+                return $this->asJson(['status' => true]);
             }
         }
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return $this->render('index', ['searchModel' => $searchModel,'dataProvider' => $dataProvider]);
     }
 
     /**

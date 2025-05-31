@@ -106,12 +106,11 @@ use yii\widgets\Pjax;
           </div>
         </div>
       <?php else : ?>
-        <?= ! Yii::$app->user->isGuest && ! Yii::$app->user->identity->isAdmin
-          ? Html::a(
-            'В корзину',
-            ['/cart/add', 'product_id' => $model->product->id],
-            ['class' => 'btn-cart-add btn btn-warning w-100', 'data-pjx' => $pjx]
-          ) : ""
+        <?= Html::a(
+          'В корзину',
+          ['/cart/add', 'product_id' => $model->product->id],
+          ['class' => 'btn-cart-add btn btn-warning w-100', 'data-pjx' => $pjx]
+        )
         ?>
       <?php endif; ?>
 

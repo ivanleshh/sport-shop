@@ -60,7 +60,7 @@ $this->title = 'My Yii Application';
                     </div>
                     <div class="content">
                         <h2 class="text-light">
-                            <span class="text-success fw-bold">Теперь в наличии</span>
+                            <span class="text-primary fw-bold">Теперь в наличии</span>
                             Gold Standart 100% Whey
                         </h2>
                         <h3 class="text-light">5199 ₽</h3>

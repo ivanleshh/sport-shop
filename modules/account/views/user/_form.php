@@ -12,27 +12,15 @@ use yii\widgets\Pjax;
 
 <div class="user-form">
     <?php Pjax::begin([
-        'id' => 'form-personal-pjax',
-        'enablePushState' => false,
-        'timeout' => 5000,
-    ]); ?>
-        <?php $form = ActiveForm::begin([
-            'id' => 'form-personal',
-            'options' => [
-                'data-pjax' => true,
-            ]
-        ]); ?>
+        'id' => 'form-personal-pjax', 'enablePushState' => false,'timeout' => 5000]); ?>
+        <?php $form = ActiveForm::begin(['id' => 'form-personal','options' => ['data-pjax' => true]]); ?>
         <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'surname')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'login')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'check')->checkbox() ?>
-        <?= $form->field($model, 'password', ['options' => [
-            'class' => 'collapse'
-        ]])->passwordInput(['maxlength' => true, 'value' => '']) ?>
-        <?= $form->field($model, 'password_repeat', ['options' => [
-            'class' => 'collapse'
-        ]])->passwordInput(['maxlength' => true, 'value' => '']) ?>
+        <?= $form->field($model, 'password', ['options' => ['class' => 'collapse']])->passwordInput(['maxlength' => true, 'value' => '']) ?>
+        <?= $form->field($model, 'password_repeat', ['options' => ['class' => 'collapse']])->passwordInput(['maxlength' => true, 'value' => '']) ?>
         <div class="form-group d-flex gap-3 justify-content-end mt-3">
             <?= Html::a('Закрыть', '', ['class' => 'btn btn-secondary btn-modal-close', 'data-pjax' => 0]) ?>
             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
