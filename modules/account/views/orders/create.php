@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Cart;
+use app\widgets\Alert;
 use yii\bootstrap5\LinkPager;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -17,6 +18,8 @@ $this->params['breadcrumbs'] = [
     'Оформление заказа',
 ];
 ?>
+
+<?= Alert::widget() ?>
 
 <div class="create-order hero-content m-0 row">
     <div class="create-order-cart col-12 col-lg-7 order-2 order-lg-1 mt-4 mt-lg-0 ps-1">

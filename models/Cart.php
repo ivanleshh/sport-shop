@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\VarDumper;
 
 /**
  * This is the model class for table "cart".
@@ -82,7 +83,32 @@ class Cart extends \yii\db\ActiveRecord
         return $count;
     }
 
-    // Метод для пересчета количества товаров корзины и её общей суммы
+    // Метод для пересчета добавленных в корзину товаров
+    public function updateItemsData($dataProvider)
+    {
+        if (isset($dataProvider)) {
+            $wasAdjusted = false;
+            foreach ($dataProvider->models as $item) {
+                if ($item->product_amount > $item->product->count) {
+                    $adjustCount = $item->product_amount - $item->product->count;
+                    $item->total_amount -= $adjustCount * $item->product->price;
+                    $item->product_amount = $item->product->count;
+                    $item->save(false);
+                    $wasAdjusted = true;
+                }
+            }
+            if ($wasAdjusted) {
+                $this->recalculate();
+                $text = 'Количество товаров из вашей корзины было скорректировано из-за недостатка на складе';
+                Yii::$app->session->set('bg_color', 'bg-danger');
+                Yii::$app->session->set('text', $text);
+                Yii::$app->session->setFlash('danger', $text);
+            }
+        }
+        return $dataProvider;
+    }
+
+    // Метод для пересчета характеристик корзины
     public function recalculate()
     {
         $items = CartItem::find()->where(['cart_id' => $this->id])->with('product')->all();

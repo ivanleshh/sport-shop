@@ -10,7 +10,9 @@ $(() => {
         success(data) {
           if (data) {
             if (data.status) {
-              $.pjax.reload({container: "#order-pjax"});
+              $.pjax.reload({
+                container: "#order-pjax"
+              });
             } else {
               error_modal(data.message);
             }

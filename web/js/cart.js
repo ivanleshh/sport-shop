@@ -2,10 +2,7 @@ $(() => {
     $('#btn-cart').on('click', (e) => {
         e.preventDefault();
         $.pjax.reload('#cart-pjax', {
-            url: $('#btn-cart').attr('href'),
-            push: false,
-            replace: false,
-            timeout: 5000,
+            url: $('#btn-cart').attr('href'), push: false, replace: false, timeout: 5000
         })
     })
 
@@ -19,10 +16,7 @@ $(() => {
                 success(data) {
                     if (data.status) {
                         $.pjax.reload("#cart-pjax", {
-                            url: $('#btn-cart').attr('href'),
-                            push: false,
-                            replace: false,
-                            timeout: 5000,
+                            url: $('#btn-cart').attr('href'), push: false, replace: false, timeout: 5000
                         });
                     } else {
                         error_modal(data.message);
@@ -33,18 +27,11 @@ $(() => {
 
     $('#cart-pjax').on('pjax:end', () => {
         if ($('#cart-pjax').find('.cart-empty').length) {
-            $('#cart-modal')
-                .find('.btn-cart-manger, .cart-panel-top')
-                .addClass('d-none')
+            $('#cart-modal').find('.btn-cart-manger, .cart-panel-top').addClass('d-none')
         } else {
-            $('#cart-modal')
-                .find('.btn-cart-manger, .cart-panel-top')
-                .removeClass('d-none')
+            $('#cart-modal').find('.btn-cart-manger, .cart-panel-top').removeClass('d-none')
         }
-        if (!$('#cart-modal').hasClass('show')) {
-            $('#cart-modal').modal('show');
-        } else {
-            pjax_reload()
-        }
+        $('#cart-modal').modal('show');
+        pjax_reload()
     })
 })

@@ -205,10 +205,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 <li class="position-relative">
                                     <?= Html::a(
                                         '<i class="bi bi-cart4"></i>',
-                                        [!Yii::$app->user->isGuest ? '/cart/index' : '/site/login'],
+                                        ['/cart/index'],
                                         ['id' => 'btn-cart']
                                     ) ?>
-
                                     <span class="cart-item-count">
                                         <? Pjax::begin([
                                             'id' => 'cart-item-count',
@@ -394,7 +393,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         </div>
                         <div class="col-lg-4 col-12">
                             <div class="copyright">
-                                <p>Разработано by <span class="text-warning fw-bold" href="https://graygrids.com/" rel="nofollow"
+                                <p>Designed by <span class="text-warning fw-bold" href="https://graygrids.com/" rel="nofollow"
                                         target="_blank">Javalets</span></p>
                             </div>
                         </div>
@@ -435,9 +434,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'size' => 'modal-lg',
             'title' => 'Корзина'
         ]); ?>
-
-        <?php $cart_data = $this->render('@app/views/cart/index', ['dataProvider' => null]); ?>
-
         <div class="d-flex justify-content-end gap-3 my-2 d-none cart-panel-top">
             <div class="d-flex justify-content-end gap-3">
                 <?= Html::a(
@@ -452,7 +448,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 ) ?>
             </div>
         </div>
-        <?= $cart_data ?>
+        <?= $this->render('@app/views/cart/index', ['dataProvider' => null]); ?>
         <div class="d-flex justify-content-between gap-3 mt-2">
             <div class="d-flex justify-content-end">
                 <?= Html::a(

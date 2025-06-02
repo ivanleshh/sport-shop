@@ -1,7 +1,9 @@
 $(() => {
+    let category_id;
     $("#compare-pjax").on("click", ".btn-compare, .btn-favourite", function (e) {
             e.preventDefault();
             const a = $(this);
+            category_id = a.data('category-id')
             $.ajax({
                 url: a.attr("href"), type: "POST", data: {id: a.data("id")},
                 success(data) {
@@ -28,11 +30,12 @@ $(() => {
                 },
             });
         });
+    $('#compare-pjax').on('pjax:end', function () {
+        if (typeof category_id !== 'undefined' && $(`#content-${category_id}`).find('.compare-items').children().length) {
+            $('.tab-pane.active').removeClass('active show')
+            $('.nav-link.active').removeClass('active')
+            $(`#content-${category_id}`).addClass('active show')
+            $(`#category-${category_id}`).addClass('active')
+        }
+    })
 });
-    // $('#compare-pjax').on('pjax:end', function () {
-    //     if (typeof category_id !== 'undefined') {
-    //         $('.active').removeClass('active show')
-    //         $(`#content-${category_id}`).addClass('active show')
-    //         $(`#category-${category_id}`).addClass('active show')
-    //     }
-    // })

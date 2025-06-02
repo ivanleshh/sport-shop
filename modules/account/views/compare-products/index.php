@@ -37,7 +37,7 @@ $this->params['breadcrumbs'] = [
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <?php foreach ($categories as $index => $category): ?>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link <?= $index == 0 ? 'show active' : '' ?>" id="category-<?= $category->id ?>" data-bs-toggle="tab" data-bs-target="#content-<?= $category->id ?>" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"><?= $category->title ?></button>
+                    <button class="nav-link <?= $index == 0 ? 'active' : '' ?>" id="category-<?= $category->id ?>" data-bs-toggle="tab" data-bs-target="#content-<?= $category->id ?>" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true"><?= $category->title ?></button>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'] = [
                             'itemView' => 'product',
                             'layout' =>
                             '<div class="d-flex justify-content-center mt-4">{pager}</div>
-            <div class="d-flex ms-2 gap-3">{items}</div>
+            <div class="d-flex ms-2 gap-3 compare-items">{items}</div>
             <div class="d-flex justify-content-center mt-4">{pager}</div>',
                         ]) ?>
 
@@ -108,7 +108,7 @@ $this->params['breadcrumbs'] = [
 
                                     <?php foreach ($uniqueProperties as $propertyTitle): ?>
                                         <tr>
-                                            <td><?= Html::encode($propertyTitle) ?></td>
+                                            <td class="text-nowrap"><?= Html::encode($propertyTitle) ?></td>
                                             <?php foreach ($products as $compareProduct): ?>
                                                 <td>
                                                     <?= Html::encode($properties[$compareProduct->product_id][$propertyTitle] ?? '-') ?>

@@ -3,6 +3,7 @@
 use yii\bootstrap5\Html;
 use yii\web\JqueryAsset;
 use yii\bootstrap5\ActiveForm;
+use yii\widgets\Pjax;
 
 use function PHPSTORM_META\map;
 
@@ -12,6 +13,12 @@ use function PHPSTORM_META\map;
 ?>
 
 <div class="order-form">
+    <?php Pjax::begin([
+        'id' => 'order-form-pjax',
+        'enablePushState' => false,
+        'timeout' => 5000
+    ]); ?>
+
     <?php $form = ActiveForm::begin([
         'id' => 'form-order',
     ]); ?>
@@ -41,7 +48,7 @@ use function PHPSTORM_META\map;
             <div class="row">
                 <div class="col-12"><?= $form->field($model, 'address')->textarea(['rows' => 2]) ?></div>
                 <div class="col-6"><?= $form->field($model, 'date_delivery')
-                    ->textInput(['type' => 'date', 'min' => date('Y-m-d', strtotime("+1 day")), 'max' => date('Y-m-d', strtotime("+30 day"))]) ?></div>
+                                        ->textInput(['type' => 'date', 'min' => date('Y-m-d', strtotime("+1 day")), 'max' => date('Y-m-d', strtotime("+30 day"))]) ?></div>
                 <div class="col-6"><?= $form->field($model, 'time_delivery')->textInput(['type' => 'time', 'min' => '09:00', 'max' => '21:00', 'step' => 1800]) ?></div>
                 <div class="col-12"><?= $form->field($model, 'comment')->textarea(['rows' => 2]) ?></div>
             </div>
@@ -51,5 +58,7 @@ use function PHPSTORM_META\map;
         </div>
     </div>
     <?php ActiveForm::end(); ?>
+
+    <?php Pjax::end() ?>
 </div>
 <?= $this->registerJsFile('/js/order-create.js', ['depends' => JqueryAsset::class]); ?>

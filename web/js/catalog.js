@@ -12,7 +12,8 @@ const cartItemCount = () => $.pjax.reload('#cart-item-count', {
 })
 
 const toastReload = () => $.pjax.reload({
-  container: '#toast-pjax'
+  container: '#toast-pjax',
+  timeout: 5000,
 })
 
 const pjax_array = [

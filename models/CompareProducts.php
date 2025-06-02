@@ -78,4 +78,32 @@ class CompareProducts extends \yii\db\ActiveRecord
     {
         return self::find()->where(['user_id' => Yii::$app->user->id, 'status' => 1])->count();
     }
+
+    // Метод для получения сгруппированных товаров, добавленных в избранное
+    public static function getGroupedProducts($dataProvider)
+    {
+        $groupedProducts = [];
+        foreach ($dataProvider->models as $compareProduct) {
+            if ($compareProduct->product && $compareProduct->product->category) {
+                $category_id = $compareProduct->product->category->id;
+                $groupedProducts[$category_id][] = $compareProduct;
+            }
+        }
+        return $groupedProducts;
+    }
+
+    // Метод для получения сгруппированных характеристик товаров, добавленных в избранное
+    public static function getGroupedProperties($groupedProducts)
+    {
+        $properties = [];
+        foreach ($groupedProducts as $products) {
+            foreach ($products as $compareProduct) {
+                $productProperties = ProductProperty::find()->where(['product_id' => $compareProduct->product_id])->joinWith('property')->all();
+                foreach ($productProperties as $prop) {
+                    $properties[$compareProduct->product_id][$prop->property->title] = $prop->property_value;
+                }
+            }
+        }
+        return $properties;
+    }
 }
