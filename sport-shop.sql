@@ -27,7 +27,7 @@ CREATE TABLE `brand` (
   `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -55,7 +55,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (84,5,0.00,0);
+INSERT INTO `cart` VALUES (116,5,8550.00,5);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,7 +86,7 @@ CREATE TABLE `cart_item` (
   KEY `product_Id` (`product_id`),
   CONSTRAINT `cart_item_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `cart` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cart_item_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=1051 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1487 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +95,7 @@ CREATE TABLE `cart_item` (
 
 LOCK TABLES `cart_item` WRITE;
 /*!40000 ALTER TABLE `cart_item` DISABLE KEYS */;
+INSERT INTO `cart_item` VALUES (1485,116,3,3,5970.00),(1486,116,4,2,2580.00);
 /*!40000 ALTER TABLE `cart_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +115,7 @@ CREATE TABLE `category` (
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`),
   CONSTRAINT `category_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -143,7 +144,7 @@ CREATE TABLE `category_property` (
   KEY `property_id` (`property_id`),
   CONSTRAINT `category_property_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `category_property_ibfk_2` FOREIGN KEY (`property_id`) REFERENCES `property` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +174,7 @@ CREATE TABLE `compare_products` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `compare_products_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `compare_products_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +183,7 @@ CREATE TABLE `compare_products` (
 
 LOCK TABLES `compare_products` WRITE;
 /*!40000 ALTER TABLE `compare_products` DISABLE KEYS */;
-INSERT INTO `compare_products` VALUES (1,5,3,0),(2,5,4,0),(3,5,5,0),(4,5,6,0),(8,5,36,0),(9,5,38,0),(10,5,39,0),(11,5,40,0);
+INSERT INTO `compare_products` VALUES (12,5,3,0),(13,5,6,0),(14,5,36,0),(15,5,4,0),(16,5,5,0),(17,5,39,0),(18,5,40,0),(19,5,38,0);
 /*!40000 ALTER TABLE `compare_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +204,7 @@ CREATE TABLE `favourite_products` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `favourite_products_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `favourite_products_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +213,7 @@ CREATE TABLE `favourite_products` (
 
 LOCK TABLES `favourite_products` WRITE;
 /*!40000 ALTER TABLE `favourite_products` DISABLE KEYS */;
-INSERT INTO `favourite_products` VALUES (3,5,3,0),(4,5,5,0),(5,5,6,0),(6,5,4,0),(7,5,36,0),(8,5,38,0),(9,5,39,0),(10,5,40,0);
+INSERT INTO `favourite_products` VALUES (11,5,3,0),(12,5,36,0),(13,5,6,1),(14,5,5,0),(15,5,4,1),(16,5,39,0),(17,5,40,0),(18,5,38,0);
 /*!40000 ALTER TABLE `favourite_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +237,7 @@ CREATE TABLE `order_item` (
   KEY `product_id` (`product_id`),
   CONSTRAINT `order_item_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `order_item_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -245,7 +246,7 @@ CREATE TABLE `order_item` (
 
 LOCK TABLES `order_item` WRITE;
 /*!40000 ALTER TABLE `order_item` DISABLE KEYS */;
-INSERT INTO `order_item` VALUES (5,5,6,'Maxler 100% Golden Whey 907 гр',2,3890.00,7780.00),(6,5,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(7,5,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(8,6,3,'Atlecs Casein 454 гр',3,1990.00,5970.00),(9,6,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(10,6,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(11,7,3,'Atlecs Casein 454 гр',2,1990.00,3980.00),(12,12,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(13,12,3,'Atlecs Casein 454 гр',1,1990.00,1990.00),(14,12,6,'Maxler 100% Golden Whey 907 гр',3,3890.00,11670.00),(15,12,4,'RPS Casein Protein 500 гр',4,1290.00,5160.00),(16,13,5,'LevelUp 100% Whey 908 гр',2,2490.00,4980.00),(17,13,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(18,17,38,'Протеиновые батончики Малиновый чизкейк',1,1027.00,1027.00),(19,17,6,'Maxler 100% Golden Whey 907 гр',1,3890.00,3890.00),(20,17,39,'Батончики с арахисовой пастой Mix Box Peanut',2,756.00,1512.00),(21,17,36,'Протеиновый батончик CHIKABAR (кокос)',3,956.00,2868.00),(22,18,39,'Батончики с арахисовой пастой Mix Box Peanut',1,756.00,756.00),(23,18,36,'Протеиновый батончик CHIKABAR (кокос)',1,956.00,956.00),(24,19,38,'Протеиновые батончики Малиновый чизкейк',1,1027.00,1027.00),(25,19,39,'Батончики с арахисовой пастой Mix Box Peanut',1,756.00,756.00),(26,19,36,'Протеиновый батончик CHIKABAR (кокос)',1,956.00,956.00),(27,20,3,'Atlecs Casein 454 гр',1,1990.00,1990.00),(28,20,4,'RPS Casein Protein 500 гр',2,1290.00,2580.00),(29,21,3,'Atlecs Casein 454 гр',1,1990.00,1990.00),(30,21,40,'Протеиновые батончики \"Кокосовый торт\"',1,758.00,758.00),(31,21,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(32,21,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00);
+INSERT INTO `order_item` VALUES (5,5,6,'Maxler 100% Golden Whey 907 гр',2,3890.00,7780.00),(6,5,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(7,5,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(8,6,3,'Atlecs Casein 454 гр',3,1990.00,5970.00),(9,6,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(10,6,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(11,7,3,'Atlecs Casein 454 гр',2,1990.00,3980.00),(12,12,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(13,12,3,'Atlecs Casein 454 гр',1,1990.00,1990.00),(14,12,6,'Maxler 100% Golden Whey 907 гр',3,3890.00,11670.00),(15,12,4,'RPS Casein Protein 500 гр',4,1290.00,5160.00),(16,13,5,'LevelUp 100% Whey 908 гр',2,2490.00,4980.00),(17,13,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(18,17,38,'Протеиновые батончики Малиновый чизкейк',1,1027.00,1027.00),(19,17,6,'Maxler 100% Golden Whey 907 гр',1,3890.00,3890.00),(20,17,39,'Батончики с арахисовой пастой Mix Box Peanut',2,756.00,1512.00),(21,17,36,'Протеиновый батончик CHIKABAR (кокос)',3,956.00,2868.00),(22,18,39,'Батончики с арахисовой пастой Mix Box Peanut',1,756.00,756.00),(23,18,36,'Протеиновый батончик CHIKABAR (кокос)',1,956.00,956.00),(24,19,38,'Протеиновые батончики Малиновый чизкейк',1,1027.00,1027.00),(25,19,39,'Батончики с арахисовой пастой Mix Box Peanut',1,756.00,756.00),(26,19,36,'Протеиновый батончик CHIKABAR (кокос)',1,956.00,956.00),(27,20,3,'Atlecs Casein 454 гр',1,1990.00,1990.00),(28,20,4,'RPS Casein Protein 500 гр',2,1290.00,2580.00),(29,21,3,'Atlecs Casein 454 гр',1,1990.00,1990.00),(30,21,40,'Протеиновые батончики \"Кокосовый торт\"',1,758.00,758.00),(31,21,4,'RPS Casein Protein 500 гр',1,1290.00,1290.00),(32,21,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(33,22,3,'Atlecs Casein 454 гр',4,1990.00,7960.00),(34,22,4,'RPS Casein Protein 500 гр',4,1290.00,5160.00),(35,23,5,'LevelUp 100% Whey 908 гр',1,2490.00,2490.00),(36,23,6,'Maxler 100% Golden Whey 907 гр',1,3890.00,3890.00);
 /*!40000 ALTER TABLE `order_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +285,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_3` FOREIGN KEY (`type_pay_id`) REFERENCES `typepay` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_4` FOREIGN KEY (`status_id`) REFERENCES `status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +294,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (5,'Иван','fds@fds.fd','+7(312)-321-32-23',1,2,NULL,NULL,NULL,NULL,11560.00,4,1,5,'2025-03-02 09:24:06','2025-04-01 11:08:27','123','2025-03-07'),(6,'Иван','sdfjds@jfds.fd','+7(321)-312-31-23',1,2,NULL,NULL,NULL,NULL,9750.00,5,2,5,'2025-03-06 21:03:24','2025-04-01 11:08:27','123','2025-03-14'),(7,'Иван','kfds@kfds.fsd','+7(321)-321-32-13',1,NULL,'fdsfsd','2025-03-27','12:33:00',NULL,3980.00,2,2,5,'2025-03-24 22:31:38','2025-03-24 22:38:15',NULL,NULL),(12,'аываыв','fsd@2fas.sd','+7(321)-432-43-24',1,1,NULL,NULL,NULL,NULL,21310.00,9,1,5,'2025-04-15 11:11:56','2025-04-15 11:11:56',NULL,NULL),(13,'аваыв','3f@fds.fd','+7(231)-432-43-24',1,1,NULL,NULL,NULL,NULL,6270.00,3,2,5,'2025-04-15 11:12:34','2025-04-15 11:14:20',NULL,NULL),(17,'Андрей','andrew2@gm.ad','+7(423)-432-43-24',2,4,NULL,NULL,NULL,NULL,9297.00,7,3,5,'2025-05-11 10:52:43','2025-05-11 21:30:27',NULL,NULL),(18,'Иван','fdsd@fsd.f','+7(324)-234-32-43',1,1,NULL,NULL,NULL,NULL,1712.00,2,2,5,'2025-05-11 11:13:54','2025-05-11 21:37:16','123','2025-05-13'),(19,'Савелий','fsd@f.fds','+7(432)-432-43-24',1,3,NULL,NULL,NULL,NULL,2739.00,3,3,5,'2025-05-11 11:37:02','2025-05-24 19:08:25','312','2025-05-22'),(20,'Савелий','fds@fsd.fd','+7(423)-432-43-24',1,NULL,'Россия, г. Долгопрудный, Тихая ул., д. 20 кв.197','2025-05-28','15:30:00','Комментарий курьеру Комментарий курьеру',4570.00,3,3,5,'2025-05-11 12:30:38','2025-05-11 22:22:31',NULL,NULL),(21,'аываыв','fsd@fds.fd','+7(321)-312-41-24',2,2,NULL,NULL,NULL,NULL,6528.00,4,1,5,'2025-05-18 15:54:49','2025-05-18 15:54:49',NULL,NULL);
+INSERT INTO `orders` VALUES (5,'Иван','fds@fds.fd','+7(312)-321-32-23',1,2,NULL,NULL,NULL,NULL,11560.00,4,1,5,'2025-03-02 09:24:06','2025-04-01 11:08:27','123','2025-03-07'),(6,'Иван','sdfjds@jfds.fd','+7(321)-312-31-23',1,2,NULL,NULL,NULL,NULL,9750.00,5,1,5,'2025-03-06 21:03:24','2025-05-27 21:39:31','123','2025-03-14'),(7,'Иван','kfds@kfds.fsd','+7(321)-321-32-13',1,NULL,'fdsfsd','2025-03-27','12:33:00',NULL,3980.00,2,1,5,'2025-03-24 22:31:38','2025-05-27 21:39:31',NULL,NULL),(12,'аываыв','fsd@2fas.sd','+7(321)-432-43-24',1,1,NULL,NULL,NULL,NULL,21310.00,9,1,5,'2025-04-15 11:11:56','2025-04-15 11:11:56',NULL,NULL),(13,'аваыв','3f@fds.fd','+7(231)-432-43-24',1,1,NULL,NULL,NULL,NULL,6270.00,3,1,5,'2025-04-15 11:12:34','2025-05-27 21:39:31',NULL,NULL),(17,'Андрей','andrew2@gm.ad','+7(423)-432-43-24',2,4,NULL,NULL,NULL,NULL,9297.00,7,1,5,'2025-05-11 10:52:43','2025-05-27 21:39:31',NULL,NULL),(18,'Иван','fdsd@fsd.f','+7(324)-234-32-43',1,1,NULL,NULL,NULL,NULL,1712.00,2,1,5,'2025-05-11 11:13:54','2025-05-29 18:20:44','123','2025-05-13'),(19,'Савелий','fsd@f.fds','+7(432)-432-43-24',1,3,NULL,NULL,NULL,NULL,2739.00,3,2,5,'2025-05-11 11:37:02','2025-05-29 21:01:33','11232','2025-05-31'),(20,'Савелий','fds@fsd.fd','+7(423)-432-43-24',1,NULL,'Россия, г. Долгопрудный, Тихая ул., д. 20 кв.197','2025-05-28','15:30:00','Комментарий курьеру Комментарий курьеру',4570.00,3,3,5,'2025-05-11 12:30:38','2025-05-29 20:49:11',NULL,NULL),(21,'аываыв','fsd@fds.fd','+7(321)-312-41-24',2,2,NULL,NULL,NULL,NULL,6528.00,4,3,5,'2025-05-18 15:54:49','2025-05-29 20:49:05','123','2025-05-30'),(22,'аываыв','jhgjhg@asd.fd','+7(312)-321-31-34',1,2,NULL,NULL,NULL,NULL,13120.00,8,1,5,'2025-06-01 20:21:22','2025-06-01 20:21:22',NULL,NULL),(23,'аывавы','fsd@fdgf.asd','+7(234)-234-32-43',2,3,NULL,NULL,NULL,NULL,6380.00,2,2,5,'2025-06-01 20:26:50','2025-06-02 09:56:46',NULL,NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +342,7 @@ CREATE TABLE `product` (
   KEY `category_id` (`category_id`),
   CONSTRAINT `product_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `product_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -350,7 +351,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (3,'Atlecs Casein 454 гр','Мицеллярный казеин является одним из самых полноценных источников белка благодаря своему уникальному аминокислотному профилю. При приеме перед сном длительное время питает мышцы, способствуя наилучшему восстановлению и формированию сухой мышечной массы. ',1990.00,2,1,2),(4,'RPS Casein Protein 500 гр','Казеиновые протеины – это пищевые добавки с медленной скоростью усвоения. Casein Protein, производимый Russian Performance Standard, представляет собой сложный молочный продукт, являющийся источником практически всех аминокислот. ',1290.00,2,2,1),(5,'LevelUp 100% Whey 908 гр','Протеин 100% Whey от LevelUp производится на основе концентрата из сыворотки. И это не случайно: ведь сывороточный белок обладает легким и быстрым усвоением. К тому же, он богат незаменимыми аминокислотами BCAA и глютамином. Для получения продукта применяется ультрафильтрационная технология. Ну а исходным сырьем служит обычная молочная сыворотка, которая образуется, к примеру, при изготовлении сыров. В ходе данного способа обработки белок очищается от углеводов и жиров.',2490.00,3,76,3),(6,'Maxler 100% Golden Whey 907 гр','В состав 100% Golden Whey 908г входят концентрат, гидролизат и изолят сывороточного протеина. Действие протеина 100% Golden Whey от компании Maxler усилено высоким содержанием BCAA и L - глютамина.',3890.00,3,35,4),(36,'Протеиновый батончик CHIKABAR (кокос)','Представляем вам превосходное сочетание вкуса и пользы – CHIKABAR. Настоящая находка для любителей ярких вкусов, находящихся в поиске необычных десертов в спортивном и правильном питании. \r\n\r\nНежная основа батончика, содержащая протеин (концентрат и изолят сывороточного белка высокой степени очистки), мягчайшая начинка из орехов, и все это покрыто молочным шоколадом без сахара собственного производства. Яркий и насыщенный вкус при использовании только натуральных компонентов. Невероятное сочетание вкусов и натуральных ингредиентов - идеальный выбор для тех, кто следит за фигурой и хочет похудеть, не жертвуя вкусом ради пользы.',956.00,37,235,8),(38,'Протеиновые батончики Малиновый чизкейк','Классическая линейка Bombbar включает 17 разнообразных вкусов, среди которых можно без труда найти то, что придется по вкусу любому сладкоежке. В нашей линейке вы можете найти фруктовые и ягодные вкусы (клубника, манго и банан), а также десертные вкусы, такие как малиновый чизкейк, панкейк с черникой и смородиной, фисташковый пломбир и многие другие.',1027.00,37,10,9),(39,'Батончики с арахисовой пастой Mix Box Peanut','Шоколадные батончики Nattys &Go® Mix Box Peanut — это ассорти батончиков с арахисовой пастой внутри, покрытые слоем настоящего молочного шоколада без добавления сахара. Это очень вкусный, полезный и абсолютно натуральный перекус, который доставит много удовольствия и зарядит энергией! Теперь та самая арахисовая паста Nattys® всегда с собой, в удобной форме батончика to go — это вкусное и легкое лакомство, идеально для твоего полезного перекуса, без вреда для фигуры и здоровья, без сахара, создан из премиальных ингредиентов высшего качества, с честным и чистым составом. Nattys &Go® — это чистый заряд энергии и насыщение на длительное время. Источник растительного белка и клетчатки.',756.00,37,8,10),(40,'Протеиновые батончики \"Кокосовый торт\"','Протеиновые батончики Bombbar в натуральном шоколаде без добавленного сахара – невероятные десертные вкусы с высоким содержанием белка и минимумом быстрых углеводов. Эти небольшие помощники позволят сохранить чувство сытости между приемами пищи или в ситуациях, когда нет возможности полноценно пообедать. Сокращай калорийность перекусов вместе с Бомббар и худей эффективнее!',758.00,37,99,9);
+INSERT INTO `product` VALUES (3,'Atlecs Casein 454 гр','Мицеллярный казеин является одним из самых полноценных источников белка благодаря своему уникальному аминокислотному профилю. При приеме перед сном длительное время питает мышцы, способствуя наилучшему восстановлению и формированию сухой мышечной массы. ',1990.00,2,3,2),(4,'RPS Casein Protein 500 гр','Казеиновые протеины – это пищевые добавки с медленной скоростью усвоения. Casein Protein, производимый Russian Performance Standard, представляет собой сложный молочный продукт, являющийся источником практически всех аминокислот. ',1290.00,2,2,1),(5,'LevelUp 100% Whey 908 гр','Протеин 100% Whey от LevelUp производится на основе концентрата из сыворотки. И это не случайно: ведь сывороточный белок обладает легким и быстрым усвоением. К тому же, он богат незаменимыми аминокислотами BCAA и глютамином. Для получения продукта применяется ультрафильтрационная технология. Ну а исходным сырьем служит обычная молочная сыворотка, которая образуется, к примеру, при изготовлении сыров. В ходе данного способа обработки белок очищается от углеводов и жиров.',2490.00,3,75,3),(6,'Maxler 100% Golden Whey 907 гр','В состав 100% Golden Whey 908г входят концентрат, гидролизат и изолят сывороточного протеина. Действие протеина 100% Golden Whey от компании Maxler усилено высоким содержанием BCAA и L - глютамина.',3890.00,3,34,4),(36,'Протеиновый батончик CHIKABAR (кокос)','Представляем вам превосходное сочетание вкуса и пользы – CHIKABAR. Настоящая находка для любителей ярких вкусов, находящихся в поиске необычных десертов в спортивном и правильном питании. \r\n\r\nНежная основа батончика, содержащая протеин (концентрат и изолят сывороточного белка высокой степени очистки), мягчайшая начинка из орехов, и все это покрыто молочным шоколадом без сахара собственного производства. Яркий и насыщенный вкус при использовании только натуральных компонентов. Невероятное сочетание вкусов и натуральных ингредиентов - идеальный выбор для тех, кто следит за фигурой и хочет похудеть, не жертвуя вкусом ради пользы.',956.00,37,235,8),(38,'Протеиновые батончики Малиновый чизкейк','Классическая линейка Bombbar включает 17 разнообразных вкусов, среди которых можно без труда найти то, что придется по вкусу любому сладкоежке. В нашей линейке вы можете найти фруктовые и ягодные вкусы (клубника, манго и банан), а также десертные вкусы, такие как малиновый чизкейк, панкейк с черникой и смородиной, фисташковый пломбир и многие другие.',1027.00,37,10,9),(39,'Батончики с арахисовой пастой Mix Box Peanut','Шоколадные батончики Nattys &Go® Mix Box Peanut — это ассорти батончиков с арахисовой пастой внутри, покрытые слоем настоящего молочного шоколада без добавления сахара. Это очень вкусный, полезный и абсолютно натуральный перекус, который доставит много удовольствия и зарядит энергией! Теперь та самая арахисовая паста Nattys® всегда с собой, в удобной форме батончика to go — это вкусное и легкое лакомство, идеально для твоего полезного перекуса, без вреда для фигуры и здоровья, без сахара, создан из премиальных ингредиентов высшего качества, с честным и чистым составом. Nattys &Go® — это чистый заряд энергии и насыщение на длительное время. Источник растительного белка и клетчатки.',756.00,37,8,10),(40,'Протеиновые батончики Кокосовый торт','Протеиновые батончики Bombbar в натуральном шоколаде без добавленного сахара – невероятные десертные вкусы с высоким содержанием белка и минимумом быстрых углеводов. Эти небольшие помощники позволят сохранить чувство сытости между приемами пищи или в ситуациях, когда нет возможности полноценно пообедать. Сокращай калорийность перекусов вместе с Бомббар и худей эффективнее!',758.00,37,99,9);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -398,7 +399,7 @@ CREATE TABLE `product_property` (
   KEY `property_id` (`property_id`),
   CONSTRAINT `product_property_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `product_property_ibfk_2` FOREIGN KEY (`property_id`) REFERENCES `property` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=363 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=374 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -407,7 +408,7 @@ CREATE TABLE `product_property` (
 
 LOCK TABLES `product_property` WRITE;
 /*!40000 ALTER TABLE `product_property` DISABLE KEYS */;
-INSERT INTO `product_property` VALUES (59,38,105,'Малиновый чизкейк'),(60,38,107,'без сахара, без ГМО, без пальмового масла'),(61,38,89,'3.5'),(62,38,90,'4.3'),(63,38,91,'20'),(64,38,100,'174'),(65,38,88,'360'),(66,38,108,'12'),(67,39,105,'Ассорти, Арахисовое печенье, Шоколадный брауни, Соленая карамель, Воздушная кукуруза'),(68,39,107,'    без сахара, без ГМО, без консервантов, без пальмового масла'),(69,39,89,'20.7'),(70,39,90,'15.7'),(71,39,91,'7.2'),(72,39,100,'252'),(73,39,88,'274'),(74,39,108,'12'),(75,36,105,'Кокос'),(76,36,107,'без сахара, без ГМО, без пальмового масла'),(77,36,89,'3.5'),(78,36,90,'12'),(79,36,91,'15'),(80,36,100,'224'),(81,36,88,'360'),(82,36,108,'12'),(91,40,105,'Кокосовый торт'),(92,40,107,'без сахара, без ГМО, без пальмового масла'),(93,40,89,'2.6'),(94,40,90,'6.9'),(95,40,91,'10'),(96,40,100,'142'),(97,40,88,'360'),(98,40,108,'12'),(352,3,89,'1.5'),(353,3,90,'0.5'),(354,3,91,'23.4'),(355,3,92,'В сухом темном месте, При температуре от +10`С до +25`С'),(356,3,94,'6,2 г'),(357,3,95,'< 1,8 мкг'),(358,3,96,'< 0,3 мг'),(359,3,97,'0,1 мг'),(360,3,98,'30 мг'),(361,3,99,'648 мг'),(362,3,100,'105 ккал/441 кДж');
+INSERT INTO `product_property` VALUES (59,38,105,'Малиновый чизкейк'),(60,38,107,'без сахара, без ГМО, без пальмового масла'),(61,38,89,'3.5'),(62,38,90,'4.3'),(63,38,91,'20'),(64,38,100,'174'),(65,38,88,'360'),(66,38,108,'12'),(67,39,105,'Ассорти, Арахисовое печенье, Шоколадный брауни, Соленая карамель, Воздушная кукуруза'),(68,39,107,'    без сахара, без ГМО, без консервантов, без пальмового масла'),(69,39,89,'20.7'),(70,39,90,'15.7'),(71,39,91,'7.2'),(72,39,100,'252'),(73,39,88,'274'),(74,39,108,'12'),(75,36,105,'Кокос'),(76,36,107,'без сахара, без ГМО, без пальмового масла'),(77,36,89,'3.5'),(78,36,90,'12'),(79,36,91,'15'),(80,36,100,'224'),(81,36,88,'360'),(82,36,108,'12'),(91,40,105,'Кокосовый торт'),(92,40,107,'без сахара, без ГМО, без пальмового масла'),(93,40,89,'2.6'),(94,40,90,'6.9'),(95,40,91,'10'),(96,40,100,'142'),(97,40,88,'360'),(98,40,108,'12'),(363,3,89,'1.5'),(364,3,90,'0.5'),(365,3,91,'23.4'),(366,3,92,'В сухом темном месте, При температуре от +10`С до +25`С'),(367,3,94,'6,2 г'),(368,3,95,'< 1,8 мкг'),(369,3,96,'< 0,3 мг'),(370,3,97,'0,1 мг'),(371,3,98,'30 мг'),(372,3,99,'648 мг'),(373,3,100,'105 ккал/441 кДж');
 /*!40000 ALTER TABLE `product_property` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -423,7 +424,7 @@ CREATE TABLE `property` (
   `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -432,7 +433,7 @@ CREATE TABLE `property` (
 
 LOCK TABLES `property` WRITE;
 /*!40000 ALTER TABLE `property` DISABLE KEYS */;
-INSERT INTO `property` VALUES (94,'BCAA'),(91,'Белок: грамм в 1 порции'),(95,'Витамин A'),(96,'Витамин С'),(106,'Вку'),(105,'Вкус'),(97,'Железо'),(90,'Жиры: грамм в 1 порции'),(99,'Кальций'),(108,'Количество в упаковке'),(98,'Натрий'),(107,'Не содержит'),(93,'Пищевая ценность'),(88,'Срок годности'),(89,'Углеводы: грамм в 1 порции'),(92,'Условия хранения'),(87,'Форма выпуска'),(100,'Энергетическая ценность');
+INSERT INTO `property` VALUES (110,'123'),(94,'BCAA'),(91,'Белок: грамм в 1 порции'),(95,'Витамин A'),(96,'Витамин С'),(106,'Вку'),(105,'Вкус'),(97,'Железо'),(90,'Жиры: грамм в 1 порции'),(99,'Кальций'),(108,'Количество в упаковке'),(98,'Натрий'),(107,'Не содержит'),(109,'пвапа'),(93,'Пищевая ценность'),(88,'Срок годности'),(89,'Углеводы: грамм в 1 порции'),(92,'Условия хранения'),(87,'Форма выпуска'),(100,'Энергетическая ценность');
 /*!40000 ALTER TABLE `property` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -458,7 +459,7 @@ CREATE TABLE `review` (
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`parent_id`) REFERENCES `review` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `review_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -467,7 +468,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
-INSERT INTO `review` VALUES (25,5,3,'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','5',NULL,'2025-04-07 18:48:51'),(26,5,3,'Thanks a lot!',NULL,25,'2025-04-07 18:49:07'),(27,5,3,'123','4',NULL,'2025-04-07 18:50:33'),(28,5,3,'Очень вкусный казеин','5',NULL,'2025-04-07 20:04:26'),(81,5,3,'123',NULL,28,'2025-05-10 22:59:03'),(82,5,3,'123','3',NULL,'2025-05-10 22:59:11'),(83,5,3,'432',NULL,82,'2025-05-10 23:01:59'),(84,5,3,'321','5',NULL,'2025-05-10 23:02:06'),(85,5,4,'Всё очень хорошо!','5',NULL,'2025-05-18 15:22:34'),(86,5,4,'Дополнние комментария',NULL,85,'2025-05-18 15:22:53'),(87,5,4,'Норм','3',NULL,'2025-05-18 15:23:08'),(88,5,4,'Тест','1',NULL,'2025-05-18 15:23:33'),(89,5,4,'3','4',NULL,'2025-05-18 15:23:48'),(90,8,3,'Комментарий администратора',NULL,84,'2025-05-24 19:33:45');
+INSERT INTO `review` VALUES (25,5,3,'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.','5',NULL,'2025-04-07 18:48:51'),(26,5,3,'Thanks a lot!',NULL,25,'2025-04-07 18:49:07'),(27,5,3,'123','4',NULL,'2025-04-07 18:50:33'),(28,5,3,'Очень вкусный казеин','5',NULL,'2025-04-07 20:04:26'),(81,5,3,'123',NULL,28,'2025-05-10 22:59:03'),(82,5,3,'123','3',NULL,'2025-05-10 22:59:11'),(83,5,3,'432',NULL,82,'2025-05-10 23:01:59'),(84,5,3,'321','5',NULL,'2025-05-10 23:02:06'),(85,5,4,'Всё очень хорошо!','5',NULL,'2025-05-18 15:22:34'),(86,5,4,'Дополнние комментария',NULL,85,'2025-05-18 15:22:53'),(87,5,4,'Норм','3',NULL,'2025-05-18 15:23:08'),(88,5,4,'Тест','1',NULL,'2025-05-18 15:23:33'),(89,5,4,'3','4',NULL,'2025-05-18 15:23:48'),(90,8,3,'Комментарий администратора',NULL,84,'2025-05-24 19:33:45'),(91,5,36,'Тест','5',NULL,'2025-05-27 21:18:33'),(92,5,36,'123',NULL,91,'2025-05-27 21:19:13'),(93,5,36,'13','4',NULL,'2025-05-27 21:21:26'),(94,5,36,'1232',NULL,93,'2025-05-27 21:22:33'),(95,5,36,'123','5',NULL,'2025-05-27 21:22:43'),(96,5,3,'123',NULL,84,'2025-05-29 23:10:46'),(97,5,3,'123','4',NULL,'2025-05-30 16:47:27'),(98,5,3,'1232',NULL,97,'2025-05-30 16:47:34'),(99,5,3,'13321',NULL,98,'2025-05-30 16:49:51'),(100,5,3,'123',NULL,97,'2025-05-30 16:50:07'),(101,5,3,'123','4',NULL,'2025-05-31 16:12:51'),(102,5,3,'123',NULL,101,'2025-05-31 16:12:57'),(103,5,6,'312321','5',NULL,'2025-05-31 16:52:09'),(104,5,6,'123',NULL,103,'2025-05-31 16:52:18'),(105,5,6,'123','3',NULL,'2025-05-31 19:55:40'),(106,5,6,'test',NULL,105,'2025-05-31 19:55:51'),(107,5,6,'fewfew','5',NULL,'2025-05-31 19:55:58'),(108,5,4,'fdsfsd','4',NULL,'2025-06-02 19:46:26'),(109,5,4,'fdsfds',NULL,108,'2025-06-02 19:46:33');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -587,4 +588,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-24 22:35:31
+-- Dump completed on 2025-06-03  0:19:06
