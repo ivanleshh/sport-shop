@@ -61,19 +61,6 @@ class CartController extends Controller
     }
 
     /**
-     * Displays a single Cart model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Cart model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
@@ -90,7 +77,7 @@ class CartController extends Controller
             }
             if ($product = Product::findOne($product_id)) {
                 if ($product->count) {
-                    $cart_item = CartItem::findOne(['cart_id' => $cart->id,'product_id' => $product->id]);
+                    $cart_item = CartItem::findOne(['cart_id' => $cart->id, 'product_id' => $product->id]);
                     if (!$cart_item) {
                         $cart_item = new CartItem();
                         $cart_item->cart_id = $cart->id;
@@ -109,7 +96,9 @@ class CartController extends Controller
                         return $this->asJson(['status' => true]);
                     }
                 }
-                return $this->asJson(['status' => false,'message' => 'Извините, товар закончился :(']);
+                Yii::$app->session->set('bg_color', 'bg-warning');
+                Yii::$app->session->set('text', 'Товар закончился на складе!');
+                return $this->asJson(['status' => false]);
             }
         }
     }
@@ -139,9 +128,10 @@ class CartController extends Controller
                         'status' => true,
                     ]);
                 }
+                Yii::$app->session->set('bg_color', 'bg-warning');
+                Yii::$app->session->set('text', 'Товар закончился на складе!');
                 return $this->asJson([
                     'status' => false,
-                    'message' => 'Извините, товар закончился :('
                 ]);
             }
         }

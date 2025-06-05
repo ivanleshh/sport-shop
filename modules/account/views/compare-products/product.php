@@ -12,7 +12,7 @@ use yii\widgets\Pjax;
     <?= Html::a(
       '<i class="bi bi-trash3-fill text-danger fs-6"></i>',
       ['index', 'id' => $model->id],
-      ['data-id' => $model->id, 'data-category-id' => $model->product->category_id, 'class' => 'btn-compare text-decoration-none align-self-end'] // 'data-category' => $model->product->category_id
+      ['data-id' => $model->id, 'data-category-id' => $model->product->category_id, 'class' => 'btn-compare text-decoration-none align-self-end']
     ) ?>
   </div>
 

@@ -24,7 +24,7 @@ class BrandController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
@@ -47,19 +47,6 @@ class BrandController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'model' => new Brand(),
-        ]);
-    }
-
-    /**
-     * Displays a single Brand model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
         ]);
     }
 

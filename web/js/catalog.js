@@ -1,8 +1,3 @@
-const error_modal = (text) => {
-  $('#text-error').html(text)
-  $('#info-modal').modal('show')
-}
-
 const cartItemCount = () => $.pjax.reload('#cart-item-count', {
   url: $('#cart-item-count').data('url'),
   method: 'POST',
@@ -50,7 +45,7 @@ $(() => {
                 container: a.data('pjx'),
               })
             } else {
-              error_modal(data.message)
+              toastReload()
             }
           }
         },

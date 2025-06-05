@@ -27,7 +27,6 @@ class FavouriteProductsSearch extends FavouriteProducts
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -44,8 +43,6 @@ class FavouriteProductsSearch extends FavouriteProducts
         $query = FavouriteProducts::find()->where(['user_id' => Yii::$app->user->id])->joinWith([
             'product' => fn($q) => $q->joinWith('category'),
         ]);
-
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

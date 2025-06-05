@@ -44,9 +44,7 @@ class LoginForm extends Model
             ['password', 'match', 'pattern' => '/^(?=.*[\d]).+$/', 'message' => 'Должна быть хотя бы одна цифра'],
             ['password', 'match', 'pattern' => '/^(?=.*[a-z]).+$/', 'message' => 'Должна быть хотя бы одна строчная буква'],
             ['password', 'match', 'pattern' => '/^(?=.*[A-Z]).+$/', 'message' => 'Должна быть хотя бы одна заглавная буква'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword', 'on' => self::SCENARIO_CLIENT],
             ['password', 'validateAdminPassword', 'on' => self::SCENARIO_ADMIN],
         ];

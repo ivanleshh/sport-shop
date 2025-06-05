@@ -27,7 +27,6 @@ class CategorySearch extends Category
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 
@@ -42,34 +41,21 @@ class CategorySearch extends Category
     {
         $query = Category::find()->where(['parent_id' => null]);
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
                 'defaultOrder' => [
                     'title' => SORT_ASC
                 ],
-                // 'attributes' => [
-                //     'title' => [
-                //         'asc' => ['title' => SORT_ASC],
-                //         'desc' => ['title' => SORT_DESC],
-                //         'default' => SORT_ASC,
-                //         'label' => 'Названию'
-                //     ],
-                // ]
             ]
         ]);
 
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'parent_id' => $this->parent_id,

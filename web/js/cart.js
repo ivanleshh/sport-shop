@@ -19,7 +19,7 @@ $(() => {
                             url: $('#btn-cart').attr('href'), push: false, replace: false, timeout: 5000
                         });
                     } else {
-                        error_modal(data.message);
+                        toastReload()
                     }
                 },
             });

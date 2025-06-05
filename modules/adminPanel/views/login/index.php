@@ -10,7 +10,7 @@ use yii\bootstrap5\Html;
     <div class="login-info rounded-4 col-12 col-md-6">
         <div class="d-flex align-items-center justify-content-center h-100">
             <div class="col-10 col-xl-8 py-3 text-center">
-                <img class="img-fluid mb-4" src="/images/logo.jpg" alt="logo">
+                <img class="img-fluid mb-4" src="/images/logo.png" alt="logo">
                 <hr class="border-danger mb-4">
                 <h2 class="mb-4">Админ-авторизация</h2>
                 <p class="m-0 fs-6">Вход в панель администратора осуществляется с помощью email и пароля</p>

@@ -29,7 +29,6 @@ class ProductSearch extends Product
      */
     public function scenarios()
     {
-        // bypass scenarios() implementation in the parent class
         return Model::scenarios();
     }
 

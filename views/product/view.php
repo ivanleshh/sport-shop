@@ -82,13 +82,13 @@ $countReviews = $model->countReviews;
 
                         <div class="bottom-content">
 
-                            <?php 
+                            <?php
                             Pjax::begin([
                                 'id' => 'product-buttons-pjax',
                                 'enablePushState' => false,
                                 'timeout' => 5000,
                                 'enableReplaceState' => false,
-                            ]); 
+                            ]);
                             $pjx = '#product-buttons-pjax'
                             ?>
 
@@ -191,56 +191,63 @@ $countReviews = $model->countReviews;
                     </div>
                 </div>
             </div>
-            <div id="product-reviews" class="info-body row tab-pane fade">
-                <div class="d-flex flex-column gap-3 col-12 col-lg-4 mb-2">
-                    <div class="d-flex align-items-center justify-content-center gap-3 border rounded-4 py-2 px-3">
-                        <h2><?= $mediumStars ?></h2>
-                        <div class="position-relative">
-                            <?= StarRating::widget([
-                                'name' => 'mediumStars',
-                                'value' => $mediumStars,
-                                'pluginOptions' => [
-                                    'theme' => 'krajee-uni',
-                                    'readonly' => true,
-                                    'showClear' => false,
-                                    'showCaption' => false,
-                                    'size' => 'sm',
-                                ],
-                            ]); ?>
-                            <div class="position-absolute right-50 left-50 top-50 mt-1">Всего отзывов: <?= $countReviews ?></div>
+            <div id="product-reviews" class="info-body tab-pane fade">
+
+                <?php Pjax::begin([
+                    'id' => 'product-reviews-pjax',
+                    'enablePushState' => false,
+                    'timeout' => 5000,
+                ]); ?>
+
+                <div class="row">
+                    <div class="d-flex flex-column gap-3 col-12 col-lg-4 mb-2">
+                        <div class="d-flex align-items-center justify-content-center gap-3 border rounded-4 py-2 px-3">
+                            <h2><?= $mediumStars ?></h2>
+                            <div class="position-relative">
+                                <?= StarRating::widget([
+                                    'name' => 'mediumStars',
+                                    'value' => $mediumStars,
+                                    'pluginOptions' => [
+                                        'theme' => 'krajee-uni',
+                                        'readonly' => true,
+                                        'showClear' => false,
+                                        'showCaption' => false,
+                                        'size' => 'sm',
+                                    ],
+                                ]); ?>
+                                <div class="position-absolute right-50 left-50 top-50 mt-1">Всего отзывов: <?= $countReviews ?></div>
+                            </div>
+                        </div>
+                        <h5 class="fs-6 fw-bold">Есть что рассказать?</h5>
+                        <span>Оцените товар, ваш опыт будет полезен</span>
+                        <div class="mb-2">
+                            <?php if (Yii::$app->user->isGuest) : ?>
+                                <?= Html::a("Войдите, чтобы оценить товар", ['/site/login'], ['class' => 'btn btn-orange px-4 py-2']) ?>
+                            <?php elseif (!Yii::$app->user->identity->isAdmin) : ?>
+                                <?= Html::a(
+                                    "Оценить товар",
+                                    ['/review/create', 'product_id' => $model->id],
+                                    ['class' => 'btn btn-orange btn-add-review px-4 py-2']
+                                ) ?>
+                            <?php endif; ?>
                         </div>
                     </div>
-                    <h5 class="fs-6 fw-bold">Есть что рассказать?</h5>
-                    <span>Оцените товар, ваш опыт будет полезен</span>
-                    <div class="mb-2">
-                        <?php if (Yii::$app->user->isGuest) : ?>
-                            <?= Html::a("Войдите, чтобы оценить товар", ['/site/login'], ['class' => 'btn btn-orange px-4 py-2']) ?>
-                        <?php elseif (!Yii::$app->user->identity->isAdmin) : ?>
-                            <?= Html::a("Оценить товар", ['/review/create', 'product_id' => $model->id], 
-                            ['class' => 'btn btn-orange btn-add-review px-4 py-2']) ?>
-                        <?php endif; ?>
+                    <div class="col-12 col-lg-8">
+
+                        <?= ListView::widget([
+                            'dataProvider' => $dataProvider,
+                            'layout' => "{pager}<div class='reviews row gap-3'>{items}</div>{pager}",
+                            'itemOptions' => ['class' => 'item col-12'],
+                            'itemView' => '/review/view',
+                            'pager' => [
+                                'class' => LinkPager::class,
+                            ]
+                        ]) ?>
+
                     </div>
                 </div>
-                <div class="col-12 col-lg-8">
 
-                    <?php Pjax::begin([
-                        'id' => 'product-reviews-pjax',
-                        'enablePushState' => false,
-                        'timeout' => 5000,
-                    ]); ?>
-
-                    <?= ListView::widget([
-                        'dataProvider' => $dataProvider,
-                        'layout' => "{pager}<div class='reviews row gap-3'>{items}</div>{pager}",
-                        'itemOptions' => ['class' => 'item col-12'],
-                        'itemView' => '/review/view',
-                        'pager' => [
-                            'class' => LinkPager::class,
-                        ]
-                    ]) ?>
-
-                    <?php Pjax::end(); ?>
-                </div>
+                <?php Pjax::end(); ?>
             </div>
             <div id="product-delivery" class="tab-pane fade gap-3 gap-md-5 flex-wrap">
                 <div class="info-body">
@@ -263,10 +270,6 @@ $countReviews = $model->countReviews;
 </section>
 
 <?= \app\widgets\RecentlyViewed::widget(['excludeId' => $model->id]) ?>
-
-<!-- End Item Details -->
-
-<!-- Review Modal -->
 
 <?php
 if (!(Yii::$app->user->isGuest || Yii::$app->user->identity->isAdmin)) {

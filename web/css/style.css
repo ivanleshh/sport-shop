@@ -102,6 +102,10 @@ input:checked {
     color: gray;
 }
 
+#product-reviews-pjax {
+    width: 100%;
+}
+
 .file-input .fileinput-remove {
     padding: 0.5rem;
     border: none;

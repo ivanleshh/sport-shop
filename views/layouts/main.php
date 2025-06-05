@@ -37,13 +37,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
 <body class="d-flex flex-column h-100">
     <?php $this->beginBody() ?>
-    <!--[if lte IE 9]>
-      <p class="browserupgrade">
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="https://browsehappy.com/">upgrade your browser</a> to improve
-        your experience and security.
-      </p>
-    <![endif]-->
 
     <!-- Start Header Area -->
     <header class="header navbar-area position-relative">
@@ -101,7 +94,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     <div class="col-lg-3 col-md-3 col-12 text-center text-md-start">
                         <!-- Start Header Logo -->
                         <a class="navbar-logo" href="/">
-                            <?= Html::img("/images/header_logo.jpg", ['class' => "w-100", 'alt' => "Logo"]) ?>
+                            <?= Html::img("/images/header_logo.png", ['class' => "w-100", 'alt' => "Logo"]) ?>
                         </a>
                         <!-- End Header Logo -->
                     </div>
@@ -238,9 +231,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
             <!-- Start Breadcrumbs -->
             <?php
-            if (isset($this->params['breadcrumbs']) && !empty($this->params['breadcrumbs'])) { // Проверяем, есть ли breadcrumbs в параметрах
+            if (isset($this->params['breadcrumbs']) && !empty($this->params['breadcrumbs'])) {
                 $breadcrumbs = $this->params['breadcrumbs'];
-                $lastItem = array_pop($breadcrumbs); // Извлекаем последний элемент (текущая страница)
+                $lastItem = array_pop($breadcrumbs);
             ?>
                 <div class="breadcrumbs border rounded-4 my-3">
                     <div class="container">
@@ -272,17 +265,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 </div>
             <?php } ?>
             <!-- End Breadcrumbs -->
-
-            <!-- Preloader -->
-            <!-- <div class="preloader">
-                <div class="preloader-inner">
-                    <div class="preloader-icon">
-                        <span></span>
-                        <span></span>
-                    </div>
-                </div>
-            </div> -->
-            <!-- /End Preloader -->
 
             <div class="mt-3"><?php echo Alert::widget() ?></div>
 
@@ -321,7 +303,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         <div class="footer-logo col-lg-3 col-xl-2 col-md-4 col-6 align-self-center">
                             <div class="single-footer">
                                 <a href="/">
-                                    <?= Html::img("/images/logo_dark.png", ['class' => "w-100", 'alt' => "Logo"]) ?>
+                                    <?= Html::img("/images/logo.png", ['class' => "w-100", 'alt' => "Logo"]) ?>
                                 </a>
                             </div>
                         </div>
@@ -384,11 +366,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="footer-bottom">
             <div class="container">
                 <div class="inner-content">
-                    <div class="row align-items-center">
+                    <div class="row align-items-center gy-3">
                         <div class="col-lg-4 col-12">
                             <div class="payment-gateway">
                                 <span>Мы принимаем:</span>
-                                <img src="/front/images/footer/credit-cards-footer.png" alt="#">
+                                <img src="/images/credit-cards-footer.png" alt="#">
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">
