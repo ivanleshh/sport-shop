@@ -29,6 +29,7 @@ class AppAsset extends AssetBundle
         "front/css/main.css",
         "assets/bootstrap-icons/bootstrap-icons.css",
     ];
+    /////
     public $js = [
         "front/js/tiny-slider.js",
         "front/js/glightbox.min.js",
