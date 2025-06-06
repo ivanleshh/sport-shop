@@ -54,6 +54,12 @@ class Typepay extends \yii\db\ActiveRecord
         return $this->hasMany(Orders::class, ['type_pay_id' => 'id']);
     }
 
+    // Метод для получения id типа оплаты по его заголовку
+    public static function getTypepayId($title): int|null
+    {
+        return self::findOne(compact('title'))->id;
+    }
+
     public static function getTypePays()
     {
         return self::find()

@@ -51,7 +51,6 @@ class CartController extends Controller
                     'pageSize' => 4
                 ],
             ]);
-            $dataProvider = $cart->updateItemsData($dataProvider);
         }
 
         return $this->render('index', [

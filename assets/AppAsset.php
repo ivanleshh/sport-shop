@@ -30,8 +30,6 @@ class AppAsset extends AssetBundle
         "assets/bootstrap-icons/bootstrap-icons.css",
     ];
     public $js = [
-        'js/catalog.js',
-        'js/toast.js',
         "front/js/tiny-slider.js",
         "front/js/glightbox.min.js",
         "front/js/other.js",

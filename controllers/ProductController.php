@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Cart;
 use app\models\Product;
 use app\models\ProductSearch;
 use app\models\Review;
@@ -52,28 +53,6 @@ class ProductController extends Controller
             'model' => $this->findModel($id),
             'dataProvider' => $dataProvider,
             'model_review' => new Review(['product_id' => $id]),
-        ]);
-    }
-
-    /**
-     * Creates a new Product model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Product();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
         ]);
     }
 

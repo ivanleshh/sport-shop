@@ -113,7 +113,8 @@ class Orders extends \yii\db\ActiveRecord
             $transaction = Yii::$app->db->beginTransaction();
 
             try {
-                $orderShop->attributes = $cart->attributes;
+                $orderShop->total_amount = $cart->total_amount;
+                $orderShop->product_amount = $cart->product_amount;
                 $orderShop->save();
 
                 $cartItems = CartItem::find()
@@ -130,8 +131,7 @@ class Orders extends \yii\db\ActiveRecord
 
                     $product = Product::findOne($cartItem->product_id);
                     $product->count -= $cartItem->product_amount;
-                    $product->save();
-
+                    $product->save(false);
                     $orderItem->save(false);
                 }
 

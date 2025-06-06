@@ -2,6 +2,7 @@
 
 namespace app\modules\account\controllers;
 
+use app\models\Cart;
 use app\models\Category;
 use app\models\CompareProducts;
 use app\models\ProductProperty;
@@ -62,6 +63,7 @@ class CompareProductsController extends Controller
                 return $this->asJson(['status' => true]);
             }
         }
+        Cart::checkAndUpdate();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'models' => $dataProvider->models,

@@ -35,4 +35,8 @@ $(() => {
         $('#review-modal').modal('hide')
         $.pjax.reload('#product-reviews-pjax')
     });
+
+    $('#product-reviews-pjax').on('pjax:end', function () {
+        toastReload()
+    });
 })

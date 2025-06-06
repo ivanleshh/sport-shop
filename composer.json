@@ -23,7 +23,8 @@
         "kartik-v/yii2-widget-fileinput": "dev-master",
         "kartik-v/yii2-icons": "@dev",
         "kartik-v/yii2-widget-rating": "dev-master",
-        "coderius/yii2-swiper-slider": "^1.0"
+        "coderius/yii2-swiper-slider": "^1.0",
+        "stripe/stripe-php": "^17.3"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

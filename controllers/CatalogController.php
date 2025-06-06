@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Brand;
+use app\models\Cart;
 use app\models\Category;
 use app\models\CategorySearch;
 use app\models\CompareProducts;
@@ -84,6 +85,8 @@ class CatalogController extends Controller
             ->select(['id','title'])
             ->asArray()
             ->all();
+
+        Cart::checkAndUpdate();
 
         return $this->render('view', [
             'brands' => ArrayHelper::map($brands, 'id', 'title'),

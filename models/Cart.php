@@ -83,12 +83,29 @@ class Cart extends \yii\db\ActiveRecord
         return $count;
     }
 
-    // Метод для пересчета добавленных в корзину товаров
-    public function updateItemsData($dataProvider)
+    public static function getCurrentCart()
     {
-        if (isset($dataProvider)) {
+        if (!Yii::$app->user->isGuest && !Yii::$app->user->identity->isAdmin) {
+            return self::findOne(['user_id' => Yii::$app->user->id]);
+        }
+        return false;
+    }
+
+    public function getTotalPrice()
+    {
+        $sum = 0;
+        foreach ($this->cartItems as $item) {
+            $sum += $item->product->price * $item->product_amount;
+        }
+        return $sum;
+    }
+
+    // Метод для пересчета добавленных в корзину товаров
+    public static function checkAndUpdate()
+    {
+        if ($cart = self::getCurrentCart()) {
             $wasAdjusted = false;
-            foreach ($dataProvider->models as $item) {
+            foreach ($cart->cartItems as $item) {
                 if ($item->product_amount > $item->product->count) {
                     $adjustCount = $item->product_amount - $item->product->count;
                     $item->total_amount -= $adjustCount * $item->product->price;
@@ -98,29 +115,25 @@ class Cart extends \yii\db\ActiveRecord
                 }
             }
             if ($wasAdjusted) {
-                $this->recalculate();
-                $text = 'Количество товаров из вашей корзины было скорректировано из-за недостатка на складе';
+                $cart->recalculate();
+                $text = 'Количество товаров из вашей корзины было скорректировано из-за недостатка на складе!';
                 Yii::$app->session->set('bg_color', 'bg-danger');
                 Yii::$app->session->set('text', $text);
                 Yii::$app->session->setFlash('danger', $text);
             }
         }
-        return $dataProvider;
     }
 
     // Метод для пересчета характеристик корзины
     public function recalculate()
     {
         $items = CartItem::find()->where(['cart_id' => $this->id])->with('product')->all();
-
         $productAmount = 0;
         $totalAmount = 0;
-
         foreach ($items as $item) {
             $productAmount += $item->product_amount;
             $totalAmount += $item->product_amount * $item->product->price;
         }
-
         $this->product_amount = $productAmount;
         $this->total_amount = $totalAmount;
         $this->save(false);

@@ -10,6 +10,9 @@ use app\models\Pickup;
 use app\models\Status;
 use app\models\Typepay;
 use app\modules\account\models\OrdersSearch;
+use Stripe\Checkout\Session;
+use Stripe\Climate\Order;
+use Stripe\Stripe;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -78,16 +81,21 @@ class OrdersController extends Controller
             ],
         ]);
 
-        $dataProvider = $cart->updateItemsData($dataProvider);
-
         if ($this->request->isPost && $model->load($this->request->post())) {
             if ($model->check) {
                 $model->scenario = Orders::SCENARIO_DELIVERY;
             }
             $model->status_id = Status::getStatusId('Новый');
-            if ($id = Orders::orderCreate($model)) {
-                Yii::$app->session->setFlash('success', "Заказ № $model->id сформирован и отправлен в работу");
-                return $this->redirect(['view', 'id' => $id]);
+            $model->user_id = Yii::$app->user->id;
+            if ($model->type_pay_id == Typepay::getTypepayId('Банковская карта онлайн')) {
+                $pendingOrder = $model->attributes;
+                Yii::$app->session->set('pendingOrder', $pendingOrder);
+                return $this->actionCreateStripeSession($cart);
+            } else {
+                if ($id = Orders::orderCreate($model)) {
+                    Yii::$app->session->setFlash('success', "Заказ № $id успешно оформлен!");
+                    return $this->redirect(['view', 'id' => $id]);
+                }
             }
         }
 
@@ -98,6 +106,61 @@ class OrdersController extends Controller
             'typePays' => Typepay::getTypePays(),
             'pickUps' => Pickup::getPickups(),
         ]);
+    }
+
+    public function actionCreateStripeSession($cart)
+    {
+        Stripe::setApiKey(Yii::$app->params['stripe.secret']);
+
+        $lineItems = [];
+        $cartItems = CartItem::find()->where(['cart_id' => $cart->id])->with('product')->all();
+        foreach ($cartItems as $item) {
+            $lineItems[] = [
+                'price_data' => [
+                    'currency' => 'rub',
+                    'product_data' => [
+                        'name' => $item->product->title,
+                    ],
+                    'unit_amount' => $item->product->price * 100, // Цена в копейках
+                ],
+                'quantity' => $item->product_amount,
+            ];
+        }
+
+        $session = Session::create([
+            'payment_method_types' => ['card'],
+            'line_items' => $lineItems,
+            'mode' => 'payment',
+            'success_url' => Yii::$app->urlManager->createAbsoluteUrl(['/personal/orders/stripe-success']),
+            'cancel_url' => Yii::$app->urlManager->createAbsoluteUrl(['/personal/orders/create']),
+            'locale' => 'ru',
+        ]);
+
+        return $this->redirect($session->url);
+    }
+
+    public function actionStripeSuccess()
+    {
+        $pendingOrder = Yii::$app->session->get('pendingOrder');
+
+        if (!$pendingOrder) {
+            return $this->redirect(['create']);
+        }
+
+        $model = new Orders();
+        $model->attributes = $pendingOrder;
+
+
+        unset($model->created_at, $model->updated_at);
+
+        if ($id = Orders::orderCreate($model)) {
+            Yii::$app->session->remove('pendingOrder');
+            Yii::$app->session->setFlash('success', "Заказ № $model->id оплачен и сформирован");
+            return $this->redirect(['view', 'id' => $id]);
+        }
+
+        Yii::$app->session->setFlash('error', 'Ошибка при создании заказа');
+        return $this->redirect(['create']);
     }
 
     /**

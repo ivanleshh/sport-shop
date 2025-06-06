@@ -2,6 +2,7 @@
 
 namespace app\widgets;
 
+use app\models\Cart;
 use Yii;
 use yii\base\Widget;
 use app\models\Product;
@@ -23,6 +24,8 @@ class RecentlyViewed extends Widget
                 unset($productIds[$index]);
             }
         }
+
+        Cart::checkAndUpdate();
 
         if (empty($productIds)) {
             return '';

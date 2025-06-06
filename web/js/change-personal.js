@@ -16,4 +16,8 @@ $(() => {
         $('#change-personal-modal').modal('hide')
         $.pjax.reload('#personal-pjax')
     });
+
+    $('#personal-pjax').on('pjax:end', function () {
+        toastReload()
+    });
 })

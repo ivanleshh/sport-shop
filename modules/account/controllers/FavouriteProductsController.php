@@ -2,6 +2,7 @@
 
 namespace app\modules\account\controllers;
 
+use app\models\Cart;
 use app\models\FavouriteProducts;
 use app\modules\account\models\FavouriteProductsSearch;
 use Yii;
@@ -52,6 +53,7 @@ class FavouriteProductsController extends Controller
                 return $this->asJson(['status' => true]);
             }
         }
+        Cart::checkAndUpdate();
         return $this->render('index', ['searchModel' => $searchModel,'dataProvider' => $dataProvider]);
     }
 

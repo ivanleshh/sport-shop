@@ -226,7 +226,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <!-- End Header Area -->
 
     <!-- Start Hero Area -->
-    <section id="main" class="hero-area">
+    <section id="main" class="hero-area mb-5">
         <div class="container">
 
             <!-- Start Breadcrumbs -->
@@ -294,7 +294,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <!-- End Hero Area -->
 
     <!-- Start Footer Area -->
-    <footer class="footer mt-3">
+    <footer class="footer mt-5">
         <!-- Start Footer Middle -->
         <div class="footer-middle">
             <div class="container">
@@ -464,6 +464,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         echo "<div id='text-error' class='text-light'></div>";
         Modal::end();
         $this->registerJsFile('/js/cart.js', ['depends' => JqueryAsset::class]);
+        $this->registerJsFile('/js/toast.js', ['depends' => JqueryAsset::class]);
     }
     ?>
 

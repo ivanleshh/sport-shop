@@ -3,6 +3,7 @@
 use yii\bootstrap5\Html;
 use yii\web\JqueryAsset;
 use yii\bootstrap5\ActiveForm;
+use yii\bootstrap5\Modal;
 use yii\widgets\Pjax;
 
 use function PHPSTORM_META\map;
@@ -38,6 +39,11 @@ use function PHPSTORM_META\map;
         <div class="col-12 col-sm-6">
             <?= $form->field($model, 'type_pay_id')->dropDownList($typePays, ['prompt' => 'Выберите тип оплаты']) ?>
         </div>
+        <div class="col-12">
+            <div class="alert alert-success alert-pay d-none" role="alert">
+                Вы будете перенаправлены на страницу оплаты
+            </div>
+        </div>
         <div class="pickup">
             <?= $form->field($model, 'pick_up_id')->dropDownList($pickUps, ['prompt' => 'Выберите пункты выдачи']) ?>
         </div>
@@ -54,7 +60,7 @@ use function PHPSTORM_META\map;
             </div>
         </div>
         <div class="form-group">
-            <?= Html::submitButton('Оформить заказ', ['class' => 'btn btn-orange w-100']) ?>
+            <?= Html::submitButton('Оформить заказ', ['class' => 'btn btn-orange btn-form-send w-100']) ?>
         </div>
     </div>
     <?php ActiveForm::end(); ?>
