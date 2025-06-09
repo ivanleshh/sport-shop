@@ -26,6 +26,7 @@ use yii\helpers\VarDumper;
  * @property string $updated_at
  * @property string|null $delay_reason
  * @property string|null $new_date_delivery
+ * @property int $is_payed
  *
  * @property OrderItem[] $orderItems
  * @property Pickup $pickUp
@@ -54,9 +55,9 @@ class Orders extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'email', 'phone', 'type_pay_id', 'product_amount', 'status_id', 'user_id'], 'required'],
-            [['type_pay_id', 'pick_up_id', 'product_amount', 'status_id', 'user_id'], 'integer'],
+            [['type_pay_id', 'pick_up_id', 'product_amount', 'status_id', 'user_id', 'is_payed'], 'integer'],
             [['comment', 'delay_reason', 'address', 'date_delivery', 'time_delivery'], 'string'],
-            [['created_at', 'updated_at', 'new_date_delivery', 'delay_reason'], 'safe'],
+            [['created_at', 'updated_at', 'new_date_delivery', 'delay_reason', 'is_payed'], 'safe'],
             [['total_amount'], 'number'],
             [['name', 'email', 'phone'], 'string', 'max' => 255],
             [['pick_up_id'], 'exist', 'skipOnError' => true, 'targetClass' => Pickup::class, 'targetAttribute' => ['pick_up_id' => 'id']],
@@ -103,6 +104,7 @@ class Orders extends \yii\db\ActiveRecord
             'updated_at' => 'Дата обновления',
             'delay_reason' => 'Причина задержки',
             'new_date_delivery' => 'Новая дата доставки',
+            'is_payed' => 'Статус оплаты'
         ];
     }
 
@@ -115,6 +117,7 @@ class Orders extends \yii\db\ActiveRecord
             try {
                 $orderShop->total_amount = $cart->total_amount;
                 $orderShop->product_amount = $cart->product_amount;
+                $orderShop->is_payed = 1;
                 $orderShop->save();
 
                 $cartItems = CartItem::find()

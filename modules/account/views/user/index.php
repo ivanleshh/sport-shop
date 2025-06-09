@@ -80,11 +80,13 @@ $this->params['breadcrumbs'] = [
                             <div class="accordion-body">
                                 <?php if (isset($orders)) {
                                     foreach ($orders as $order) {
+                                        $is_payed = $order->is_payed;
                                         echo "<div class='order-item mb-2 d-flex gap-5 align-items-center justify-content-between border-bottom pb-2'>
                                     <div>
                                         <span class='fw-bold'>Заказ № $order->id</span>
                                         <span>от " . Yii::$app->formatter->asDatetime($order->created_at, 'php:d.m.Y H:i') . "</span>
                                         <div class='text-" . $order->status->bg_color . "'>" . $order->status->title . "</div>
+                                        <div class=" . ($is_payed ? 'text-success' : 'text-danger') . ">" . ($is_payed ? 'Оплачен' : 'Не оплачен') . "</div>
                                     </div>
                                     <div class='text-nowrap text-center'>
                                         <div class='text-muted'>Товаров: " . $order->product_amount . "</div>

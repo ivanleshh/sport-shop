@@ -45,6 +45,10 @@ $this->params['breadcrumbs'] = [
                                 'value' => $model->status->title,
                             ],
                             [
+                                'attribute' => 'is_payed',
+                                'value' => $model->is_payed ? 'Оплачен' : 'Не оплачен',
+                            ],
+                            [
                                 'attribute' => 'new_date_delivery',
                                 'value' => Yii::$app->formatter->asDatetime($model?->new_date_delivery, 'php:d.m.Y'),
                                 'visible' => (bool)$model?->new_date_delivery,

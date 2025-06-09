@@ -6,13 +6,19 @@ use yii\bootstrap5\Html;
 ?>
 <div class="card h-100 rounded-4">
   <div class="border-bottom d-flex gap-2 align-items-center justify-content-between p-3 text-dark">
-    <div class="d-flex gap-2 align-items-center">
+    <div class="d-flex flex-wrap gap-2 align-items-center">
       <span class="fw-bold">Заказ № <?= $model->id ?></span>
       <span>от <?= Yii::$app->formatter->asDatetime($model->created_at, 'php:d.m.Y H:i') ?></span>
     </div>
-    <div class="bg-<?= $model->status->bg_color ?> px-3 py-2 rounded-3 text-nowrap">
-      <?= $model->status->title ?>
+    <div class="d-flex flex-wrap flex-sm-nowrap flex-xl-wrap flex-xxl-nowrap justify-content-end gap-2">
+      <div class="bg-<?= $model->status->bg_color ?> px-3 py-1 rounded-3 text-nowrap">
+        <?= $model->status->title ?>
+      </div>
+      <div class="text-nowrap text-light rounded-3 bg-<?= $model->is_payed ? 'success' : 'danger' ?> px-3 py-1">
+        <?= $model->is_payed ? 'Оплачен' : 'Не оплачен' ?>
+      </div>
     </div>
+
   </div>
   <div class="row gy-2 justify-content-center align-items-center p-3 h-100">
     <div class="col-12 col-sm-6 col-lg-5">

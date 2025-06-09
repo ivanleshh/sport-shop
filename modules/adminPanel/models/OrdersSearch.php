@@ -18,7 +18,7 @@ class OrdersSearch extends Orders
     {
         return [
             [['id', 'type_pay_id', 'pick_up_id', 'product_amount', 'status_id', 'user_id'], 'integer'],
-            [['name', 'email', 'phone', 'address', 'date_delivery', 'time_delivery', 'comment', 'created_at', 'updated_at', 'delay_reason', 'new_date_delivery'], 'safe'],
+            [['name', 'email', 'phone', 'address', 'date_delivery', 'time_delivery', 'comment', 'created_at', 'updated_at', 'delay_reason', 'new_date_delivery', 'is_payed'], 'safe'],
             [['total_amount'], 'number'],
         ];
     }
@@ -74,6 +74,7 @@ class OrdersSearch extends Orders
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'new_date_delivery' => $this->new_date_delivery,
+            'is_payed' => $this->is_payed,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name])
