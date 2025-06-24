@@ -117,7 +117,6 @@ class Orders extends \yii\db\ActiveRecord
             try {
                 $orderShop->total_amount = $cart->total_amount;
                 $orderShop->product_amount = $cart->product_amount;
-                $orderShop->is_payed = 1;
                 $orderShop->save();
 
                 $cartItems = CartItem::find()

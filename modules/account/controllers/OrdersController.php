@@ -149,7 +149,7 @@ class OrdersController extends Controller
 
         $model = new Orders();
         $model->attributes = $pendingOrder;
-
+        $model->is_payed = 1;
 
         unset($model->created_at, $model->updated_at);
 

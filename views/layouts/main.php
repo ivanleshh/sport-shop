@@ -366,17 +366,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <div class="footer-bottom">
             <div class="container">
                 <div class="inner-content">
-                    <div class="row align-items-center gy-3">
+                    <div class="row justify-content-center align-items-center gy-3">
                         <div class="col-lg-4 col-12">
                             <div class="payment-gateway">
                                 <span>Мы принимаем:</span>
                                 <img src="/images/credit-cards-footer.png" alt="#">
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-12">
-                            <div class="copyright">
-                                <p>Designed by <span class="text-warning fw-bold" href="https://graygrids.com/" rel="nofollow"
-                                        target="_blank">Javalets</span></p>
                             </div>
                         </div>
                         <div class="col-lg-4 col-12">

@@ -56,8 +56,6 @@ $this->params['breadcrumbs'] = [
             <ul class="col-12 col-md-5 col-lg-4 d-flex flex-column gap-2 text-secondary text-center" style="list-style-type: none;">
                 <h6>Используйте данные:</h6>
                 <li><strong>Клиент 1:</strong></li>
-                <li>demo-user / P1ssw0rd^1-7</li>
-                <li><strong>Клиент 2:</strong></li>
                 <li>demo-user1 / Pa66word+>Str0ng</li>
             </ul>
         </div>
